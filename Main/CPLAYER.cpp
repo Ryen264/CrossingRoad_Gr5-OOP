@@ -14,11 +14,20 @@ int CPLAYER::getY() {
 int CPLAYER::getScore() {
     return this->score;
 }
-void CPLAYER::setXY(int x, int y) {
+void CPLAYER::set(int x, int y) {
     if (x >= 0)
         this->x = x;
     if (y >= 0)
         this->y = y;
+}
+void CPLAYER::set(int x, int y, bool alive, int score) {
+    if (x >= 0)
+        this->x = x;
+    if (y >= 0)
+        this->y = y;
+    this->alive = alive;
+    if (score >= 0)
+        this->score = score;
 }
 
 void CPLAYER::decreaseScore(int point) {

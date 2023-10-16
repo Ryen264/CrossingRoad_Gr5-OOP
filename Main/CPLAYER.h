@@ -6,11 +6,12 @@ class CPLAYER {
 	bool alive;
 	int score;
 public:
-	CPLAYER(int firstX = 20 / 2, int firstY = 0);
+	CPLAYER(int firstX, int firstY);
 	int getX();
 	int getY();
 	int getScore();
-	void setXY(int x = -1, int y = -1);
+	void set(int x = -1, int y = -1);
+	void set(int x, int y, bool alive, int score);
 	void decreaseScore(int point = 1);
 	void increaseScore(int point = 1);
 	void Up(int step = 1);
