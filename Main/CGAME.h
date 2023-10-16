@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "CGRAPHIC.h"
 #include "CPLAYER.h"
 #include "CLANE.h"
 #include "CVEHICLELANE.h"
@@ -6,7 +7,6 @@
 #include <iostream>
 #include <conio.h>
 #include <time.h>
-#include <Windows.h>
 using namespace std;
 class CGAME {
     const int WIDTH = 20;
@@ -35,6 +35,7 @@ public:
     void drawStart(ostream& outDev);
     void drawQuit(ostream& outDev);
     void drawIsReset(ostream& outDev);
+    void drawDemo();
 
     friend void ShowCur(bool CursorVisibility);
     /*

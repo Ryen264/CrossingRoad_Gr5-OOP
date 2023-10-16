@@ -144,3 +144,14 @@ void CGAME::drawQuit(ostream& outDev) {
 void CGAME::drawIsReset(ostream& outDev) {
 	outDev << "Play again (Y/N)?" << endl;
 }
+void CGAME::drawDemo() {
+	Configure();
+	CGRAPHIC grp;
+	grp.clear(0, 0);
+	grp.screen[6][10] = { L'/', FELDGRAU, LIGHTSKY };
+	grp.screen[6][11] = { L'\\', FELDGRAU, LIGHTSKY };
+	grp.screen[6][12] = { L'/', FELDGRAU, LIGHTSKY };
+	grp.screen[6][13] = { L'\\', FELDGRAU, LIGHTSKY };
+	grp.screen[6][14] = { L'/', FELDGRAU, LIGHTSKY };
+	grp.display(6, 10, 6, 14);
+}

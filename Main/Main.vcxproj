@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CCAR.cpp" />
+    <ClCompile Include="CGRAPHIC.cpp" />
     <ClCompile Include="CNPC.cpp" />
     <ClCompile Include="CVEHICLELANE.cpp" />
     <ClCompile Include="CGAME.cpp" />
@@ -138,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCAR.h" />
+    <ClInclude Include="CGRAPHIC.h" />
     <ClInclude Include="CNPC.h" />
     <ClInclude Include="CVEHICLELANE.h" />
     <ClInclude Include="CGAME.h" />
