@@ -185,14 +185,41 @@ void CGAME::drawPerry()
 	Configure();
 	CGRAPHIC car;
 	car.clear(6, 6);
-	for (int i = 0; i < 15; i++)
+	//VE THAN PERRY
+	for (int i = 5; i < 16; i++)
 	{
-		for (int j = 1; j < 4; j++)
+		for (int j = 3; j < 5; j++)
 		{
 			car.screen[i][j] = { L' ', FELDGRAU, GREEN_PERRY };
 		}
+		
 	}
-	car.screen[2][4] = { L' ', FELDGRAU, 7 };
+	//VE MAT PERRY
+	car.screen[13][3] = { L'▀', GREEN_PERRY, BLACK };
+	car.screen[16][3] = { L'▀', 6, BLACK };
+	//VE TOC PERRY
+	car.screen[15][2] = { L'▀', 6, BLACK };
+	car.screen[14][2] = { L'▄', 6, BLACK };
+	car.screen[16][2] = { L'▄', 6, BLACK };
+	//VE MO PERRY
+	car.screen[15][4] = { L'▀', 7,7  };
+	car.screen[16][4] = { L'▀', 7,7 };
+	car.screen[16][4] = { L'▄', 7,6};
+	
+	//VE CHAN PERRY
+	car.screen[7][5] = { L'▄', 7,GREEN_PERRY };
+	car.screen[5][5] = { L'▄', 7,GREEN_PERRY };
+	car.screen[11][5] = { L'▄', GREEN_PERRY,GREEN_PERRY };
+	car.screen[13][5] = { L'▄', GREEN_PERRY,GREEN_PERRY };
+	//VE DUOI PERRY
+	car.screen[1][3] = { L'▄', 7,6 };
+	car.screen[2][3] = { L'▄', 7,6};
+	car.screen[3][4] = { L'▀', 7,6 };
+	car.screen[4][4] = { L'▀', 7,6 };
+	//car.screen[15][5] = { L'▀', 7,GREEN_PERRY };
+	// ▀▀▀
+	//▄▀▄
+	/*car.screen[2][4] = {L' ', FELDGRAU, 7};
 	car.screen[3][4] = { L' ', FELDGRAU, 7 };
 	//▄
 	car.screen[4][4] = { L'▄', 7, 6};
@@ -205,11 +232,6 @@ void CGAME::drawPerry()
 	car.screen[15][2] = { L'▀', 6, 7 };
 	car.screen[15][3] = { L'▀', 7, 6 };
 	car.screen[16][2] = { L'▀', 6, 7 };
-	car.screen[16][3] = { L'▀', 7, 6 };
-	
-	
-	
-
-
+	car.screen[16][3] = { L'▀', 7, 6 };*/
 	car.display(0, 0, 39, 19);
 }
