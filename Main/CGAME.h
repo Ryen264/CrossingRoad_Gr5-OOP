@@ -36,6 +36,8 @@ public:
     void drawQuit(ostream& outDev);
     void drawIsReset(ostream& outDev);
     void drawDemo();
+    void drawlane();
+    void drawPerry();
 
     friend void ShowCur(bool CursorVisibility);
     /*

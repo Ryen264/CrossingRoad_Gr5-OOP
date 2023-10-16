@@ -155,3 +155,61 @@ void CGAME::drawDemo() {
 	grp.screen[6][14] = { L'/', FELDGRAU, LIGHTSKY };
 	grp.display(6, 10, 6, 14);
 }
+
+void CGAME::drawlane()
+{
+	Configure();
+	CGRAPHIC lane;
+	lane.clear(0, 0);
+	int j = 0;
+	for (int i = 0; i < 40; i++)
+	{	
+		for (int j = 0; j < 6; j++)
+		{
+			lane.screen[i][j] = { L' ', FELDGRAU, GREEN_PERRY };
+		}	
+	}
+	for (int i = 0; i < 39; i++)
+	{
+		if (i % 5 == 0)
+		{
+			continue;
+		}
+		lane.screen[i][2] = { L' ', FELDGRAU, WHITE};
+	}
+	lane.display(0, 0, 39, 19);
+}
+
+void CGAME::drawPerry()
+{
+	Configure();
+	CGRAPHIC car;
+	car.clear(6, 6);
+	for (int i = 0; i < 15; i++)
+	{
+		for (int j = 1; j < 4; j++)
+		{
+			car.screen[i][j] = { L' ', FELDGRAU, GREEN_PERRY };
+		}
+	}
+	car.screen[2][4] = { L' ', FELDGRAU, 7 };
+	car.screen[3][4] = { L' ', FELDGRAU, 7 };
+	//▄
+	car.screen[4][4] = { L'▄', 7, 6};
+	car.screen[10][4] = { L' ', FELDGRAU, 7 };
+	car.screen[11][4] = { L' ', FELDGRAU, 7 };
+	car.screen[12][4] = { L'▄', 7, 6 };
+	//▀
+	car.screen[12][1] = { L'▀', GREEN_PERRY, BLACK };
+	car.screen[12][2] = { L'▀', BLACK, GREEN_PERRY };
+	car.screen[15][2] = { L'▀', 6, 7 };
+	car.screen[15][3] = { L'▀', 7, 6 };
+	car.screen[16][2] = { L'▀', 6, 7 };
+	car.screen[16][3] = { L'▀', 7, 6 };
+	
+	
+	
+
+
+	car.display(0, 0, 39, 19);
+}
