@@ -181,60 +181,31 @@ void CGAME::drawlane()
 	lane.display(0, 0, 39, 19);
 }
 
-void CGAME::drawPerry()
+void CGAME::drawTree(int x, int y)
 {
 	Configure();
-	CGRAPHIC perry;
-	perry.clear(6, 6);
-	//VE THAN PERRY
-	for (int i = 5; i < 16; i++)
-	{
-		for (int j = 3; j < 5; j++)
-		{
-			perry.screen[i][j] = { L' ', FELDGRAU, GREEN_PERRY };
-		}
-		
-	}
-	//VE MAT PERRY
-	perry.screen[13][3] = { L'▀', GREEN_PERRY, BLACK };
-	perry.screen[16][3] = { L'▀', 6, BLACK };
-	//VE TOC PERRY
-	perry.screen[15][2] = { L'▀', 6, BLACK };
-	perry.screen[14][2] = { L'▄', 6, BLACK };
-	perry.screen[16][2] = { L'▄', 6, BLACK };
-	//VE MO PERRY
-	perry.screen[15][4] = { L'▀', 7,7  };
-	perry.screen[16][4] = { L'▀', 7,7 };
-	perry.screen[16][4] = { L'▄', 7,6};
-	
-	//VE CHAN PERRY
-	perry.screen[7][5] = { L'▄', 7,GREEN_PERRY };
-	perry.screen[5][5] = { L'▄', 7,GREEN_PERRY };
-	perry.screen[11][5] = { L'▄', GREEN_PERRY,GREEN_PERRY };
-	perry.screen[13][5] = { L'▄', GREEN_PERRY,GREEN_PERRY };
-	//VE DUOI PERRY
-	perry.screen[1][3] = { L'▄', 7,6 };
-	perry.screen[2][3] = { L'▄', 7,6};
-	perry.screen[3][4] = { L'▀', 7,6 };
-	perry.screen[4][4] = { L'▀', 7,6 };
-	//car.screen[15][5] = { L'▀', 7,GREEN_PERRY };
-	// ▀▀▀
-	//▄▀▄
-	/*car.screen[2][4] = {L' ', FELDGRAU, 7};
-	car.screen[3][4] = { L' ', FELDGRAU, 7 };
-	//▄
-	car.screen[4][4] = { L'▄', 7, 6};
-	car.screen[10][4] = { L' ', FELDGRAU, 7 };
-	car.screen[11][4] = { L' ', FELDGRAU, 7 };
-	car.screen[12][4] = { L'▄', 7, 6 };
-	//▀
-	car.screen[12][1] = { L'▀', GREEN_PERRY, BLACK };
-	car.screen[12][2] = { L'▀', BLACK, GREEN_PERRY };
-	car.screen[15][2] = { L'▀', 6, 7 };
-	car.screen[15][3] = { L'▀', 7, 6 };
-	car.screen[16][2] = { L'▀', 6, 7 };
-	car.screen[16][3] = { L'▀', 7, 6 };*/
-	perry.display(0, 0, 39, 19);
+	CGRAPHIC tree;
+	tree.clear(WHITE, WHITE);
+	tree.DrawObject(Tree,x,y, GREEN,WHITE);
+
+	tree.screen[x + 3][y + 3].txtColor = SADDLE_BROWN;
+	tree.screen[x + 4][y + 3].txtColor = SADDLE_BROWN;
+	tree.screen[x + 5][y + 3].txtColor = SADDLE_BROWN;
+	tree.screen[x + 6][y + 3].txtColor = SADDLE_BROWN;
+
+	tree.screen[x + 3][y + 4].txtColor = SADDLE_BROWN;
+	tree.screen[x + 4][y + 4].txtColor = SADDLE_BROWN;
+	tree.screen[x + 5][y + 4].txtColor = SADDLE_BROWN;
+	tree.screen[x + 6][y + 4].txtColor = SADDLE_BROWN;
+
+	tree.screen[x + 3][y + 5].txtColor = SADDLE_BROWN;
+	tree.screen[x + 4][y + 5].txtColor = SADDLE_BROWN;
+	tree.screen[x + 5][y + 5].txtColor = SADDLE_BROWN;
+	tree.screen[x + 6][y + 5].txtColor = SADDLE_BROWN;
+	//tree.screen[x + 4][y + 2].txtColor = SADDLE_BROWN;
+	//tree.screen[x + 3][y + 3].txtColor = SADDLE_BROWN;
+	//tree.screen[x + 4][y + 3].txtColor = SADDLE_BROWN;
+	tree.display(x, y, x + 20, y + 5);
 }
 
 /*void CGAME::drawTrees()
@@ -310,7 +281,7 @@ void CGAME::drawCar(int x, int y) {
 	CGRAPHIC Car;
 	Car.clear(WHITE, WHITE);
 	Car.DrawObject(car, x, y, RED, WHITE);
-	Car.screen[x][y].txtColor = DARK_RED;
+	/*Car.screen[x][y].txtColor = DARK_RED;
 	Car.screen[x + 1][y].txtColor = DARK_RED;
 	Car.screen[x + 7][y].txtColor = DARK_RED;
 	Car.screen[x + 8][y].txtColor = DARK_RED;
@@ -346,5 +317,5 @@ void CGAME::drawCar(int x, int y) {
 	Car.screen[x + 2][y + 3].txtColor = BLACK;
 	Car.screen[x + 6][y + 3].txtColor = BLACK;
 	Car.screen[x + 7][y + 3].txtColor = BLACK;
-	Car.display(x, y, x + 9, y + 3);
+	Car.display(x, y, x + 9, y + 3);*/
 }

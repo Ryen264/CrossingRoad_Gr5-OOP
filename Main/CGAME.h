@@ -37,8 +37,7 @@ public:
     void drawIsReset(ostream& outDev);
     void drawDemo();
     void drawlane();
-    void drawPerry();
-    void drawTrees();
+    void drawTree(int, int);
     void drawCar(int, int);
 
     friend void ShowCur(bool CursorVisibility);

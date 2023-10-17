@@ -17,7 +17,11 @@ const vector<wstring> truck = { L"▄▄▄▄▄▄████▄▄▄▄",
                                 L"   ▀▀     ▀▀  "
 };
 
-
+const vector<wstring> Tree = {  L"██████████",
+								L"██████████",
+								L"██████████",
+							    L"    ██",
+                                L"    ██"};
 
 struct PIXEL {
 	wchar_t buffer;
