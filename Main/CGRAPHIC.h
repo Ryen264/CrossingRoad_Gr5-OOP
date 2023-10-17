@@ -11,10 +11,11 @@ const int BLACK		= 0;
 const int LIGHTSKY	= 1;
 const int WHITE	    = 2;
 const int GREEN		= 3;
-const int BLUE		= 4;
+const int SADDLE_BROWN = 4;
 const int PUPLE		= 5;
 const int FELDGRAU	= 12;
-const int GREEN_PERRY    = 15;
+const int NEON_GREEN = 14;
+const int GREEN_PERRY = 15;
 void Configure();
 
 class CGRAPHIC {

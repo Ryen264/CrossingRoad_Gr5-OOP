@@ -19,8 +19,8 @@ void Configure() {
 	csbiex.ColorTable[11] = RGB(0, 17, 51);		//oxford blue
 	csbiex.ColorTable[12] = RGB(67, 96, 86);	//feldgrau
 	csbiex.ColorTable[13] = RGB(149, 156, 176);	//con chon xanh binh thuong
-	csbiex.ColorTable[14] = RGB(201, 255, 229);	//Aero blue
-	//csbiex.ColorTable[15] = RGB(25, 255, 25);	//Neon green
+	//csbiex.ColorTable[14] = RGB(201, 255, 229);	//Aero blue
+	csbiex.ColorTable[14] = RGB(25, 255, 25);	//Neon green
 	csbiex.ColorTable[15] = RGB(0, 153, 153);	//GREEN PERRY
 	SetConsoleScreenBufferInfoEx(hStdout, &csbiex);
 }

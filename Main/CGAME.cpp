@@ -164,7 +164,7 @@ void CGAME::drawlane()
 	int j = 0;
 	for (int i = 0; i < 40; i++)
 	{	
-		for (int j = 0; j < 6; j++)
+		for (int j = 0; j < 7; j++)
 		{
 			lane.screen[i][j] = { L' ', FELDGRAU, GREEN_PERRY };
 		}	
@@ -175,7 +175,7 @@ void CGAME::drawlane()
 		{
 			continue;
 		}
-		lane.screen[i][2] = { L' ', FELDGRAU, WHITE};
+		lane.screen[i][3] = { L' ', FELDGRAU, WHITE};
 	}
 	lane.display(0, 0, 39, 19);
 }
@@ -183,39 +183,39 @@ void CGAME::drawlane()
 void CGAME::drawPerry()
 {
 	Configure();
-	CGRAPHIC car;
-	car.clear(6, 6);
+	CGRAPHIC perry;
+	perry.clear(6, 6);
 	//VE THAN PERRY
 	for (int i = 5; i < 16; i++)
 	{
 		for (int j = 3; j < 5; j++)
 		{
-			car.screen[i][j] = { L' ', FELDGRAU, GREEN_PERRY };
+			perry.screen[i][j] = { L' ', FELDGRAU, GREEN_PERRY };
 		}
 		
 	}
 	//VE MAT PERRY
-	car.screen[13][3] = { L'▀', GREEN_PERRY, BLACK };
-	car.screen[16][3] = { L'▀', 6, BLACK };
+	perry.screen[13][3] = { L'▀', GREEN_PERRY, BLACK };
+	perry.screen[16][3] = { L'▀', 6, BLACK };
 	//VE TOC PERRY
-	car.screen[15][2] = { L'▀', 6, BLACK };
-	car.screen[14][2] = { L'▄', 6, BLACK };
-	car.screen[16][2] = { L'▄', 6, BLACK };
+	perry.screen[15][2] = { L'▀', 6, BLACK };
+	perry.screen[14][2] = { L'▄', 6, BLACK };
+	perry.screen[16][2] = { L'▄', 6, BLACK };
 	//VE MO PERRY
-	car.screen[15][4] = { L'▀', 7,7  };
-	car.screen[16][4] = { L'▀', 7,7 };
-	car.screen[16][4] = { L'▄', 7,6};
+	perry.screen[15][4] = { L'▀', 7,7  };
+	perry.screen[16][4] = { L'▀', 7,7 };
+	perry.screen[16][4] = { L'▄', 7,6};
 	
 	//VE CHAN PERRY
-	car.screen[7][5] = { L'▄', 7,GREEN_PERRY };
-	car.screen[5][5] = { L'▄', 7,GREEN_PERRY };
-	car.screen[11][5] = { L'▄', GREEN_PERRY,GREEN_PERRY };
-	car.screen[13][5] = { L'▄', GREEN_PERRY,GREEN_PERRY };
+	perry.screen[7][5] = { L'▄', 7,GREEN_PERRY };
+	perry.screen[5][5] = { L'▄', 7,GREEN_PERRY };
+	perry.screen[11][5] = { L'▄', GREEN_PERRY,GREEN_PERRY };
+	perry.screen[13][5] = { L'▄', GREEN_PERRY,GREEN_PERRY };
 	//VE DUOI PERRY
-	car.screen[1][3] = { L'▄', 7,6 };
-	car.screen[2][3] = { L'▄', 7,6};
-	car.screen[3][4] = { L'▀', 7,6 };
-	car.screen[4][4] = { L'▀', 7,6 };
+	perry.screen[1][3] = { L'▄', 7,6 };
+	perry.screen[2][3] = { L'▄', 7,6};
+	perry.screen[3][4] = { L'▀', 7,6 };
+	perry.screen[4][4] = { L'▀', 7,6 };
 	//car.screen[15][5] = { L'▀', 7,GREEN_PERRY };
 	// ▀▀▀
 	//▄▀▄
@@ -233,5 +233,73 @@ void CGAME::drawPerry()
 	car.screen[15][3] = { L'▀', 7, 6 };
 	car.screen[16][2] = { L'▀', 6, 7 };
 	car.screen[16][3] = { L'▀', 7, 6 };*/
-	car.display(0, 0, 39, 19);
+	perry.display(0, 0, 39, 19);
+}
+
+void CGAME::drawTrees()
+{
+	Configure();
+	CGRAPHIC tree;
+	tree.clear(6, 6);
+	//Ve vien den ben tren
+	for (int i = 1; i < 10; i++)
+	{
+		tree.screen[i][0] = { L'▄',BLACK,6 };
+	}
+	//Ve vien den duoi
+	for (int i = 1; i < 10; i++)
+	{
+		tree.screen[i][3] = { L'▀',BLACK,6 };
+	}
+	//ve vien den ben trai
+	for (int j = 1; j < 3; j++)
+	{
+		tree.screen[0][j] = { L' ',BLACK,BLACK };
+	}
+	//ve vien den ben phai
+	for (int j = 1; j < 3; j++)
+	{
+		tree.screen[10][j] = { L' ',BLACK,BLACK };
+	}
+	//Ve mau xanh la cay dam
+	for (int i = 1; i < 10; i++)
+	{
+		for (int j = 1; j < 3; j++)
+		{
+			if (i % 2 == 0)
+			{
+				tree.screen[i][j] = { L'▀',GREEN,NEON_GREEN };
+			}
+			else
+			{
+				tree.screen[i][j] = { L'▀',NEON_GREEN,GREEN };
+			}
+			
+		}
+	}
+	//Ve Than Cay
+	for (int i = 4; i < 7; i++)
+	{
+		for (int j = 3; j < 5; j++)
+		{
+			tree.screen[i][j] = { L' ',SADDLE_BROWN,SADDLE_BROWN };
+		}
+	}
+	//Vien than cay ben trai
+	for (int j = 3; j < 5; j++)
+	{
+		tree.screen[3][j] = { L' ',BLACK,BLACK};
+	}
+	//Vien than cay ben phai
+	for (int j = 3; j < 5; j++)
+	{
+		tree.screen[7][j] = { L' ',BLACK,BLACK };
+	}
+	//Vien than cay ben duoi
+	for (int i = 3; i < 8; i++)
+	{
+		tree.screen[i][5] = { L'▀',BLACK,6 };
+	}
+	tree.display(0, 0, 39, 19);
+
 }

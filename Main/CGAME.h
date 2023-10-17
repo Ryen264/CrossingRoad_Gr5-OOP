@@ -38,6 +38,7 @@ public:
     void drawDemo();
     void drawlane();
     void drawPerry();
+    void drawTrees();
 
     friend void ShowCur(bool CursorVisibility);
     /*

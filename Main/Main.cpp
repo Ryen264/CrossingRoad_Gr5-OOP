@@ -3,6 +3,6 @@
 int main()
 {
     CGAME CrossingGame;
-    CrossingGame.drawPerry();
+    CrossingGame.drawTrees();
     _getch();
 }
