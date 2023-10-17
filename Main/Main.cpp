@@ -3,6 +3,6 @@
 int main()
 {
     CGAME CrossingGame;
-    CrossingGame.drawTrees();
+    CrossingGame.drawCar(0,0);
     _getch();
 }

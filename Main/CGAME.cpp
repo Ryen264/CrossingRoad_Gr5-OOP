@@ -147,12 +147,13 @@ void CGAME::drawIsReset(ostream& outDev) {
 void CGAME::drawDemo() {
 	Configure();
 	CGRAPHIC grp;
+	//hello
 	grp.clear(0, 0);
-	grp.screen[6][10] = { L'/', FELDGRAU, LIGHTSKY };
-	grp.screen[6][11] = { L'\\', FELDGRAU, LIGHTSKY };
-	grp.screen[6][12] = { L'/', FELDGRAU, LIGHTSKY };
-	grp.screen[6][13] = { L'\\', FELDGRAU, LIGHTSKY };
-	grp.screen[6][14] = { L'/', FELDGRAU, LIGHTSKY };
+	grp.screen[6][10] = { L'/', FELDGRAU, SKY_BLUE };
+	grp.screen[6][11] = { L'\\', FELDGRAU, SKY_BLUE };
+	grp.screen[6][12] = { L'/', FELDGRAU, SKY_BLUE };
+	grp.screen[6][13] = { L'\\', FELDGRAU, SKY_BLUE };
+	grp.screen[6][14] = { L'/', FELDGRAU, SKY_BLUE };
 	grp.display(6, 10, 6, 14);
 }
 
@@ -236,7 +237,7 @@ void CGAME::drawPerry()
 	perry.display(0, 0, 39, 19);
 }
 
-void CGAME::drawTrees()
+/*void CGAME::drawTrees()
 {
 	Configure();
 	CGRAPHIC tree;
@@ -302,4 +303,48 @@ void CGAME::drawTrees()
 	}
 	tree.display(0, 0, 39, 19);
 
+}*/
+
+void CGAME::drawCar(int x, int y) {
+	Configure();
+	CGRAPHIC Car;
+	Car.clear(WHITE, WHITE);
+	Car.DrawObject(car, x, y, RED, WHITE);
+	Car.screen[x][y].txtColor = DARK_RED;
+	Car.screen[x + 1][y].txtColor = DARK_RED;
+	Car.screen[x + 7][y].txtColor = DARK_RED;
+	Car.screen[x + 8][y].txtColor = DARK_RED;
+	Car.screen[x + 6][y].txtColor = SKY_BLUE;
+	Car.screen[x + 9][y].txtColor = BRIGHTYELLOW;
+	Car.screen[x + 2][y + 1].txtColor = DARK_RED;
+	Car.screen[x + 2][y + 1].bgdColor = RED;
+	Car.screen[x + 3][y + 1].txtColor = DARK_RED;
+	Car.screen[x + 3][y + 1].bgdColor = RED;
+	Car.screen[x + 4][y + 1].txtColor = DARK_RED;
+	Car.screen[x + 4][y + 1].bgdColor = RED;
+	Car.screen[x + 5][y + 1].txtColor = DARK_RED;
+	Car.screen[x + 5][y + 1].bgdColor = RED;
+	Car.screen[x + 6][y + 1].txtColor = SKY_BLUE;
+	Car.screen[x][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 1][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 6][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 2][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 2][y + 2].bgdColor = SKY_BLUE;
+	Car.screen[x + 3][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 3][y + 2].bgdColor = SKY_BLUE;
+	Car.screen[x + 4][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 4][y + 2].bgdColor = SKY_BLUE;
+	Car.screen[x + 5][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 5][y + 2].bgdColor = SKY_BLUE;
+	Car.screen[x + 7][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 7][y + 2].bgdColor = RED;
+	Car.screen[x + 8][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 8][y + 2].bgdColor = RED;
+	Car.screen[x + 9][y + 2].txtColor = BRIGHTYELLOW;
+	Car.screen[x + 9][y + 2].bgdColor = RED;
+	Car.screen[x + 1][y + 3].txtColor = BLACK;
+	Car.screen[x + 2][y + 3].txtColor = BLACK;
+	Car.screen[x + 6][y + 3].txtColor = BLACK;
+	Car.screen[x + 7][y + 3].txtColor = BLACK;
+	Car.display(x, y, x + 9, y + 3);
 }

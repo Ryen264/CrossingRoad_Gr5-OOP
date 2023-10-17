@@ -39,6 +39,7 @@ public:
     void drawlane();
     void drawPerry();
     void drawTrees();
+    void drawCar(int, int);
 
     friend void ShowCur(bool CursorVisibility);
     /*
