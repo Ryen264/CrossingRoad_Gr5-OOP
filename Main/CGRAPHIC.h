@@ -17,11 +17,11 @@ const vector<wstring> truck = { L"▄▄▄▄▄▄████▄▄▄▄",
                                 L"   ▀▀     ▀▀  "
 };
 
-const vector<wstring> Tree = {  L"██████████",
+const vector<wstring> Tree = {  L" ▄▄▄▄▄▄▄▄",
 								L"██████████",
 								L"██████████",
-							    L"    ██",
-                                L"    ██"};
+							    L" ▀▀████▀▀",
+                                L" ▀▀▀▀▀▀▀▀"};
 
 struct PIXEL {
 	wchar_t buffer;
@@ -30,14 +30,14 @@ struct PIXEL {
 const int BLACK		= 0;
 const int SKY_BLUE = 1;
 const int WHITE	    = 2;
-const int GREEN		= 3;
+const int DARK_GREEN		= 3;
 const int SADDLE_BROWN = 4;
 const int DARK_RED = 5;
 const int RED		= 6;
 const int FELDGRAU	= 12;
 const int BRIGHTYELLOW = 13;
-const int NEON_GREEN = 14;
-const int GREEN_PERRY = 15;
+const int LIGHT_GREEN = 14;
+const int LIGHT_BROWN = 15;
 void Configure();
 
 class CGRAPHIC {

@@ -8,7 +8,7 @@ void Configure() {
 	csbiex.ColorTable[0] = RGB(0, 0, 0);		//black
 	csbiex.ColorTable[1] = RGB(153, 217, 234);	//sky blue
 	csbiex.ColorTable[2] = RGB(255, 255, 255);	//white
-	csbiex.ColorTable[3] = RGB(0, 100, 0);		//dark green
+	csbiex.ColorTable[3] = RGB(34, 177, 76);		//dark green
 	csbiex.ColorTable[4] = RGB(139, 69, 19);	//saddle brown (nau dam)
 	csbiex.ColorTable[5] = RGB(158, 19, 26);	//Dark Red
 	csbiex.ColorTable[6] = RGB(237, 28, 36);	//Red
@@ -20,8 +20,8 @@ void Configure() {
 	csbiex.ColorTable[12] = RGB(67, 96, 86);	//feldgrau
 	csbiex.ColorTable[13] = RGB(255, 242, 0);	//bright yellow
 	//csbiex.ColorTable[14] = RGB(201, 255, 229);	//Aero blue
-	csbiex.ColorTable[14] = RGB(25, 255, 25);	//Neon green
-	csbiex.ColorTable[15] = RGB(0, 153, 153);	//GREEN PERRY
+	csbiex.ColorTable[14] = RGB(56, 224, 104);	// light green
+	csbiex.ColorTable[15] = RGB(196, 98, 16);	//LIGHT BROWN
 	SetConsoleScreenBufferInfoEx(hStdout, &csbiex);
 }
 
