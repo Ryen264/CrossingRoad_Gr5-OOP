@@ -48,6 +48,9 @@ public:
     void drawQuit();
     void drawIsReset();
     void drawDemo();
+    void drawlane();
+    void drawTree(int, int);
+    void drawCar(int, int);
 
     void finishTell();
     /*

@@ -31,4 +31,6 @@ public:
 	void clear(int txtColor, int bgdColor);
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
+
+	//friend void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor;
 };

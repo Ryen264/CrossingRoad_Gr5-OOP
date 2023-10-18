@@ -1,4 +1,29 @@
 #include "CGRAPHIC.h"
+void Configure() {
+	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFOEX csbiex;
+	csbiex.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
+	GetConsoleScreenBufferInfoEx(hStdout, &csbiex);
+
+	csbiex.ColorTable[0] = RGB(0, 0, 0);		//black
+	csbiex.ColorTable[1] = RGB(135, 206, 250);	//light sky blue
+	csbiex.ColorTable[2] = RGB(255, 255, 255);	//white
+	csbiex.ColorTable[3] = RGB(0, 100, 0);		//dark green
+	csbiex.ColorTable[4] = RGB(139, 69, 19);	//saddle brown (nau dam)
+	csbiex.ColorTable[5] = RGB(205, 133, 63);	//peru (nau nhat)
+	csbiex.ColorTable[6] = RGB(255, 25, 25);	//red
+	csbiex.ColorTable[7] = RGB(255, 165, 0);	//orange
+	csbiex.ColorTable[8] = RGB(148, 0, 211);	//dark violet
+	csbiex.ColorTable[9] = RGB(255, 99, 71);	//tomato
+	csbiex.ColorTable[10] = RGB(204, 255, 255);	//light cyan
+	csbiex.ColorTable[11] = RGB(0, 17, 51);		//oxford blue
+	csbiex.ColorTable[12] = RGB(67, 96, 86);	//feldgrau
+	csbiex.ColorTable[13] = RGB(149, 156, 176);	//con chon xanh binh thuong
+	csbiex.ColorTable[14] = RGB(201, 255, 229);	//Aero blue
+	csbiex.ColorTable[15] = RGB(25, 255, 25);	//Neon green
+	SetConsoleScreenBufferInfoEx(hStdout, &csbiex);
+}
+
 CGRAPHIC::CGRAPHIC(PIXEL** screen) {
 	this->screen = new PIXEL*[WIDTH];
 	for (int i = 0; i < WIDTH; i++)

@@ -259,6 +259,7 @@ void CGAME::drawDemo() {
 	//Configure();
 	SetupTheme(THEME_LAND);
 	CGRAPHIC grp;
+	//hello
 	grp.clear(0, 0);
 	grp.screen[6][10] = { L'/', BLACK, WHITE };
 	grp.screen[6][11] = { L'\\', BLACK, WHITE };
@@ -268,6 +269,180 @@ void CGAME::drawDemo() {
 	grp.display(6, 10, 6, 14);
 }
 
-void CGAME::finishTell() {
-	cout << "\x07"; //Bell~
+/*void CGAME::drawlane()
+{
+	Configure();
+	CGRAPHIC lane;
+	lane.clear(0, 0);
+	int j = 0;
+	for (int i = 0; i < 40; i++)
+	{	
+		for (int j = 0; j < 7; j++)
+		{
+			lane.screen[i][j] = { L' ', FELDGRAU, GREEN_PERRY };
+		}	
+	}
+	for (int i = 0; i < 39; i++)
+	{
+		if (i % 5 == 0)
+		{
+			continue;
+		}
+		lane.screen[i][3] = { L' ', FELDGRAU, WHITE};
+	}
+	lane.display(0, 0, 39, 19);
+}*/
+
+void CGAME::drawTree(int x, int y)
+{
+	Configure();
+	CGRAPHIC tree;
+	tree.clear(WHITE, WHITE);
+	tree.DrawObject(Tree, x, y,DARK_GREEN, WHITE);
+	//VE VIEN DEN
+	for (int i = 1; i < 9; i++)
+	{
+		tree.screen[x + i][y].txtColor = BLACK;
+	}
+	for (int j = 1; j < 4; j++)
+	{
+		tree.screen[x][y+j].txtColor = BLACK;
+	}
+	for (int j = 1; j < 4; j++)
+	{
+		tree.screen[x+9][y + j].txtColor = BLACK;
+	}
+	tree.screen[x + 1][y + 3].txtColor = BLACK;
+	tree.screen[x + 2][y + 3].txtColor = SADDLE_BROWN;
+	tree.screen[x + 2][y + 3].bgdColor = BLACK;
+	tree.screen[x + 1][y + 4].txtColor = BLACK;
+	tree.screen[x + 8][y + 3].txtColor = BLACK;
+	tree.screen[x + 7][y + 3].txtColor = SADDLE_BROWN;
+	tree.screen[x + 7][y + 3].bgdColor = BLACK;
+	tree.screen[x + 8][y + 4].txtColor = BLACK;
+
+	//VE MAU THAN CAY
+	for (int i = 3; i < 7; i++)
+	{
+		tree.screen[x + i][y + 3].txtColor = SADDLE_BROWN;
+	}
+	for (int i = 2; i < 8; i++)
+	{
+		tree.screen[x + i][y + 4].txtColor = SADDLE_BROWN;
+	}
+	tree.display(x, y, x + 20, y + 5);
+	
+
+}
+
+/*void CGAME::drawTrees()
+{
+	Configure();
+	CGRAPHIC tree;
+	tree.clear(6, 6);
+	//Ve vien den ben tren
+	for (int i = 1; i < 10; i++)
+	{
+		tree.screen[i][0] = { L'▄',BLACK,6 };
+	}
+	//Ve vien den duoi
+	for (int i = 1; i < 10; i++)
+	{
+		tree.screen[i][3] = { L'▀',BLACK,6 };
+	}
+	//ve vien den ben trai
+	for (int j = 1; j < 3; j++)
+	{
+		tree.screen[0][j] = { L' ',BLACK,BLACK };
+	}
+	//ve vien den ben phai
+	for (int j = 1; j < 3; j++)
+	{
+		tree.screen[10][j] = { L' ',BLACK,BLACK };
+	}
+	//Ve mau xanh la cay dam
+	for (int i = 1; i < 10; i++)
+	{
+		for (int j = 1; j < 3; j++)
+		{
+			if (i % 2 == 0)
+			{
+				tree.screen[i][j] = { L'▀',GREEN,NEON_GREEN };
+			}
+			else
+			{
+				tree.screen[i][j] = { L'▀',NEON_GREEN,GREEN };
+			}
+			
+		}
+	}
+	//Ve Than Cay
+	for (int i = 4; i < 7; i++)
+	{
+		for (int j = 3; j < 5; j++)
+		{
+			tree.screen[i][j] = { L' ',SADDLE_BROWN,SADDLE_BROWN };
+		}
+	}
+	//Vien than cay ben trai
+	for (int j = 3; j < 5; j++)
+	{
+		tree.screen[3][j] = { L' ',BLACK,BLACK};
+	}
+	//Vien than cay ben phai
+	for (int j = 3; j < 5; j++)
+	{
+		tree.screen[7][j] = { L' ',BLACK,BLACK };
+	}
+	//Vien than cay ben duoi
+	for (int i = 3; i < 8; i++)
+	{
+		tree.screen[i][5] = { L'▀',BLACK,6 };
+	}
+	tree.display(0, 0, 39, 19);
+
+}*/
+
+void CGAME::drawCar(int x, int y) {
+	Configure();
+	CGRAPHIC Car;
+	Car.clear(WHITE, WHITE);
+	Car.DrawObject(car, x, y, RED, WHITE);
+	Car.screen[x][y].txtColor = DARK_RED;
+	Car.screen[x + 1][y].txtColor = DARK_RED;
+	Car.screen[x + 7][y].txtColor = DARK_RED;
+	Car.screen[x + 8][y].txtColor = DARK_RED;
+	Car.screen[x + 6][y].txtColor = SKY_BLUE;
+	Car.screen[x + 9][y].txtColor = BRIGHTYELLOW;
+	Car.screen[x + 2][y + 1].txtColor = DARK_RED;
+	Car.screen[x + 2][y + 1].bgdColor = RED;
+	Car.screen[x + 3][y + 1].txtColor = DARK_RED;
+	Car.screen[x + 3][y + 1].bgdColor = RED;
+	Car.screen[x + 4][y + 1].txtColor = DARK_RED;
+	Car.screen[x + 4][y + 1].bgdColor = RED;
+	Car.screen[x + 5][y + 1].txtColor = DARK_RED;
+	Car.screen[x + 5][y + 1].bgdColor = RED;
+	Car.screen[x + 6][y + 1].txtColor = SKY_BLUE;
+	Car.screen[x][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 1][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 6][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 2][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 2][y + 2].bgdColor = SKY_BLUE;
+	Car.screen[x + 3][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 3][y + 2].bgdColor = SKY_BLUE;
+	Car.screen[x + 4][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 4][y + 2].bgdColor = SKY_BLUE;
+	Car.screen[x + 5][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 5][y + 2].bgdColor = SKY_BLUE;
+	Car.screen[x + 7][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 7][y + 2].bgdColor = RED;
+	Car.screen[x + 8][y + 2].txtColor = DARK_RED;
+	Car.screen[x + 8][y + 2].bgdColor = RED;
+	Car.screen[x + 9][y + 2].txtColor = BRIGHTYELLOW;
+	Car.screen[x + 9][y + 2].bgdColor = RED;
+	Car.screen[x + 1][y + 3].txtColor = BLACK;
+	Car.screen[x + 2][y + 3].txtColor = BLACK;
+	Car.screen[x + 6][y + 3].txtColor = BLACK;
+	Car.screen[x + 7][y + 3].txtColor = BLACK;
+	Car.display(x, y, x + 9, y + 3);
 }
