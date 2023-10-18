@@ -210,10 +210,10 @@ void CGAME::SetupTheme(THEME theme) {
 	GetConsoleScreenBufferInfoEx(hStdout, &csbiex);
 	for (int i = 0; i < 16; i++)
 		csbiex.ColorTable[i] = theme.colorTable[i];
-	this->BLACK = theme.black; this->SKY_BLUE = theme.skyblue; this->WHITE = theme.white; this->DARK_GREEN = theme.darkgreen;
-	this->SADDLE_BROWN = theme.saddlebrown; this->DARK_RED = theme.darkred; this->RED = theme.red; this->ORANGE = theme.orange;
-	this->DARKVIOLET = theme.darkviolet; this->TOMATO = theme.tomato; this->LIGHTCYAN = theme.lightcyan; this->OXFORD = theme.oxford;
-	this->FELDGRAU = theme.feldgrau; this->BRIGHTYELLOW = theme.brightyellow; this->LIGHT_GREEN = theme.lightgreen; this->LIGHT_BROWN = theme.lightbrown;
+	this->BLACK = theme.BLACK; this->SKY_BLUE = theme.SKY_BLUE; this->WHITE = theme.WHITE; this->DARK_GREEN = theme.DARK_GREEN;
+	this->SADDLE_BROWN = theme.SADDLE_BROWN; this->DARK_RED = theme.DARK_RED; this->RED = theme.RED; this->ORANGE = theme.ORANGE;
+	this->DARK_VIOLET = theme.DARK_VIOLET; this->TOMATO = theme.TOMATO; this->LIGHT_CYAN = theme.LIGHT_CYAN; this->OXFORD = theme.OXFORD;
+	this->FELD_GRAU = theme.FELD_GRAU; this->BRIGHT_YELLOW = theme.BRIGHT_YELLOW; this->LIGHT_GREEN = theme.LIGHT_GREEN; this->LIGHT_BROWN = theme.LIGHT_BROWN;
 	SetConsoleScreenBufferInfoEx(hStdout, &csbiex);
 }
 
@@ -411,7 +411,7 @@ void CGAME::drawCar(int x, int y) {
 	Car.screen[x + 7][y].txtColor = DARK_RED;
 	Car.screen[x + 8][y].txtColor = DARK_RED;
 	Car.screen[x + 6][y].txtColor = SKY_BLUE;
-	Car.screen[x + 9][y].txtColor = BRIGHTYELLOW;
+	Car.screen[x + 9][y].txtColor = BRIGHT_YELLOW;
 	Car.screen[x + 2][y + 1].txtColor = DARK_RED;
 	Car.screen[x + 2][y + 1].bgdColor = RED;
 	Car.screen[x + 3][y + 1].txtColor = DARK_RED;
@@ -436,7 +436,7 @@ void CGAME::drawCar(int x, int y) {
 	Car.screen[x + 7][y + 2].bgdColor = RED;
 	Car.screen[x + 8][y + 2].txtColor = DARK_RED;
 	Car.screen[x + 8][y + 2].bgdColor = RED;
-	Car.screen[x + 9][y + 2].txtColor = BRIGHTYELLOW;
+	Car.screen[x + 9][y + 2].txtColor = BRIGHT_YELLOW;
 	Car.screen[x + 9][y + 2].bgdColor = RED;
 	Car.screen[x + 1][y + 3].txtColor = BLACK;
 	Car.screen[x + 2][y + 3].txtColor = BLACK;

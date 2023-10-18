@@ -5,12 +5,17 @@
 using namespace std;
 struct THEME {
 	COLORREF colorTable[16];
-	int black, white; //All colors used, <id>: color used, -1: else
+	int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
+		SADDLE_BROWN, DARK_RED, RED, ORANGE,
+		DARK_VIOLET, TOMATO, LIGHT_CYAN, OXFORD,
+		FELD_GRAU, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN; //All colors used, <id>: color used, -1: else
 };
 const THEME THEME_BASIC = { {
-	RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
-	RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)},
-	0, 15 };
+	RGB(0, 0, 0), RGB(135, 206, 235), RGB(255, 255, 255), RGB(1, 50, 32),
+	RGB(139, 69, 19), RGB(139, 0, 0), RGB(255, 0, 0), RGB(255, 85, 0),
+	RGB(148, 0, 211), RGB(255, 99, 71), RGB(224, 255, 255), RGB(0, 33, 71),
+	RGB(77, 93, 83), RGB(255, 170, 29), RGB(144, 238, 144), RGB(181, 101, 29)},
+	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 const THEME THEME_LAND = { {
 	RGB(255, 255, 255), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
 	RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)},
@@ -21,7 +26,7 @@ const vector<wstring> CAR = { L"▄▄████▄▄▄▄",
 							  L" ▀▀   ▀▀  "
 };
 
-const vector<wstring> TRUCK = { L"▄▄▄▄▄▄████▄▄▄▄",
+const vector<wstring> TRUNCK = { L"▄▄▄▄▄▄████▄▄▄▄",
 								L"█▄▄▄▄█▄▄▄▄████",
 								L"█▄▄▄▄█▄▄▄▄█▄▄▄",
 								L"   ▀▀     ▀▀  "
