@@ -36,7 +36,7 @@
     <ClCompile Include="CVEHICLE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CNPC.cpp">
+    <ClCompile Include="COBJECT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CGRAPHIC.cpp">
@@ -62,7 +62,7 @@
     <ClInclude Include="CPLAYER.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CNPC.h">
+    <ClInclude Include="COBJECT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CGRAPHIC.h">

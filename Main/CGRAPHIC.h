@@ -3,20 +3,23 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+struct THEME {
+	COLORREF colorTable[16];
+	int black, white; //All colors used, <id>: color used, -1: else
+};
+const THEME THEME_BASIC = { {
+	RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+	RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)},
+	0, 15 };
+const THEME THEME_LAND = { {
+	RGB(255, 255, 255), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
+	RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)},
+	15, 0 };
+
 struct PIXEL {
 	wchar_t buffer;
 	int txtColor, bgdColor;
 };
-const int BLACK		= 0;
-const int LIGHTSKY	= 1;
-const int ORANGE	= 2;
-const int GREEN		= 3;
-const int BLUE		= 4;
-const int PUPLE		= 5;
-const int FELDGRAU	= 12;
-const int WHITE		= 15;
-void Configure();
-
 class CGRAPHIC {
 	const int WIDTH = 40;
 	const int HEIGHT = 20;
@@ -28,6 +31,4 @@ public:
 	void clear(int txtColor, int bgdColor);
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
-
-	//friend void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor;
 };

@@ -3,6 +3,7 @@
 int main()
 {
     CGAME CrossingGame;
-    CrossingGame.drawDemo();
+    CrossingGame.start();
+    //CrossingGame.drawDemo();
     _getch();
 }

@@ -1,11 +1,11 @@
 ﻿#pragma once
-#include "CNPC.h"
+#include "COBJECT.h"
 #include <deque>
 #include <iostream>
 using namespace std;
 class CLANE {
 protected:
-	deque<CNPC*> lane;
+	deque<COBJECT*> lane;
 	bool right; //chiều di chuyển
 public:
 	//CLANE(int width);

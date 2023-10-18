@@ -1,6 +1,6 @@
 #pragma once
-#include "CNPC.h"
-class CVEHICLE : public CNPC {
+#include "COBJECT.h"
+class CVEHICLE : public COBJECT {
 public:
 	virtual void draw(ostream& outDev);
 };

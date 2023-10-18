@@ -6,7 +6,7 @@
 //}
 //CLANE::~CLANE() {
 //    for (int i = 0; i < (int)this->lane.size(); i++) {
-//        CNPC* cur = this->lane[i];
+//        COBJECT* cur = this->lane[i];
 //        if (cur != NULL) {
 //            delete cur;
 //            this->lane[i] = NULL;
@@ -20,20 +20,20 @@ void CLANE::Move() {
     //Random push a car
     if (this->right) {
         if (rand() % 10 == 1)
-            this->lane.push_front(new CNPC);
+            this->lane.push_front(new COBJECT);
         else
             this->lane.push_front(NULL);
-        CNPC* back = lane.back();
+        COBJECT* back = lane.back();
         if (back != NULL)
             delete back;
         this->lane.pop_back();
     }
     else {
         if (rand() % 10 == 1)
-            this->lane.push_back(new CNPC);
+            this->lane.push_back(new COBJECT);
         else
             this->lane.push_back(NULL);
-        CNPC* front = lane.front();
+        COBJECT* front = lane.front();
         if (front != NULL)
             delete front;
         this->lane.pop_front();
