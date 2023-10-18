@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <Windows.h>
 #include <iostream>
 #include <vector>
@@ -15,6 +15,24 @@ const THEME THEME_LAND = { {
 	RGB(255, 255, 255), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
 	RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)},
 	15, 0 };
+const vector<wstring> CAR = { L"▄▄████▄▄▄▄",
+							  L"██▄▄▄▄████",
+							  L"██▄▄▄▄█▄▄▄",
+							  L" ▀▀   ▀▀  "
+};
+
+const vector<wstring> TRUCK = { L"▄▄▄▄▄▄████▄▄▄▄",
+								L"█▄▄▄▄█▄▄▄▄████",
+								L"█▄▄▄▄█▄▄▄▄█▄▄▄",
+								L"   ▀▀     ▀▀  "
+};
+const vector<wstring> TREE = {	L" ▄▄▄▄▄▄▄▄",
+								L"██████████",
+								L"██████████",
+								L" ▀▀████▀▀",
+								L" ▀▀▀▀▀▀▀▀" 
+};
+
 
 struct PIXEL {
 	wchar_t buffer;

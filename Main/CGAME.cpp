@@ -81,7 +81,6 @@ void CGAME::logic() {
 		//Tăng điểm và reset màn
 		this->cPlayer->increaseScore();
 		this->cPlayer->set(-1, START_HEIGHT);
-		this->finishTell();
 		//Change direction of a line
 		this->aLanes[rand() % this->numberOfLanes]->changeDirection();
 	}
@@ -211,8 +210,10 @@ void CGAME::SetupTheme(THEME theme) {
 	GetConsoleScreenBufferInfoEx(hStdout, &csbiex);
 	for (int i = 0; i < 16; i++)
 		csbiex.ColorTable[i] = theme.colorTable[i];
-	this->BLACK = theme.black;
-	this->WHITE = theme.white;
+	this->BLACK = theme.black; this->SKY_BLUE = theme.skyblue; this->WHITE = theme.white; this->DARK_GREEN = theme.darkgreen;
+	this->SADDLE_BROWN = theme.saddlebrown; this->DARK_RED = theme.darkred; this->RED = theme.red; this->ORANGE = theme.orange;
+	this->DARKVIOLET = theme.darkviolet; this->TOMATO = theme.tomato; this->LIGHTCYAN = theme.lightcyan; this->OXFORD = theme.oxford;
+	this->FELDGRAU = theme.feldgrau; this->BRIGHTYELLOW = theme.brightyellow; this->LIGHT_GREEN = theme.lightgreen; this->LIGHT_BROWN = theme.lightbrown;
 	SetConsoleScreenBufferInfoEx(hStdout, &csbiex);
 }
 
@@ -256,8 +257,7 @@ void CGAME::drawIsReset() {
 	cout << "Play again (Y/N)?" << endl;
 }
 void CGAME::drawDemo() {
-	//Configure();
-	SetupTheme(THEME_LAND);
+	SetupTheme();
 	CGRAPHIC grp;
 	//hello
 	grp.clear(0, 0);
@@ -295,10 +295,10 @@ void CGAME::drawDemo() {
 
 void CGAME::drawTree(int x, int y)
 {
-	Configure();
+	SetupTheme();
 	CGRAPHIC tree;
 	tree.clear(WHITE, WHITE);
-	tree.DrawObject(Tree, x, y,DARK_GREEN, WHITE);
+	tree.DrawObject(TREE, x, y, DARK_GREEN, WHITE);
 	//VE VIEN DEN
 	for (int i = 1; i < 9; i++)
 	{
@@ -331,8 +331,6 @@ void CGAME::drawTree(int x, int y)
 		tree.screen[x + i][y + 4].txtColor = SADDLE_BROWN;
 	}
 	tree.display(x, y, x + 20, y + 5);
-	
-
 }
 
 /*void CGAME::drawTrees()
@@ -404,10 +402,10 @@ void CGAME::drawTree(int x, int y)
 }*/
 
 void CGAME::drawCar(int x, int y) {
-	Configure();
+	SetupTheme();
 	CGRAPHIC Car;
 	Car.clear(WHITE, WHITE);
-	Car.DrawObject(car, x, y, RED, WHITE);
+	Car.DrawObject(CAR, x, y, RED, WHITE);
 	Car.screen[x][y].txtColor = DARK_RED;
 	Car.screen[x + 1][y].txtColor = DARK_RED;
 	Car.screen[x + 7][y].txtColor = DARK_RED;

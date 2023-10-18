@@ -4,6 +4,6 @@ int main()
 {
     CGAME CrossingGame;
     CrossingGame.start();
-    //CrossingGame.drawDemo();
+    //CrossingGame.drawTree(0, 0);
     _getch();
 }

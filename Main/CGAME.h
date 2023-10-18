@@ -18,7 +18,10 @@ class CGAME {
 	CPLAYER* cPlayer;
     int numberOfLanes;
 	vector<CLANE*> aLanes;
-    int BLACK, WHITE;
+    int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
+        SADDLE_BROWN, DARK_RED, RED, ORANGE,
+        DARKVIOLET, TOMATO, LIGHTCYAN, OXFORD,
+        FELDGRAU, BRIGHTYELLOW, LIGHT_GREEN, LIGHT_BROWN;
 public:
     friend void ShowCur(bool CursorVisibility);
 
@@ -51,8 +54,6 @@ public:
     void drawlane();
     void drawTree(int, int);
     void drawCar(int, int);
-
-    void finishTell();
     /*
     void pauseGame(HANDLE); //Tạm dừng thread
     void resumeGame(HANDLE); //Quay lại thread
