@@ -298,67 +298,58 @@ void CGAME::drawTree(int x, int y)
 	SetupTheme();
 	CGRAPHIC tree;
 	tree.clear(WHITE, WHITE);
-	tree.DrawObject(Tree, x, y, DARK_GREEN, WHITE);
-	for (int i =5; i < 15; i++)
+	tree.DrawObject(Tree, x, y, BLACK, WHITE);
+	for (int i = 1; i <= 5; i++)
 	{
-		tree.screen[x + i][y].txtColor = BLACK;
+		tree.screen[x + i][y].bgdColor = LIGHT_GREEN;
 	}
-	tree.screen[x+4][y+1].txtColor = BLACK;
-	tree.screen[x + 4][y + 1].bgdColor = BLACK;
-	tree.screen[x + 15][y + 1].txtColor = BLACK;
-	tree.screen[x + 15][y + 1].bgdColor = BLACK;
-
-	tree.screen[x + 3][y + 2].txtColor = BLACK;
-	tree.screen[x + 16][y + 2].txtColor = BLACK;
-
-	tree.screen[x + 2][y + 3].txtColor = BLACK;
-	tree.screen[x + 17][y + 3].txtColor = BLACK;
-
-	tree.screen[x + 1][y + 4].txtColor = BLACK;
-	tree.screen[x + 18][y + 4].txtColor = BLACK;
-
-	tree.screen[x][y + 5].txtColor = BLACK;
-	tree.screen[x + 19][y + 5].txtColor = BLACK;
-
-	tree.screen[x+1][y + 6].txtColor = BLACK;
-	for (int i = 2; i < 18; i++)
+	tree.screen[x + 6][y].bgdColor = DARK_GREEN;
+	tree.screen[x + 7][y].bgdColor = DARK_GREEN;
+	for (int i = 1; i <= 7; i++)
 	{
-		tree.screen[x + i][y + 6].txtColor = BLACK;
-		tree.screen[x + i][y + 6].bgdColor = DARK_GREEN;
-	}
-	tree.screen[x + 18][y + 6].txtColor = BLACK;
-	//tree.screen[x - 1][y + 1].txtColor = BLACK;
-	//tree.screen[x - 1][y + 1].bgdColor = WHITE;
-	for (int j = 7; j < 10; j++)
-	{
-		tree.screen[x + 6][y + j].txtColor = BLACK;
-		
-	}
-	for (int j = 7; j < 10; j++)
-	{
-		tree.screen[x + 13][y + j].txtColor = BLACK;
-	}
-
-	tree.screen[x + 4][y + 9].txtColor = BLACK;
-	tree.screen[x + 5][y + 9].txtColor = BLACK;
-	tree.screen[x + 6][y + 9].bgdColor = BLACK;
-	for (int i = 7; i < 13; i++)
-	{
-		tree.screen[x + i][y + 9].txtColor = BLACK;
-		tree.screen[x + i][y + 9].bgdColor = SADDLE_BROWN;
-	}
-	for (int i = 7; i < 13; i++)
-	{
-		for (int j = 8; j > 6; j--)
+		if (i == 1)
 		{
-			tree.screen[x + i][y + j].txtColor = SADDLE_BROWN;
+			tree.screen[x + i][y + 1].txtColor = DARK_GREEN;
+			tree.screen[x + i][y + 1].bgdColor = LIGHT_GREEN;
 		}
-		
+		else if (i == 7)
+		{
+			tree.screen[x + i][y + 1].txtColor = DARK_GREEN;
+		}
+		else
+		{
+			tree.screen[x + i][y + 1].txtColor = LIGHT_GREEN;
+		}
 	}
-	tree.screen[x + 14][y + 9].txtColor = BLACK;
-	tree.screen[x + 13][y + 9].bgdColor = BLACK;
-	tree.screen[x + 15][y + 9].txtColor = BLACK;
-    tree.display(0, 0, 39, 19);
+	for (int i = 1; i <= 3; i++)
+	{
+		tree.screen[x + i][y + 2].txtColor = DARK_GREEN;
+	}
+	for (int i = 4; i <= 6; i++)
+	{
+		tree.screen[x + i][y + 2].txtColor = DARK_GREEN;
+		tree.screen[x + i][y + 2].bgdColor = LIGHT_GREEN;
+	}
+	tree.screen[x + 7][y + 2].txtColor = DARK_GREEN;
+	/*for (int i = 1; i <= 7; i++)
+	{
+		for (int j = 1; j <= 2; j++)
+		{
+			tree.screen[x + i][y+j].bgdColor = DARK_GREEN;
+		}
+	}*/
+	tree.screen[x + 3][y + 3].bgdColor = SADDLE_BROWN;
+	tree.screen[x + 5][y + 3].bgdColor = SADDLE_BROWN;
+
+	tree.screen[x + 3][y + 4].txtColor = SADDLE_BROWN;
+	tree.screen[x + 3][y + 4].bgdColor = BLACK;
+	tree.screen[x + 4][y + 4].txtColor = SADDLE_BROWN;
+	tree.screen[x + 4][y + 4].bgdColor = BLACK;
+	tree.screen[x + 5][y + 4].txtColor = SADDLE_BROWN;
+	tree.screen[x + 5][y + 4].bgdColor = BLACK;
+
+	tree.screen[x + 4][y + 5].bgdColor = SADDLE_BROWN;
+    tree.display(x, y, 39, 19);
 
 }
 
