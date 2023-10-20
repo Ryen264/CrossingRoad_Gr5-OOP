@@ -46,13 +46,12 @@ const vector<wstring> Tree = { L"     ▄▄▄▄▄▄▄▄▄▄",
 
 };
 
-const vector<wstring> Dinasour={ L"  ▄▄▄▄▄▄▄▄▄▄▄▄",
-                                 L"  ██▄▄█████████",
-	                             L"  ██▀▀█████████",
-	                             L"▄▄██████████▄▄▄",
-	                             L"▀▄▀█████████",
-	                             L"█▄▄▀▀▀▀██▀",
-	                             L"  ▀     ▀"
+const vector<wstring> Dinasour = {L"  ▄▀▀▀▀▀▀▀▀▀▀▀▀▄",
+								  L"  █  ██        █",
+								  L"  █            █",
+								  L"█▀█     ▄▄▄▄▄▄▄▀",
+								  L" ▀▄  ▄▄▄▄▄▄█",
+								  L"  █▀▀     █▀",
  };
 struct PIXEL {
 	wchar_t buffer;
