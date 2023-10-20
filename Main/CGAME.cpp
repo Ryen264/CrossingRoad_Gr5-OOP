@@ -298,7 +298,7 @@ void CGAME::drawTree(int x, int y)
 	SetupTheme();
 	CGRAPHIC tree;
 	tree.clear(WHITE, WHITE);
-	tree.DrawObject(Tree, x, y, LIGHT_GREEN, WHITE);
+	tree.DrawObject(Tree, x, y, DARK_GREEN, WHITE);
 	for (int i =5; i < 15; i++)
 	{
 		tree.screen[x + i][y].txtColor = BLACK;
@@ -324,7 +324,7 @@ void CGAME::drawTree(int x, int y)
 	for (int i = 2; i < 18; i++)
 	{
 		tree.screen[x + i][y + 6].txtColor = BLACK;
-		tree.screen[x + i][y + 6].bgdColor = LIGHT_GREEN;
+		tree.screen[x + i][y + 6].bgdColor = DARK_GREEN;
 	}
 	tree.screen[x + 18][y + 6].txtColor = BLACK;
 	//tree.screen[x - 1][y + 1].txtColor = BLACK;
@@ -338,7 +338,26 @@ void CGAME::drawTree(int x, int y)
 	{
 		tree.screen[x + 13][y + j].txtColor = BLACK;
 	}
-	
+
+	tree.screen[x + 4][y + 9].txtColor = BLACK;
+	tree.screen[x + 5][y + 9].txtColor = BLACK;
+	tree.screen[x + 6][y + 9].bgdColor = BLACK;
+	for (int i = 7; i < 13; i++)
+	{
+		tree.screen[x + i][y + 9].txtColor = BLACK;
+		tree.screen[x + i][y + 9].bgdColor = SADDLE_BROWN;
+	}
+	for (int i = 7; i < 13; i++)
+	{
+		for (int j = 8; j > 6; j--)
+		{
+			tree.screen[x + i][y + j].txtColor = SADDLE_BROWN;
+		}
+		
+	}
+	tree.screen[x + 14][y + 9].txtColor = BLACK;
+	tree.screen[x + 13][y + 9].bgdColor = BLACK;
+	tree.screen[x + 15][y + 9].txtColor = BLACK;
     tree.display(0, 0, 39, 19);
 
 }
@@ -385,4 +404,53 @@ void CGAME::drawCar(int x, int y) {
 	Car.screen[x + 6][y + 3].txtColor = BLACK;
 	Car.screen[x + 7][y + 3].txtColor = BLACK;
 	Car.display(x, y, x + 9, y + 3);
+}
+
+void CGAME::drawDinosaur(int x, int y)
+{
+	SetupTheme();
+	CGRAPHIC dino;
+	dino.clear(WHITE, WHITE);
+	dino.DrawObject(Dinasour, 0, 0, LIGHT_GREEN, WHITE);
+	for (int i = 1; i < 14; i++)
+	{
+		dino.screen[x + i][y].txtColor = BLACK;
+		dino.screen[x + i][y].bgdColor = WHITE;
+	}
+	dino.screen[x+2][y + 1].txtColor = BLACK;
+	dino.screen[x + 4][y + 1].txtColor = BLACK;
+	dino.screen[x + 4][y + 1].bgdColor = LIGHT_GREEN;
+	dino.screen[x + 5][y + 1].txtColor = BLACK;
+	dino.screen[x + 5][y + 1].bgdColor = LIGHT_GREEN;
+	dino.screen[x + 14][y + 1].txtColor =BLACK ;
+
+	dino.screen[x + 2][y + 2].txtColor = BLACK;
+	dino.screen[x + 4][y + 2].txtColor = BLACK;
+	dino.screen[x + 4][y + 2].bgdColor = LIGHT_GREEN;
+	dino.screen[x + 5][y + 2].txtColor = BLACK;
+	dino.screen[x + 5][y + 2].bgdColor = LIGHT_GREEN;
+	dino.screen[x + 14][y + 2].txtColor = BLACK;
+
+	dino.screen[x][y + 3].bgdColor = WHITE;
+	dino.screen[x][y + 3].txtColor = BLACK;
+	dino.screen[x+1][y + 3].bgdColor = WHITE;
+	dino.screen[x+1][y + 3].txtColor = BLACK;
+	dino.screen[x + 2][y + 3].txtColor = BLACK;
+
+	/*dino.screen[x + 2][y + 1].txtColor = BLACK;
+	dino.screen[x + 2][y + 1].bgdColor = LIGHT_GREEN;
+	dino.screen[x + 3][y + 1].txtColor = BLACK;
+	dino.screen[x + 3][y + 1].bgdColor = LIGHT_GREEN;
+	dino.screen[x+13][y + 1].txtColor = BLACK;
+
+	dino.screen[x][y + 2].txtColor = BLACK;
+	dino.screen[x + 2][y + 2].txtColor = BLACK;
+	dino.screen[x + 2][y + 2].bgdColor = LIGHT_GREEN;
+	dino.screen[x + 3][y + 2].txtColor = BLACK;
+	dino.screen[x + 3][y + 2].bgdColor = LIGHT_GREEN;
+	dino.screen[x + 13][y + 2].txtColor = BLACK;
+
+	dino.screen[x][y + 3].txtColor = BLACK;
+	dino.screen[x + 13][y + 3].txtColor = BLACK;*/
+	dino.display(x, y, x+39, y+19);
 }

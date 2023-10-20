@@ -54,6 +54,7 @@ public:
     void drawlane();
     void drawTree(int, int);
     void drawCar(int, int);
+    void drawDinosaur(int x, int y);
     /*
     void pauseGame(HANDLE); //Tạm dừng thread
     void resumeGame(HANDLE); //Quay lại thread

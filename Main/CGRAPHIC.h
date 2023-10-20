@@ -11,7 +11,7 @@ struct THEME {
 		FELD_GRAU, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN; //All colors used, <id>: color used, -1: else
 };
 const THEME THEME_BASIC = { {
-	RGB(0, 0, 0), RGB(135, 206, 235), RGB(255, 255, 255), RGB(1, 50, 32),
+	RGB(0, 0, 0), RGB(135, 206, 235), RGB(255, 255, 255), RGB(34,177,76),
 	RGB(139, 69, 19), RGB(139, 0, 0), RGB(255, 0, 0), RGB(255, 85, 0),
 	RGB(148, 0, 211), RGB(255, 99, 71), RGB(224, 255, 255), RGB(0, 33, 71),
 	RGB(77, 93, 83), RGB(255, 170, 29), RGB(144, 238, 144), RGB(181, 101, 29)},
@@ -41,11 +41,19 @@ const vector<wstring> Tree = { L"     ▄▄▄▄▄▄▄▄▄▄",
 								L" ▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀",
 								L"      ████████",
 								L"      ████████",
-								L"    ▄▄████████▄▄"
+								L"    ▄▄▄▄▄▄▄▄▄▄▄▄"
 
 
 };
 
+const vector<wstring> Dinasour={ L"  ▄▄▄▄▄▄▄▄▄▄▄▄",
+                                 L"  ██▄▄█████████",
+	                             L"  ██▀▀█████████",
+	                             L"▄▄█████████████",
+	                             L"▀▄▀█████████",
+	                             L"█▄▄▀▀▀▀██▀",
+	                             L"  ▀     ▀"
+ };
 struct PIXEL {
 	wchar_t buffer;
 	int txtColor, bgdColor;
