@@ -34,20 +34,26 @@ const vector<wstring> TRUNCK = { L"▄▄▄▄▄▄████▄▄▄▄",
 
 
 
-const vector<wstring> Dinasour = {L"  ▄▀▀▀▀▀▀▀▀▀▀▀▀▄",
-								  L"  █  ██        █",
-								  L"  █            █",
-								  L"█▀█     ▄▄▄▄▄▄▄▀",
-								  L" ▀▄  ▄▄▄▄▄▄█",
-								  L"  █▀▀     █▀",
- };
+const vector<wstring> DINOSAUR = {L"    ▄▀▀▀▀▀▀▀▀▀▄ ",
+								  L"    █ ██      █ ",
+								  L"    █         █ ",
+								  L"  █▀█  ▀▀▀▄▄▄▄▀ ",
+								  L"   ▀▄ ▄▄▄▄█     ",
+								  L"    █▀  █▀      ",
+};
 const vector<wstring> Tree = { L"▄▀▀▀▀▀▀▀▄", 
 							   L"█▄███████",
 							   L"████▄▄▄██",
 							   L" ▀█▀█▀█▀",
 							   L"  ▀▀█▀▀",
 							   L"  ▄█▄█▄" };
-
+const vector<wstring> grassland = {L"    ▄    ▄▄▄    ",
+								   L"   ▀▀▀ ▄██  ▄   ", 
+								   L"   ▀█▄ █▀  ▀▀▀  ", 
+								   L"   ▄ ▀▀       █ ", 
+								   L"  ▀▀▀   ▀█▄ ▄█▀ ", 
+								   L"          ▀ ▀   ", };
+                                   
 struct PIXEL {
 	wchar_t buffer;
 	int txtColor, bgdColor;

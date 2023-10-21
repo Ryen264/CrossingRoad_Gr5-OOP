@@ -26,6 +26,9 @@ CGAME::CGAME(int numberOfLanes) {
 			this->aLanes.push_back(NULL);
 		}
 	}
+	SetupTheme();
+	BgdScreen.clear(BLACK, WHITE);
+	ObjScreen.clear(BLACK, -1);
 }
 CGAME::~CGAME() {
 	delete this->cPlayer;
@@ -179,30 +182,6 @@ void CGAME::Quit() {
 }
 
 //Drawing functions
-void CGAME::Configure() {
-	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFOEX csbiex{};
-	csbiex.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
-	GetConsoleScreenBufferInfoEx(hStdout, &csbiex);
-
-	csbiex.ColorTable[0] = RGB(0, 0, 0);		//black
-	csbiex.ColorTable[1] = RGB(135, 206, 250);	//light sky blue
-	csbiex.ColorTable[2] = RGB(255, 255, 255);	//white
-	csbiex.ColorTable[3] = RGB(0, 100, 0);		//dark green
-	csbiex.ColorTable[4] = RGB(139, 69, 19);	//saddle brown (nau dam)
-	csbiex.ColorTable[5] = RGB(205, 133, 63);	//peru (nau nhat)
-	csbiex.ColorTable[6] = RGB(255, 25, 25);	//red
-	csbiex.ColorTable[7] = RGB(255, 165, 0);	//orange
-	csbiex.ColorTable[8] = RGB(148, 0, 211);	//dark violet
-	csbiex.ColorTable[9] = RGB(255, 99, 71);	//tomato
-	csbiex.ColorTable[10] = RGB(204, 255, 255);	//light cyan
-	csbiex.ColorTable[11] = RGB(0, 17, 51);		//oxford blue
-	csbiex.ColorTable[12] = RGB(67, 96, 86);	//feldgrau
-	csbiex.ColorTable[13] = RGB(149, 156, 176);	//con chon xanh binh thuong
-	csbiex.ColorTable[14] = RGB(201, 255, 229);	//Aero blue
-	csbiex.ColorTable[15] = RGB(25, 255, 25);	//Neon green
-	SetConsoleScreenBufferInfoEx(hStdout, &csbiex);
-}
 void CGAME::SetupTheme(THEME theme) {
 	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFOEX csbiex{};
@@ -400,9 +379,51 @@ void CGAME::drawCar(int x, int y) {
 void CGAME::drawDinosaur(int x, int y)
 {
 	SetupTheme();
+	ObjScreen.DrawObject(DINOSAUR, x, y, BLACK, -1);
+	//L"    ▄▀▀▀▀▀▀▀▀▀▄ ",
+	//L"    █ ██      █ ",
+	//L"    █         █ ",
+	//L"  █▀█  ▀▀▀▄▄▄▄▀ ",
+	//L"   ▀▄ ▄▄▄▄█     ",
+	//L"    █▀  █▀      ",
+	for (int i = 5; i <= 13; i++)
+		ObjScreen.screen[x + i][y].bgdColor = DARK_GREEN;
+
+	ObjScreen.screen[x + 5][y + 1].bgdColor = DARK_GREEN;
+	for (int i = 8; i <= 13; i++)
+		ObjScreen.screen[x + i][y + 1].bgdColor = DARK_GREEN;
+
+	for (int i = 5; i <= 13; i++)
+		ObjScreen.screen[x + i][y + 2].bgdColor = DARK_GREEN;
+
+	ObjScreen.screen[x + 3][y + 3].bgdColor = DARK_GREEN;
+	ObjScreen.screen[x + 5][y + 3].bgdColor = DARK_GREEN;
+	ObjScreen.screen[x + 6][y + 3].bgdColor = DARK_GREEN;
+	ObjScreen.screen[x + 7][y + 3].txtColor = DARK_GREEN;
+	ObjScreen.screen[x + 7][y + 3].bgdColor = LIGHT_GREEN;
+	ObjScreen.screen[x + 8][y + 3].txtColor = DARK_GREEN;
+	ObjScreen.screen[x + 8][y + 3].bgdColor = LIGHT_GREEN;
+	ObjScreen.screen[x + 9][y + 3].txtColor = DARK_GREEN;
+	ObjScreen.screen[x + 9][y + 3].bgdColor = LIGHT_GREEN;
+	ObjScreen.screen[x + 10][y + 3].bgdColor = DARK_GREEN;
+	ObjScreen.screen[x + 11][y + 3].bgdColor = DARK_GREEN;
+	ObjScreen.screen[x + 12][y + 3].bgdColor = DARK_GREEN;
+	ObjScreen.screen[x + 13][y + 3].bgdColor = DARK_GREEN;
+
+	ObjScreen.screen[x + 4][y + 4].bgdColor = DARK_GREEN;
+	ObjScreen.screen[x + 5][y + 4].bgdColor = DARK_GREEN;
+	ObjScreen.screen[x + 6][y + 4].bgdColor = DARK_GREEN;
+	ObjScreen.screen[x + 7][y + 4].bgdColor = LIGHT_GREEN;
+	ObjScreen.screen[x + 8][y + 4].bgdColor = LIGHT_GREEN;
+	ObjScreen.screen[x + 9][y + 4].bgdColor = LIGHT_GREEN;
+
+	BgdScreen.display(x, y, 39, 19);
+	ObjScreen.display(x, y, 39, 19);
+	/*SetupTheme();
 	CGRAPHIC dino;
 	dino.clear(WHITE, WHITE);
 	dino.DrawObject(Dinasour, x, y, BLACK, WHITE);
+
 	for (int i = 3; i < 15; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -425,5 +446,37 @@ void CGAME::drawDinosaur(int x, int y)
 	dino.screen[x + 8][y + 3].txtColor = LIGHT_GREEN;
 	dino.screen[x + 8][y + 3].bgdColor = DARK_GREEN;
 	dino.screen[x + 8][y + 4].bgdColor = LIGHT_GREEN;
-	dino.display(x, y, 39, 19);
+	dino.display(x, y, 39, 19);*/
+}
+
+void CGAME::drawGrassLand(int x, int y)
+{
+	/* {L"    ▄    ▄▄▄    ",
+		L"   ▀▀▀ ▄██  ▄   ",
+		L"   ▀█▄ █▀  ▀▀▀  ",
+		L"   ▄ ▀▀       █ ",
+		L"  ▀▀▀   ▀█▄ ▄█▀ ",
+		L"          ▀ ▀   ", };*/
+	SetupTheme();
+	ObjScreen.DrawObject(grassland,x, y, LIGHT_GREEN, DARK_GREEN);
+	ObjScreen.screen[x + 4][y].txtColor = ORANGE;
+	ObjScreen.screen[x + 3][y + 1].txtColor = ORANGE;
+	ObjScreen.screen[x + 4][y + 1].txtColor = RED;
+	ObjScreen.screen[x + 4][y + 1].bgdColor = ORANGE;
+	ObjScreen.screen[x + 5][y + 1].txtColor = ORANGE;
+	ObjScreen.screen[x + 12][y + 1].txtColor = WHITE;
+	ObjScreen.screen[x + 11][y + 2].txtColor = WHITE;
+	ObjScreen.screen[x + 12][y + 2].txtColor = BRIGHT_YELLOW;
+	ObjScreen.screen[x + 12][y + 2].bgdColor = WHITE;
+	ObjScreen.screen[x + 13][y + 2].txtColor = WHITE;
+	ObjScreen.screen[x + 12][y + 3].txtColor = WHITE;
+	ObjScreen.screen[x + 2][y + 4].txtColor = WHITE;
+	ObjScreen.screen[x + 3][y + 3].bgdColor = DARK_GREEN;
+	ObjScreen.screen[x + 3][y + 3].txtColor = WHITE;
+	ObjScreen.screen[x + 3][y + 4].txtColor = DARK_RED;
+	ObjScreen.screen[x + 3][y + 4].bgdColor = WHITE;
+	ObjScreen.screen[x + 4][y + 4].txtColor = WHITE;
+	//ObjScreen.screen[x + 3][y + 4].bgdColor = WHITE;
+	BgdScreen.display(x, y, 39, 19);
+	ObjScreen.display(x, y, 39, 19);
 }

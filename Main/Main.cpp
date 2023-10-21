@@ -4,6 +4,6 @@ int main()
 {
     CGAME CrossingGame;
     //CrossingGame.start();
-    CrossingGame.drawTree(1, 1);
+    CrossingGame.drawGrassLand(0, 0);
     _getch();
 }

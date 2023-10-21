@@ -22,6 +22,7 @@ class CGAME {
         SADDLE_BROWN, DARK_RED, RED, ORANGE,
         DARK_VIOLET, TOMATO, LIGHT_CYAN, OXFORD,
         FELD_GRAU, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN;
+    CGRAPHIC ObjScreen, BgdScreen;
 public:
     friend void ShowCur(bool CursorVisibility);
 
@@ -42,7 +43,6 @@ public:
     void About();
     void Quit();
 
-    void Configure();
     void SetupTheme(THEME theme = THEME_BASIC);
 
     void intro();
@@ -55,6 +55,7 @@ public:
     void drawTree(int, int);
     void drawCar(int, int);
     void drawDinosaur(int x, int y);
+    void drawGrassLand(int x, int y);
     /*
     void pauseGame(HANDLE); //Tạm dừng thread
     void resumeGame(HANDLE); //Quay lại thread
