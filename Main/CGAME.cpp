@@ -480,3 +480,53 @@ void CGAME::drawGrassLand(int x, int y)
 	BgdScreen.display(x, y, 39, 19);
 	ObjScreen.display(x, y, 39, 19);
 }
+
+void CGAME::drawDinosaurReverse(int x, int y)
+{
+	/*L"    ▄▀▀▀▀▀▀▀▀▀▄ ",
+	  L"    █ ██      █ ",
+	  L"    █         █ ",
+	  L"    ▀▄▄▄▄▀▀▀  █▀█",
+	  L"        █▄▄▄▄ ▄▀ ",
+	  L"        ▀█   ▀█",*/
+	SetupTheme();
+	ObjScreen.DrawObject(DINOSAUR_REVERSE, x, y, BLACK, -1);
+	for (int i = 5; i <= 13; i++)
+	{
+		ObjScreen.screen[x + i][y].bgdColor = DARK_GREEN;
+	}
+	ObjScreen.screen[x + 5][y+1].bgdColor = DARK_GREEN;
+	for (int i = 8; i <= 14; i++)
+	{
+		ObjScreen.screen[x + i][y + 1].bgdColor = DARK_GREEN;
+	}
+	for (int i = 5; i <= 13; i++)
+	{
+		ObjScreen.screen[x + i][y+2].bgdColor = DARK_GREEN;
+	}
+	for (int i = 5; i <= 8; i++)
+	{
+		ObjScreen.screen[x + i][y + 3].bgdColor = DARK_GREEN;
+	}
+	ObjScreen.screen[x + 9][y + 3].bgdColor = LIGHT_GREEN;
+	ObjScreen.screen[x + 9][y + 3].txtColor = DARK_GREEN;
+	ObjScreen.screen[x + 10][y + 3].bgdColor = LIGHT_GREEN;
+	ObjScreen.screen[x + 10][y + 3].txtColor = DARK_GREEN;
+	ObjScreen.screen[x + 11][y + 3].bgdColor = LIGHT_GREEN;
+	ObjScreen.screen[x + 11][y + 3].txtColor = DARK_GREEN;
+	for (int i = 12; i <= 13; i++)
+	{
+		ObjScreen.screen[x + i][y + 3].bgdColor = DARK_GREEN;
+	}
+	ObjScreen.screen[x + 15][y + 3].bgdColor = DARK_GREEN;
+	for (int i = 9; i <= 11; i++)
+	{
+		ObjScreen.screen[x + i][y + 4].bgdColor = LIGHT_GREEN;
+	}
+	for (int i = 12; i <= 14; i++)
+	{
+		ObjScreen.screen[x + i][y + 4].bgdColor = DARK_GREEN;
+	}
+	BgdScreen.display(x, y, 39, 19);
+	ObjScreen.display(x, y, 39, 19);
+}

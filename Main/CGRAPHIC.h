@@ -41,6 +41,15 @@ const vector<wstring> DINOSAUR = {L"    ▄▀▀▀▀▀▀▀▀▀▄ ",
 								  L"   ▀▄ ▄▄▄▄█     ",
 								  L"    █▀  █▀      ",
 };
+
+const vector<wstring> DINOSAUR_REVERSE = { L"    ▄▀▀▀▀▀▀▀▀▀▄ ",
+										   L"    █ ██      █ ",
+										   L"    █         █ ",
+										   L"    ▀▄▄▄▄▀▀▀  █▀█",
+										   L"        █▄▄▄▄ ▄▀ ",
+										   L"        ▀█   ▀█",
+};
+
 const vector<wstring> Tree = { L"▄▀▀▀▀▀▀▀▄", 
 							   L"█▄███████",
 							   L"████▄▄▄██",
