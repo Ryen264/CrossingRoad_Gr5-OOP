@@ -18,11 +18,7 @@ class CGAME {
 	CPLAYER* cPlayer;
     int numberOfLanes;
 	vector<CLANE*> aLanes;
-    int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
-        SADDLE_BROWN, DARK_RED, RED, ORANGE,
-        DARK_VIOLET, TOMATO, LIGHT_CYAN, OXFORD,
-        FELD_GRAU, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN;
-    CGRAPHIC ObjScreen, BgdScreen;
+    CGRAPHIC ObjLayer, BgdLayer;
 public:
     friend void ShowCur(bool CursorVisibility);
 
@@ -43,17 +39,13 @@ public:
     void About();
     void Quit();
 
-    void SetupTheme(THEME theme = THEME_BASIC);
-
     void intro();
     void drawMenu();
     void drawMap();
     void drawQuit();
     void drawIsReset();
-    void drawDemo();
     void drawlane();
     void drawTree(int, int);
-    void drawCar(int, int);
     void drawDinosaur(int x, int y);
     void drawGrassLand(int x, int y);
     void drawDinosaurReverse(int x, int y);

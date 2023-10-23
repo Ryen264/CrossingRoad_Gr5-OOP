@@ -20,20 +20,17 @@ const THEME THEME_LAND = { {
 	RGB(255, 255, 255), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
 	RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)},
 	15, 0 };
-const vector<wstring> CAR = { L"▄▄████▄▄▄▄",
-							  L"██▄▄▄▄████",
-							  L"██▄▄▄▄█▄▄▄",
-							  L" ▀▀   ▀▀  "
-};
+int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
+SADDLE_BROWN, DARK_RED, RED, ORANGE,
+DARK_VIOLET, TOMATO, LIGHT_CYAN, OXFORD,
+FELD_GRAU, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN;
+void SetupTheme(THEME theme = THEME_BASIC);
 
 const vector<wstring> TRUNCK = { L"▄▄▄▄▄▄████▄▄▄▄",
 								L"█▄▄▄▄█▄▄▄▄████",
 								L"█▄▄▄▄█▄▄▄▄█▄▄▄",
 								L"   ▀▀     ▀▀  "
 };
-
-
-
 const vector<wstring> DINOSAUR = {L"    ▄▀▀▀▀▀▀▀▀▀▄ ",
 								  L"    █ ██      █ ",
 								  L"    █         █ ",
@@ -41,15 +38,12 @@ const vector<wstring> DINOSAUR = {L"    ▄▀▀▀▀▀▀▀▀▀▄ ",
 								  L"   ▀▄ ▄▄▄▄█     ",
 								  L"    █▀  █▀      ",
 };
-
-const vector<wstring> DINOSAUR_REVERSE = { L"    ▄▀▀▀▀▀▀▀▀▀▄ ",
-										   L"    █ ██      █ ",
-										   L"    █         █ ",
-										   L"    ▀▄▄▄▄▀▀▀  █▀█",
-										   L"        █▄▄▄▄ ▄▀ ",
-										   L"        ▀█   ▀█",
-};
-
+const vector<wstring> DINOSAUR_REVERSE = { L" ▄▀▀▀▀▀▀▀▀▀▄    ",
+										   L" █      ██ █    ",
+										   L" █         █    ",
+										   L" ▀▄▄▄▄▀▀▀  █▀█  ",
+										   L"     █▄▄▄▄ ▄▀   ",
+										   L"      ▀█  ▀█    "};
 const vector<wstring> Tree = { L"▄▀▀▀▀▀▀▀▄", 
 							   L"█▄███████",
 							   L"████▄▄▄██",
@@ -62,7 +56,15 @@ const vector<wstring> grassland = {L"    ▄    ▄▄▄    ",
 								   L"   ▄ ▀▀       █ ", 
 								   L"  ▀▀▀   ▀█▄ ▄█▀ ", 
 								   L"          ▀ ▀   ", };
-                                   
+
+const vector<wstring> Two_Tree = { L" ▄▄▄▄▄▄▄▀▀▀▀▀▀▄ "
+	                               L"█       █      █",
+							       L"█       █      █",
+							       L"▀▄▄▄▄▄▄▄▀█▀█▀█▀ ",
+							       L"  █ ▀ █  ▀▄ ▄▀  ",
+	                               L"  ▄█▄█▄  ▄█▄█▄  "
+							       
+;
 struct PIXEL {
 	wchar_t buffer;
 	int txtColor, bgdColor;
@@ -70,14 +72,11 @@ struct PIXEL {
 class CGRAPHIC {
 	const int WIDTH = 40;
 	const int HEIGHT = 20;
+	PIXEL screen[WIDTH]HEIGHT];
 public:
-	PIXEL** screen;
-	CGRAPHIC(PIXEL** screen = NULL);
-	~CGRAPHIC();
 	void display(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
 	void clear(int txtColor, int bgdColor);
-	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
-	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
-
-	//friend void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor;
+	void Text(wstring wsContent, int x, int y, int txtColor, int bgdColor);
+	void DrawObject(vector<wstring> contentsArr, int x, int y, int txtColor, int bgdColor);
+	void DrawBlock(PIXEL block[16][16], int x, int y);
 };

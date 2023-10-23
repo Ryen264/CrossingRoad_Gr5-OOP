@@ -1,4 +1,5 @@
 #pragma once
+#include "CGRAPHIC.h" 
 #include <iostream>
 using namespace std;
 class COBJECT {

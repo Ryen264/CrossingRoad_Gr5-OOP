@@ -130,6 +130,7 @@
     <ClCompile Include="CCAR.cpp" />
     <ClCompile Include="CGRAPHIC.cpp" />
     <ClCompile Include="COBJECT.cpp" />
+    <ClCompile Include="CTREE_2.cpp" />
     <ClCompile Include="CVEHICLELANE.cpp" />
     <ClCompile Include="CGAME.cpp" />
     <ClCompile Include="CLANE.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="CCAR.h" />
     <ClInclude Include="CGRAPHIC.h" />
     <ClInclude Include="COBJECT.h" />
+    <ClInclude Include="CTREE_2.h" />
     <ClInclude Include="CVEHICLELANE.h" />
     <ClInclude Include="CGAME.h" />
     <ClInclude Include="CLANE.h" />

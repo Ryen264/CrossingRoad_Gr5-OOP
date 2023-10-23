@@ -182,19 +182,6 @@ void CGAME::Quit() {
 }
 
 //Drawing functions
-void CGAME::SetupTheme(THEME theme) {
-	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFOEX csbiex{};
-	csbiex.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
-	GetConsoleScreenBufferInfoEx(hStdout, &csbiex);
-	for (int i = 0; i < 16; i++)
-		csbiex.ColorTable[i] = theme.colorTable[i];
-	this->BLACK = theme.BLACK; this->SKY_BLUE = theme.SKY_BLUE; this->WHITE = theme.WHITE; this->DARK_GREEN = theme.DARK_GREEN;
-	this->SADDLE_BROWN = theme.SADDLE_BROWN; this->DARK_RED = theme.DARK_RED; this->RED = theme.RED; this->ORANGE = theme.ORANGE;
-	this->DARK_VIOLET = theme.DARK_VIOLET; this->TOMATO = theme.TOMATO; this->LIGHT_CYAN = theme.LIGHT_CYAN; this->OXFORD = theme.OXFORD;
-	this->FELD_GRAU = theme.FELD_GRAU; this->BRIGHT_YELLOW = theme.BRIGHT_YELLOW; this->LIGHT_GREEN = theme.LIGHT_GREEN; this->LIGHT_BROWN = theme.LIGHT_BROWN;
-	SetConsoleScreenBufferInfoEx(hStdout, &csbiex);
-}
 
 void CGAME::intro() {
 	cout << "START!!!" << endl;
@@ -234,18 +221,6 @@ void CGAME::drawQuit() {
 }
 void CGAME::drawIsReset() {
 	cout << "Play again (Y/N)?" << endl;
-}
-void CGAME::drawDemo() {
-	SetupTheme();
-	CGRAPHIC grp;
-	//hello
-	grp.clear(0, 0);
-	grp.screen[6][10] = { L'/', BLACK, WHITE };
-	grp.screen[6][11] = { L'\\', BLACK, WHITE };
-	grp.screen[6][12] = { L'/', BLACK, WHITE };
-	grp.screen[6][13] = { L'\\', BLACK, WHITE };
-	grp.screen[6][14] = { L'/', BLACK, WHITE };
-	grp.display(6, 10, 6, 14);
 }
 
 /*void CGAME::drawlane()
@@ -329,51 +304,6 @@ void CGAME::drawTree(int x, int y)
 
 	tree.screen[x + 4][y + 5].bgdColor = SADDLE_BROWN;
     tree.display(x, y, 39, 19);
-
-}
-
-void CGAME::drawCar(int x, int y) {
-	SetupTheme();
-	CGRAPHIC Car;
-	Car.clear(WHITE, WHITE);
-	Car.DrawObject(CAR, x, y, RED, WHITE);
-	Car.screen[x][y].txtColor = DARK_RED;
-	Car.screen[x + 1][y].txtColor = DARK_RED;
-	Car.screen[x + 7][y].txtColor = DARK_RED;
-	Car.screen[x + 8][y].txtColor = DARK_RED;
-	Car.screen[x + 6][y].txtColor = SKY_BLUE;
-	Car.screen[x + 9][y].txtColor = BRIGHT_YELLOW;
-	Car.screen[x + 2][y + 1].txtColor = DARK_RED;
-	Car.screen[x + 2][y + 1].bgdColor = RED;
-	Car.screen[x + 3][y + 1].txtColor = DARK_RED;
-	Car.screen[x + 3][y + 1].bgdColor = RED;
-	Car.screen[x + 4][y + 1].txtColor = DARK_RED;
-	Car.screen[x + 4][y + 1].bgdColor = RED;
-	Car.screen[x + 5][y + 1].txtColor = DARK_RED;
-	Car.screen[x + 5][y + 1].bgdColor = RED;
-	Car.screen[x + 6][y + 1].txtColor = SKY_BLUE;
-	Car.screen[x][y + 2].txtColor = DARK_RED;
-	Car.screen[x + 1][y + 2].txtColor = DARK_RED;
-	Car.screen[x + 6][y + 2].txtColor = DARK_RED;
-	Car.screen[x + 2][y + 2].txtColor = DARK_RED;
-	Car.screen[x + 2][y + 2].bgdColor = SKY_BLUE;
-	Car.screen[x + 3][y + 2].txtColor = DARK_RED;
-	Car.screen[x + 3][y + 2].bgdColor = SKY_BLUE;
-	Car.screen[x + 4][y + 2].txtColor = DARK_RED;
-	Car.screen[x + 4][y + 2].bgdColor = SKY_BLUE;
-	Car.screen[x + 5][y + 2].txtColor = DARK_RED;
-	Car.screen[x + 5][y + 2].bgdColor = SKY_BLUE;
-	Car.screen[x + 7][y + 2].txtColor = DARK_RED;
-	Car.screen[x + 7][y + 2].bgdColor = RED;
-	Car.screen[x + 8][y + 2].txtColor = DARK_RED;
-	Car.screen[x + 8][y + 2].bgdColor = RED;
-	Car.screen[x + 9][y + 2].txtColor = BRIGHT_YELLOW;
-	Car.screen[x + 9][y + 2].bgdColor = RED;
-	Car.screen[x + 1][y + 3].txtColor = BLACK;
-	Car.screen[x + 2][y + 3].txtColor = BLACK;
-	Car.screen[x + 6][y + 3].txtColor = BLACK;
-	Car.screen[x + 7][y + 3].txtColor = BLACK;
-	Car.display(x, y, x + 9, y + 3);
 }
 
 void CGAME::drawDinosaur(int x, int y)
