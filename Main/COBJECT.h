@@ -1,8 +1,9 @@
 #pragma once
-#include <iostream>
-using namespace std;
+#include "CGRAPHIC.h"
 class COBJECT {
 public:
-	virtual void draw(ostream& outDev);
+	int x, y, numberOfBlock, numberOfHeight, numberOfLength;
+	PIXEL block[BLOCKLENGTH][BLOCKHEIGHT];
+	PIXEL* blocks[BLOCKLENGTH][BLOCKHEIGHT];
+	void DrawBlock(CGRAPHIC& layer);
 };
-

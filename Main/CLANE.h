@@ -1,18 +1,18 @@
 ﻿#pragma once
+#include "CGRAPHIC.h"
 #include "COBJECT.h"
 #include <deque>
-#include <iostream>
 using namespace std;
 class CLANE {
 protected:
 	deque<COBJECT*> lane;
-	bool right; //chiều di chuyển
+	bool isMoveRight; //chiều di chuyển
 public:
-	//CLANE(int width);
-	//~CLANE();
+	int x, y, numberOfBlock;
+	PIXEL block[BLOCKLENGTH][BLOCKHEIGHT];
+	PIXEL* blocks[BLOCKLENGTH][BLOCKHEIGHT];
 	void changeDirection();
+	bool checkPos(int pos);
 	virtual void Move();
-	virtual bool checkPos(int pos);
-	virtual void draw(ostream& outDev);
+	void DrawBlock(CGRAPHIC& layer);
 };
-

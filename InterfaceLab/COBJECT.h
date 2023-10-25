@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "CVEHICLE.h"
-class CCAR : public CVEHICLE {
+#include "CGRAPHIC.h"
+class COBJECT {
 	bool isRight;
 	const vector <wstring> FRAME_RIGHT = {
 L"                ",
@@ -19,5 +19,10 @@ L"     ▀▀   ▀▀    ",
 L"                "
 	};
 public:
-	CCAR(int x = 0, int y = 0, int isRight = true);
+	COBJECT(int x = 0, int y = 0, int isRight = true);
+
+	int x, y, numberOfBlock, numberOfHeight, numberOfLength;
+	PIXEL block[BLOCKLENGTH][BLOCKHEIGHT];
+	PIXEL* blocks[BLOCKLENGTH][BLOCKHEIGHT];
+	void DrawBlock(CGRAPHIC& layer);
 };

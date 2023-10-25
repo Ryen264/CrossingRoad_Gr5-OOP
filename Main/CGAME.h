@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "CGRAPHIC.h"
 #include "CPLAYER.h"
-#include "CLANE.h"
 #include "CVEHICLELANE.h"
 #include <vector>
 #include <iostream>
@@ -15,18 +14,16 @@ class CGAME {
     const int FINISH_HEIGHT = 10;
     const int TYPELANENUM = 1;
     bool isRunning;
-	CPLAYER* cPlayer;
+    CPLAYER* cPlayer;
     int numberOfLanes;
-	vector<CLANE*> aLanes;
-    int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
-        SADDLE_BROWN, DARK_RED, RED, ORANGE,
-        DARK_VIOLET, TOMATO, LIGHT_CYAN, OXFORD,
-        FELD_GRAU, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN;
+    vector<CLANE*> aLanes;
+
+    CGRAPHIC ObjLayer, BgdLayer;
 public:
     friend void ShowCur(bool CursorVisibility);
 
-	CGAME(int numberOfLanes = 10);
-	~CGAME();
+    CGAME(int numberOfLanes = 10);
+    ~CGAME();
     void start();
     void input();
     void logic();
@@ -42,21 +39,11 @@ public:
     void About();
     void Quit();
 
-    void Configure();
-    void SetupTheme(THEME theme = THEME_BASIC);
-
     void intro();
     void drawMenu();
     void drawMap();
     void drawQuit();
     void drawIsReset();
-    void drawDemo();
-    void drawlane();
-    void drawTree(int, int);
-    void drawCar(int, int);
-    /*
-    void pauseGame(HANDLE); //Tạm dừng thread
-    void resumeGame(HANDLE); //Quay lại thread
-    */
-};
 
+    void displayScreen();
+};

@@ -1,8 +1,22 @@
 #include "CVEHICLELANE.h"
-CVEHICLELANE::CVEHICLELANE(int width) {
+CVEHICLELANE::CVEHICLELANE(int width, int x, int y) {
     for (int i = 0; i < width; i++)
         this->lane.push_front(NULL);
-    this->right = rand() % 2;
+    this->isMoveRight = rand() % 2;
+
+    this->numberOfBlock = 1;
+    this->x = x; this->y = y;
+
+    //set buffers
+    for (int i = 0; i < BLOCKLENGTH; i++)
+        for (int j = 0; j < BLOCKHEIGHT; j++)
+            this->block[i][j] = { FRAME[j][i], WHITE, LIGHT_GRAY };
+
+    //set colors
+    for (int i = 0; i < 16; i++)
+        this->block[i][0].bgdColor = DARK_GREEN;
+    for (int i = 0; i < 16; i++)
+        if (i % 4 != 3) this->block[i][3].txtColor = BRIGHT_YELLOW;
 }
 CVEHICLELANE::~CVEHICLELANE() {
     for (int i = 0; i < (int)this->lane.size(); i++) {
@@ -15,7 +29,7 @@ CVEHICLELANE::~CVEHICLELANE() {
 }
 void CVEHICLELANE::Move() {
     //Random push a car
-    if (this->right) {
+    if (this->isMoveRight) {
         if (rand() % 10 == 0)
             this->lane.push_front(new CCAR);
         else
@@ -34,16 +48,5 @@ void CVEHICLELANE::Move() {
         if (front != NULL)
             delete front;
         this->lane.pop_front();
-    }
-}
-bool CVEHICLELANE::checkPos(int pos) {
-    return this->lane[pos] != NULL;
-}
-void CVEHICLELANE::draw(ostream& outDev) {
-    for (int i = 0; i < (int)this->lane.size(); i++) {
-        if (this->checkPos(i))
-            this->lane[i]->draw(cout);
-        else
-            outDev << " ";
     }
 }

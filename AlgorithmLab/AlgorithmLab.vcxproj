@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{60d794e5-5818-4de4-90c8-7abbbd06834d}</ProjectGuid>
-    <RootNamespace>Main</RootNamespace>
+    <ProjectGuid>{6965050a-6dda-4bbf-abd1-1cf1b1c12f87}</ProjectGuid>
+    <RootNamespace>AlgorithmLab</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,31 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CCAR.cpp" />
-    <ClCompile Include="CDINOSAUR.cpp" />
-    <ClCompile Include="CGRAPHIC.cpp" />
-    <ClCompile Include="CGRASSLANE.cpp" />
-    <ClCompile Include="COBJECT.cpp" />
-    <ClCompile Include="CTRUCK.cpp" />
-    <ClCompile Include="CVEHICLELANE.cpp" />
-    <ClCompile Include="CGAME.cpp" />
-    <ClCompile Include="CLANE.cpp" />
-    <ClCompile Include="CPLAYER.cpp" />
-    <ClCompile Include="CVEHICLE.cpp" />
-    <ClCompile Include="Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CCAR.h" />
-    <ClInclude Include="CDINOSAUR.h" />
-    <ClInclude Include="CGRAPHIC.h" />
-    <ClInclude Include="CGRASSLANE.h" />
-    <ClInclude Include="COBJECT.h" />
-    <ClInclude Include="CTRUCK.h" />
-    <ClInclude Include="CVEHICLELANE.h" />
-    <ClInclude Include="CGAME.h" />
-    <ClInclude Include="CLANE.h" />
-    <ClInclude Include="CPLAYER.h" />
-    <ClInclude Include="CVEHICLE.h" />
+    <ClCompile Include="AlgorithmLab.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

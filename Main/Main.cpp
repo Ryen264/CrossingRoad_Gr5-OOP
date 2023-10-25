@@ -1,9 +1,8 @@
 #include "CGAME.h"
 
-int main()
-{
+int main() {
     CGAME CrossingGame;
-    //CrossingGame.start();
-    CrossingGame.drawTree(0, 0);
+    CrossingGame.start();
     _getch();
+    return 0;
 }

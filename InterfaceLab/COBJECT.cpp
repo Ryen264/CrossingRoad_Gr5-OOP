@@ -1,5 +1,5 @@
-#include "CCAR.h"
-CCAR::CCAR(int x, int y, int isRight) {
+#include "COBJECT.h"
+COBJECT::COBJECT(int x, int y, int isRight) {
 	this->numberOfBlock = 1;
 	this->x = x; this->y = y; this->isRight = isRight;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
@@ -56,5 +56,12 @@ CCAR::CCAR(int x, int y, int isRight) {
 	}
 	else {
 
+	}
+}
+void COBJECT::DrawBlock(CGRAPHIC& layer) {
+	if (this->numberOfBlock == 1) {
+		for (int i = 0; i < BLOCKLENGTH; i++)
+			for (int j = 0; j < BLOCKHEIGHT; j++)
+				layer.screen[this->x + i][this->y + j] = block[i][j];
 	}
 }

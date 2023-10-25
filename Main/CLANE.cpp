@@ -1,24 +1,13 @@
 #include "CLANE.h"
-//CLANE::CLANE(int width) {
-//    for (int i = 0; i < width; i++)
-//        this->lane.push_front(NULL);
-//	this->right = rand() % 2;
-//}
-//CLANE::~CLANE() {
-//    for (int i = 0; i < (int)this->lane.size(); i++) {
-//        COBJECT* cur = this->lane[i];
-//        if (cur != NULL) {
-//            delete cur;
-//            this->lane[i] = NULL;
-//        }
-//    }
-//}
 void CLANE::changeDirection() {
-	this->right = !this->right;
+	this->isMoveRight = !this->isMoveRight;
+}
+bool CLANE::checkPos(int pos) {
+    return this->lane[pos] != NULL;
 }
 void CLANE::Move() {
     //Random push a car
-    if (this->right) {
+    if (this->isMoveRight) {
         if (rand() % 10 == 1)
             this->lane.push_front(new COBJECT);
         else
@@ -39,15 +28,10 @@ void CLANE::Move() {
         this->lane.pop_front();
     }
 }
-bool CLANE::checkPos(int pos) {
-    return this->lane[pos] != NULL;
-}
-void CLANE::draw(ostream& outDev) {
-    for (int i = 0; i < (int)this->lane.size(); i++) {
-        if (this->checkPos(i))
-            this->lane[i]->draw(cout);
-        else
-            outDev << " ";
+void CLANE::DrawBlock(CGRAPHIC& layer) {
+    if (this->numberOfBlock == 1) {
+        for (int i = 0; i < BLOCKLENGTH; i++)
+            for (int j = 0; j < BLOCKHEIGHT; j++)
+                layer.screen[this->x + i][this->y + j] = block[i][j];
     }
-    outDev << endl;
 }

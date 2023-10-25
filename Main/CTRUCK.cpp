@@ -1,5 +1,5 @@
-#include "CCAR.h"
-CCAR::CCAR(int x, int y, int isRight) {
+#include "CTRUCK.h"
+CTRUCK::CTRUCK(int x, int y, int isRight) {
 	this->numberOfBlock = 1;
 	this->x = x; this->y = y; this->isRight = isRight;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;

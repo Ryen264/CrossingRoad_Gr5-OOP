@@ -1,7 +1,6 @@
 ﻿#pragma once
-#include "CLANE.h"
-#include "CCAR.h"
-class CVEHICLELANE : public CLANE {
+#include "CGRAPHIC.h"
+class CLANE {
 	const vector <wstring> FRAME = {
 L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
 L"                ",
@@ -11,7 +10,10 @@ L"                ",
 L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
 	};
 public:
-	CVEHICLELANE(int width, int x = 0, int y = 0);
-	~CVEHICLELANE();
-	void Move();
+	CLANE(int width, int x = 0, int y = 0);
+
+	int x, y, numberOfBlock;
+	PIXEL block[BLOCKLENGTH][BLOCKHEIGHT];
+	PIXEL* blocks[BLOCKLENGTH][BLOCKHEIGHT];
+	void DrawBlock(CGRAPHIC& layer);
 };
