@@ -77,5 +77,11 @@
     <ClInclude Include="CGRAPHIC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CDINOSAUR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CGRASSLANE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
