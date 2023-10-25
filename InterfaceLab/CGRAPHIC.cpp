@@ -23,18 +23,18 @@ void SetupTheme(THEME theme) {
 }
 
 CGRAPHIC::CGRAPHIC(PIXEL** screen) {
-	this->screen = new PIXEL * [WIDTH];
-	for (int i = 0; i < WIDTH; i++)
-		this->screen[i] = new PIXEL[HEIGHT];
+	this->screen = new PIXEL * [SCREEN_WIDTH];
+	for (int i = 0; i < SCREEN_WIDTH; i++)
+		this->screen[i] = new PIXEL[SCREEN_HEIGHT];
 
 	if (screen != NULL) {
-		for (int x = 0; x < WIDTH; x++)
-			for (int y = 0; y < HEIGHT; y++)
+		for (int x = 0; x < SCREEN_WIDTH; x++)
+			for (int y = 0; y < SCREEN_HEIGHT; y++)
 				this->screen[x][y] = screen[x][y];
 	}
 }
 CGRAPHIC::~CGRAPHIC() {
-	for (int i = 0; i < WIDTH; i++) {
+	for (int i = 0; i < SCREEN_WIDTH; i++) {
 		delete[] this->screen[i];
 		this->screen[i] = NULL;
 	}
@@ -43,9 +43,9 @@ CGRAPHIC::~CGRAPHIC() {
 }
 void CGRAPHIC::display(int fromX, int fromY, int toX, int toY) {
 	if (toX < 0)
-		toX = WIDTH - 1;
+		toX = SCREEN_WIDTH - 1;
 	if (toY < 0)
-		toY = HEIGHT - 1;
+		toY = SCREEN_HEIGHT - 1;
 	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	DWORD dwBytesWritten = 0;
 	wchar_t pBuffer{};
@@ -67,8 +67,8 @@ void CGRAPHIC::display(int fromX, int fromY, int toX, int toY) {
 		}
 }
 void CGRAPHIC::clear(int txtColor, int bgdColor) {
-	for (int x = 0; x < WIDTH; x++)
-		for (int y = 0; y < HEIGHT; y++)
+	for (int x = 0; x < SCREEN_WIDTH; x++)
+		for (int y = 0; y < SCREEN_HEIGHT; y++)
 			this->screen[x][y] = { L' ', txtColor, bgdColor };
 }
 void CGRAPHIC::Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor) {

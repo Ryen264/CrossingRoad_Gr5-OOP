@@ -11,7 +11,7 @@ L"                ",
 L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
 	};
 public:
-	CVEHICLELANE(int width, int x = 0, int y = 0);
+	CVEHICLELANE(int x = 0, int y = 0);
 	~CVEHICLELANE();
 	void Move();
 };

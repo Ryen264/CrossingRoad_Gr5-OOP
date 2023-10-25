@@ -8,11 +8,9 @@
 #include <time.h>
 using namespace std;
 class CGAME {
-    const int WIDTH = 20;
-    const int HEIGHT = 10;
     const int START_HEIGHT = 0;
     const int FINISH_HEIGHT = 10;
-    const int TYPELANENUM = 1;
+    const int NUMBER_OF_TYPE_LANE = 1;
     bool isRunning;
     CPLAYER* cPlayer;
     int numberOfLanes;

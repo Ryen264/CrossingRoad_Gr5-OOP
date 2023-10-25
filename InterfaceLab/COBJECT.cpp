@@ -5,8 +5,8 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
 
 	//set buffer
-	for (int i = 0; i < BLOCKLENGTH; i++)
-		for (int j = 0; j < BLOCKHEIGHT; j++)
+	for (int i = 0; i < BLOCK_WIDTH; i++)
+		for (int j = 0; j < BLOCK_HEIGHT; j++)
 			if (frame[j][i] != L' ')
 				this->block[i][j] = { frame[j][i], RED, -1 };
 			else
@@ -60,8 +60,8 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 }
 void COBJECT::DrawBlock(CGRAPHIC& layer) {
 	if (this->numberOfBlock == 1) {
-		for (int i = 0; i < BLOCKLENGTH; i++)
-			for (int j = 0; j < BLOCKHEIGHT; j++)
+		for (int i = 0; i < BLOCK_WIDTH; i++)
+			for (int j = 0; j < BLOCK_HEIGHT; j++)
 				layer.screen[this->x + i][this->y + j] = block[i][j];
 	}
 }

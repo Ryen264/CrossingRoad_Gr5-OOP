@@ -1,6 +1,6 @@
 #include "CVEHICLELANE.h"
-CVEHICLELANE::CVEHICLELANE(int width, int x, int y) {
-    for (int i = 0; i < width; i++)
+CVEHICLELANE::CVEHICLELANE(int x, int y) {
+    for (int i = 0; i < BOARD_WIDTH; i++)
         this->lane.push_front(NULL);
     this->isMoveRight = rand() % 2;
 
@@ -8,8 +8,8 @@ CVEHICLELANE::CVEHICLELANE(int width, int x, int y) {
     this->x = x; this->y = y;
 
     //set buffers
-    for (int i = 0; i < BLOCKLENGTH; i++)
-        for (int j = 0; j < BLOCKHEIGHT; j++)
+    for (int i = 0; i < BLOCK_WIDTH; i++)
+        for (int j = 0; j < BLOCK_HEIGHT; j++)
             this->block[i][j] = { FRAME[j][i], WHITE, LIGHT_GRAY };
 
     //set colors

@@ -4,8 +4,8 @@ CLANE::CLANE(int width, int x, int y) {
     this->x = x; this->y = y;
 
     //set buffers
-    for (int i = 0; i < BLOCKLENGTH; i++)
-        for (int j = 0; j < BLOCKHEIGHT; j++)
+    for (int i = 0; i < BLOCK_WIDTH; i++)
+        for (int j = 0; j < BLOCK_HEIGHT; j++)
             this->block[i][j] = { FRAME[j][i], WHITE, LIGHT_GRAY };
 
     //set colors
@@ -16,8 +16,8 @@ CLANE::CLANE(int width, int x, int y) {
 }
 void CLANE::DrawBlock(CGRAPHIC& layer) {
     if (this->numberOfBlock == 1) {
-        for (int i = 0; i < BLOCKLENGTH; i++)
-            for (int j = 0; j < BLOCKHEIGHT; j++)
+        for (int i = 0; i < BLOCK_WIDTH; i++)
+            for (int j = 0; j < BLOCK_HEIGHT; j++)
                 layer.screen[this->x + i][this->y + j] = block[i][j];
     }
 }

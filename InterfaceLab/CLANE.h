@@ -13,7 +13,7 @@ public:
 	CLANE(int width, int x = 0, int y = 0);
 
 	int x, y, numberOfBlock;
-	PIXEL block[BLOCKLENGTH][BLOCKHEIGHT];
-	PIXEL* blocks[BLOCKLENGTH][BLOCKHEIGHT];
+	PIXEL block[BLOCK_WIDTH][BLOCK_HEIGHT];
+	PIXEL* blocks[BLOCK_WIDTH][BLOCK_HEIGHT];
 	void DrawBlock(CGRAPHIC& layer);
 };

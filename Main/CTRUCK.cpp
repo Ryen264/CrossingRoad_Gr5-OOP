@@ -5,8 +5,8 @@ CTRUCK::CTRUCK(int x, int y, int isRight) {
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
 
 	//set buffer
-	for (int i = 0; i < BLOCKLENGTH; i++)
-		for (int j = 0; j < BLOCKHEIGHT; j++)
+	for (int i = 0; i < BLOCK_WIDTH; i++)
+		for (int j = 0; j < BLOCK_HEIGHT; j++)
 			if (frame[j][i] != L' ')
 				this->block[i][j] = { frame[j][i], RED, -1 };
 			else

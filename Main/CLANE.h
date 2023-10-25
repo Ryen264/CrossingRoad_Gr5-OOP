@@ -3,14 +3,16 @@
 #include "COBJECT.h"
 #include <deque>
 using namespace std;
+const int BOARD_HEIGHT = 10;
+const int BOARD_WIDTH = 20;
 class CLANE {
 protected:
 	deque<COBJECT*> lane;
 	bool isMoveRight; //chiều di chuyển
 public:
 	int x, y, numberOfBlock;
-	PIXEL block[BLOCKLENGTH][BLOCKHEIGHT];
-	PIXEL* blocks[BLOCKLENGTH][BLOCKHEIGHT];
+	PIXEL block[BLOCK_WIDTH][BLOCK_HEIGHT];
+	PIXEL* blocks[BLOCK_WIDTH][BLOCK_HEIGHT];
 	void changeDirection();
 	bool checkPos(int pos);
 	virtual void Move();

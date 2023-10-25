@@ -22,7 +22,7 @@ public:
 	COBJECT(int x = 0, int y = 0, int isRight = true);
 
 	int x, y, numberOfBlock, numberOfHeight, numberOfLength;
-	PIXEL block[BLOCKLENGTH][BLOCKHEIGHT];
-	PIXEL* blocks[BLOCKLENGTH][BLOCKHEIGHT];
+	PIXEL block[BLOCK_WIDTH][BLOCK_HEIGHT];
+	PIXEL* blocks[BLOCK_WIDTH][BLOCK_HEIGHT];
 	void DrawBlock(CGRAPHIC& layer);
 };

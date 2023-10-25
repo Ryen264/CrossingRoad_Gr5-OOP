@@ -3,7 +3,7 @@
 class COBJECT {
 public:
 	int x, y, numberOfBlock, numberOfHeight, numberOfLength;
-	PIXEL block[BLOCKLENGTH][BLOCKHEIGHT];
-	PIXEL* blocks[BLOCKLENGTH][BLOCKHEIGHT];
+	PIXEL block[BLOCK_WIDTH][BLOCK_HEIGHT];
+	PIXEL* blocks[BLOCK_WIDTH][BLOCK_HEIGHT];
 	void DrawBlock(CGRAPHIC& layer);
 };

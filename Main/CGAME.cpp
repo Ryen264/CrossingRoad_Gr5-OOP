@@ -14,12 +14,12 @@ void ShowCur(bool CursorVisibility)
 CGAME::CGAME(int numberOfLanes) {
 	srand(time(0));
 	this->isRunning = true;
-	this->cPlayer = new CPLAYER(WIDTH / 2, START_HEIGHT);
+	this->cPlayer = new CPLAYER(BOARD_WIDTH / 2, START_HEIGHT);
 	this->numberOfLanes = numberOfLanes;
 	for (int i = 0; i < numberOfLanes; i++) {
-		switch (rand() % TYPELANENUM) {
+		switch (rand() % NUMBER_OF_TYPE_LANE) {
 		case 0: {
-			this->aLanes.push_back(new CVEHICLELANE(WIDTH));
+			this->aLanes.push_back(new CVEHICLELANE(BOARD_WIDTH));
 			break;
 		}
 		default:
@@ -101,12 +101,12 @@ bool CGAME::isReset() {
 	return toupper(_getch()) == 'Y';
 }
 void CGAME::reset() {
-	this->cPlayer->set(WIDTH / 2, START_HEIGHT, true, 0);
+	this->cPlayer->set(BOARD_WIDTH / 2, START_HEIGHT, true, 0);
 	this->aLanes.clear();
 	for (int i = 0; i < this->numberOfLanes; i++) {
-		switch (rand() % TYPELANENUM) {
+		switch (rand() % NUMBER_OF_TYPE_LANE) {
 		case 0: {
-			this->aLanes.push_back(new CVEHICLELANE(WIDTH));
+			this->aLanes.push_back(new CVEHICLELANE(BOARD_WIDTH));
 			break;
 		}
 		default:
@@ -199,10 +199,10 @@ void CGAME::drawMenu() {
 void CGAME::drawMap() {
 	system("cls");
 	for (int i = 0; i < this->numberOfLanes; i++) {
-		for (int j = 0; j < WIDTH; j++) {
-			if (i == 0 && (j == 0 || j == WIDTH - 1))
+		for (int j = 0; j < BOARD_WIDTH; j++) {
+			if (i == 0 && (j == 0 || j == BOARD_WIDTH - 1))
 				cout << "S";
-			if (i == this->numberOfLanes - 1 && (j == 0 || j == WIDTH - 1))
+			if (i == this->numberOfLanes - 1 && (j == 0 || j == BOARD_WIDTH - 1))
 				cout << "F";
 			if (this->aLanes[i]->checkPos(j) && i != 0 && i != this->numberOfLanes - 1)    //no car in the first and the last lines
 				cout << "#";
