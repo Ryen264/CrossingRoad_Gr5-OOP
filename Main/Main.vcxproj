@@ -146,7 +146,6 @@
     <ClInclude Include="CGRAPHIC.h" />
     <ClInclude Include="CGRASSLANE.h" />
     <ClInclude Include="COBJECT.h" />
-    <ClInclude Include="CTRUCK.h" />
     <ClInclude Include="CVEHICLELANE.h" />
     <ClInclude Include="CGAME.h" />
     <ClInclude Include="CLANE.h" />

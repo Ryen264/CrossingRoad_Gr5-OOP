@@ -47,7 +47,7 @@ void CGRAPHIC::display(int fromX, int fromY, int toX, int toY) {
 	if (toY < 0)
 		toY = HEIGHT - 1;
 	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-	DWORD dwBytesWritten = 0;
+	DWORD dwBytesWritten{};
 	wchar_t pBuffer{};
 	WORD pColor;
 	for (int y = fromY; y <= toY; y++)
@@ -71,10 +71,9 @@ void CGRAPHIC::clear(int txtColor, int bgdColor) {
 		for (int y = 0; y < HEIGHT; y++)
 			this->screen[x][y] = { L' ', txtColor, bgdColor };
 }
-void CGRAPHIC::Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor) {
-	int x = first_x, y = first_y;
+void CGRAPHIC::Text(wstring wsContent, int x, int y, int txtColor, int bgdColor) {
 	for (int i = 0; i < wsContent.length(); i++)
-		this->screen[x++][y] = { wsContent[i], txtColor, bgdColor };
+		this->screen[x + i][y] = { wsContent[i], txtColor, bgdColor };
 }
 void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor) {
 	int x = first_x, y = first_y;
@@ -82,3 +81,4 @@ void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y,
 		for (int j = 0; j < contentsArr[i].length(); j++)
 			this->screen[x + j][y + i] = { contentsArr[i][j], txtColor, bgdColor };
 }
+
