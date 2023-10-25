@@ -19,5 +19,4 @@ public:
 	void Right(int step = 1);
 	bool isFinish(int finishHeight);
 	bool isDead();
-	void draw(ostream& outDev);
 };

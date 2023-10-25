@@ -1,9 +1,9 @@
 #include "CGRAPHIC.h"
-
 int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
 SADDLE_BROWN, DARK_RED, RED, ORANGE,
 DARK_VIOLET, TOMATO, LIGHT_CYAN, LIGHT_GRAY,
 FELD_GRAU, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN;
+
 void SetupTheme(THEME theme) {
 	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFOEX csbiex{};
@@ -26,7 +26,6 @@ CGRAPHIC::CGRAPHIC(PIXEL** screen) {
 	this->screen = new PIXEL * [SCREEN_WIDTH];
 	for (int i = 0; i < SCREEN_WIDTH; i++)
 		this->screen[i] = new PIXEL[SCREEN_HEIGHT];
-
 	if (screen != NULL) {
 		for (int x = 0; x < SCREEN_WIDTH; x++)
 			for (int y = 0; y < SCREEN_HEIGHT; y++)
@@ -74,7 +73,7 @@ void CGRAPHIC::clear(int txtColor, int bgdColor) {
 void CGRAPHIC::Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor) {
 	int x = first_x, y = first_y;
 	for (int i = 0; i < wsContent.length(); i++)
-		this->screen[x++][y] = { wsContent[i], txtColor, bgdColor };
+		this->screen[x + i][y] = { wsContent[i], txtColor, bgdColor };
 }
 void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor) {
 	int x = first_x, y = first_y;

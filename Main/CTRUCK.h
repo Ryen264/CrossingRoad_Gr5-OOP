@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "CVEHICLE.h"
-class CTRUCK : public CVEHICLE {
+#include "COBJECT.h"
+class CTRUCK : public COBJECT {
 	bool isRight;
 	const vector <wstring> FRAME_RIGHT = {
 L"                ",

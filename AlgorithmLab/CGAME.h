@@ -1,11 +1,11 @@
-﻿#pragma once
-#include "CGRAPHIC.h"
+#pragma once
 #include "CPLAYER.h"
 #include "CVEHICLELANE.h"
 #include <vector>
 #include <iostream>
 #include <conio.h>
 #include <time.h>
+#include <Windows.h>
 #include <mutex>
 #include <condition_variable>
 using namespace std;
@@ -25,9 +25,6 @@ class CGAME {
     bool isThreadRunning = true;
     mutex mtx;
     condition_variable cv;
-
-    //Screen layers
-    CGRAPHIC ObjLayer, BgdLayer;
 public:
     friend void ShowCur(bool CursorVisibility);
 
@@ -58,6 +55,4 @@ public:
     void drawMenu();
     void drawPause();
     void drawPlayAgain();
-
-    void displayScreen();
 };

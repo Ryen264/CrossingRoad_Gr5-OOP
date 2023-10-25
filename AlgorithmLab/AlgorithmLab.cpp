@@ -1,6 +1,8 @@
-#include <iostream>
+#include "CGAME.h"
 
-int main()
-{
-    std::cout << "Hello World!\n";
+int main() {
+    CGAME testGame;
+    testGame.start();
+
+    return 0;
 }

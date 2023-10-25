@@ -128,6 +128,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlgorithmLab.cpp" />
+    <ClCompile Include="CCAR.cpp" />
+    <ClCompile Include="CGAME.cpp" />
+    <ClCompile Include="CLANE.cpp" />
+    <ClCompile Include="COBJECT.cpp" />
+    <ClCompile Include="CPLAYER.cpp" />
+    <ClCompile Include="CVEHICLELANE.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CCAR.h" />
+    <ClInclude Include="CGAME.h" />
+    <ClInclude Include="CLANE.h" />
+    <ClInclude Include="COBJECT.h" />
+    <ClInclude Include="CPLAYER.h" />
+    <ClInclude Include="CVEHICLELANE.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

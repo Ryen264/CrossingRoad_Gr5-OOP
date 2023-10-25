@@ -137,7 +137,6 @@
     <ClCompile Include="CGAME.cpp" />
     <ClCompile Include="CLANE.cpp" />
     <ClCompile Include="CPLAYER.cpp" />
-    <ClCompile Include="CVEHICLE.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,11 +145,11 @@
     <ClInclude Include="CGRAPHIC.h" />
     <ClInclude Include="CGRASSLANE.h" />
     <ClInclude Include="COBJECT.h" />
+    <ClInclude Include="CTRUCK.h" />
     <ClInclude Include="CVEHICLELANE.h" />
     <ClInclude Include="CGAME.h" />
     <ClInclude Include="CLANE.h" />
     <ClInclude Include="CPLAYER.h" />
-    <ClInclude Include="CVEHICLE.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

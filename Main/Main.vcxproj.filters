@@ -33,9 +33,6 @@
     <ClCompile Include="CGAME.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CVEHICLE.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="COBJECT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -65,9 +62,6 @@
     <ClInclude Include="CGAME.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CVEHICLE.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CPLAYER.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -81,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CGRASSLANE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTRUCK.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

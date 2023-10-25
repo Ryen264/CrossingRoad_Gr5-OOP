@@ -1,4 +1,4 @@
-﻿#include "CGAME.h"
+#include "CGAME.h"
 //Friend functions
 void ShowCur(bool CursorVisibility)
 {
@@ -14,10 +14,6 @@ void ShowCur(bool CursorVisibility)
 CGAME::CGAME() {
 	srand(time(0));
 	this->cPlayer = new CPLAYER(BOARD_WIDTH / 2, START_HEIGHT);
-
-	SetupTheme();
-	BgdLayer.clear(BLACK, WHITE);
-	ObjLayer.clear(BLACK, -1);
 }
 CGAME::~CGAME() {
 	delete this->cPlayer;
@@ -270,9 +266,4 @@ void CGAME::drawPause() {
 }
 void CGAME::drawPlayAgain() {
 	cout << "Play again (Y/N)?" << endl;
-}
-
-void CGAME::displayScreen() {
-	BgdLayer.display();
-	ObjLayer.display();
 }
