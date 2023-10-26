@@ -2,6 +2,7 @@
 #include "CLANE.h"
 #include "COBJECT.h"
 #include <conio.h>
+#include"CDINOSAUR.h"
 
 const int BOARD_HEIGHT = 10;
 const int BOARD_WIDTH = 20;
@@ -13,9 +14,13 @@ int main() {
 	SetupTheme();
 
 	CLANE testlane(BOARD_WIDTH);
-	COBJECT testobject;
+	CDINOSAUR testobject(BOARD_WIDTH);
+
 	testlane.DrawBlock(BgdLayer);
-	testobject.DrawBlock(ObjLayer);
+	testlane.DrawBlock(ObjLayer);
+
+    testobject.DrawDinosaur(BgdLayer);
+	testobject.DrawDinosaur(ObjLayer);
 
 	BgdLayer.display();
 	ObjLayer.display();

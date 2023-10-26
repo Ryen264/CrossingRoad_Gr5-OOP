@@ -65,3 +65,5 @@ void COBJECT::DrawBlock(CGRAPHIC& layer) {
 				layer.screen[this->x + i][this->y + j] = block[i][j];
 	}
 }
+
+

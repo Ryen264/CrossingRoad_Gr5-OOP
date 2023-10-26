@@ -9,11 +9,11 @@ L"▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀ ",
 L"                ",
 L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
 	};
+protected:
+    int x, y, numberOfBlock;
+    PIXEL block[BLOCK_WIDTH][BLOCK_HEIGHT];
+    PIXEL* blocks[BLOCK_WIDTH][BLOCK_HEIGHT];
 public:
 	CLANE(int width, int x = 0, int y = 0);
-
-	int x, y, numberOfBlock;
-	PIXEL block[BLOCK_WIDTH][BLOCK_HEIGHT];
-	PIXEL* blocks[BLOCK_WIDTH][BLOCK_HEIGHT];
 	void DrawBlock(CGRAPHIC& layer);
 };

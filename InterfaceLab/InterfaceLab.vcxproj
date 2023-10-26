@@ -127,12 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CDINOSAUR.cpp" />
     <ClCompile Include="CGRAPHIC.cpp" />
     <ClCompile Include="CLANE.cpp" />
     <ClCompile Include="COBJECT.cpp" />
     <ClCompile Include="InterfaceLab.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CDINOSAUR.h" />
     <ClInclude Include="CGRAPHIC.h" />
     <ClInclude Include="CLANE.h" />
     <ClInclude Include="COBJECT.h" />
