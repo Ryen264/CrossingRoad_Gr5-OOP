@@ -27,9 +27,6 @@
     <ClCompile Include="COBJECT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CDINOSAUR.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGRAPHIC.h">
@@ -39,9 +36,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CLANE.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CDINOSAUR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

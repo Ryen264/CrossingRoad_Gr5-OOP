@@ -39,7 +39,7 @@ struct PIXEL {
 };
 class CGRAPHIC {
 public:
-	PIXEL** screen;
+	PIXEL** screen = NULL;
 	CGRAPHIC(PIXEL** screen = NULL);
 	~CGRAPHIC();
 	void display(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
