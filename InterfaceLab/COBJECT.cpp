@@ -19,53 +19,68 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
 	//set colors
 	if (isRight) {
-		block[x + 6][y + 4].bgdColor = SADDLE_BROWN;
-		block[x + 8][y + 4].bgdColor = SADDLE_BROWN;
-		block[x + 7][y + 5].bgdColor = SADDLE_BROWN;
-		block[x + 7][y + 4].bgdColor = SADDLE_BROWN;
-		block[x + 9][y + 5].bgdColor = SADDLE_BROWN;
-		block[x + 11][y + 5].bgdColor = SADDLE_BROWN;
-		block[x + 10][y + 6].bgdColor = SADDLE_BROWN;
-		block[x + 5][y + 8].bgdColor = SADDLE_BROWN;
-		block[x + 6][y + 8].bgdColor = SADDLE_BROWN;
-		block[x + 7][y + 8].bgdColor = SADDLE_BROWN;
-		block[x + 6][y + 8].bgdColor = SADDLE_BROWN;
-		for (int j = 9; j <= 11; j++)
-		{
-			block[x + 7][y + j].bgdColor = SADDLE_BROWN;
-		}
-		block[x + 6][y + 11].bgdColor = SADDLE_BROWN;
-		block[x + 7][y + 11].bgdColor = SADDLE_BROWN;
-		block[x + 8][y + 11].bgdColor = SADDLE_BROWN;
+		block[6][4].txtColor = SADDLE_BROWN;
+		block[8][4].txtColor = SADDLE_BROWN;
+		block[7][5].bgdColor = SADDLE_BROWN;
+		block[7][4].bgdColor = SADDLE_BROWN;
+		block[11][5].bgdColor = SADDLE_BROWN;
+		block[10][6].bgdColor = SADDLE_BROWN;
+		block[5][8].bgdColor = SADDLE_BROWN;
+		block[6][8].bgdColor = SADDLE_BROWN;
+		block[7][8].bgdColor = SADDLE_BROWN;
+		block[6][8].bgdColor = SADDLE_BROWN;
+		block[7][9].txtColor = SADDLE_BROWN;
+		block[7][10].txtColor = SADDLE_BROWN;
+		block[6][11].bgdColor = SADDLE_BROWN;
+		block[7][11].bgdColor = SADDLE_BROWN;
+		block[8][11].bgdColor = SADDLE_BROWN;
 		for (int i = 4; i <= 8; i++)
 		{
-			block[x + i][y].bgdColor = LIGHT_GREEN;
+			block[i][0].bgdColor = LIGHT_GREEN;
 		}
-		for (int i = 2; i <= 9; i++)
+		for (int i = 3; i <= 9; i++)
 		{
-			block[x + i][y + 1].bgdColor = LIGHT_GREEN;
+			block[i][1].txtColor = LIGHT_GREEN;
 		}
+		block[10][1].txtColor = DARK_GREEN;
+		block[10][1].bgdColor = LIGHT_GREEN;
+		block[11][1].txtColor = DARK_GREEN;
 		for (int i = 7; i <= 10; i++)
 		{
-			block[x + i][y + 2].bgdColor = LIGHT_GREEN;
+			block[i][2].bgdColor = LIGHT_GREEN;
 		}
-		block[x + 5][y + 2].bgdColor = LIGHT_GREEN;
-		block[x + 5][y + 2].txtColor = DARK_GREEN;
-		block[x + 6][y + 2].bgdColor = LIGHT_GREEN;
-		block[x + 6][y + 2].txtColor = DARK_GREEN;
+		block[3][2].txtColor = DARK_GREEN;
+		block[4][2].txtColor = DARK_GREEN;
+		block[5][2].bgdColor = LIGHT_GREEN;
+		block[5][2].txtColor = DARK_GREEN;
+		block[6][2].bgdColor = LIGHT_GREEN;
+		block[6][2].txtColor = DARK_GREEN;
+		block[7][2].txtColor = LIGHT_GREEN;
+		block[8][2].txtColor = LIGHT_GREEN;
+		block[9][2].txtColor = LIGHT_GREEN;
+		block[10][2].bgdColor = LIGHT_GREEN;
+		block[10][2].txtColor = DARK_GREEN;
+		block[11][2].txtColor = DARK_GREEN;
+		block[11][3].bgdColor = LIGHT_GREEN;
+		for (int i = 4; i <= 10; i++)
+			block[i][3].bgdColor = DARK_GREEN;
+		block[12][3].bgdColor = DARK_GREEN;
+		block[13][3].bgdColor = DARK_GREEN;
 		for (int i = 10; i <= 12; i++)
 		{
-			block[x + i][y + 4].bgdColor = LIGHT_GREEN;
-			block[x + i][y + 4].txtColor = DARK_GREEN;
+			block[i][4].bgdColor = LIGHT_GREEN;
+			block[i][4].txtColor = DARK_GREEN;
 		}
-		block[x + 11][y + 3].bgdColor = LIGHT_GREEN;
-		block[x + 3][y + 6].bgdColor = LIGHT_GREEN;
-		block[x + 3][y + 6].txtColor = DARK_GREEN;
-		block[x + 4][y + 6].bgdColor = LIGHT_GREEN;
-		block[x + 5][y + 6].bgdColor = LIGHT_GREEN;
-		block[x + 6][y + 6].bgdColor = LIGHT_GREEN;
-		block[x + 7][y + 6].txtColor = DARK_GREEN;
-		block[x + 7][y + 6].bgdColor = LIGHT_GREEN;
+		block[13][4].txtColor = DARK_GREEN;
+		block[3][6].bgdColor = LIGHT_GREEN;
+		block[3][6].txtColor = DARK_GREEN;
+		block[4][6].txtColor = LIGHT_GREEN;
+		block[5][6].txtColor = LIGHT_GREEN;
+		block[6][6].txtColor = DARK_GREEN;
+		block[6][6].bgdColor = LIGHT_GREEN;
+		block[7][6].txtColor = DARK_GREEN;
+		for (int i = 3; i <= 7; i++)
+			block[i][7].bgdColor = DARK_GREEN;
 	}
 	else {
 		block[5][1].bgdColor = DARK_GREEN;
