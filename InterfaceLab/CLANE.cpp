@@ -1,23 +1,29 @@
 #include "CLANE.h"
-CLANE::CLANE(int width, int x, int y) {
-    this->numberOfBlock = 1;
+CLANE::CLANE(int x, int y) {
     this->x = x; this->y = y;
 
-    //set buffers
-    for (int i = 0; i < BLOCK_WIDTH; i++)
-        for (int j = 0; j < BLOCK_HEIGHT; j++)
-            this->block[i][j] = { FRAME[j][i], WHITE, LIGHT_GRAY };
+	this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
+	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
+		this->block[i] = new PIXEL[BLOCK_HEIGHT * this->numberOfHeight];
 
-    //set colors
-    for (int i = 0; i < 16; i++)
-        this->block[i][0].bgdColor = DARK_GREEN;
-    for (int i = 0; i < 16; i++)
-        if (i % 4 != 3) this->block[i][3].txtColor = BRIGHT_YELLOW;
+	//set buffers
+	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
+		for (int j = 0; j < BLOCK_HEIGHT * this->numberOfHeight; j++)
+			this->block[i][j] = { FRAME[j][i], WHITE, LIGHT_GRAY };
+
+	//set colors
+	for (int i = 0; i < 16; i++)
+		this->block[i][0].bgdColor = DARK_GREEN;
+	for (int i = 0; i < 16; i++)
+		if (i % 4 != 3) this->block[i][3].txtColor = BRIGHT_YELLOW;
+}
+CLANE::~CLANE() {
+	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
+		delete[] this->block[i];
+	delete[] this->block;
 }
 void CLANE::DrawBlock(CGRAPHIC& layer) {
-    if (this->numberOfBlock == 1) {
-        for (int i = 0; i < BLOCK_WIDTH; i++)
-            for (int j = 0; j < BLOCK_HEIGHT; j++)
-                layer.screen[this->x + i][this->y + j] = block[i][j];
-    }
+	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
+		for (int j = 0; j < BLOCK_HEIGHT * this->numberOfHeight; j++)
+			layer.screen[this->x + i][this->y + j] = block[i][j];
 }

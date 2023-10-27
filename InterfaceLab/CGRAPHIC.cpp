@@ -28,9 +28,9 @@ CGRAPHIC::CGRAPHIC(PIXEL** screen) {
 		this->screen[i] = new PIXEL[SCREEN_HEIGHT];
 
 	if (screen != NULL) {
-		for (int x = 0; x < SCREEN_WIDTH; x++)
-			for (int y = 0; y < SCREEN_HEIGHT; y++)
-				this->screen[x][y] = screen[x][y];
+	for (int x = 0; x < SCREEN_WIDTH; x++)
+		for (int y = 0; y < SCREEN_HEIGHT; y++)
+			this->screen[x][y] = screen[x][y];
 	}
 }
 CGRAPHIC::~CGRAPHIC() {
@@ -42,6 +42,8 @@ CGRAPHIC::~CGRAPHIC() {
 	this->screen = NULL;
 }
 void CGRAPHIC::display(int fromX, int fromY, int toX, int toY) {
+	if (this->screen == NULL)
+		return;
 	if (toX < 0)
 		toX = SCREEN_WIDTH - 1;
 	if (toY < 0)

@@ -7,17 +7,22 @@ const int BOARD_HEIGHT = 10;
 const int BOARD_WIDTH = 20;
 
 int main() {
-	CGRAPHIC BgdLayer, ObjLayer;
-	BgdLayer.clear(BLACK, WHITE);
-	ObjLayer.clear(BLACK, -1);
 	SetupTheme();
+	CGRAPHIC BgdLayer;
+	BgdLayer.clear(BLACK, WHITE);
 
-	CLANE testlane(BOARD_WIDTH);
-	COBJECT testobject;
-	testlane.DrawBlock(BgdLayer);
-	testobject.DrawBlock(ObjLayer);
-
+	CLANE testlane1(0, 0), testlane2(BLOCK_WIDTH, 0), testlane3(BLOCK_WIDTH, BLOCK_HEIGHT), testlane4(0, BLOCK_HEIGHT);
+	//draw background
+	testlane1.DrawBlock(BgdLayer); testlane2.DrawBlock(BgdLayer); testlane3.DrawBlock(BgdLayer); testlane4.DrawBlock(BgdLayer);
 	BgdLayer.display();
+
+
+	CGRAPHIC ObjLayer;
+	ObjLayer.clear(BLACK, -1);
+
+	COBJECT testobject;
+	//draw object
+	testobject.DrawBlock(ObjLayer);
 	ObjLayer.display();
 	_getch();
 	return 0;

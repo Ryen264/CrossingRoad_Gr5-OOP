@@ -10,10 +10,10 @@ L"                ",
 L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
 	};
 protected:
-	int x, y, numberOfBlock;
-	PIXEL block[BLOCK_WIDTH][BLOCK_HEIGHT];
-	PIXEL* blocks[BLOCK_WIDTH][BLOCK_HEIGHT];
+	int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1;
+	PIXEL** block;
 public:
-	CLANE(int width, int x = 0, int y = 0);
+	CLANE(int x = 0, int y = 0);
+	~CLANE();
 	void DrawBlock(CGRAPHIC& layer);
 };
