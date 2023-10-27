@@ -9,10 +9,10 @@ class CLANE {
 protected:
 	deque<COBJECT*> lane;
 	bool isMoveRight; //chiều di chuyển
-public:
 	int x, y, numberOfBlock;
 	PIXEL block[BLOCK_WIDTH][BLOCK_HEIGHT];
 	PIXEL* blocks[BLOCK_WIDTH][BLOCK_HEIGHT];
+public:
 	void changeDirection();
 	bool checkPos(int pos);
 	virtual void Move();
