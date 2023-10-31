@@ -13,7 +13,7 @@ int main() {
 
 	CLANE testlane1(0, 0), testlane2(BLOCK_WIDTH, 0), testlane3(BLOCK_WIDTH, BLOCK_HEIGHT), testlane4(0, BLOCK_HEIGHT);
 	//draw background
-	testlane1.DrawBlock(BgdLayer); testlane2.DrawBlock(BgdLayer); testlane3.DrawBlock(BgdLayer); testlane4.DrawBlock(BgdLayer);
+	//testlane1.DrawBlock(BgdLayer); testlane2.DrawBlock(BgdLayer); testlane3.DrawBlock(BgdLayer); testlane4.DrawBlock(BgdLayer);
 	BgdLayer.display();
 
 
