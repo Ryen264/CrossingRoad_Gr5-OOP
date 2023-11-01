@@ -17,6 +17,10 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
 	//set colors
 	if (isRight) {
+		
+
+	}	
+	else {
 		block[3][1].bgdColor = SKY_BLUE;
 		block[3][1].txtColor = WHITE;
 		block[4][1].txtColor = SKY_BLUE;
@@ -51,9 +55,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[8][3].txtColor = BRIGHT_YELLOW;
 		block[9][3].txtColor = ORANGE;
 
-
-	}	
-	else {
 	}
 		
 }
