@@ -17,8 +17,37 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
 	//set colors
 	if (isRight) {
-		
-
+		block[12][1].txtColor = WHITE;
+		block[12][1].bgdColor = SKY_BLUE;
+		block[11][1].txtColor = SKY_BLUE;
+		block[10][1].txtColor = BLACK;
+		block[10][1].bgdColor = SKY_BLUE;
+		block[9][1].txtColor = WHITE;
+		block[9][1].bgdColor = SKY_BLUE;
+		block[8][1].txtColor = SKY_BLUE;
+		block[8][2].txtColor = SKY_BLUE;
+		block[9][2].txtColor = SKY_BLUE;
+		block[10][2].txtColor = BRIGHT_YELLOW;
+		block[10][2].bgdColor = BLACK;
+		block[11][2].txtColor = BRIGHT_YELLOW;
+		block[12][2].txtColor = BRIGHT_YELLOW;
+		block[13][2].txtColor = BRIGHT_YELLOW;
+		block[13][2].bgdColor = BLACK;
+		block[14][2].txtColor = BRIGHT_YELLOW;
+		block[15][2].txtColor = BRIGHT_YELLOW;
+		for (int i = 8; i <= 13; i++)
+		{
+			block[i][3].txtColor = SKY_BLUE;
+		}
+		block[4][2].txtColor = BRIGHT_YELLOW;
+		block[4][2].bgdColor = ORANGE;
+		block[5][2].txtColor = ORANGE;
+		block[5][2].bgdColor = BRIGHT_YELLOW;
+		block[6][2].txtColor = BRIGHT_YELLOW;
+		block[6][2].bgdColor = ORANGE;
+		block[7][2].txtColor = ORANGE;
+		block[6][3].txtColor = ORANGE;
+		block[7][3].txtColor = BRIGHT_YELLOW;
 	}	
 	else {
 		block[3][1].bgdColor = SKY_BLUE;
