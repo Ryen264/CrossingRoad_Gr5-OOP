@@ -20,4 +20,5 @@ L"                "
 	};
 public:
 	CCAR(int x = 0, int y = 0, int isRight = true);
+	~CCAR();
 };

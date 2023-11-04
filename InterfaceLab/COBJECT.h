@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "CGRAPHIC.h"
+const int BOARD_HEIGHT = 5;
+const int BOARD_WIDTH = 5;
 class COBJECT {
 	bool isRight;
 	const vector <wstring> FRAME_RIGHT = {

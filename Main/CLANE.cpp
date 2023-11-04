@@ -8,30 +8,34 @@ bool CLANE::checkPos(int pos) {
 void CLANE::Move() {
     //Random push a car
     if (this->isMoveRight) {
-        if (rand() % 10 == 1)
-            this->lane.push_front(new COBJECT);
-        else
-            this->lane.push_front(NULL);
         COBJECT* back = lane.back();
         if (back != NULL)
             delete back;
         this->lane.pop_back();
+        if (rand() % 10 == 0)
+            this->lane.push_front(new COBJECT);
+        else
+            this->lane.push_front(NULL);
     }
     else {
-        if (rand() % 10 == 1)
-            this->lane.push_back(new COBJECT);
-        else
-            this->lane.push_back(NULL);
         COBJECT* front = lane.front();
         if (front != NULL)
             delete front;
         this->lane.pop_front();
+        if (rand() % 10 == 0)
+            this->lane.push_back(new COBJECT);
+        else
+            this->lane.push_back(NULL);
     }
 }
-void CLANE::DrawBlock(CGRAPHIC& layer) {
-    if (this->numberOfBlock == 1) {
-        for (int i = 0; i < BLOCK_WIDTH; i++)
-            for (int j = 0; j < BLOCK_HEIGHT; j++)
-                layer.screen[this->x + i][this->y + j] = block[i][j];
+void CLANE::DrawLane(CGRAPHIC& layer) {
+    for (int k = 0; k < BOARD_WIDTH; k++) {
+        for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
+            for (int j = 0; j < BLOCK_HEIGHT * this->numberOfHeight; j++)
+                layer.screen[this->x + k * BLOCK_WIDTH * this->numberOfWidth + i][this->y + j] = block[i][j];
+
     }
+}
+void CLANE::DrawObject(CGRAPHIC& layer, int pos) {
+    this->lane[pos]->DrawBlock(layer);
 }

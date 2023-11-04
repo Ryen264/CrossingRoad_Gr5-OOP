@@ -32,7 +32,9 @@ void CGAME::start() {
 	system("cls");
 	this->intro();
 	_getch();
+
 	while (this->Menu() != QUIT_CODE);
+
 	this->outtro();
 	_getch();
 	system("cls");
@@ -40,14 +42,13 @@ void CGAME::start() {
 }
 void CGAME::resetData() {
 	this->cPlayer->set(BOARD_WIDTH / 2, START_HEIGHT, true, 0);
-	for (int i = 0; i < (int)this->aLanes.size(); i++) {
+	while (!this->aLanes.empty()) {
 		CLANE* pointer = this->aLanes.back();
-		this->aLanes.pop_back();
 		if (pointer != NULL)
 			delete pointer;
 		pointer = NULL;
+		this->aLanes.pop_back();
 	}
-	this->aLanes.clear();
 	for (int i = 0; i < BOARD_HEIGHT; i++) {
 		switch (rand() % NUMBER_OF_TYPE_LANE) {
 		case 0: {
@@ -90,6 +91,46 @@ int CGAME::Menu() {
 	return 0;
 }
 void CGAME::NewGame() {
+	system("cls");
+	isThreadRunning = true;
+	thread threadNewGame(&CGAME::SubThreadNewGame, this);
+	this->resetData();
+	while (!this->cPlayer->isDead()) {
+		if (!_kbhit()) continue;
+		int temp = toupper(_getch());
+		switch (temp) {
+		case 'W': {
+			this->cPlayer->Up();
+			break;
+		}
+		case 'S': {
+			this->cPlayer->Down();
+			break;
+		}
+		case 'A': {
+			this->cPlayer->Left();
+			break;
+		}
+		case 'D': {
+			this->cPlayer->Right();
+			break;
+		}
+		case 'P': {
+			if (Pause(threadNewGame.native_handle()) == BACK_TO_MENU_CODE) {
+				exitThread(&threadNewGame);
+				return;
+			}
+		}
+		case 'Y': {
+			cout << "Press again!" << endl;
+			break;
+		}
+		}
+		temp = 0;
+	}
+	threadNewGame.join();
+}
+void CGAME::NewGame1() {
 	system("cls");
 	isThreadRunning = true;
 	thread threadNewGame(&CGAME::SubThreadNewGame, this);

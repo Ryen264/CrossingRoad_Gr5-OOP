@@ -2,6 +2,8 @@
 #include "CGRAPHIC.h"
 #include "CPLAYER.h"
 #include "CVEHICLELANE.h"
+#include "CGRASSLANE.h"
+
 #include <vector>
 #include <iostream>
 #include <conio.h>
@@ -10,9 +12,7 @@
 #include <condition_variable>
 using namespace std;
 class CGAME {
-    const int START_HEIGHT = 0;
-    const int FINISH_HEIGHT = 10;
-    const int NUMBER_OF_TYPE_LANE = 1;
+    const int NUMBER_OF_TYPE_LANE = 2;
 
     CPLAYER* cPlayer;
     vector<CLANE*> aLanes;
@@ -35,6 +35,7 @@ public:
     ~CGAME();
     void start();
     void resetData();
+    void resetMap();
     //void saveData();
 
     int Menu();
@@ -59,5 +60,7 @@ public:
     void drawPause();
     void drawPlayAgain();
 
+    void displayBgd();
+    void displayObj();
     void displayScreen();
 };

@@ -10,6 +10,6 @@ L"  ▀▀▀   ▀█▄ ▄█▀ ",
 L"          ▀ ▀   "
 	};
 public:
-	CGRASSLANE(int width, int x = 0, int y = 0);
+	CGRASSLANE(int x = 0, int y = 0);
 	~CGRASSLANE();
 };

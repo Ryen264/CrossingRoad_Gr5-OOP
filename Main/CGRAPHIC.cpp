@@ -51,14 +51,15 @@ void CGRAPHIC::display(int fromX, int fromY, int toX, int toY) {
 	WORD pColor;
 	for (int y = fromY; y <= toY; y++)
 		for (int x = fromX; x <= toX; x++) {
+			if (this->screen[x][y].txtColor == -1)
+				continue;
 			COORD cPos = { x, y };
 			if (this->screen[x][y].buffer != L' ')
 				pBuffer = this->screen[x][y].buffer;
 			else
 				ReadConsoleOutputCharacter(hStdout, &pBuffer, 1, cPos, &dwBytesWritten);
 			ReadConsoleOutputAttribute(hStdout, &pColor, 1, cPos, &dwBytesWritten);
-			if (this->screen[x][y].txtColor != -1)
-				pColor = pColor - (pColor % 16) + this->screen[x][y].txtColor;
+			pColor = pColor - (pColor % 16) + this->screen[x][y].txtColor;
 			if (this->screen[x][y].bgdColor != -1)
 				pColor = pColor - 16 * (pColor / 16) + 16 * this->screen[x][y].bgdColor;
 			WriteConsoleOutputCharacter(hStdout, &pBuffer, 1, cPos, &dwBytesWritten);

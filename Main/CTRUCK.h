@@ -20,4 +20,5 @@ L"                "
 	};
 public:
 	CTRUCK(int x = 0, int y = 0, int isRight = true);
+	~CTRUCK();
 };

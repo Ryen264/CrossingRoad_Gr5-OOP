@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "CGRAPHIC.h"
+#include "COBJECT.h"
 class CLANE {
 	const vector <wstring> FRAME = {
 L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",

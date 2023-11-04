@@ -3,6 +3,11 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+const int SCREEN_HEIGHT = 50;
+const int SCREEN_WIDTH = 100;
+const int BLOCK_HEIGHT = 6;
+const int BLOCK_WIDTH = 16;
+
 struct THEME {
 	COLORREF colorTable[16];
 	int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
@@ -26,17 +31,13 @@ SADDLE_BROWN, DARK_RED, RED, ORANGE,
 DARK_VIOLET, TOMATO, LIGHT_CYAN, LIGHT_GRAY,
 FELD_GRAU, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN;
 
-const int SCREEN_HEIGHT = 10;
-const int SCREEN_WIDTH = 20;
-const int BLOCK_HEIGHT = 6;
-const int BLOCK_WIDTH = 16;
-
 void SetupTheme(THEME theme = THEME_BASIC);
 
 struct PIXEL {
 	wchar_t buffer;
 	int txtColor, bgdColor;
 };
+
 class CGRAPHIC {
 public:
 	PIXEL** screen;

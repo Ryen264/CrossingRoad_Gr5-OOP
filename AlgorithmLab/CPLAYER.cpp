@@ -30,16 +30,20 @@ void CPLAYER::decreaseScore(int point) {
     this->score -= point;
 }
 void CPLAYER::Up(int step) {
-    this->y -= step;
+    if (this->y > 0)
+        this->y -= step;
 }
 void CPLAYER::Down(int step) {
-    this->y += step;
+    if (this->y < BOARD_HEIGHT - 1)
+        this->y += step;
 }
 void CPLAYER::Left(int step) {
-    this->x -= step;
+    if (this->x > 0)
+        this->x -= step;
 }
 void CPLAYER::Right(int step) {
-    this->x += step;
+    if (this->x < BOARD_WIDTH - 1)
+        this->x += step;
 }
 bool CPLAYER::isFinish(int finishHeight) {
     return this->y >= finishHeight - 1;

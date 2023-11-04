@@ -5,6 +5,8 @@ class CPLAYER {
 	int x, y;
 	bool alive;
 	int score;
+	const int BOARD_HEIGHT = 10;
+	const int BOARD_WIDTH = 20;
 public:
 	CPLAYER(int firstX = 0, int firstY = 0);
 	int getX();
