@@ -17,7 +17,9 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
 	//set colors
 	if (isRight) {
-		block[12][1].txtColor = WHITE;
+		          // VE PERRY
+
+		/*block[12][1].txtColor = WHITE;
 		block[12][1].bgdColor = SKY_BLUE;
 		block[11][1].txtColor = SKY_BLUE;
 		block[10][1].txtColor = BLACK;
@@ -47,10 +49,18 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[6][2].bgdColor = ORANGE;
 		block[7][2].txtColor = ORANGE;
 		block[6][3].txtColor = ORANGE;
-		block[7][3].txtColor = BRIGHT_YELLOW;
+		block[7][3].txtColor = BRIGHT_YELLOW;*/
+
+		       // VE DUONG SONG
+		for (int i = 0; i < 16; i++)
+		{
+			block[i][0].txtColor = BLUE;
+		}
 	}	
 	else {
-		block[3][1].bgdColor = SKY_BLUE;
+		        //VE PERRY
+
+		/*block[3][1].bgdColor = SKY_BLUE;
 		block[3][1].txtColor = WHITE;
 		block[4][1].txtColor = SKY_BLUE;
 		block[5][1].bgdColor = SKY_BLUE;
@@ -82,8 +92,100 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 			block[i][3].txtColor = SKY_BLUE;
 		}
 		block[8][3].txtColor = BRIGHT_YELLOW;
-		block[9][3].txtColor = ORANGE;
+		block[9][3].txtColor = ORANGE;*/
 
+		      //VE DUONG SONG
+		for (int i = 0; i < 16; i++)
+		{
+			block[i][0].txtColor = BLUE;
+		}
+		block[0][1].txtColor = BLUE;
+		block[1][1].txtColor = BLUE;
+		block[1][1].bgdColor = WHITE;
+		block[2][1].txtColor = BLUE;
+		block[2][1].bgdColor = WHITE;
+		block[3][1].txtColor = BLUE;
+		block[3][1].bgdColor = WHITE;
+		block[4][1].txtColor = BLUE;
+		block[5][1].txtColor = BLUE;
+		block[5][1].bgdColor = WHITE;
+		for (int i = 6; i <= 9; i++)
+		{
+			block[i][1].txtColor = BLUE;
+		}
+		block[10][1].txtColor = BLUE;
+		block[10][1].bgdColor = WHITE;
+		block[11][1].txtColor = BLUE;
+		block[11][1].bgdColor = WHITE;
+		block[12][1].txtColor = BLUE;
+		block[12][1].bgdColor = WHITE;
+
+		block[13][1].txtColor = BLUE;
+		block[14][1].txtColor = BLUE;
+		block[14][1].bgdColor = WHITE;
+		block[15][1].txtColor = BLUE;
+		for (int i = 0; i <= 5; i++)
+		{
+			block[i][2].txtColor = BLUE;
+		}
+		for (int i = 6; i <= 8; i++)
+		{
+			block[i][2].txtColor = BLUE;
+			block[i][2].bgdColor = WHITE;
+		}
+		block[9][2].txtColor = BLUE;
+		block[10][2].txtColor = BLUE;
+		block[10][2].bgdColor = WHITE;
+		for (int i = 11; i < 16; i++)
+		{
+			block[i][2].txtColor = BLUE;
+		}
+		block[0][3].txtColor = BLUE;
+		block[1][3].txtColor = BLUE;
+		for (int i = 2; i <= 4; i++)
+		{
+			block[i][3].txtColor = BLUE;
+			block[i][3].bgdColor = WHITE;
+		}
+		block[5][3].txtColor = BLUE;
+		block[6][3].txtColor = BLUE;
+		block[6][3].bgdColor = WHITE;
+		for (int i = 7; i <= 9; i++)
+		{
+			block[i][3].txtColor = BLUE;
+		}
+		for (int i = 10; i <= 12; i++)
+		{
+			block[i][3].txtColor = BLUE;
+			block[i][3].bgdColor = WHITE;
+		}
+		block[13][3].txtColor = BLUE;
+		block[14][3].txtColor = BLUE;
+		block[14][3].bgdColor = WHITE;
+		block[15][3].txtColor = BLUE;
+		for (int i = 0; i < 16; i++)
+		{
+			block[i][4].txtColor = BLUE;
+		}
+		for (int i = 8; i <= 10; i++)
+		{
+			block[i][4].txtColor = BLUE;
+			block[i][4].bgdColor = WHITE;
+		}
+		block[12][4].txtColor = BLUE;
+		block[12][4].bgdColor = WHITE;
+		for (int i = 0; i < 16; i++)
+		{
+			block[i][5].txtColor = BLUE;
+		}
+		for (int i = 2; i <= 4; i++)
+		{
+			block[i][5].txtColor = BLUE;
+			block[i][5].bgdColor = WHITE;
+		}
+		block[6][5].txtColor = BLUE;
+		block[6][5].bgdColor = WHITE;
+		
 	}
 		
 }

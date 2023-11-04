@@ -17,7 +17,7 @@ void SetupTheme(THEME theme) {
 	//setup color ids
 	BLACK = theme.BLACK; SKY_BLUE = theme.SKY_BLUE; WHITE = theme.WHITE; DARK_GREEN = theme.DARK_GREEN;
 	SADDLE_BROWN = theme.SADDLE_BROWN; DARK_RED = theme.DARK_RED; RED = theme.RED; ORANGE = theme.ORANGE;
-	DARK_VIOLET = theme.DARK_VIOLET; TOMATO = theme.TOMATO; LIGHT_CYAN = theme.LIGHT_CYAN; LIGHT_GRAY = theme.LIGHT_GRAY;
+	BLUE = theme.BLUE; DARK_BLUE = theme.DARK_BLUE; LIGHT_CYAN = theme.LIGHT_CYAN; LIGHT_GRAY = theme.LIGHT_GRAY;
 	FELD_GRAU = theme.FELD_GRAU; BRIGHT_YELLOW = theme.BRIGHT_YELLOW; LIGHT_GREEN = theme.LIGHT_GREEN; LIGHT_BROWN = theme.LIGHT_BROWN;
 	SetConsoleScreenBufferInfoEx(hStdout, &csbiex);
 }
