@@ -26,6 +26,9 @@ void CPLAYER::set(int x, int y, bool alive, int score) {
     if (score >= 0)
         this->score = score;
 }
+bool CPLAYER::setIsRight() {
+    return this->isRight;
+}
 void CPLAYER::setFinish(bool finish) {
     this->finish = false;
 }

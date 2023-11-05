@@ -40,6 +40,7 @@ void CGAME::start() {
 	system("cls");
 	//resetConsole(); - anti-Configure 
 }
+
 void CGAME::resetData() {
 	this->cPlayer->set(BOARD_WIDTH / 2, START_HEIGHT, true, 0);
 	while (!this->aLanes.empty()) {
@@ -60,6 +61,13 @@ void CGAME::resetData() {
 		}
 	}
 }
+void saveData();
+void loadData();
+string inputUserTxt();
+int inputUserNumber();
+void saveFileNameList();
+void loadFileNameList();
+
 int CGAME::Menu() {
 	system("cls");
 	this->drawMenu();
@@ -130,47 +138,10 @@ void CGAME::NewGame() {
 	}
 	threadNewGame.join();
 }
-void CGAME::NewGame1() {
-	system("cls");
-	isThreadRunning = true;
-	thread threadNewGame(&CGAME::SubThreadNewGame, this);
-	this->resetData();
-	while (!this->cPlayer->isDead()) {
-		if (!_kbhit()) continue;
-		int temp = toupper(_getch());
-		switch (temp) {
-		case 'W': {
-			this->cPlayer->Up();
-			break;
-		}
-		case 'S': {
-			this->cPlayer->Down();
-			break;
-		}
-		case 'A': {
-			this->cPlayer->Left();
-			break;
-		}
-		case 'D': {
-			this->cPlayer->Right();
-			break;
-		}
-		case 'P': {
-			if (Pause(threadNewGame.native_handle()) == BACK_TO_MENU_CODE) {
-				exitThread(&threadNewGame);
-				return;
-			}
-		}
-		case 'Y': {
-			cout << "Press again!" << endl;
-			break;
-		}
-		}
-		temp = 0;
-	}
-	threadNewGame.join();
-}
 void CGAME::LoadGame() {
+
+}
+void CGAME::SaveGame() {
 
 }
 void CGAME::Setting() {
@@ -199,7 +170,7 @@ void CGAME::SubThreadNewGame() {
 			else {
 				this->cPlayer->set(-1, -1, false);
 				isThreadRunning = false;
-				cv.notify_all();
+				//cv.notify_all();
 				return;
 			}
 		}
@@ -212,7 +183,7 @@ void CGAME::SubThreadNewGame() {
 			//Change direction of a line
 			this->aLanes[rand() % BOARD_HEIGHT]->changeDirection();
 		}
-		lock.unlock();
+		//lock.unlock();
 		Sleep(100);
 	}
 }
@@ -308,3 +279,8 @@ void CGAME::drawPause() {
 void CGAME::drawPlayAgain() {
 	cout << "Play again (Y/N)?" << endl;
 }
+void drawSaveGame();
+void drawLoadGame();
+void drawInputUserTxt();
+void drawInputUserNumber();
+

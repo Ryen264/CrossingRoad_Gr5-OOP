@@ -42,39 +42,127 @@ void CGAME::start() {
 	system("cls");
 	//resetConsole(); - anti-Configure 
 }
-void CGAME::resetData() {
-	this->cPlayer->set(BOARD_WIDTH / 2, 0, true, 0);
-	while (!this->aLanes.empty()) {
-		CLANE* pointer = this->aLanes.back();
-		this->aLanes.pop_back();
-		if (pointer != NULL)
-			delete pointer;
+void CGAME::playGame() {
+	this->startMap();
+	system("cls");
+	isThreadRunning = true;
+	thread threadNewGame(&CGAME::SubThreadNewGame, this);
+	while (1) {
+		if (!this->cPlayer->isDead()) {
+			int temp = toupper(_getch());
+			switch (temp) {
+			case 'W': case 'S': case 'A': case 'D': {
+				this->cPlayer->setMove(temp);
+				break;
+			}
+			case 'P': {
+				if (Pause(threadNewGame.native_handle()) == BACK_TO_MENU_CODE) {
+					this->exitThread(&threadNewGame);
+					return;
+				}
+			}
+			}
+		}
+		else {
+			if (this->isReset()) {
+				this->resetData();
+				this->startMap();
+			}
+			else {
+				this->exitThread(&threadNewGame);
+				return;
+			}
+		}
 	}
-	this->aLanes.clear();
-	this->aLanes.push_back(new CGRASSLANE(0, 0));
-	for (int i = 1; i < BOARD_HEIGHT - 1; i++) {
-		switch (rand() % NUMBER_OF_TYPE_LANE) {
-		case 0: {
-			this->aLanes.push_back(new CVEHICLELANE(0, i * BLOCK_HEIGHT));
-			break;
-		}
-		case 1: {
-			this->aLanes.push_back(new CGRASSLANE(0, i * BLOCK_HEIGHT));
-			break;
-		}
-		default:
-			this->aLanes.push_back(NULL);
-		}
-	}
-	this->aLanes.push_back(new CGRASSLANE(0, BOARD_HEIGHT - 1));
 }
-void CGAME::resetMap() {
+void CGAME::startMap() {
 	//for (int i = 0; i < BOARD_HEIGHT; i++)
 	//	this->aLanes[i]->DrawLane(BgdLayer);
 	this->cPlayer->drawCharacter(ObjLayer);
 	this->displayBgd();
 	this->displayObj();
 }
+
+void CGAME::resetData() {
+	this->cPlayer->set(BOARD_WIDTH / 2, 0, true, 0);
+	while (!this->aLanes.empty()) {
+		CLANE* pointer = this->aLanes.back();
+		if (pointer != NULL)
+			delete pointer;
+		pointer = NULL;
+		this->aLanes.pop_back();
+	}
+	for (int i = 0; i < BOARD_HEIGHT; i++) {
+		switch (rand() % NUMBER_OF_TYPE_LANE) {
+		case 0: {
+			this->aLanes.push_back(new CVEHICLELANE);
+			break;
+		}
+		default:
+			this->aLanes.push_back(NULL);
+		}
+	}
+}
+void CGAME::saveData(string fileName) {
+	ofstream file(fileName, ios::out);
+	
+	if(file.is_open()){
+		// <x> <y> <score> <isRight> //Thông tin người chơi
+		file << cPlayer->getX() << " " << cPlayer->getY() << " " << cPlayer->getScore() << endl;
+		//file << level;
+		for(int i=0;i<BOARD_HEIGHT;i++){
+			file << ((this->cPlayer->setIsRight()) ? "r" : "l") << " ";
+			for(int j=0;j<BOARD_WIDTH;j++){
+				file<<(aLanes[i]->checkPos(j)?1:0);
+			}
+			file<<endl;
+		}
+		file << endl;
+		file.close();
+	}else{
+		cout << "Cant open file." << endl;
+	}
+}
+void CGAME::loadData(string fileName) {
+
+}
+string CGAME::inputUserTxt() {
+	string fileName;
+	cout << "Enter the file name: ";
+	getline(cin, fileName);
+	return fileName;
+}
+int CGAME::inputUserNumber() {
+	int n{};
+	cout << "Enter the number: ";
+	cin >> n;
+	return n;
+}
+void CGAME::saveFileNameList() {
+	fstream outFile("file_name_list.txt", fstream::out);
+	if (outFile.fail())
+		return;
+	int size = (int)fileNameList.size();
+	outFile << size << endl;
+	for (int i = 0; i < size; i++)
+		outFile << fileNameList[i] << endl;
+	outFile.close();
+}
+void CGAME::loadFileNameList() {
+	fstream inFile("file_name_list.txt", fstream::in);
+	if (inFile.fail())
+		return;
+	fileNameList.clear();
+	int size{};
+	inFile >> size;
+	string fileName;
+	for (int i = 0; i < size; i++) {
+		inFile >> fileName;
+		fileNameList.push_front(fileName);
+	}
+	inFile.close();
+}
+
 int CGAME::Menu() {
 	system("cls");
 	this->drawMenu();
@@ -106,42 +194,25 @@ int CGAME::Menu() {
 	return 0;
 }
 void CGAME::NewGame() {
-	system("cls");
-	isThreadRunning = true;
-	thread threadNewGame(&CGAME::SubThreadNewGame, this);
 	this->resetData();
-	this->resetMap();
-	while (1) {
-		if (!this->cPlayer->isDead()) {
-			int temp = toupper(_getch());
-			switch (temp) {
-			case 'W': case 'S': case 'A': case 'D': {
-				this->cPlayer->setMove(temp);
-				break;
-			}
-			case 'P': {
-				if (Pause(threadNewGame.native_handle()) == BACK_TO_MENU_CODE) {
-					this->exitThread(&threadNewGame);
-					return;
-				}
-			}
-			}
-		}
-		else {
-			if (this->isReset()) {
-				this->resetData();
-				this->resetMap();
-			}
-			else {
-				this->exitThread(&threadNewGame);
-				//cv.notify_all();
-				return;
-			}
-		}
-	}
+	this->playGame();
 }
 void CGAME::LoadGame() {
+	//drawLoadGame
+	//input user
+	this->loadData();	//cap nhat bien
+	this->playGame();
+}
+void CGAME::SaveGame() {
+	drawSaveGame();
+	string fileName=inputUserTxt();
 
+	if(fileNameList.size()>10){
+		fileNameList.pop_back();
+	}
+	fileNameList.push_back(fileName);
+	saveFileNameList();
+	saveData(fileName);
 }
 void CGAME::Setting() {
 
@@ -155,8 +226,6 @@ void CGAME::About() {
 
 void CGAME::SubThreadNewGame() {
 	while (isThreadRunning) {
-		//unique_lock<mutex> lock(mtx);
-		//cv.wait(lock, [this] {return isThreadRunning; });
 		if (!this->cPlayer->isDead()) {
 			this->cPlayer->eraseCharacter(ObjLayer);
 			this->cPlayer->moveCharacter();
@@ -195,7 +264,6 @@ void CGAME::resumeThread(HANDLE t) {
 		ResumeThread(t);
 }
 int CGAME::Pause(HANDLE t) {
-	unique_lock<mutex> lock(mtx);
 	SuspendThread(t);
 	//setup tmpLayers
 	system("cls");
@@ -204,17 +272,14 @@ int CGAME::Pause(HANDLE t) {
 	switch (key) {
 	case '1': {
 		this->resumeThread(t);
-		cv.notify_all();
 		break;
 	}
 	case'6': {
 		this->resumeThread(t);
-		lock.unlock();
 		return BACK_TO_MENU_CODE;
 	}
 	default:
 		this->resumeThread(t);
-		cv.notify_all();
 	}
 	return 0;
 }
@@ -283,11 +348,14 @@ void CGAME::drawPause() {
 void CGAME::drawPlayAgain() {
 	cout << "Play again (Y/N)?" << endl;
 }
+void drawSaveGame();
+void drawLoadGame();
+void drawInputUserTxt();
+void drawInputUserNumber();
 
 void CGAME::displayBgd() {
 	BgdLayer.display();
 }
-
 void CGAME::displayObj() {
 	for (int i = 0; i < SCREEN_WIDTH; i++)
 		for (int j = 0; j < SCREEN_HEIGHT; j++)
@@ -295,7 +363,6 @@ void CGAME::displayObj() {
 				ObjLayer.screen[i][j].bgdColor = BgdLayer.screen[i][j].bgdColor;
 	ObjLayer.display();
 }
-
 void CGAME::displayScreen() {
 	BgdLayer.display();
 	ObjLayer.display();

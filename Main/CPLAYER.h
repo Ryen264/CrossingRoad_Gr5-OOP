@@ -16,6 +16,7 @@ public:
 	int getY();
 	int getScore();
 	void set(int x = -1, int y = -1, bool alive = true, int score = -1);
+	bool setIsRight();
 	void setFinish(bool finish);
 	void setAlive(bool alive);
 	void setMove(int moving);

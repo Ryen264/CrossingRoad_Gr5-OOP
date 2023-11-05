@@ -37,7 +37,7 @@ public:
     int Menu();
     void NewGame();
     void NewGame1();
-
+    void SaveGame();
     void LoadGame();
     void Setting();
     void Help();
