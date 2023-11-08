@@ -7,14 +7,16 @@ class CLANE {
 protected:
 	deque<COBJECT*> lane;
 	bool isMoveRight; //chiều di chuyển
-	int heightID;
+	bool isStop = false;
+	int timeCount = 0;
 
 	int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1;
 	PIXEL** block = NULL;
 public:
-	void changeDirection();
+	virtual void changeDirection();
 	bool checkPos(int pos);
 	virtual void Move();
+	virtual bool isMove() const;
 	void DrawLane(CGRAPHIC& layer);
-	void DrawObject(CGRAPHIC& layer, int pos);
+	void DrawObjects(CGRAPHIC& layer);
 };

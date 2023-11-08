@@ -70,7 +70,7 @@ public:
     void resumeThread(HANDLE t);
     int Pause(HANDLE t);
 
-    bool isInjured();
+    bool isInjured() const;
     bool isReset();
 
     void intro();

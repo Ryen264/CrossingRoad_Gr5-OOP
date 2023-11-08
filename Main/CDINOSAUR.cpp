@@ -33,7 +33,6 @@ CDINOSAUR::CDINOSAUR(int x, int y, bool isRight) {
 
 		block[4][1].bgdColor = BLACK;
 		block[2][2].txtColor = DARK_GREEN;
-		//block[4][1].txtColor = DARK_GREEN;
 		block[5][1].txtColor = DARK_GREEN;
 		block[3][3].bgdColor = DARK_GREEN;
 		block[5][3].txtColor = DARK_GREEN;

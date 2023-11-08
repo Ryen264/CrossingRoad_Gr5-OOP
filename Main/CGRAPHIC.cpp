@@ -1,7 +1,7 @@
 #include "CGRAPHIC.h"
 int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
 SADDLE_BROWN, DARK_RED, RED, ORANGE,
-DARK_VIOLET, TOMATO, LIGHT_CYAN, LIGHT_GRAY,
+BLUE, DARK_BLUE, LIGHT_CYAN, LIGHT_GRAY,
 FELD_GRAU, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN;
 
 void SetupTheme(THEME theme) {
@@ -51,18 +51,11 @@ void CGRAPHIC::display(int fromX, int fromY, int toX, int toY) {
 	WORD pColor;
 	for (int y = fromY; y <= toY; y++)
 		for (int x = fromX; x <= toX; x++) {
-			if (this->screen[x][y].txtColor == -1)
-				continue;
 			COORD cPos = { x, y };
-			if (this->screen[x][y].buffer != L' ')
-				pBuffer = this->screen[x][y].buffer;
-			else
-				ReadConsoleOutputCharacter(hStdout, &pBuffer, 1, cPos, &dwBytesWritten);
-			ReadConsoleOutputAttribute(hStdout, &pColor, 1, cPos, &dwBytesWritten);
-			pColor = pColor - (pColor % 16) + this->screen[x][y].txtColor;
-			if (this->screen[x][y].bgdColor != -1)
-				pColor = pColor - 16 * (pColor / 16) + 16 * this->screen[x][y].bgdColor;
+			pBuffer = (screen[x][y].buffer == L'@') ? L' ' : screen[x][y].buffer;
 			WriteConsoleOutputCharacter(hStdout, &pBuffer, 1, cPos, &dwBytesWritten);
+
+			pColor = screen[x][y].bgdColor * 16 + screen[x][y].txtColor;
 			WriteConsoleOutputAttribute(hStdout, &pColor, 1, cPos, &dwBytesWritten);
 		}
 }

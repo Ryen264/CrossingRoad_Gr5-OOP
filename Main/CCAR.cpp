@@ -1,6 +1,7 @@
 #include "CCAR.h"
 CCAR::CCAR(int x, int y, int isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
+	
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
 
 	this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];

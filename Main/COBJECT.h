@@ -7,5 +7,6 @@ protected:
 	int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1;
 	PIXEL** block;
 public:
+	void setPos(int x, int y);
 	void DrawBlock(CGRAPHIC& layer);
 };
