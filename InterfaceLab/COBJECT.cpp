@@ -51,8 +51,9 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[6][3].txtColor = ORANGE;
 		block[7][3].txtColor = BRIGHT_YELLOW;*/
 
+
 		       // VE DUONG SONG
-		for (int i = 0; i < 2; i++)
+		/*for (int i = 0; i < 2; i++)
 		{
 			block[i][0].txtColor = LIGHT_GREEN;
 		}
@@ -184,7 +185,10 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 			block[i][5].bgdColor = WHITE;
 		}
 		block[6][5].txtColor = BLUE;
-		block[6][5].bgdColor = WHITE;
+		block[6][5].bgdColor = WHITE;*/
+
+// VE PAUSE GAME
+
 	}	
 	else {
 		        //VE PERRY
@@ -223,8 +227,10 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[8][3].txtColor = BRIGHT_YELLOW;
 		block[9][3].txtColor = ORANGE;*/
 
-		      //VE DUONG SONG
-		for (int i = 0; i < 2; i++)
+		     
+		
+		//VE DUONG SONG
+		/*for (int i = 0; i < 2; i++)
 		{
 			block[i][0].txtColor = LIGHT_GREEN;
 		}
@@ -356,7 +362,9 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 			block[i][5].bgdColor = WHITE;
 		}
 		block[6][5].txtColor = BLUE;
-		block[6][5].bgdColor = WHITE;
+		block[6][5].bgdColor = WHITE;*/
+
+        //VE PAUSE GAME
 		
 	}
 		

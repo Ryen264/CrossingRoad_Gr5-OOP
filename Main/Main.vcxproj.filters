@@ -54,6 +54,9 @@
     <ClCompile Include="CPERRY.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CCAPYBARA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLANE.h">
@@ -90,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CPERRY.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CCAPYBARA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

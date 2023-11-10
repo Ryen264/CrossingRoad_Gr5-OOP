@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CCAPYBARA.cpp" />
     <ClCompile Include="CCAR.cpp" />
     <ClCompile Include="CDINOSAUR.cpp" />
     <ClCompile Include="CGRAPHIC.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CCAPYBARA.h" />
     <ClInclude Include="CCAR.h" />
     <ClInclude Include="CDINOSAUR.h" />
     <ClInclude Include="CGRAPHIC.h" />
