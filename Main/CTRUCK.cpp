@@ -1,65 +1,72 @@
 #include "CTRUCK.h"
+#include "CTRUCK.h"
 CTRUCK::CTRUCK(int x, int y, int isRight) {
+	this->numberOfBlock = 1;
 	this->x = x; this->y = y; this->isRight = isRight;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
 
-	this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
-	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-		this->block[i] = new PIXEL[BLOCK_HEIGHT * this->numberOfHeight];
-
 	//set buffer
-	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-		for (int j = 0; j < BLOCK_HEIGHT * this->numberOfHeight; j++)
+	for (int i = 0; i < BLOCK_WIDTH; i++)
+		for (int j = 0; j < BLOCK_HEIGHT; j++)
 			if (frame[j][i] != L' ')
-				this->block[i][j] = { frame[j][i], RED, -1 };
+				this->block[i][j] = { frame[j][i], DARK_GREEN, -1 };
 			else
 				this->block[i][j] = { frame[j][i], -1, -1 };
 
 	//set colors
 	if (isRight) {
-		block[3][1].txtColor = DARK_RED;
-		block[4][1].txtColor = DARK_RED;
-		block[10][1].txtColor = DARK_RED;
-		block[11][1].txtColor = DARK_RED;
-		block[9][1].txtColor = SKY_BLUE;
-		block[12][1].txtColor = BRIGHT_YELLOW;
-
-		block[5][2].txtColor = DARK_RED;
-		block[5][2].bgdColor = RED;
-		block[6][2].txtColor = DARK_RED;
-		block[6][2].bgdColor = RED;
-		block[7][2].txtColor = DARK_RED;
-		block[7][2].bgdColor = RED;
-		block[8][2].txtColor = DARK_RED;
-		block[8][2].bgdColor = RED;
-		block[9][2].txtColor = SKY_BLUE;
-
-		block[3][3].txtColor = DARK_RED;
-		block[4][3].txtColor = DARK_RED;
-		block[9][3].txtColor = DARK_RED;
-		block[5][3].txtColor = DARK_RED;
-		block[5][3].bgdColor = SKY_BLUE;
-		block[6][3].txtColor = DARK_RED;
-		block[6][3].bgdColor = SKY_BLUE;
-		block[7][3].txtColor = DARK_RED;
-		block[7][3].bgdColor = SKY_BLUE;
-		block[8][3].txtColor = DARK_RED;
-		block[8][3].bgdColor = SKY_BLUE;
-		block[10][3].txtColor = DARK_RED;
-		block[10][3].bgdColor = RED;
-		block[11][3].txtColor = DARK_RED;
-		block[11][3].bgdColor = RED;
-		block[12][3].txtColor = BRIGHT_YELLOW;
-		block[12][3].bgdColor = RED;
-
+		block[14][1].txtColor = BRIGHT_YELLOW;
+		block[14][3].txtColor = BRIGHT_YELLOW;
+		for (int i = 12; i <= 14; i++) {
+			block[i][2].txtColor = LIGHT_GREEN;
+			block[i][3].bgdColor = LIGHT_GREEN;
+		}
+		block[11][1].txtColor = WHITE;
+		block[11][2].txtColor = WHITE;
+		block[3][4].txtColor = BLACK;
 		block[4][4].txtColor = BLACK;
-		block[5][4].txtColor = BLACK;
-		block[9][4].txtColor = BLACK;
-		block[10][4].txtColor = BLACK;
+		block[11][4].txtColor = BLACK;
+		block[12][4].txtColor = BLACK;
+		for (int i = 8; i <= 10; i++) {
+			block[i][1].txtColor = LIGHT_GREEN;
+			block[i][2].bgdColor = LIGHT_GREEN;
+			block[i][3].bgdColor = WHITE;
+		}
+		block[7][1].txtColor = LIGHT_GREEN;
+		block[7][2].txtColor = LIGHT_GREEN;
+		for (int i = 2; i <= 6; i++) {
+			block[i][2].txtColor = LIGHT_GRAY;
+			block[i][2].bgdColor = DARK_GRAY;
+			block[i][3].bgdColor = DARK_GRAY;
+		}
 	}
 	else {
-
+		block[1][1].txtColor = BRIGHT_YELLOW;
+		block[1][3].txtColor = BRIGHT_YELLOW;
+		for (int i = 1; i <= 3; i++) {
+			block[i][2].txtColor = LIGHT_GREEN;
+			block[i][3].bgdColor = LIGHT_GREEN;
+		}
+		block[4][1].txtColor = WHITE;
+		block[4][2].txtColor = WHITE;
+		block[3][4].txtColor = BLACK;
+		block[4][4].txtColor = BLACK;
+		block[11][4].txtColor = BLACK;
+		block[12][4].txtColor = BLACK;
+		for (int i = 5; i <= 8; i++) {
+			block[i][1].txtColor = LIGHT_GREEN;
+			block[i][2].bgdColor = LIGHT_GREEN;
+			block[i][3].bgdColor = WHITE;
+		}
+		block[8][1].txtColor = LIGHT_GREEN;
+		block[8][2].txtColor = LIGHT_GREEN;
+		for (int i = 9; i <= 13; i++) {
+			block[i][2].txtColor = LIGHT_GRAY;
+			block[i][2].bgdColor = DARK_GRAY;
+			block[i][3].bgdColor = DARK_GRAY;
+		}
 	}
+
 }
 CTRUCK::~CTRUCK() {
 	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)

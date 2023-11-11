@@ -57,6 +57,12 @@
     <ClCompile Include="CCAPYBARA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CBUS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CLANELIGHT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLANE.h">
@@ -96,6 +102,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CCAPYBARA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CBUS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CLANELIGHT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
