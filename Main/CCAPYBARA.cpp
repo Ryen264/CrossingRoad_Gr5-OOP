@@ -1,7 +1,6 @@
 #include "CCAPYBARA.h"
-CCAPYBARA::CCAPYBARA(int x, int y, int isRight) {
+CCAPYBARA::CCAPYBARA(int x, int y, bool isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
-
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
 
 	this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
@@ -85,9 +84,4 @@ CCAPYBARA::CCAPYBARA(int x, int y, int isRight) {
 	block[7][0].txtColor = BRIGHT_YELLOW;
 	block[8][0].txtColor = BRIGHT_YELLOW;
 	}
-}
-CCAPYBARA::~CCAPYBARA() {
-	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-		delete[] this->block[i];
-	delete[] this->block;
 }

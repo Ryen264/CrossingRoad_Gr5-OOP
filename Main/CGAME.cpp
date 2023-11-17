@@ -1,23 +1,8 @@
 ﻿#include "CGAME.h"
 //Friend functions
-void ShowCur(bool CursorVisibility)
-{
-	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_CURSOR_INFO ConCurInf{};
-
-	ConCurInf.dwSize = 10;
-	ConCurInf.bVisible = CursorVisibility;
-
-	SetConsoleCursorInfo(handle, &ConCurInf);
-}
-
 CGAME::CGAME() {
-	srand(time(0));
+	this->Configure();
 	this->cPlayer = new CPLAYER;
-
-	SetupTheme();
-	BgdLayer.clear(BLACK, WHITE);
-	ObjLayer.clear(BLACK, -1);
 }
 CGAME::~CGAME() {
 	delete this->cPlayer;
@@ -31,6 +16,48 @@ CGAME::~CGAME() {
 	}
 	ShowCur(true);
 }
+void CGAME::Configure()
+{
+	//Disable Button
+	HWND hWnd = GetConsoleWindow();
+	HMENU hMenu = GetSystemMenu(hWnd, false);
+	DeleteMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND);
+	ShowScrollbar(false);
+	DisableResizeWindow();
+	ShowCur(false);
+	SetConsoleTitle(L"CROSSY-ROAD-Project_Group-5_22CLC01_HCMUS");
+	//
+
+	//Setup zoom
+	CONSOLE_FONT_INFOEX cfiex;
+	cfiex.cbSize = sizeof(CONSOLE_FONT_INFOEX);
+
+	HANDLE hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetCurrentConsoleFontEx(hConsoleOutput, 0, &cfiex);
+	cfiex.dwFontSize.Y = 14;
+	SetCurrentConsoleFontEx(hConsoleOutput, 0, &cfiex);
+	//
+
+	//Setup WindowSize & ScreenBufferSize
+	RECT rectClient, rectWindow;
+	GetClientRect(hWnd, &rectClient);
+	GetWindowRect(hWnd, &rectWindow);
+
+	MoveWindow(hWnd, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, TRUE);
+
+	string sysStr = "mode " + to_string(SCREEN_WIDTH) + ", " + to_string(SCREEN_HEIGHT );
+	char* sysMode = new char[sysStr.size() + 1];
+	for (int i = 0; i < (int)sysStr.size(); i++) sysMode[i] = sysStr[i];
+	sysMode[sysStr.size()] = '\0';
+	system(sysMode);
+	system("color 20");
+	//
+	srand(time(0));
+	SetupTheme();
+	BgdLayer.clear(BLACK, WHITE);
+	ObjLayer.clear(BLACK, -1);
+}
+
 void CGAME::start() {
 	ShowCur(false);
 	system("cls");
@@ -48,7 +75,7 @@ void CGAME::playGame() {
 	isThreadRunning = true;
 	thread threadNewGame(&CGAME::SubThreadNewGame, this);
 	while (1) {
-		if (!cPlayer->isDead() && !_kbhit()) {
+		if (!cPlayer->isDead()) {
 			int temp = toupper(_getch());
 			switch (temp) {
 			case 'W': case 'S': case 'A': case 'D': {
@@ -63,7 +90,7 @@ void CGAME::playGame() {
 			}
 			}
 		}
-		else {
+		else if (cPlayer->isDead()) {
 			if (isReset()) {
 				resetData();
 				startMap();
@@ -91,22 +118,39 @@ void CGAME::resetData() {
 			delete pointer;
 		pointer = NULL;
 	}
-	aLanes.push_back(new CGRASSLANE(0, 0));
+	aLanes.push_back(new CGRASSLANE(0, START_HEIGHT));
+
+	int condition = 0, laneCase{};
 	for (int i = 1; i < BOARD_HEIGHT - 1; i++) {
-		switch (rand() % NUMBER_OF_TYPE_LANE) {
-		case 0: {
-			aLanes.push_back(new CVEHICLELANE(0, i * BLOCK_HEIGHT, rand() % 10));
+		laneCase = random(LANE_ID_LIST);
+
+		switch (laneCase) {
+		case VEHICLELANE_ID: {
+			aLanes.push_back(new CVEHICLELANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 10));
+			condition = 0;
 			break;
 		}
-		case 1: {
-			aLanes.push_back(new CGRASSLANE(0, i * BLOCK_HEIGHT));
+		case GRASSLANE_ID: {
+			aLanes.push_back(new CGRASSLANE(0, i * BLOCK_HEIGHT + START_HEIGHT));
+			condition = 0;
+			break;
+		}
+		case RIVERLANE_LAND_ID: {
+			if (condition == 0) {
+				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 10, true));
+				condition = RIVERLANE_NOLAND_ID;
+			}
+			else {
+				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 10, false));
+			}
 			break;
 		}
 		default:
 			aLanes.push_back(NULL);
 		}
+
 	}
-	aLanes.push_back(new CGRASSLANE(0, (BOARD_HEIGHT - 1) * BLOCK_HEIGHT));
+	aLanes.push_back(new CGRASSLANE(0, (BOARD_HEIGHT - 1) * BLOCK_HEIGHT + START_HEIGHT));
 }
 void CGAME::saveData(string fileName) {
 	ofstream file(fileName, ios::out);
@@ -260,7 +304,7 @@ void CGAME::SubThreadNewGame() {
 				}
 				drawMap();
 				displayObj();
-				Sleep(10);
+				Sleep(1);
 			}
 		}
 	}
@@ -374,4 +418,29 @@ void CGAME::displayObj() {
 void CGAME::displayScreen() {
 	BgdLayer.display();
 	ObjLayer.display();
+}
+
+
+void ShowCur(bool CursorVisibility) {
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO ConCurInf;
+
+	ConCurInf.dwSize = 10;
+	ConCurInf.bVisible = CursorVisibility;
+
+	SetConsoleCursorInfo(handle, &ConCurInf);
+}
+void DisableResizeWindow()
+{
+	HWND hWnd = GetConsoleWindow();
+	SetWindowLong(hWnd, GWL_STYLE, GetWindowLong(hWnd, GWL_STYLE) & ~WS_SIZEBOX);
+}
+void ShowScrollbar(BOOL Show)
+{
+	HWND hWnd = GetConsoleWindow();
+	ShowScrollBar(hWnd, SB_BOTH, Show);
+}
+int random(vector<int> arr) {
+	int size = (int)arr.size();
+	return arr[rand() % size];
 }

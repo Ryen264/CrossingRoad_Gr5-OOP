@@ -1,7 +1,6 @@
 #include "CPERRY.h"
-CPERRY::CPERRY(int x, int y, int isRight) {
+CPERRY::CPERRY(int x, int y, bool isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
-
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
 
 	this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
@@ -85,9 +84,4 @@ CPERRY::CPERRY(int x, int y, int isRight) {
 		block[8][3].txtColor = BRIGHT_YELLOW;
 		block[9][3].txtColor = ORANGE;
 	}
-}
-CPERRY::~CPERRY() {
-	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-		delete[] this->block[i];
-	delete[] this->block;
 }

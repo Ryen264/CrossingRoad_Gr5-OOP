@@ -81,11 +81,11 @@ bool CPLAYER::isMoving() const {
     return this->moving != 0;
 }
 void CPLAYER::drawCharacter(CGRAPHIC& layer) {
-    CDINOSAUR character(this->x * BLOCK_WIDTH, this->y * BLOCK_HEIGHT, this->isRight);
+    CDINOSAUR character(this->x * BLOCK_WIDTH, this->y * BLOCK_HEIGHT + START_HEIGHT, this->isRight);
     character.DrawBlock(layer);
 }
 void CPLAYER::eraseCharacter(CGRAPHIC& layer) {
     for (int i = 0; i < BLOCK_WIDTH; i++)
         for (int j = 0; j < BLOCK_HEIGHT; j++)
-            layer.screen[this->x * BLOCK_WIDTH + i][this->y * BLOCK_HEIGHT + j] = {L'@', BLACK, -1};
+            layer.screen[this->x * BLOCK_WIDTH + i][this->y * BLOCK_HEIGHT + START_HEIGHT+ j] = {L'@', BLACK, -1};
 }

@@ -17,17 +17,3 @@ CGRASSLANE::CGRASSLANE(int x, int y) {
     //set colors
 
 }
-CGRASSLANE::~CGRASSLANE() {
-    for (int i = 0; i < (int)this->lane.size(); i++) {
-        COBJECT* cur = this->lane[i];
-        if (cur != NULL) {
-            delete cur;
-            this->lane[i] = NULL;
-        }
-    }
-    for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-        delete[] this->block[i];
-    delete[] this->block;
-}
-
-void CGRASSLANE::Move() {}

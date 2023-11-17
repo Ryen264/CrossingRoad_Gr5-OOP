@@ -26,18 +26,7 @@ CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) {
         this->block[i][5].txtColor = LIGHT_GRAY;
     }
 }
-CVEHICLELANE::~CVEHICLELANE() {
-    for (int i = 0; i < (int)this->lane.size(); i++) {
-        COBJECT* cur = this->lane[i];
-        if (cur != NULL) {
-            delete cur;
-            this->lane[i] = NULL;
-        }
-    }
-    for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-        delete[] this->block[i];
-    delete[] this->block;
-}
+
 void CVEHICLELANE::Move() {
     //Setup speed
     if (timeCount < delayTime) {
@@ -51,8 +40,12 @@ void CVEHICLELANE::Move() {
         if (back != NULL)
             delete back;
         this->lane.pop_back();
-        if (rand() % 10 == 0)
-            this->lane.push_front(new CCAR(0, this->y, true));
+        if (rand() % 10 == 0) {
+            if (rand() % 2 == 0)
+                this->lane.push_front(new CCAR(0, this->y, true));
+            else
+                this->lane.push_front(new CTRUCK(0, this->y, true));
+        }
         else
             this->lane.push_front(NULL);
     }
@@ -61,8 +54,12 @@ void CVEHICLELANE::Move() {
         if (front != NULL)
             delete front;
         this->lane.pop_front();
-        if (rand() % 10 == 1)
-            this->lane.push_back(new CCAR(0, this->y, false));
+        if (rand() % 10 == 1) {
+            if (rand() % 2 == 0)
+                this->lane.push_back(new CCAR(0, this->y, false));
+            else
+                this->lane.push_back(new CTRUCK(0, this->y, false));
+        }
         else
             this->lane.push_back(NULL);
     }

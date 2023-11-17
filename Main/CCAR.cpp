@@ -1,16 +1,21 @@
 #include "CCAR.h"
-CCAR::CCAR(int x, int y, int isRight) {
+CCAR::CCAR(int x, int y, bool isRight) {
 	this->numberOfBlock = 1;
 	this->x = x; this->y = y; this->isRight = isRight;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
 
+	this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
+	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
+		this->block[i] = new PIXEL[BLOCK_HEIGHT * this->numberOfHeight];
+
 	//set buffer
-	for (int i = 0; i < BLOCK_WIDTH; i++)
-		for (int j = 0; j < BLOCK_HEIGHT; j++)
+	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
+		for (int j = 0; j < BLOCK_HEIGHT * this->numberOfHeight; j++) {
 			if (frame[j][i] != L' ')
 				this->block[i][j] = { frame[j][i], RED, -1 };
-		else
-		this->block[i][j] = { frame[j][i], -1, -1 };
+			else
+				this->block[i][j] = { frame[j][i], -1, -1 };
+		}
 
 	//set colors
 	if (isRight) {
@@ -55,6 +60,29 @@ CCAR::CCAR(int x, int y, int isRight) {
 		block[10][4].txtColor = BLACK;
 	}
 	else {
-
+		block[3][1].txtColor = BRIGHT_YELLOW;
+		block[3][3].txtColor = BRIGHT_YELLOW;
+		block[4][1].txtColor = DARK_RED;
+		block[5][1].txtColor = DARK_RED;
+		block[4][3].txtColor = DARK_RED;
+		block[5][3].txtColor = DARK_RED;
+		block[3][3].bgdColor = RED;
+		block[4][3].bgdColor = RED;
+		block[5][3].bgdColor = RED;
+		block[5][4].txtColor = BLACK;
+		block[6][4].txtColor = BLACK;
+		block[10][4].txtColor = BLACK;
+		block[11][4].txtColor = BLACK;
+		for (int i = 6; i <= 12; i++)
+			block[i][3].txtColor = DARK_RED;
+		block[6][2].txtColor = WHITE;
+		block[6][1].txtColor = WHITE;
+		for (int i = 7; i <= 10; i++) {
+			block[i][2].txtColor = DARK_RED;
+			block[i][2].bgdColor = RED;
+		}
+		block[11][1].txtColor = DARK_RED;
+		block[12][1].txtColor = DARK_RED;
 	}
 }
+

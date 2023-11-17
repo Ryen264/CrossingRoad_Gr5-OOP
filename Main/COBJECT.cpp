@@ -1,4 +1,11 @@
 #include "COBJECT.h"
+
+COBJECT::~COBJECT() {
+	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
+		delete[] this->block[i];
+	delete[] this->block;
+}
+
 void COBJECT::setPos(int x, int y)
 {
 	this->x = x; this->y = y;
