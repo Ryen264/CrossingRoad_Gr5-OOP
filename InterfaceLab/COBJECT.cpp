@@ -187,7 +187,10 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[6][5].txtColor = BLUE;
 		block[6][5].bgdColor = WHITE;*/
 
-// VE PAUSE GAME
+        // VE PAUSE GAME
+
+       // VE BAN NHAP TEN
+       
 
 	}	
 	else {
