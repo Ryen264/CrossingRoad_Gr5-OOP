@@ -189,80 +189,100 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
         // VE PAUSE GAME
 
+
+
+
        // VE GRASSLAND
-for (int i = 0; i < 16; i++)
-{
-	for (int j = 0; j < 6; j++)
-	{
-		block[i][j].txtColor = DARK_GREEN;
-		block[i][j].bgdColor = LIGHT_GREEN;
-	}
-}
-for (int i = 5; i <= 15; i++)
-{
-	block[i][0].txtColor = LIGHT_GREEN;
-	block[i][0].bgdColor = LIGHT_GREEN;
-}
-for (int i = 0; i < 3; i++)
-{
-	block[i][0].txtColor = LIGHT_GREEN;
-	block[0][0].bgdColor = LIGHT_GREEN;
-}
-for (int i = 9; i <= 11; i++)
-{
-	block[i][0].txtColor = DARK_GREEN;
-}
-block[3][0].txtColor = LIGHT_GREEN;
-block[3][0].bgdColor = LIGHT_GREEN;
-block[4][0].txtColor = WHITE;
-block[4][0].bgdColor = LIGHT_GREEN;
+////for (int i = 0; i < 16; i++)
+////{
+////	for (int j = 0; j < 6; j++)
+////	{
+////		block[i][j].txtColor = DARK_GREEN;
+////		block[i][j].bgdColor = LIGHT_GREEN;
+////	}
+////}
+////for (int i = 5; i <= 15; i++)
+////{
+////	block[i][0].txtColor = LIGHT_GREEN;
+////	block[i][0].bgdColor = LIGHT_GREEN;
+////}
+////for (int i = 0; i < 3; i++)
+////{
+////	block[i][0].txtColor = LIGHT_GREEN;
+////	block[0][0].bgdColor = LIGHT_GREEN;
+////}
+////for (int i = 9; i <= 11; i++)
+////{
+////	block[i][0].txtColor = DARK_GREEN;
+////}
+////block[3][0].txtColor = LIGHT_GREEN;
+////block[3][0].bgdColor = LIGHT_GREEN;
+////block[4][0].txtColor = WHITE;
+////block[4][0].bgdColor = LIGHT_GREEN;
+////
+////block[3][1].txtColor = WHITE;
+////block[3][1].bgdColor = LIGHT_GREEN;
+////block[4][1].txtColor = RED;
+////block[4][1].bgdColor = WHITE;
+////block[5][1].txtColor = WHITE;
+////block[5][1].bgdColor = LIGHT_GREEN;
+////block[12][1].txtColor = WHITE;
+////block[12][1].bgdColor = LIGHT_GREEN;
+////
+////block[11][2].txtColor = WHITE;
+////block[11][2].bgdColor = LIGHT_GREEN;
+////block[12][2].txtColor = ORANGE;
+////block[12][2].bgdColor = WHITE;
+////block[13][2].txtColor = WHITE;
+////block[13][2].bgdColor = LIGHT_GREEN;
+////
+////block[3][3].txtColor = WHITE;
+////block[3][3].bgdColor = LIGHT_GREEN;
+////block[4][3].txtColor = LIGHT_GREEN;
+////block[4][3].bgdColor = LIGHT_GREEN;
+////for (int i = 8; i <= 13; i++)
+////{
+////	block[i][3].txtColor = LIGHT_GREEN;
+////	block[i][3].bgdColor = LIGHT_GREEN;
+////}
+////for (int i = 0; i <= 2; i++)
+////{
+////	block[i][3].txtColor = LIGHT_GREEN;
+////}
+////block[2][4].txtColor = WHITE;
+////block[3][4].txtColor = BRIGHT_YELLOW;
+////block[3][4].bgdColor = WHITE;
+////block[4][4].txtColor = WHITE;
+////
+////for (int i = 0; i <= 9; i++)
+////{
+////	block[i][5].txtColor = LIGHT_GREEN;
+////}
+////for (int i = 13; i <= 15; i++)
+////{
+////	block[i][5].txtColor = LIGHT_GREEN;
+////}
+////for (int i = 0; i <= 15; i++)
+////{
+//	block[i][6].txtColor = LIGHT_GREEN;
+//}
 
-block[3][1].txtColor = WHITE;
-block[3][1].bgdColor = LIGHT_GREEN;
-block[4][1].txtColor = RED;
-block[4][1].bgdColor = WHITE;
-block[5][1].txtColor = WHITE;
-block[5][1].bgdColor = LIGHT_GREEN;
-block[12][1].txtColor = WHITE;
-block[12][1].bgdColor = LIGHT_GREEN;
 
-block[11][2].txtColor = WHITE;
-block[11][2].bgdColor = LIGHT_GREEN;
-block[12][2].txtColor = ORANGE;
-block[12][2].bgdColor = WHITE;
-block[13][2].txtColor = WHITE;
-block[13][2].bgdColor = LIGHT_GREEN;
+// VE QUA TRUNG
+block[2][0].bgdColor = WHITE;
+block[3][0].bgdColor = WHITE;
+for (int i = 1; i <= 4; i++)
+{
+	block[i][1].txtColor = WHITE;
+}
+for (int i = 2; i <= 3; i++)
+{
+	block[i][2].bgdColor = WHITE;
+	block[i][2].txtColor = WHITE;
+}
+block[1][2].bgdColor = WHITE;
+block[4][2].bgdColor = WHITE;
 
-block[3][3].txtColor = WHITE;
-block[3][3].bgdColor = LIGHT_GREEN;
-block[4][3].txtColor = LIGHT_GREEN;
-block[4][3].bgdColor = LIGHT_GREEN;
-for (int i = 8; i <= 13; i++)
-{
-	block[i][3].txtColor = LIGHT_GREEN;
-	block[i][3].bgdColor = LIGHT_GREEN;
-}
-for (int i = 0; i <= 2; i++)
-{
-	block[i][3].txtColor = LIGHT_GREEN;
-}
-block[2][4].txtColor = WHITE;
-block[3][4].txtColor = BRIGHT_YELLOW;
-block[3][4].bgdColor = WHITE;
-block[4][4].txtColor = WHITE;
-
-for (int i = 0; i <= 9; i++)
-{
-	block[i][5].txtColor = LIGHT_GREEN;
-}
-for (int i = 13; i <= 15; i++)
-{
-	block[i][5].txtColor = LIGHT_GREEN;
-}
-for (int i = 0; i <= 15; i++)
-{
-	block[i][6].txtColor = LIGHT_GREEN;
-}
 	}	
 	else {
 		        //VE PERRY
@@ -439,7 +459,7 @@ for (int i = 0; i <= 15; i++)
 		block[6][5].bgdColor = WHITE;*/
 
         //VE GRASSLAND
-	for (int i = 0; i < 16; i++)
+	/*for (int i = 0; i < 16; i++)
 	{
 		for (int j = 0; j < 6; j++)
 		{
@@ -511,7 +531,23 @@ for (int i = 0; i <= 15; i++)
 	for (int i = 0; i <= 15; i++)
 	{
 		block[i][6].txtColor = LIGHT_GREEN;
-	}
+	}*/
+
+// VE QUA TRUNG
+block[2][0].bgdColor = WHITE;
+block[3][0].bgdColor = WHITE;
+for (int i = 1; i <= 4; i++)
+{
+	block[i][1].txtColor = WHITE;
+}
+for (int i = 2; i <= 3; i++)
+{
+	block[i][2].bgdColor = WHITE;
+	block[i][2].txtColor = WHITE;
+}
+block[1][2].bgdColor = WHITE;
+block[4][2].bgdColor = WHITE;
+
 	}
 		
 }
