@@ -136,7 +136,7 @@
     <ClCompile Include="CLANELIGHT.cpp" />
     <ClCompile Include="COBJECT.cpp" />
     <ClCompile Include="CPERRY.cpp" />
-    <ClCompile Include="CRIVERLAND.cpp" />
+    <ClCompile Include="CRIVERLANE.cpp" />
     <ClCompile Include="CTRUCK.cpp" />
     <ClCompile Include="CVEHICLELANE.cpp" />
     <ClCompile Include="CGAME.cpp" />
@@ -154,7 +154,7 @@
     <ClInclude Include="CLANELIGHT.h" />
     <ClInclude Include="COBJECT.h" />
     <ClInclude Include="CPERRY.h" />
-    <ClInclude Include="CRIVERLAND.h" />
+    <ClInclude Include="CRIVERLANE.h" />
     <ClInclude Include="CTRUCK.h" />
     <ClInclude Include="CVEHICLELANE.h" />
     <ClInclude Include="CGAME.h" />

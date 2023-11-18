@@ -1,9 +1,12 @@
 #include "CTRUCK.h"
 #include "CTRUCK.h"
-CTRUCK::CTRUCK(int x, int y, int isRight) {
-	this->numberOfBlock = 1;
+CTRUCK::CTRUCK(int x, int y, bool isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
+
+	this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
+	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
+		this->block[i] = new PIXEL[BLOCK_HEIGHT * this->numberOfHeight];
 
 	//set buffer
 	for (int i = 0; i < BLOCK_WIDTH; i++)
@@ -66,10 +69,5 @@ CTRUCK::CTRUCK(int x, int y, int isRight) {
 			block[i][3].bgdColor = DARK_GRAY;
 		}
 	}
+}
 
-}
-CTRUCK::~CTRUCK() {
-	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-		delete[] this->block[i];
-	delete[] this->block;
-}

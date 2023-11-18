@@ -88,8 +88,4 @@ CDINOSAUR::CDINOSAUR(int x, int y, bool isRight) {
 		block[11][4].txtColor = DARK_GREEN;
 	}
 }
-CDINOSAUR::~CDINOSAUR() {
-	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-		delete[] this->block[i];
-	delete[] this->block;
-}
+

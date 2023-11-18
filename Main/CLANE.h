@@ -13,8 +13,9 @@ protected:
 	int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1;
 	PIXEL** block = NULL;
 public:
+	~CLANE();
 	virtual void changeDirection();
-	bool checkPos(int pos);
+	virtual bool checkPos(int pos);
 	virtual void Move();
 	virtual bool isMove() const;
 	void DrawLane(CGRAPHIC& layer);

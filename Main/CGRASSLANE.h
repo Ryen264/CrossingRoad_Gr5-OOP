@@ -11,6 +11,4 @@ L"          ▀ ▀   "
 	};
 public:
 	CGRASSLANE(int x = 0, int y = 0);
-	~CGRASSLANE();
-	void Move();
 };

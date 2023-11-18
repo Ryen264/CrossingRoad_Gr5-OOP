@@ -3,10 +3,11 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-const int SCREEN_HEIGHT = 50;
-const int SCREEN_WIDTH = 100;
-const int BLOCK_HEIGHT = 6;
+const int SCREEN_WIDTH = 208;
+const int SCREEN_HEIGHT = 51;
 const int BLOCK_WIDTH = 16;
+const int BLOCK_HEIGHT = 6;
+const int START_HEIGHT = 3;
 
 struct THEME {
 	COLORREF colorTable[16];
