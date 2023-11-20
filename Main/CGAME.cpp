@@ -299,9 +299,6 @@ void CGAME::changeFileName(int index) {
 			cout << "Name already exists. Cannot change file name." << endl;
 			return;
 		}
-		else if (!checkFileName(newName)) {
-			return;
-		}
 
 		fileNameList[index] = newName; 
 		saveFileNameList();
