@@ -3,7 +3,7 @@ CGRASSLANE::CGRASSLANE(int x, int y) {
     for (int i = 0; i < BOARD_WIDTH; i++)
         this->lane.push_front(NULL);
 
-    this->x = x; this->y = y;
+    this->x = x; this->y = y; this->ID = GRASSLANE_ID;
 
     this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
     for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)

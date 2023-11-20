@@ -7,9 +7,11 @@ class COBJECT {
 protected:
 	int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1;
 	PIXEL** block;
+	int ID;
 public:
 	~COBJECT();
 	void setPos(int x, int y);
+	int getID() const;
 	void DrawBlock(CGRAPHIC& layer);
 };
 //Object IDs

@@ -12,14 +12,18 @@ class CPLAYER {
 public:
 	CPLAYER(int firstX = 0, int firstY = 0);
 	~CPLAYER();
+	
 	int getX() const;
 	int getY() const;
 	int getScore() const;
-	void set(int x = -1, int y = -1, bool alive = true, int score = -1);
+	bool getIsRight() const;
+	
+	void set(int x = -1, int y = -1, bool right = true, int score = -1);
 	bool setIsRight();
 	void setFinish(bool finish);
 	void setAlive(bool alive);
 	void setMove(int moving);
+	
 	void moveCharacter();
 	void increaseScore(int point = 1);
 	void decreaseScore(int point = 1);

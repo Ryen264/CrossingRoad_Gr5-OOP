@@ -24,6 +24,39 @@ bool CLANE::isMove() const
 {
     return !this->isStop;
 }
+void CLANE::pushObj(int x,int ID) {}
+
+int CLANE::PosID(int pos) const {
+    if (pos < 0 || pos >= BOARD_WIDTH - 1) return 0;
+    return (lane[pos] != NULL) ? lane[pos]->getID() : 0;
+}
+bool CLANE::getIsMoveRight() {
+    return this->isMoveRight;
+}
+int CLANE::getTimeCount() {
+    return this->timeCount;
+}
+int CLANE::getDelayTime() {
+    return this->delayTime;
+}
+void CLANE::setIsMoveRight(bool right) {
+    if (right == 1) {
+        this->isMoveRight = true;
+    }
+    else {
+        this->isMoveRight = false;
+    }
+}
+void CLANE::setTimeCount(int time) {
+    this->timeCount = time;
+}
+void CLANE::setDelayTime(int time) {
+    this->delayTime = time;
+}
+int CLANE::getID() const {
+    return this->ID;
+}
+
 void CLANE::DrawLane(CGRAPHIC& layer) {
     for (int k = 0; k < BOARD_WIDTH; k++) {
         for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)

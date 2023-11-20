@@ -64,8 +64,38 @@ void CVEHICLELANE::Move() {
             this->lane.push_back(NULL);
     }
 }
+void CVEHICLELANE::pushObj(int x, int ID) {
+    switch (ID) {
+    case CAR_ID: {
+        (isMoveRight) ? lane.push_front(new CCAR(x, this->y, true)) : lane.push_back(new CCAR(x, this->y, false));
+        break;
+    }
+    case TRUCK_ID: {
+        (isMoveRight) ? lane.push_front(new CTRUCK(x, this->y, true)) : lane.push_back(new CTRUCK(x, this->y, false));
+        break;
+    }
+    default: {
+        lane.push_front(NULL);
+    }
+    }
+}
 
-void CVEHICLELANE::setStop(bool isStop)
-{
+void CVEHICLELANE::setStop(bool isStop) {
     this->isStop = isStop;
+}
+void CVEHICLELANE::setIsMoveRight(bool isMoveRight) {
+    this->isMoveRight = isMoveRight;
+}
+
+bool CVEHICLELANE::getIsMoveRight() {
+    return this->isMoveRight;
+}
+int CVEHICLELANE::getDelayTime() {
+    return this->delayTime;
+}
+int CVEHICLELANE::getTimeCount() {
+    return this->timeCount;
+}
+bool CVEHICLELANE::getIsStop() {
+    return this->isStop;
 }

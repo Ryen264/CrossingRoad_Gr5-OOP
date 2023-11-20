@@ -70,7 +70,6 @@ void CGAME::start() {
 	//resetConsole(); - anti-Configure 
 }
 void CGAME::playGame() {
-	resetData();
 	startMap();
 	isThreadRunning = true;
 	thread threadNewGame(&CGAME::SubThreadNewGame, this);
@@ -154,38 +153,104 @@ void CGAME::resetData() {
 }
 void CGAME::saveData(string fileName) {
 	ofstream file(fileName, ios::out);
-	
-	if(file.is_open()){
+
+	if (file.is_open()) {
 		// <x> <y> <score> <isRight> //Thông tin người chơi
-		file << cPlayer->getX() << " " << cPlayer->getY() << " " << cPlayer->getScore() << endl;
-		//file << level;
-		for(int i=0;i<BOARD_HEIGHT;i++){
-			file << ((this->cPlayer->setIsRight()) ? "r" : "l") << " ";
-			for(int j=0;j<BOARD_WIDTH;j++){
-				file<<(aLanes[i]->checkPos(j)?1:0);
+		file << cPlayer->getX() << " " << cPlayer->getY() << " " << cPlayer->getScore() << " " << cPlayer->getIsRight() << endl;
+		file << this->level << endl;
+		// <type lane ID> <isMoveRight> <timeCount> <isStop> <delayTime> [<object ID>/0]
+		for (int i = 0; i < BOARD_HEIGHT; i++) {
+			file << aLanes[i]->getID() << " " << aLanes[i]->getIsMoveRight() << " " << aLanes[i]->getTimeCount() << " " << aLanes[i]->getDelayTime() << " ";
+			for (int j = 0; j < BOARD_WIDTH; j++) {
+				file << aLanes[i]->PosID(j) << " ";
 			}
-			file<<endl;
+			file << endl;
 		}
 		file << endl;
 		file.close();
-	}else{
-		cout << "Cant open file." << endl;
+	}else {
+		cout << "Can't open file." << endl;
 	}
 }
 void CGAME::loadData(string fileName) {
-
+	ifstream file(fileName, ios::in);
+	if (file.is_open()) {
+		int x, y, score;
+		bool isRight;//player
+		// Doc thong tin nguoi choi
+		file >> x >> y >> score >> isRight;
+		cPlayer->set(x, y, isRight, score);
+		file >> level;
+		for (int i = 0; i < BOARD_HEIGHT; i++) {
+			bool direction;
+			int laneID;
+			int timeCount, delayTime;
+			file >> laneID >> direction >> timeCount >> delayTime;
+			switch (laneID) {
+			case VEHICLELANE_ID: {
+				aLanes.push_back(new CVEHICLELANE(0, i * BLOCK_HEIGHT, delayTime));
+				break;
+			}
+			case GRASSLANE_ID: {
+				aLanes.push_back(new CGRASSLANE(0, i * BLOCK_HEIGHT));
+				break;
+			}
+			case RIVERLANE_LAND_ID: {
+				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT, delayTime, 1));
+				break;
+			}
+			case RIVERLANE_NOLAND_ID: {
+				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT, delayTime, 0));
+				break;
+			}
+			default:
+				aLanes.push_back(NULL);
+			}
+			aLanes[i]->setIsMoveRight(direction);
+			aLanes[i]->setTimeCount(timeCount);
+			// Doc trang thai tung o
+			for (int j = 0; j < BOARD_WIDTH; j++) {
+				int posID;
+				file >> posID;
+				switch (posID) {
+				case CAR_ID: {
+					aLanes[i]->pushObj(j,CAR_ID);
+				}
+				case TRUCK_ID: {
+					aLanes[i]->pushObj(j, TRUCK_ID);
+				}
+				}
+			}
+		}
+		file.close();
+	}
+	else {
+		cout << "Can't open file." << endl;
+	}
 }
 string CGAME::inputUserTxt() {
 	string fileName;
 	cout << "Enter the file name: ";
 	getline(cin, fileName);
-	return fileName;
+	return fileName + ".txt";
 }
 int CGAME::inputUserNumber() {
 	int n{};
 	cout << "Enter the number: ";
 	cin >> n;
 	return n;
+}
+bool CGAME::checkFileName(string fileName) {
+	if (fileName.size() > 20 && fileName.size() <= 0) {
+		cout << "Error over 20 characters." << endl;
+		return false;
+	}
+	if (find(fileNameList.begin(), fileNameList.end(), fileName) != fileNameList.end())
+	{
+		cout << "Name has been existed." << endl;
+		return false;
+	}
+	return true;
 }
 void CGAME::saveFileNameList() {
 	fstream outFile("file_name_list.txt", fstream::out);
@@ -211,7 +276,53 @@ void CGAME::loadFileNameList() {
 	}
 	inFile.close();
 }
+void CGAME::deleteFileName(string fileName, int index) {
+	if (fileNameList.size() <= 0 || index < 0 || index >= fileNameList.size()) {
+		return;
+	}
+	// Chuyển đổi chuỗi từ const char* sang const wchar_t*
+	wstring wFileName(fileName.begin(), fileName.end());
 
+	// Sử dụng index để xác định file cần xóa trong danh sách
+	string fileToDelete = fileNameList[index-1];
+
+	// Xóa file từ danh sách file
+	fileNameList.erase(fileNameList.begin() + index-1);
+
+	// Xóa file từ hệ thống tệp
+	wstring filePath = wstring(fileToDelete.begin(), fileToDelete.end()) + L".txt";
+
+	wofstream outputFile(filePath, ios::trunc); // Mở file để xóa nó
+	outputFile.close(); // Đóng file để hoàn tất việc xóa
+
+	saveFileNameList();
+}
+void CGAME::changeFileName(string fileName, int index) {
+	if (index <= 0 || index > fileNameList.size()) {
+		cout << "Invalid index." << endl;
+		return;
+	}
+	int out = 0;
+	do{
+		string newNameFile = inputUserTxt();
+
+		if (checkFileName(newNameFile)) {
+			string oldName = fileNameList[index - 1];
+			
+			int err = rename(oldName.c_str(), newNameFile.c_str());
+			if (err != 0) {
+				cout << "Error rename file." << endl;
+			}
+			fileNameList[index - 1] = newNameFile;
+			saveFileNameList(); // update file list
+			drawLoadGame();
+			out = 1;
+		}
+		else {
+			cout << "Invalid name. Please enter again." << endl;
+		}
+	} while (out);
+}
 int CGAME::Menu() {
 	system("cls");
 	this->drawMenu();
@@ -248,21 +359,58 @@ void CGAME::NewGame() {
 	playGame();
 }
 void CGAME::LoadGame() {
-	//drawLoadGame
-	//input user
-	//this->loadData();	//cap nhat bien
-	this->playGame();
+	drawLoadGame();
+	while (1) {
+		int choice = inputUserNumber();
+		if (choice == 11) {
+			return;
+		}
+		else if (choice >= 1 && choice <= fileNameList.size()) {
+			string selectedFileName = fileNameList[choice - 1];
+			// draw options
+			cout << "1. Load game" << endl;
+			cout << "2. Delete name" << endl;
+			cout << "3. Change name" << endl;
+			cout << "4. Back" << endl;
+			int choice1 = inputUserNumber();
+			switch (choice1) {
+			case 1:
+				this->loadData(selectedFileName);
+				this->playGame();
+				break;
+			case 2:
+				this->deleteFileName(selectedFileName, choice);
+				break;
+			case 3:
+				this->changeFileName(selectedFileName, choice);
+				break;
+			case 4:
+				break;
+			default:
+				cout << "Invalid choice. Please enter a valid number" << endl;
+				break;
+			}
+			break;
+		}
+		else {
+			cout << "Invalid choice. Please enter a valid number" << endl;
+		}
+	}
 }
 void CGAME::SaveGame() {
 	drawSaveGame();
-	string fileName=inputUserTxt();
+	string fileName;
+	do {
+		fileName = inputUserTxt();
+	} while (!checkFileName(fileName));
 
 	if(fileNameList.size()>10){
 		fileNameList.pop_back();
 	}
-	fileNameList.push_back(fileName);
+	fileNameList.push_front(fileName);
 	saveFileNameList();
 	saveData(fileName);
+	isSaved = true;
 }
 void CGAME::Setting() {
 
@@ -330,6 +478,11 @@ int CGAME::Pause(HANDLE t) {
 		this->resumeThread(t);
 		break;
 	}
+	case '2': {
+		this->SaveGame();
+		this->resumeThread(t);
+		break;
+	}
 	case'6': {
 		this->resumeThread(t);
 		return BACK_TO_MENU_CODE;
@@ -389,6 +542,18 @@ void CGAME::drawSaveGame()
 
 void CGAME::drawLoadGame()
 {
+	cout << "===== Load Game =====" << endl;
+	if (fileNameList.empty()) {
+		cout << "No saved games available." << endl;
+	}
+	else {
+		for (int i = 0; i < fileNameList.size(); i++) {
+			cout << i + 1 << ". " << fileNameList[i] << endl;
+		}
+	}
+	cout << "11. Back to Main Menu" << endl;
+	cout << "========================" << endl;
+	cout << "Enter the number of the game: ";
 }
 
 void CGAME::drawInputUserTxt()

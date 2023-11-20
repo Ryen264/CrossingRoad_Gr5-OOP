@@ -9,6 +9,14 @@ const int BLOCK_WIDTH = 16;
 const int BLOCK_HEIGHT = 6;
 const int START_HEIGHT = 3;
 
+// LaneIDs
+const int VEHICLELANE_ID = 20001;
+const int GRASSLANE_ID = 20002;
+const int RIVERLANE_LAND_ID = 20003;
+const int RIVERLANE_NOLAND_ID = 21003;
+const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, GRASSLANE_ID, RIVERLANE_LAND_ID };
+
+
 struct THEME {
 	COLORREF colorTable[16];
 	int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
