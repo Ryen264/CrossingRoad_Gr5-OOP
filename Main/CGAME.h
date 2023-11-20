@@ -46,8 +46,8 @@ public:
     bool checkFileName(string fileName);
     void saveFileNameList();
     void loadFileNameList();
-    void deleteFileName(string fileName, int);
-    void changeFileName(string fileName, int);
+    void deleteFileName(int);
+    void changeFileName(int);
     
     int Menu();
     void NewGame();

@@ -276,52 +276,40 @@ void CGAME::loadFileNameList() {
 	}
 	inFile.close();
 }
-void CGAME::deleteFileName(string fileName, int index) {
-	if (fileNameList.size() <= 0 || index < 0 || index >= fileNameList.size()) {
-		return;
+
+void CGAME::deleteFileName(int index) 
+{
+	if (index >= 0 && index < fileNameList.size()) {
+		fileNameList.erase(fileNameList.begin() + index); 
+		saveFileNameList();
+		cout << "File name at index " << index << " has been deleted." << endl;
 	}
-	// Chuyển đổi chuỗi từ const char* sang const wchar_t*
-	wstring wFileName(fileName.begin(), fileName.end());
-
-	// Sử dụng index để xác định file cần xóa trong danh sách
-	string fileToDelete = fileNameList[index-1];
-
-	// Xóa file từ danh sách file
-	fileNameList.erase(fileNameList.begin() + index-1);
-
-	// Xóa file từ hệ thống tệp
-	wstring filePath = wstring(fileToDelete.begin(), fileToDelete.end()) + L".txt";
-
-	wofstream outputFile(filePath, ios::trunc); // Mở file để xóa nó
-	outputFile.close(); // Đóng file để hoàn tất việc xóa
-
-	saveFileNameList();
+	else {
+		cout << "Invalid index. Cannot delete file name." << endl;
+	}
 }
-void CGAME::changeFileName(string fileName, int index) {
-	if (index <= 0 || index > fileNameList.size()) {
-		cout << "Invalid index." << endl;
-		return;
-	}
-	int out = 0;
-	do{
-		string newNameFile = inputUserTxt();
 
-		if (checkFileName(newNameFile)) {
-			string oldName = fileNameList[index - 1];
-			
-			int err = rename(oldName.c_str(), newNameFile.c_str());
-			if (err != 0) {
-				cout << "Error rename file." << endl;
-			}
-			fileNameList[index - 1] = newNameFile;
-			saveFileNameList(); // update file list
-			drawLoadGame();
-			out = 1;
+void CGAME::changeFileName(int index) {
+	if (index >= 0 && index < fileNameList.size()) {
+		string newName;
+		cout << "Enter the new file name: ";
+		cin >> newName;
+
+		if (find(fileNameList.begin(), fileNameList.end(), newName) != fileNameList.end()) {
+			cout << "Name already exists. Cannot change file name." << endl;
+			return;
 		}
-		else {
-			cout << "Invalid name. Please enter again." << endl;
+		else if (!checkFileName(newName)) {
+			return;
 		}
-	} while (out);
+
+		fileNameList[index] = newName; 
+		saveFileNameList();
+		cout << "File name at index " << index << " has been changed to " << newName << endl;
+	}
+	else {
+		cout << "Invalid index. Cannot change file name." << endl;
+	}
 }
 int CGAME::Menu() {
 	system("cls");
@@ -379,10 +367,10 @@ void CGAME::LoadGame() {
 				this->playGame();
 				break;
 			case 2:
-				this->deleteFileName(selectedFileName, choice);
+				this->deleteFileName(choice-1);
 				break;
 			case 3:
-				this->changeFileName(selectedFileName, choice);
+				this->changeFileName(choice-1);
 				break;
 			case 4:
 				break;
