@@ -1,6 +1,5 @@
 #include "CCAR.h"
 CCAR::CCAR(int x, int y, bool isRight) {
-	this->numberOfBlock = 1;
 	this->x = x; this->y = y; this->isRight = isRight;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
 

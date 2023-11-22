@@ -15,3 +15,9 @@ void COBJECT::DrawBlock(CGRAPHIC& layer) {
 		for (int j = 0; j < BLOCK_HEIGHT * this->numberOfHeight; j++)
 			layer.screen[this->x + i][this->y + j] = block[i][j];
 }
+
+
+int random(vector<int> arr) {
+	int size = (int)arr.size();
+	return arr[rand() % size];
+}

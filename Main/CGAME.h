@@ -3,6 +3,7 @@
 #include "CPLAYER.h"
 #include "CVEHICLELANE.h"
 #include "CGRASSLANE.h"
+#include "CTRAINLANE.h"
 #include "CRIVERLANE.h"
 
 #include <vector>
@@ -84,10 +85,10 @@ const int VEHICLELANE_ID = 20001;
 const int GRASSLANE_ID = 20002;
 const int RIVERLANE_LAND_ID = 20003;
 const int RIVERLANE_NOLAND_ID = 21003;
-const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, GRASSLANE_ID, RIVERLANE_LAND_ID };
+const int TRAINLANE_ID = 20004;
+const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, GRASSLANE_ID, RIVERLANE_LAND_ID, TRAINLANE_ID };
 
 void ShowCur(bool CursorVisibility);
 void DisableResizeWindow();
 void ShowScrollbar(BOOL Show);
-int random(vector<int> arr);
 

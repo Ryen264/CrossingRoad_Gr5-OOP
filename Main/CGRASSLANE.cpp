@@ -15,5 +15,38 @@ CGRASSLANE::CGRASSLANE(int x, int y) {
             this->block[i][j] = { FRAME[j][i], DARK_GREEN, LIGHT_GREEN };
 
     //set colors
+	for (int i = 9; i <= 11; i++)
+	{
+		block[i][0].txtColor = DARK_GREEN;
+	}
+	block[3][0].txtColor = LIGHT_GREEN;
+	block[3][0].bgdColor = LIGHT_GREEN;
+	block[4][0].txtColor = WHITE;
+	block[4][0].bgdColor = LIGHT_GREEN;
 
+	block[3][1].txtColor = WHITE;
+	block[3][1].bgdColor = LIGHT_GREEN;
+	block[4][1].txtColor = RED;
+	block[4][1].bgdColor = WHITE;
+	block[5][1].txtColor = WHITE;
+	block[5][1].bgdColor = LIGHT_GREEN;
+	block[12][1].txtColor = WHITE;
+	block[12][1].bgdColor = LIGHT_GREEN;
+
+	block[11][2].txtColor = WHITE;
+	block[11][2].bgdColor = LIGHT_GREEN;
+	block[12][2].txtColor = ORANGE;
+	block[12][2].bgdColor = WHITE;
+	block[13][2].txtColor = WHITE;
+	block[13][2].bgdColor = LIGHT_GREEN;
+
+	block[3][3].txtColor = WHITE;
+	block[3][3].bgdColor = LIGHT_GREEN;
+	block[4][3].txtColor = LIGHT_GREEN;
+	block[4][3].bgdColor = LIGHT_GREEN;
+
+	block[2][4].txtColor = WHITE;
+	block[3][4].txtColor = BRIGHT_YELLOW;
+	block[3][4].bgdColor = WHITE;
+	block[4][4].txtColor = WHITE;
 }

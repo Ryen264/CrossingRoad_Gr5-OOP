@@ -16,3 +16,11 @@ public:
 const int CAR_ID = 30001;
 const int TRUCK_ID = 30002;
 const int DINOSAUR_ID = 30003;
+const int PERRY_ID = 30004;
+const int CAPYBARA_ID = 30005;
+const int TRAIN_HEAD_ID = 30006;
+const int TRAIN_BODY_ID = 31006;
+const int BUS_HEAD_ID = 30007;
+const int BUS_TAIL_ID = 31007;
+
+int random(vector<int> arr);

@@ -45,6 +45,21 @@
     <ClCompile Include="CGRASSLANE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CBUS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CCAR.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTRAFFICLIGHT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTRAINLANE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTRAIN.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="CRIVERLANE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -52,15 +67,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CCAPYBARA.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CBUS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CLANELIGHT.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CCAR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -95,6 +101,18 @@
     <ClInclude Include="CTRUCK.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CBUS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTRAFFICLIGHT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTRAINLANE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTRAIN.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="CRIVERLANE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -102,12 +120,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CCAPYBARA.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CBUS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CLANELIGHT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

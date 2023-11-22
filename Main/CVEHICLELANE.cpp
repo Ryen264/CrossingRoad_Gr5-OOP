@@ -4,6 +4,8 @@ CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) {
         this->lane.push_front(NULL);
     this->isMoveRight = rand() % 2;
     this->delayTime = delayTime;
+    this->lightPos = 6;
+    if (lightPos >= BOARD_WIDTH) lightPos = -1;
 
     this->x = x; this->y = y;
 
@@ -19,53 +21,238 @@ CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) {
     //set colors
     for (int i = 0; i < 16; i++)
         this->block[i][0].bgdColor = LIGHT_GREEN;
-    for (int i = 0; i < 16; i++)
-        if (i % 4 != 3) this->block[i][3].txtColor = BRIGHT_YELLOW;
-    for (int i = 0; i < 16; i++) {
-        this->block[i][5].bgdColor = WHITE;
-        this->block[i][5].txtColor = LIGHT_GRAY;
+}
+
+void CVEHICLELANE::pushDeque(int redPoint) {
+    //push normally
+    if (redPoint < 0) {
+        if (condition == 0)
+        {
+            int objCase = random(OBJECT_ID_LIST);
+            if (this->isMoveRight) {
+                COBJECT* back = lane.back();
+                if (back != NULL) delete back;
+                this->lane.pop_back();
+
+                switch (objCase) {
+                case CAR_ID: {
+                    lane.push_front(new CCAR(0, this->y, true));
+                    condition = 0;
+                    break;
+                }
+                case TRUCK_ID: {
+                    lane.push_front(new CTRUCK(0, this->y, true));
+                    condition = 0;
+                    break;
+                }/*
+                case BUS_HEAD_ID: {
+                    lane.push_front(new CBUS(0, this->y, true, true));
+                    condition = BUS_TAIL_ID;
+                    break;
+                }*/
+                default:
+                    lane.push_front(NULL);
+                    condition = 0;
+                }
+            }
+            else {
+                COBJECT* front = lane.front();
+                if (front != NULL) delete front;
+                this->lane.pop_front();
+
+                switch (objCase) {
+                case CAR_ID: {
+                    lane.push_back(new CCAR(0, this->y, false));
+                    condition = 0;
+                    break;
+                }
+                case TRUCK_ID: {
+                    lane.push_back(new CTRUCK(0, this->y, false));
+                    condition = 0;
+                    break;
+                }/*
+                case BUS_HEAD_ID: {
+                    lane.push_back(new CBUS(0, this->y, false, true));
+                    condition = BUS_TAIL_ID;
+                    break;
+                }*/
+                default:
+                    lane.push_back(NULL);
+                    condition = 0;
+                }
+            }
+        }
+        else {
+            switch (condition) {
+            case BUS_TAIL_ID: {
+                if (this->isMoveRight) {
+                    COBJECT* back = lane.back();
+                    if (back != NULL) delete back;
+                    this->lane.pop_back();
+
+                    lane.push_front(new CBUS(0, this->y, true, false));
+                    condition = 0;
+                }
+                else {
+                    COBJECT* front = lane.front();
+                    if (front != NULL) delete front;
+                    this->lane.pop_front();
+
+                    lane.push_back(new CBUS(0, this->y, false, false));
+                    condition = 0;
+                }
+                break;
+            }
+            }
+        }
+        return;
+    }
+    int size = (int)lane.size();
+    //push after
+    if (redPoint < size - 2) {
+        if (isMoveRight) {
+            COBJECT* back = lane.back();
+            if (back != NULL) delete back;
+            this->lane.pop_back();
+        }
+        else {
+            COBJECT* back = lane.front();
+            if (back != NULL) delete back;
+            this->lane.pop_front();
+        }
+        lane.insert(lane.begin() + redPoint, NULL);
+    }
+    //push front
+    if (isMoveRight) {
+        int id = redPoint - 1;
+        for (; id >= 0 && lane[id] != NULL; id--);
+        if (id >= 0) {
+            COBJECT* back = lane[id];
+            if (back != NULL) delete back;
+            lane.erase(lane.begin() + id);
+
+            if (condition == 0) {
+                int objCase = random(OBJECT_ID_LIST);
+                switch (objCase) {
+                case CAR_ID: {
+                    lane.push_front(new CCAR(0, this->y, true));
+                    condition = 0;
+                    break;
+                }
+                case TRUCK_ID: {
+                    lane.push_front(new CTRUCK(0, this->y, true));
+                    condition = 0;
+                    break;
+                }/*
+                case BUS_HEAD_ID: {
+                    lane.push_front(new CBUS(0, this->y, true, true));
+                    condition = BUS_TAIL_ID;
+                    break;
+                }*/
+                default:
+                    lane.push_front(NULL);
+                    condition = 0;
+                }
+            }
+            else {
+                switch (condition) {/*
+                case BUS_TAIL_ID: {
+                    COBJECT* back = lane.back();
+                    if (back != NULL) delete back;
+                    this->lane.pop_back();
+
+                    lane.push_front(new CBUS(0, this->y, true, false));
+                    condition = 0;
+                    break;
+                }*/
+                }
+            }
+        }
+    }
+    else {
+        int id = redPoint + 1;
+        for (; id < size && lane[id] != NULL; id++);
+        if (id < size) {
+            COBJECT* back = lane[id];
+            if (back != NULL) delete back;
+            lane.erase(lane.begin() + id);
+
+            if (condition == 0) {
+                int objCase = random(OBJECT_ID_LIST);
+                switch (objCase) {
+                case CAR_ID: {
+                    lane.push_back(new CCAR(0, this->y, false));
+                    condition = 0;
+                    break;
+                }
+                case TRUCK_ID: {
+                    lane.push_back(new CTRUCK(0, this->y, false));
+                    condition = 0;
+                    break;
+                }/*
+                case BUS_HEAD_ID: {
+                    lane.push_back(new CBUS(0, this->y, false, true));
+                    condition = BUS_TAIL_ID;
+                    break;
+                }*/
+                default:
+                    lane.push_back(NULL);
+                    condition = 0;
+                }
+            }
+            else {
+                switch (condition) {/*
+                case BUS_TAIL_ID: {
+                    COBJECT* front = lane.front();
+                    if (front != NULL) delete front;
+                    this->lane.pop_front();
+
+                    lane.push_back(new CBUS(0, this->y, false, false));
+                    condition = 0;
+                    break;
+                }*/
+                }
+            }
+        }
     }
 }
 
 void CVEHICLELANE::Move() {
-    //Setup speed
-    if (timeCount < delayTime) {
-        timeCount++;
-        return;
-    }
-    timeCount = 0;
-    //Random push a car
-    if (this->isMoveRight) {
-        COBJECT* back = lane.back();
-        if (back != NULL)
-            delete back;
-        this->lane.pop_back();
-        if (rand() % 10 == 0) {
-            if (rand() % 2 == 0)
-                this->lane.push_front(new CCAR(0, this->y, true));
-            else
-                this->lane.push_front(new CTRUCK(0, this->y, true));
-        }
-        else
-            this->lane.push_front(NULL);
-    }
-    else {
-        COBJECT* front = lane.front();
-        if (front != NULL)
-            delete front;
-        this->lane.pop_front();
-        if (rand() % 10 == 1) {
-            if (rand() % 2 == 0)
-                this->lane.push_back(new CCAR(0, this->y, false));
-            else
-                this->lane.push_back(new CTRUCK(0, this->y, false));
-        }
-        else
-            this->lane.push_back(NULL);
+    lightWork();
+    timeCount++;
+    if (timeCount >= delayTime) {
+        timeCount = 0;
+        //Random push a car
+        pushDeque((isStop) ? lightPos : -1);
     }
 }
+
+void CVEHICLELANE::lightWork()
+{
+    if (timeLight < TRAFFICLIGHT_DELAY) {
+        timeLight++;
+        //change to yellow
+        return;
+    }
+    if (timeLight == TRAFFICLIGHT_DELAY) {
+        isStop = true;
+        //change to red
+    }
+    if (timeLight < TRAFFICLIGHT_DELAY + TRAFFICLIGHT_WAIT) {
+        timeLight++;
+        return;
+    }
+    isStop = false;
+    //change to green
+    timeLight = 0;
+}
+
 
 void CVEHICLELANE::setStop(bool isStop)
 {
     this->isStop = isStop;
+}
+bool CVEHICLELANE::getStop() const
+{
+    return this->isStop;
 }

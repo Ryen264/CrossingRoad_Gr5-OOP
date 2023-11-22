@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "COBJECT.h"
 class CPERRY : public COBJECT {
 	bool isRight;
@@ -11,7 +11,7 @@ L"  ▀▀▀▀▀▀▀▀      ",
 L"                ",
 L"                "
 	};
-const vector<wstring> FRAME_RIGHT =
+	const vector<wstring> FRAME_RIGHT =
 	{
 L"          ▀▄▀   ",
 L"        █▄▄█▄▄  ",
@@ -23,3 +23,8 @@ L"                "
 public:
 	CPERRY(int x = 0, int y = 0, bool isRight = true);
 };
+
+
+
+
+

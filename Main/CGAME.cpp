@@ -126,7 +126,7 @@ void CGAME::resetData() {
 
 		switch (laneCase) {
 		case VEHICLELANE_ID: {
-			aLanes.push_back(new CVEHICLELANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 10));
+			aLanes.push_back(new CVEHICLELANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3));
 			condition = 0;
 			break;
 		}
@@ -135,20 +135,21 @@ void CGAME::resetData() {
 			condition = 0;
 			break;
 		}
+		//case TRAINLANE_ID: {
+		//	aLanes.push_back(new CTRAINLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, 10, 10));
+		//	condition = 0;
+		//	break;
+		//}
 		case RIVERLANE_LAND_ID: {
 			if (condition == 0) {
-				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 10, true));
+				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, true));
 				condition = RIVERLANE_NOLAND_ID;
 			}
-			else {
-				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 10, false));
-			}
+			else
+				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, false));
 			break;
 		}
-		default:
-			aLanes.push_back(NULL);
 		}
-
 	}
 	aLanes.push_back(new CGRASSLANE(0, (BOARD_HEIGHT - 1) * BLOCK_HEIGHT + START_HEIGHT));
 }
@@ -285,7 +286,7 @@ void CGAME::SubThreadNewGame() {
 				}
 				cPlayer->setMove(0);
 				for (int i = 1; i < BOARD_HEIGHT - 1; i++) //ignore the first and the last lanes
-					if (aLanes[i]->isMove()) aLanes[i]->Move();
+					aLanes[i]->Move();
 				//Xu ly va cham
 				if (isInjured()) {
 					cPlayer->setAlive(false);
@@ -304,7 +305,6 @@ void CGAME::SubThreadNewGame() {
 				}
 				drawMap();
 				displayObj();
-				Sleep(1);
 			}
 		}
 	}
@@ -439,8 +439,4 @@ void ShowScrollbar(BOOL Show)
 {
 	HWND hWnd = GetConsoleWindow();
 	ShowScrollBar(hWnd, SB_BOTH, Show);
-}
-int random(vector<int> arr) {
-	int size = (int)arr.size();
-	return arr[rand() % size];
 }

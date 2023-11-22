@@ -1,13 +1,12 @@
 #include "CLANE.h"
 
 CLANE::~CLANE() {
-    for (int i = 0; i < (int)this->lane.size(); i++) {
-        COBJECT* cur = this->lane[i];
-        if (cur != NULL) {
-            delete cur;
-            this->lane[i] = NULL;
-        }
+    while (!this->lane.empty()) {
+        COBJECT* back = lane.back();
+        lane.pop_back();
+        if (back != NULL) delete back;
     }
+    this->lane.clear();
     for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
         delete[] this->block[i];
     delete[] this->block;
@@ -20,10 +19,7 @@ bool CLANE::checkPos(int pos) {
     return this->lane[pos] != NULL;
 }
 void CLANE::Move() {}
-bool CLANE::isMove() const
-{
-    return !this->isStop;
-}
+
 void CLANE::DrawLane(CGRAPHIC& layer) {
     for (int k = 0; k < BOARD_WIDTH; k++) {
         for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)

@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "CLANE.h"
 class CGRASSLANE : public CLANE {
-	const vector <wstring> FRAME = {
+	const vector <wstring> FRAME =
+	{
 L"    ▄    ▄▄▄    ",
 L"   ▀▀▀ ▄██  ▄   ",
 L"   ▀█▄ █▀  ▀▀▀  ",
