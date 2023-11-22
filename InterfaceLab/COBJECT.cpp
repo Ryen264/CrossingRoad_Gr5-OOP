@@ -269,19 +269,45 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
 
 // VE QUA TRUNG
-block[2][0].bgdColor = WHITE;
-block[3][0].bgdColor = WHITE;
-for (int i = 1; i <= 4; i++)
+//block[2][0].bgdColor = WHITE;
+//block[3][0].bgdColor = WHITE;
+//for (int i = 1; i <= 4; i++)
+//{
+//	block[i][1].txtColor = WHITE;
+//}
+//for (int i = 2; i <= 3; i++)
+//{
+//	block[i][2].bgdColor = WHITE;
+//	block[i][2].txtColor = WHITE;
+//}
+//block[1][2].bgdColor = WHITE;
+//block[4][2].bgdColor = WHITE;
+
+
+
+// VE NON
+for (int i = 2; i <= 12; i++)
 {
-	block[i][1].txtColor = WHITE;
+	block[i][0].txtColor = SADDLE_BROWN;
 }
-for (int i = 2; i <= 3; i++)
+for (int i = 1; i <= 12; i++)
 {
-	block[i][2].bgdColor = WHITE;
-	block[i][2].txtColor = WHITE;
+	block[i][1].txtColor = BLACK;
+	block[i][1].bgdColor = SADDLE_BROWN;
 }
-block[1][2].bgdColor = WHITE;
-block[4][2].bgdColor = WHITE;
+block[0][2].txtColor = SADDLE_BROWN;
+block[0][2].bgdColor = -1;
+for (int i = 1; i <= 12; i++)
+{
+	block[i][2].txtColor = SADDLE_BROWN;
+	block[i][2].bgdColor = BLACK;
+}
+block[13][2].txtColor = SADDLE_BROWN;
+block[13][2].bgdColor = -1;
+
+
+
+
 
 	}	
 	else {
@@ -533,20 +559,44 @@ block[4][2].bgdColor = WHITE;
 		block[i][6].txtColor = LIGHT_GREEN;
 	}*/
 
+
 // VE QUA TRUNG
-block[2][0].bgdColor = WHITE;
-block[3][0].bgdColor = WHITE;
-for (int i = 1; i <= 4; i++)
+//block[2][0].bgdColor = WHITE;
+//block[3][0].bgdColor = WHITE;
+//for (int i = 1; i <= 4; i++)
+//{
+//	block[i][1].txtColor = WHITE;
+//}
+//for (int i = 2; i <= 3; i++)
+//{
+//	block[i][2].bgdColor = WHITE;
+//	block[i][2].txtColor = WHITE;
+//}
+//block[1][2].bgdColor = WHITE;
+//block[4][2].bgdColor = WHITE;
+
+
+
+// VE NON
+for (int i = 2; i <= 12; i++)
 {
-	block[i][1].txtColor = WHITE;
+	block[i][0].txtColor = SADDLE_BROWN;
 }
-for (int i = 2; i <= 3; i++)
+for (int i = 1; i <= 12; i++)
 {
-	block[i][2].bgdColor = WHITE;
-	block[i][2].txtColor = WHITE;
+	block[i][1].txtColor = BLACK;
+	block[i][1].bgdColor = SADDLE_BROWN;
 }
-block[1][2].bgdColor = WHITE;
-block[4][2].bgdColor = WHITE;
+block[0][2].txtColor = SADDLE_BROWN;
+block[0][2].bgdColor = -1;
+for (int i = 1; i <= 12; i++)
+{
+	block[i][2].txtColor = SADDLE_BROWN;
+	block[i][2].bgdColor = BLACK;
+}
+block[13][2].txtColor = SADDLE_BROWN;
+block[13][2].bgdColor = -1;
+
 
 	}
 		
