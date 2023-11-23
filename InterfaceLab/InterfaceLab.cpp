@@ -8,10 +8,10 @@ int main() {
 	BgdLayer.clear(BLACK, BLUE);
 
 	//CLANE testlane1(0, 0), testlane2(0, BLOCK_HEIGHT);
-	//draw background
+	////draw background
 	//testlane1.DrawBlock(BgdLayer);
 	//testlane2.DrawBlock(BgdLayer);
-	BgdLayer.display();
+	//BgdLayer.display();
 
 
 	CGRAPHIC ObjLayer;
