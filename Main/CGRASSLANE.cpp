@@ -3,7 +3,7 @@ CGRASSLANE::CGRASSLANE(int x, int y) {
     for (int i = 0; i < BOARD_WIDTH; i++)
         this->lane.push_front(NULL);
 
-    this->x = x; this->y = y;
+	this->x = x; this->y = y; this->ID = GRASSLANE_ID;
 
     this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
     for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
@@ -15,7 +15,7 @@ CGRASSLANE::CGRASSLANE(int x, int y) {
             this->block[i][j] = { FRAME[j][i], DARK_GREEN, LIGHT_GREEN };
 
     //set colors
-	for (int i = 9; i <= 11; i++)
+	/*for (int i = 9; i <= 11; i++)
 	{
 		block[i][0].txtColor = DARK_GREEN;
 	}
@@ -48,5 +48,13 @@ CGRASSLANE::CGRASSLANE(int x, int y) {
 	block[2][4].txtColor = WHITE;
 	block[3][4].txtColor = BRIGHT_YELLOW;
 	block[3][4].bgdColor = WHITE;
-	block[4][4].txtColor = WHITE;
+	block[4][4].txtColor = WHITE;*/
+
+	for (int i = 0; i < 16; i++)
+	{
+		for (int j = 0; j < 6; j++)
+		{
+			block[i][j].txtColor = LIGHT_GREEN;
+		}
+	}
 }

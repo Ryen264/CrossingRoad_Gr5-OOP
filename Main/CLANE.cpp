@@ -1,5 +1,4 @@
 #include "CLANE.h"
-
 CLANE::~CLANE() {
     while (!this->lane.empty()) {
         COBJECT* back = lane.back();
@@ -11,7 +10,9 @@ CLANE::~CLANE() {
         delete[] this->block[i];
     delete[] this->block;
 }
-
+int CLANE::getID() const {
+    return this->ID;
+}
 void CLANE::changeDirection() {
 	this->isMoveRight = !this->isMoveRight;
 }

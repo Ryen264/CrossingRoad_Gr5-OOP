@@ -1,6 +1,6 @@
 #include "CTRAFFICLIGHT.h"
 CTRAFFICLIGHT::CTRAFFICLIGHT(int x, int y) {
-	this->x = x; this->y = y;
+	this->x = x; this->y = y; this->ID = TRAFFICLIGHT_ID;
 
 	this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
 	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)

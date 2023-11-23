@@ -6,7 +6,7 @@ CTRAINLANE::CTRAINLANE(int x, int y, int delayTime, int trainDelay, int trainWai
     this->isMoveRight = rand() % 2;
     this->delayTime = delayTime; this->trainDelay = trainDelay; this->trainWait = trainWait;
 
-    this->x = x; this->y = y;
+    this->x = x; this->y = y; this->ID = TRAINLANE_ID;
 
     this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
     for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
@@ -75,21 +75,21 @@ void CTRAINLANE::fillDeque(int ID)
 void CTRAINLANE::Move()
 {
     timeTrain++;
-    //if (timeTrain == trainDelay - TRAIN_BEFORE) {
-    //    //push head
-    //    if (isMoveRight) {
-    //        COBJECT* back = lane.back();
-    //        if (back != NULL) delete back;
-    //        this->lane.pop_back();
-    //        lane.push_front(new CTRAIN(0, this->y, true, true));
-    //    }
-    //    else {
-    //        COBJECT* front = lane.front();
-    //        if (front != NULL) delete front;
-    //        this->lane.pop_front();
-    //        lane.push_back(new CTRAIN(0, this->y, false, true));
-    //    }
-    //}
+    if (timeTrain == trainDelay - TRAIN_BEFORE) {
+        //push head
+        if (isMoveRight) {
+            COBJECT* back = lane.back();
+            if (back != NULL) delete back;
+            this->lane.pop_back();
+            lane.push_front(new CTRAIN(0, this->y, true, true));
+        }
+        else {
+            COBJECT* front = lane.front();
+            if (front != NULL) delete front;
+            this->lane.pop_front();
+            lane.push_back(new CTRAIN(0, this->y, false, true));
+        }
+    }
     
     if (timeTrain >= trainDelay) {
         if (timeTrain == trainDelay)

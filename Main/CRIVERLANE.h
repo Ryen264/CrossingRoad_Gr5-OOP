@@ -28,4 +28,5 @@ public:
 	CRIVERLANE(int x = 0, int y = 0, int delayTime = 0, bool haveLand = true);
 	void pushDeque();
 	void Move();
+	bool checkPos(int pos);
 };

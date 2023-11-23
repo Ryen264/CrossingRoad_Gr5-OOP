@@ -7,7 +7,7 @@ CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) {
     this->lightPos = 6;
     if (lightPos >= BOARD_WIDTH) lightPos = -1;
 
-    this->x = x; this->y = y;
+    this->x = x; this->y = y; this->ID = VEHICLELANE_ID;
 
     this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
     for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
@@ -24,6 +24,7 @@ CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) {
 }
 
 void CVEHICLELANE::pushDeque(int redPoint) {
+    
     //push normally
     if (redPoint < 0) {
         if (condition == 0)
@@ -44,12 +45,12 @@ void CVEHICLELANE::pushDeque(int redPoint) {
                     lane.push_front(new CTRUCK(0, this->y, true));
                     condition = 0;
                     break;
-                }/*
+                }
                 case BUS_HEAD_ID: {
                     lane.push_front(new CBUS(0, this->y, true, true));
                     condition = BUS_TAIL_ID;
                     break;
-                }*/
+                }
                 default:
                     lane.push_front(NULL);
                     condition = 0;
@@ -70,12 +71,12 @@ void CVEHICLELANE::pushDeque(int redPoint) {
                     lane.push_back(new CTRUCK(0, this->y, false));
                     condition = 0;
                     break;
-                }/*
+                }
                 case BUS_HEAD_ID: {
                     lane.push_back(new CBUS(0, this->y, false, true));
                     condition = BUS_TAIL_ID;
                     break;
-                }*/
+                }
                 default:
                     lane.push_back(NULL);
                     condition = 0;
@@ -103,6 +104,9 @@ void CVEHICLELANE::pushDeque(int redPoint) {
                 }
                 break;
             }
+            default:
+                lane.push_front(NULL);
+                condition = 0;
             }
         }
         return;
@@ -120,7 +124,11 @@ void CVEHICLELANE::pushDeque(int redPoint) {
             if (back != NULL) delete back;
             this->lane.pop_front();
         }
-        lane.insert(lane.begin() + redPoint, NULL);
+        if (lane[redPoint]->getID() == BUS_HEAD_ID) {
+            if (isMoveRight) lane.insert(lane.begin() + redPoint - 1, NULL);
+            else lane.insert(lane.begin() + redPoint + 1, NULL);
+        } else
+            lane.insert(lane.begin() + redPoint, NULL);
     }
     //push front
     if (isMoveRight) {
@@ -143,19 +151,19 @@ void CVEHICLELANE::pushDeque(int redPoint) {
                     lane.push_front(new CTRUCK(0, this->y, true));
                     condition = 0;
                     break;
-                }/*
+                }
                 case BUS_HEAD_ID: {
                     lane.push_front(new CBUS(0, this->y, true, true));
                     condition = BUS_TAIL_ID;
                     break;
-                }*/
+                }
                 default:
                     lane.push_front(NULL);
                     condition = 0;
                 }
             }
             else {
-                switch (condition) {/*
+                switch (condition) {
                 case BUS_TAIL_ID: {
                     COBJECT* back = lane.back();
                     if (back != NULL) delete back;
@@ -164,7 +172,10 @@ void CVEHICLELANE::pushDeque(int redPoint) {
                     lane.push_front(new CBUS(0, this->y, true, false));
                     condition = 0;
                     break;
-                }*/
+                }
+                default:
+                    lane.push_front(NULL);
+                    condition = 0;
                 }
             }
         }
@@ -189,19 +200,19 @@ void CVEHICLELANE::pushDeque(int redPoint) {
                     lane.push_back(new CTRUCK(0, this->y, false));
                     condition = 0;
                     break;
-                }/*
+                }
                 case BUS_HEAD_ID: {
                     lane.push_back(new CBUS(0, this->y, false, true));
                     condition = BUS_TAIL_ID;
                     break;
-                }*/
+                }
                 default:
                     lane.push_back(NULL);
                     condition = 0;
                 }
             }
             else {
-                switch (condition) {/*
+                switch (condition) {
                 case BUS_TAIL_ID: {
                     COBJECT* front = lane.front();
                     if (front != NULL) delete front;
@@ -210,7 +221,10 @@ void CVEHICLELANE::pushDeque(int redPoint) {
                     lane.push_back(new CBUS(0, this->y, false, false));
                     condition = 0;
                     break;
-                }*/
+                }
+                default:
+                    lane.push_front(NULL);
+                    condition = 0;
                 }
             }
         }

@@ -135,11 +135,11 @@ void CGAME::resetData() {
 			condition = 0;
 			break;
 		}
-		//case TRAINLANE_ID: {
-		//	aLanes.push_back(new CTRAINLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, 10, 10));
-		//	condition = 0;
-		//	break;
-		//}
+		case TRAINLANE_ID: {
+			aLanes.push_back(new CTRAINLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, 10, 5));
+			condition = 0;
+			break;
+		}
 		case RIVERLANE_LAND_ID: {
 			if (condition == 0) {
 				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, true));
@@ -149,6 +149,9 @@ void CGAME::resetData() {
 				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, false));
 			break;
 		}
+		default:
+			aLanes.push_back(new CGRASSLANE(0, i * BLOCK_HEIGHT + START_HEIGHT));
+			condition = 0;
 		}
 	}
 	aLanes.push_back(new CGRASSLANE(0, (BOARD_HEIGHT - 1) * BLOCK_HEIGHT + START_HEIGHT));
@@ -170,7 +173,7 @@ void CGAME::saveData(string fileName) {
 		file << endl;
 		file.close();
 	}else{
-		cout << "Cant open file." << endl;
+		cout << "Can't open file." << endl;
 	}
 }
 void CGAME::loadData(string fileName) {
@@ -244,7 +247,7 @@ int CGAME::Menu() {
 	return 0;
 }
 void CGAME::NewGame() {
-	cPlayer->set(BOARD_WIDTH / 2, 0, true, 0);
+	cPlayer->set(BOARD_WIDTH / 2, BOARD_HEIGHT - 1, true, 0);
 	resetData();
 	playGame();
 }
@@ -297,7 +300,7 @@ void CGAME::SubThreadNewGame() {
 				//Xy ly finish
 				if (cPlayer->isFinish()) {
 					cPlayer->increaseScore();
-					cPlayer->set(-1, 0);
+					cPlayer->set(-1, BOARD_HEIGHT - 1);
 					cPlayer->setFinish(false);
 					resetData();
 					startMap();

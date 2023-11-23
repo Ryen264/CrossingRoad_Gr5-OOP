@@ -17,7 +17,10 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
 	//set colors
 	if (isRight) {
-		block[12][1].txtColor = WHITE;
+
+		// VE PERRY
+
+		/*block[12][1].txtColor = WHITE;
 		block[12][1].bgdColor = SKY_BLUE;
 		block[11][1].txtColor = SKY_BLUE;
 		block[10][1].txtColor = BLACK;
@@ -47,10 +50,23 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[6][2].bgdColor = ORANGE;
 		block[7][2].txtColor = ORANGE;
 		block[6][3].txtColor = ORANGE;
-		block[7][3].txtColor = BRIGHT_YELLOW;
+		block[7][3].txtColor = BRIGHT_YELLOW;*/
+
+		// VE HOA
+        block[6][2].txtColor = BRIGHT_YELLOW;
+        block[6][2].bgdColor = -1;
+        block[7][2].txtColor = RED;
+        block[7][2].bgdColor = BRIGHT_YELLOW;
+        block[8][2].txtColor = BRIGHT_YELLOW;
+        block[8][2].bgdColor = -1;
+        block[7][3].txtColor = BRIGHT_YELLOW;
+        block[7][3].bgdColor = -1;
+
 	}
 	else {
-		block[3][1].bgdColor = SKY_BLUE;
+		// VE PERRY
+
+		/*block[3][1].bgdColor = SKY_BLUE;
 		block[3][1].txtColor = WHITE;
 		block[4][1].txtColor = SKY_BLUE;
 		block[5][1].bgdColor = SKY_BLUE;
@@ -82,7 +98,17 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 			block[i][3].txtColor = SKY_BLUE;
 		}
 		block[8][3].txtColor = BRIGHT_YELLOW;
-		block[9][3].txtColor = ORANGE;
+		block[9][3].txtColor = ORANGE;*/
+
+		//VE HOA
+        block[6][2].txtColor = RED;
+        block[6][2].bgdColor = -1;
+        block[7][2].txtColor = BRIGHT_YELLOW;
+        block[7][2].bgdColor = RED;
+        block[8][2].txtColor = RED;
+        block[8][2].bgdColor = -1;
+        block[7][3].txtColor = RED;
+        block[7][3].bgdColor = -1;
 	}
 }
 COBJECT::~COBJECT() {

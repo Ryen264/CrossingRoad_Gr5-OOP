@@ -41,16 +41,16 @@ void CPLAYER::setMove(int moving) {
 }
 void CPLAYER::moveCharacter() {
     if (this->moving == UP) {
-        if (this->y > 0)
+        if (this->y > -1)
             this->y--;
+        if (this->y == -1) {
+            this->finish = true;
+            this->y = BOARD_HEIGHT - 1;
+        }
     }
     else if (this->moving == DOWN) {
-        if (this->y < BOARD_HEIGHT)
+        if (this->y < BOARD_HEIGHT - 1)
             this->y++;
-        if (this->y == BOARD_HEIGHT) {
-            this->finish = true;
-            this->y = 0;
-        }
     }
     else if (this->moving == RIGHT) {
         if (this->x < BOARD_WIDTH - 1)

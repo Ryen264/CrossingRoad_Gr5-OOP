@@ -80,13 +80,7 @@ public:
 const int QUIT_CODE = -1000;
 const int BACK_TO_MENU_CODE = -1001;
 
-//Lane IDs
-const int VEHICLELANE_ID = 20001;
-const int GRASSLANE_ID = 20002;
-const int RIVERLANE_LAND_ID = 20003;
-const int RIVERLANE_NOLAND_ID = 21003;
-const int TRAINLANE_ID = 20004;
-const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, GRASSLANE_ID, RIVERLANE_LAND_ID, TRAINLANE_ID };
+const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, GRASSLANE_ID, RIVERLANE_LAND_ID, TRAINLANE_ID};
 
 void ShowCur(bool CursorVisibility);
 void DisableResizeWindow();

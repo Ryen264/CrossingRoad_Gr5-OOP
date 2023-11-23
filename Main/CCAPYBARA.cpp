@@ -1,6 +1,7 @@
 #include "CCAPYBARA.h"
 CCAPYBARA::CCAPYBARA(int x, int y, bool isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
+	this->ID = CAPYBARA_ID;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
 
 	this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];

@@ -6,6 +6,7 @@ CRIVERLANE::CRIVERLANE(int x, int y, int delayTime, bool haveLand) {
 	this->delayTime = delayTime;
 
 	this->x = x; this->y = y; this->haveLand = haveLand;
+	this->ID = (haveLand) ? RIVERLANE_LAND_ID : RIVERLANE_NOLAND_ID;
 	vector<wstring> frame = (haveLand) ? FRAME_LAND : FRAME_NOLAND;
 
 	this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
@@ -240,4 +241,7 @@ void CRIVERLANE::Move() {
 		//Random push a car
 		pushDeque();
 	}
+}
+bool CRIVERLANE::checkPos(int pos) {
+	return this->lane[pos] == NULL;
 }

@@ -5,10 +5,11 @@ const int BOARD_HEIGHT = 8;
 
 class COBJECT {
 protected:
-	int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1;
+	int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1, ID;
 	PIXEL** block;
 public:
 	~COBJECT();
+	int getID() const;
 	void setPos(int x, int y);
 	void DrawBlock(CGRAPHIC& layer);
 };
@@ -22,5 +23,7 @@ const int TRAIN_HEAD_ID = 30006;
 const int TRAIN_BODY_ID = 31006;
 const int BUS_HEAD_ID = 30007;
 const int BUS_TAIL_ID = 31007;
+
+const int TRAFFICLIGHT_ID = 40001;
 
 int random(vector<int> arr);

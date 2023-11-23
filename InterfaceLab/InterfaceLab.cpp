@@ -5,19 +5,19 @@
 int main() {
 	SetupTheme();
 	CGRAPHIC BgdLayer;
-	BgdLayer.clear(BLACK, WHITE);
+	BgdLayer.clear(BLACK, BLUE);
 
-	CLANE testlane1(0, 0), testlane2(0, BLOCK_HEIGHT);
+	//CLANE testlane1(0, 0), testlane2(0, BLOCK_HEIGHT);
 	//draw background
-	testlane1.DrawBlock(BgdLayer);
-	testlane2.DrawBlock(BgdLayer);
+	//testlane1.DrawBlock(BgdLayer);
+	//testlane2.DrawBlock(BgdLayer);
 	BgdLayer.display();
 
 
 	CGRAPHIC ObjLayer;
 	ObjLayer.clear(-1, -1);
 
-	COBJECT testobject;
+	COBJECT testobject(0, 0, false);
 	//draw object
 	testobject.DrawBlock(ObjLayer);
 	ObjLayer.display();
