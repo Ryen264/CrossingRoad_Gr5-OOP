@@ -22,7 +22,9 @@ class CGAME {
     CPLAYER* cPlayer;
     vector<CLANE*> aLanes;
     deque<string> fileNameList;
-
+    bool isSaved = false;
+    string savename;
+    int level = 0;
     //Thread variables
     bool isThreadRunning = true;
 
@@ -42,13 +44,16 @@ public:
     void loadData(string fileName);
     string inputUserTxt();
     int inputUserNumber();
+    bool checkFileName(string fileName);
     void saveFileNameList();
     void loadFileNameList();
-    
+    void deleteFileName(int);
+    void changeFileName(int);
+
     int Menu();
     void NewGame();
     void LoadGame();
-    void SaveGame();
+    string SaveGame();
     void Setting();
     void Help();
     void About();

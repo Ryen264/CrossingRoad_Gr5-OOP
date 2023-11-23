@@ -4,7 +4,9 @@ CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) {
         this->lane.push_front(NULL);
     this->isMoveRight = rand() % 2;
     this->delayTime = delayTime;
-    this->lightPos = 6;
+    //this->lightPos = 6;
+    this->lightPos = -1;
+
     if (lightPos >= BOARD_WIDTH) lightPos = -1;
 
     this->x = x; this->y = y; this->ID = VEHICLELANE_ID;
@@ -23,7 +25,7 @@ CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) {
         this->block[i][0].bgdColor = LIGHT_GREEN;
 }
 
-void CVEHICLELANE::pushDeque(int redPoint) {
+void CVEHICLELANE::pushDeque(int redPoint ) {
     
     //push normally
     if (redPoint < 0) {
@@ -104,6 +106,7 @@ void CVEHICLELANE::pushDeque(int redPoint) {
                 }
                 break;
             }
+
             default:
                 lane.push_front(NULL);
                 condition = 0;
@@ -231,6 +234,28 @@ void CVEHICLELANE::pushDeque(int redPoint) {
     }
 }
 
+void CVEHICLELANE::pushObj(int x, int ID) {
+        switch (ID) {
+        case CAR_ID: {
+            (isMoveRight) ? lane.push_front(new CCAR(x, this->y, true)) : lane.push_back(new CCAR(x, this->y, false));
+            break;
+        }
+        case TRUCK_ID: {
+            (isMoveRight) ? lane.push_front(new CTRUCK(x, this->y, true)) : lane.push_back(new CTRUCK(x, this->y, false));
+            break;
+        }
+        case BUS_HEAD_ID: {
+            (isMoveRight) ? lane.push_front(new CBUS(x, this->y, true, true)) : lane.push_back(new CBUS(x, this->y, false, true));
+            break;
+        }
+        case BUS_TAIL_ID: {
+            (isMoveRight) ? lane.push_front(new CBUS(x, this->y, true, false)) : lane.push_back(new CBUS(x, this->y, false, false));
+            break;
+        }
+        default:
+            lane.push_back(NULL);
+        }
+}
 void CVEHICLELANE::Move() {
     lightWork();
     timeCount++;

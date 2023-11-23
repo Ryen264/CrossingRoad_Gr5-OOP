@@ -24,6 +24,7 @@ L"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"
 public:
 	CVEHICLELANE(int x = 0, int y = 0, int delayTime = 0);
 	void pushDeque(int redPoint = -1);
+	void pushObj(int x, int ID);
 	void Move();
 	void lightWork();
 

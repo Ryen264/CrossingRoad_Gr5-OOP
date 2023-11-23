@@ -18,12 +18,15 @@ int CPLAYER::getY() const {
 int CPLAYER::getScore() const {
     return this->score;
 }
-void CPLAYER::set(int x, int y, bool alive, int score) {
+bool CPLAYER::getIsRight() const {
+    return this->isRight;
+}
+void CPLAYER::set(int x, int y, bool right, int score) {
     if (x >= 0)
         this->x = x;
     if (y >= 0)
         this->y = y;
-    this->alive = alive;
+    this->isRight = right;
     if (score >= 0)
         this->score = score;
 }

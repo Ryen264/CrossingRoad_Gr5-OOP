@@ -22,7 +22,7 @@ class COBJECT {
 //L"                ",
 //L"                "
 //	};
-
+	/*
 	const vector<wstring> FRAME_LEFT =
 	{
 L"                ",

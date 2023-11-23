@@ -138,12 +138,7 @@ void CGAME::NewGame() {
 	}
 	threadNewGame.join();
 }
-void CGAME::LoadGame() {
-
-}
-void CGAME::SaveGame() {
-
-}
+void CGAME::LoadGame(){}
 void CGAME::Setting() {
 
 }
