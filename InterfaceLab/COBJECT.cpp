@@ -63,10 +63,10 @@ COBJECT::COBJECT(int x, int y, int isRight) {
         block[7][3].bgdColor = -1;*/
 
 		//CAPYBARA
-		block[0][4].txtColor = LIGHT_BROWN;
-		block[1][4].txtColor = LIGHT_BROWN;
-		block[2][4].txtColor = LIGHT_BROWN;
-		block[3][4].txtColor = SADDLE_BROWN;
+		block[0][2].txtColor = LIGHT_BROWN;
+		block[1][2].txtColor = LIGHT_BROWN;
+		block[2][2].txtColor = LIGHT_BROWN;
+		block[3][2].txtColor = SADDLE_BROWN;
 		for (int i = 4; i <= 8; i++)
 		{
 			block[i][4].txtColor = LIGHT_BROWN;
@@ -168,12 +168,16 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[2][2].txtColor = LIGHT_BROWN;
 		block[3][2].txtColor = LIGHT_BROWN;
 		block[4][2].bgdColor = LIGHT_BROWN;
+		block[4][2].txtColor = BLACK;
 		block[5][2].bgdColor = LIGHT_BROWN;
+		block[5][2].txtColor = BLACK;
 		block[6][2].bgdColor = LIGHT_BROWN;
 		block[6][2].txtColor = LIGHT_BROWN;
 		block[7][2].txtColor = SADDLE_BROWN;
 		block[8][2].txtColor = LIGHT_BROWN;
 		block[8][2].bgdColor = SADDLE_BROWN;
+
+		block[8][4].txtColor = LIGHT_BROWN;
 
 		block[7][1].txtColor = BRIGHT_YELLOW;
 		block[8][1].txtColor = BRIGHT_YELLOW;

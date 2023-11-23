@@ -125,27 +125,27 @@ class COBJECT {
 
 const vector <wstring> FRAME_RIGHT =
 {
-L"                "
+L"                ",
 L"   ▄▄           ",
 L"   ▄█▄▄▄██▄█    ",
 L"▄█▄█████████    ",
 L"████████▀       ",
-L"                ",
+L"                "
 };
 const vector <wstring> FRAME_LEFT =
 {
-L"                "
+L"                ",
 L"       ▄▄       ",
 L"█▄██▄▄▄█▄       ",
 L"█████████▄█▄    ",
 L"   ▀████████    ",
-L"                ",
+L"                "
 };
 protected:
     int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1;
     PIXEL** block;
 public:
-	COBJECT(int x = 0, int y = 0, int isRight = false);
+	COBJECT(int x = 0, int y = 0, int isRight = true);
 	~COBJECT();
 	void DrawBlock(CGRAPHIC& layer);
 
