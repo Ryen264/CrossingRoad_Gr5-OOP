@@ -18,71 +18,71 @@ CCAPYBARA::CCAPYBARA(int x, int y, bool isRight) {
 
 	//set colors
 	if (isRight) {
-		block[0][3].txtColor = LIGHT_BROWN;
-		block[1][3].txtColor = LIGHT_BROWN;
-		block[2][3].txtColor = LIGHT_BROWN;
-		block[3][3].txtColor = SADDLE_BROWN;
+		block[0][4].txtColor = LIGHT_BROWN;
+		block[1][4].txtColor = LIGHT_BROWN;
+		block[2][4].txtColor = LIGHT_BROWN;
+		block[3][4].txtColor = SADDLE_BROWN;
 		for (int i = 4; i <= 8; i++)
 		{
-			block[i][3].txtColor = LIGHT_BROWN;
+			block[i][4].txtColor = LIGHT_BROWN;
 		}
-		block[0][2].txtColor = LIGHT_BROWN;
-		block[1][2].txtColor = LIGHT_BROWN;
-		block[2][2].txtColor = SADDLE_BROWN;
-		block[2][2].bgdColor = LIGHT_BROWN;
+		block[0][3].txtColor = LIGHT_BROWN;
+		block[1][3].txtColor = LIGHT_BROWN;
+		block[2][3].txtColor = SADDLE_BROWN;
+		block[2][3].bgdColor = LIGHT_BROWN;
 		for (int i = 3; i <= 11; i++)
 		{
 			block[i][2].txtColor = LIGHT_BROWN;
 		}
-		block[3][1].txtColor = LIGHT_BROWN;
-		block[3][1].bgdColor = SADDLE_BROWN;
-		block[4][1].txtColor = SADDLE_BROWN;
-		block[5][1].txtColor = LIGHT_BROWN;
-		block[5][1].bgdColor = LIGHT_BROWN;
-		block[6][1].bgdColor = LIGHT_BROWN;
-		block[7][1].txtColor = BLACK;
-		block[7][1].bgdColor = LIGHT_BROWN;
-		block[8][1].txtColor = LIGHT_BROWN;
-		block[9][1].txtColor = LIGHT_BROWN;
-		block[10][1].txtColor = LIGHT_BROWN;
-		block[10][1].bgdColor = SADDLE_BROWN;
-		block[11][1].txtColor = SADDLE_BROWN;
-		block[11][1].txtColor = SADDLE_BROWN;
-		block[3][0].txtColor = BRIGHT_YELLOW;
-		block[4][0].txtColor = BRIGHT_YELLOW;
+		block[3][2].txtColor = LIGHT_BROWN;
+		block[3][2].bgdColor = SADDLE_BROWN;
+		block[4][2].txtColor = SADDLE_BROWN;
+		block[5][2].txtColor = LIGHT_BROWN;
+		block[5][2].bgdColor = LIGHT_BROWN;
+		block[6][2].bgdColor = LIGHT_BROWN;
+		block[7][2].txtColor = BLACK;
+		block[7][2].bgdColor = LIGHT_BROWN;
+		block[8][2].txtColor = LIGHT_BROWN;
+		block[9][2].txtColor = LIGHT_BROWN;
+		block[10][2].txtColor = LIGHT_BROWN;
+		block[10][2].bgdColor = SADDLE_BROWN;
+		block[11][2].txtColor = SADDLE_BROWN;
+		block[11][2].txtColor = SADDLE_BROWN;
+		block[3][1].txtColor = BRIGHT_YELLOW;
+		block[4][1].txtColor = BRIGHT_YELLOW;
 	}
 	else {
 		for (int i = 0; i <= 8; i++)
 		{
-			block[i][2].txtColor = LIGHT_BROWN;
+			block[i][3].txtColor = LIGHT_BROWN;
 		}
-		block[9][2].txtColor = SADDLE_BROWN;
-		block[9][2].bgdColor = LIGHT_BROWN;
-		block[10][2].txtColor = LIGHT_BROWN;
-		block[11][2].txtColor = LIGHT_BROWN;
+		block[9][3].txtColor = SADDLE_BROWN;
+		block[9][3].bgdColor = LIGHT_BROWN;
+		block[10][3].txtColor = LIGHT_BROWN;
+		block[11][3].txtColor = LIGHT_BROWN;
 		for (int i = 3; i <= 7; i++)
 		{
-			block[i][3].txtColor = LIGHT_BROWN;
+			block[i][4].txtColor = LIGHT_BROWN;
 		}
 		block[8][3].txtColor = SADDLE_BROWN;
 		for (int i = 9; i <= 11; i++)
 		{
-			block[i][3].txtColor = LIGHT_BROWN;
+			block[i][4].txtColor = LIGHT_BROWN;
 		}
-		block[0][1].txtColor = SADDLE_BROWN;
-		block[1][1].txtColor = LIGHT_BROWN;
-		block[1][1].bgdColor = SADDLE_BROWN;
-		block[2][1].txtColor = LIGHT_BROWN;
-		block[3][1].txtColor = LIGHT_BROWN;
-		block[4][1].bgdColor = LIGHT_BROWN;
-		block[5][1].bgdColor = LIGHT_BROWN;
-		block[6][1].bgdColor = LIGHT_BROWN;
-		block[6][1].txtColor = LIGHT_BROWN;
-		block[7][1].txtColor = SADDLE_BROWN;
-		block[8][1].txtColor = LIGHT_BROWN;
-		block[8][1].bgdColor = SADDLE_BROWN;
+		block[0][2].txtColor = SADDLE_BROWN;
+		block[1][2].txtColor = LIGHT_BROWN;
+		block[1][2].bgdColor = SADDLE_BROWN;
+		block[2][2].txtColor = LIGHT_BROWN;
+		block[3][2].txtColor = LIGHT_BROWN;
+		block[4][2].bgdColor = LIGHT_BROWN;
+		block[5][2].bgdColor = LIGHT_BROWN;
+		block[6][2].bgdColor = LIGHT_BROWN;
+		block[6][2].txtColor = LIGHT_BROWN;
+		block[7][2].txtColor = SADDLE_BROWN;
+		block[8][2].txtColor = LIGHT_BROWN;
+		block[8][2].bgdColor = SADDLE_BROWN;
 
-		block[7][0].txtColor = BRIGHT_YELLOW;
-		block[8][0].txtColor = BRIGHT_YELLOW;
+		block[7][1].txtColor = BRIGHT_YELLOW;
+		block[8][1].txtColor = BRIGHT_YELLOW;
 	}
 }
