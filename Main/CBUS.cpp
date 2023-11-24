@@ -45,8 +45,8 @@ CBUS::CBUS(int x, int y, bool isRight, bool isHead) {
 			block[8][2].txtColor = RED;
 			block[9][2].txtColor = RED;
 
+			block[0][3].bgdColor = WHITE;
 			block[0][3].txtColor = DARK_RED;
-			block[0][3].txtColor = WHITE;
 			block[1][3].txtColor = DARK_RED;
 			block[2][3].txtColor = WHITE;
 			block[3][3].txtColor = DARK_RED;
@@ -74,6 +74,10 @@ CBUS::CBUS(int x, int y, bool isRight, bool isHead) {
 			}
 		}
 		else {
+			for (int i = 0; i < 3; i++) {
+				block[8 + i][4].txtColor = BLACK;
+				block[8 + i][4].bgdColor = DARK_RED;
+			}
 			block[6][1].txtColor = DARK_RED;
 			for(int i=7;i<16;i++)
 			{
@@ -208,16 +212,17 @@ CBUS::CBUS(int x, int y, bool isRight, bool isHead) {
 
 			block[0][4].txtColor = DARK_RED;
 			block[0][4].bgdColor = -1;
-			for (int i=1;i<4;i++)
-			{
-				block[i][4].txtColor = BLACK;
-				block[i][4].bgdColor = DARK_RED;
-			}
+			
 			for (int i = 4; i < 10; i++)
 			{
 				block[i][4].txtColor = DARK_RED;
 				block[i][4].bgdColor = -1;
 			}
-
+			for (int i = 0; i < 3; i++)
+			{
+				block[5 + i][4].txtColor = BLACK;
+				block[5 + i][4].bgdColor = DARK_RED;
+			}
 		}
+		
 }

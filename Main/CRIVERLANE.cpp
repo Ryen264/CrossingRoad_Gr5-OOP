@@ -20,6 +20,8 @@ CRIVERLANE::CRIVERLANE(int x, int y, int delayTime, bool haveLand) {
 
 	//set colors
 	if (haveLand) {
+		for (int i = 0; i < 16; i++)
+			block[i][0].bgdColor = LIGHT_GREEN;
 		block[2][0].txtColor = SADDLE_BROWN;
 		block[2][0].bgdColor = LIGHT_GREEN;
 		block[8][0].txtColor = SADDLE_BROWN;
