@@ -17,8 +17,9 @@ public:
 	int getY() const;
 	int getScore() const;
 	bool getIsRight() const;
+	bool getIsAlive() const;
 
-	void set(int x = -1, int y = -1, bool alive = true, int score = -1);
+	void set(int x = -1, int y = -1, bool alive = true,bool right = true, int score = -1);
 	bool setIsRight();
 	void setFinish(bool finish);
 	void setAlive(bool alive);
