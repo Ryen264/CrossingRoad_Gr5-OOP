@@ -17,10 +17,59 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
 	//set colors
 	if (isRight) {
-
+		//VE BANG NHAP TEN
+		 block[0][0].txtColor=BLACK;
+	 for(int i=1;i<20;i++)
+	{
+	  if(1<=i&&i<=4||17<=i&&i<=19) 
+	  {
+	  block[i][0].txtColor=BLACK;
+	  block[i][0].bgdColor=DARK_BLUE;
+	  }
+	  else
+	  {
+	  block[i][0].txtColor=BLACK;
+	  block[i][0].bgdColor=LIGHT_GRAY;
+	  }
+	}
+	 block[20][0].txtColor=BLACK;
+	 block[20][0].bgdColor=-1;
+	 block[0][1].txtColor=BLACK;
+	  for(int i=1;i<20;i++)
+	{
+	  if(1<=i&&i<=4||17<=i&&i<=20) 
+	  {
+	  block[i][1].txtColor=BLACK;
+	  block[i][1].bgdColor=DARK_BLUE;
+	  }
+	  else
+	  {
+	  block[i][1].txtColor=BLACK;
+	  block[i][2].bgdColor=LIGHT_GRAY;
+	  }
+	}
+	 block[13][1].txtColor=BLACK;
+	 block[14][1].txtColor=BLACK;
+	 block[20][1].txtColor=BLACK;
+	for(int i=1;i<20;i++)
+	{
+	  if(1<=i&&i<=4||17<=i&&i<=20) 
+	  {
+	  block[i][2].txtColor=BLACK;
+	  block[i][2].bgdColor=DARK_BLUE;
+	  }
+	  else
+	  {
+	  block[i][2].txtColor=BLACK;
+	  block[i][2].bgdColor=LIGHT_GRAY;
+	  }
+	}
+	 block[13][2].txtColor=BLACK;
+	 block[14][2].txtColor=BLACK;
+	 block[20][2].txtColor=BLACK;
 
 		//VE TRUNG
-		block[5][1].txtColor = BLACK;
+		/*block[5][1].txtColor = BLACK;
 		block[5][1].bgdColor = -1;
 		block[6][1].txtColor = BLACK;
 		block[6][1].bgdColor = WHITE;
@@ -50,7 +99,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[6][4].txtColor = BLACK;
 		block[6][4].bgdColor = -1;
 		block[7][4].txtColor = BLACK;
-		block[7][4].bgdColor = -1;
+		block[7][4].bgdColor = -1;*/
 		// VE PERRY
 
 		/*block[12][2].txtColor = WHITE;
