@@ -67,7 +67,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
         block[7][3].bgdColor = -1;*/
 
 		//CAPYBARA
-		block[0][2].txtColor = LIGHT_BROWN;
+		/*block[0][2].txtColor = LIGHT_BROWN;
 		block[1][2].txtColor = LIGHT_BROWN;
 		block[2][2].txtColor = LIGHT_BROWN;
 		block[3][2].txtColor = SADDLE_BROWN;
@@ -98,7 +98,90 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[11][2].txtColor = SADDLE_BROWN;
 		block[11][2].txtColor = SADDLE_BROWN;
 		block[3][1].txtColor = BRIGHT_YELLOW;
-		block[4][1].txtColor = BRIGHT_YELLOW;
+		block[4][1].txtColor = BRIGHT_YELLOW;*/
+
+
+		//VE DUONG
+		block[0][0].txtColor = WHITE;
+		block[15][0].txtColor = WHITE;
+		for (int i = 1; i < 14; i+=4)
+		{
+			block[i][0].txtColor = BLACK;
+			block[i+1][0].txtColor = BLACK;
+		}
+		for (int i = 3; i < 12; i += 4)
+		{
+			block[i][0].txtColor = WHITE;
+			block[i + 1][0].txtColor = WHITE;
+		}
+
+
+		block[0][1].txtColor = BLACK;
+		block[15][1].txtColor = BLACK;
+		for (int i = 1; i < 14; i += 4)
+		{
+			block[i][1].txtColor = WHITE;
+			block[i + 1][1].txtColor = WHITE;
+		}
+		for (int i = 3; i < 12; i += 4)
+		{
+			block[i][1].txtColor = BLACK;
+			block[i + 1][1].txtColor = BLACK;
+		}
+
+
+		block[0][2].txtColor = WHITE;
+		block[15][2].txtColor = WHITE;
+		for (int i = 1; i < 14; i += 4)
+		{
+			block[i][2].txtColor = BLACK;
+			block[i + 1][2].txtColor = BLACK;
+		}
+		for (int i = 3; i < 12; i += 4)
+		{
+			block[i][2].txtColor = WHITE;
+			block[i + 1][2].txtColor = WHITE;
+		}
+
+
+		block[0][3].txtColor = BLACK;
+		block[15][3].txtColor = BLACK;
+		for (int i = 1; i < 14; i += 4)
+		{
+			block[i][3].txtColor = WHITE;
+			block[i + 1][3].txtColor = WHITE;
+		}
+		for (int i = 3; i < 12; i += 4)
+		{
+			block[i][3].txtColor = BLACK;
+			block[i + 1][3].txtColor = BLACK;
+		}
+
+		block[0][4].txtColor = WHITE;
+		block[15][4].txtColor = WHITE;
+		for (int i = 1; i < 14; i += 4)
+		{
+			block[i][4].txtColor = BLACK;
+			block[i + 1][4].txtColor = BLACK;
+		}
+		for (int i = 3; i < 12; i += 4)
+		{
+			block[i][4].txtColor = WHITE;
+			block[i + 1][4].txtColor = WHITE;
+		}
+
+		block[0][5].txtColor = BLACK;
+		block[15][5].txtColor = BLACK;
+		for (int i = 1; i < 14; i += 4)
+		{
+			block[i][5].txtColor = WHITE;
+			block[i + 1][5].txtColor = WHITE;
+		}
+		for (int i = 3; i < 12; i += 4)
+		{
+			block[i][5].txtColor = BLACK;
+			block[i + 1][5].txtColor = BLACK;
+		}
 
 	}
 	else {
@@ -187,7 +270,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
         block[7][3].bgdColor = -1;*/
 
 		//CAPYBARA
-		for (int i = 0; i <= 8; i++)
+		/*for (int i = 0; i <= 8; i++)
 		{
 			block[i][3].txtColor = LIGHT_BROWN;
 		}
@@ -222,7 +305,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[8][4].txtColor = LIGHT_BROWN;
 
 		block[7][1].txtColor = BRIGHT_YELLOW;
-		block[8][1].txtColor = BRIGHT_YELLOW;
+		block[8][1].txtColor = BRIGHT_YELLOW;*/
 	}
 }
 COBJECT::~COBJECT() {
