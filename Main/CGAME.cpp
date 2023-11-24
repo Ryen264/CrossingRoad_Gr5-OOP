@@ -138,7 +138,7 @@ void CGAME::saveData(string fileName) {
 
 	if (file.is_open()) {
 		// <x> <y> <score> <isRight> //Thông tin người chơi
-		file << cPlayer->getX() << " " << cPlayer->getY() << " " << cPlayer->getScore() << " " << cPlayer->getIsRight() << endl;
+		file << cPlayer->getX() << " " << cPlayer->getY() << " " << cPlayer->getScore() << " " <<cPlayer->getIsAlive() <<" "<<cPlayer->getIsRight() << endl;
 		file << this->level << endl;
 		// <type lane ID> <isMoveRight> <timeCount> <isStop> <delayTime> [<object ID>/0]
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
@@ -159,10 +159,10 @@ void CGAME::loadData(string fileName) {
 	ifstream file(fileName, ios::in);
 	if (file.is_open()) {
 		int x, y, score;
-		bool isRight;//player
+		bool isRight,isAlive;//player
 		// Doc thong tin nguoi choi
-		file >> x >> y >> score >> isRight;
-		cPlayer->set(x, y, isRight, score);
+		file >> x >> y >> score >>isAlive >>isRight;
+		cPlayer->set(x, y, isAlive,isRight, score);
 		file >> level;
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
 			bool direction;
@@ -426,6 +426,8 @@ int CGAME::Pause(HANDLE t) {
 	}
 	case'6': {
 		this->resumeThread(t);
+		this->savename = "";
+		isSaved = false;
 		return BACK_TO_MENU_CODE;
 	}
 	default:
@@ -438,8 +440,12 @@ bool CGAME::isInjured() const {
 	return this->aLanes[this->cPlayer->getY()]->checkPos(this->cPlayer->getX());
 }
 bool CGAME::isReset() {
-	this->drawPlayAgain();
-	return toupper(_getch()) == 'Y';
+	do 	{
+		this->drawPlayAgain();
+		int temp = toupper(_getch());
+		if (temp == 'Y') return true;
+		else if (temp == 'N') return false;
+	} while (1);
 }
 void CGAME::push_frontLane(int ID) {
 	if (ID == 0) ID = GRASSLANE_ID;

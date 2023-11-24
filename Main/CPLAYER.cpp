@@ -21,11 +21,15 @@ int CPLAYER::getScore() const {
 bool CPLAYER::getIsRight() const {
     return this->isRight;
 }
-void CPLAYER::set(int x, int y, bool right, int score) {
+bool CPLAYER::getIsAlive() const {
+    return this->alive;
+}
+void CPLAYER::set(int x, int y, bool live, bool right, int score) {
     if (x >= 0)
         this->x = x;
     if (y >= 0)
         this->y = y;
+    this->alive = live;
     this->isRight = right;
     if (score >= 0)
         this->score = score;
