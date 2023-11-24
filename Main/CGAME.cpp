@@ -478,6 +478,8 @@ int CGAME::Pause(HANDLE t) {
 	}
 	case'6': {
 		this->resumeThread(t);
+		this->savename = "";
+		isSaved = false;
 		return BACK_TO_MENU_CODE;
 	}
 	default:
