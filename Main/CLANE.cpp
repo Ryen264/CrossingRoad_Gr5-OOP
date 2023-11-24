@@ -36,13 +36,12 @@ int CLANE::getTimeCount() {
 int CLANE::getDelayTime() {
     return this->delayTime;
 }
+int CLANE::getID() const {
+    return this->ID;
+}
+
 void CLANE::setIsMoveRight(bool right) {
-    if (right == 1) {
-        this->isMoveRight = true;
-    }
-    else {
-        this->isMoveRight = false;
-    }
+    this->isMoveRight = right;
 }
 void CLANE::setTimeCount(int time) {
     this->timeCount = time;
@@ -50,9 +49,18 @@ void CLANE::setTimeCount(int time) {
 void CLANE::setDelayTime(int time) {
     this->delayTime = time;
 }
-int CLANE::getID() const {
-    return this->ID;
+void CLANE::setYHeight(int y) {
+    if (y < 0) y = 0;
+    if (y > BOARD_HEIGHT - 1) y = BOARD_HEIGHT - 1;
+    this->y = y * BLOCK_HEIGHT + START_BOARD_HEIGHT;
+
+    updateYObj();
 }
+void CLANE::updateYObj() {
+    for (int i = 0; i < (int)this->lane.size(); i++)
+        if (lane[i] != NULL) lane[i]->setY(this->y);
+}
+
 void CLANE::DrawLane(CGRAPHIC& layer) {
     for (int k = 0; k < BOARD_WIDTH; k++) {
         for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)

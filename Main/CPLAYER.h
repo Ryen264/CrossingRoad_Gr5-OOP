@@ -1,6 +1,9 @@
 #pragma once
 #include "CDINOSAUR.h"
 #include <iostream>
+const int UP_LANE = BOARD_HEIGHT - 3;
+const int DOWN_LANE = BOARD_HEIGHT - 2;
+
 using namespace std;
 class CPLAYER {
 	int x, y;
@@ -24,12 +27,13 @@ public:
 	void setAlive(bool alive);
 	void setMove(int moving);
 
-	void moveCharacter();
+	//return: is push new lane
+	bool moveCharacter();
 	void increaseScore(int point = 1);
 	void decreaseScore(int point = 1);
 	bool isFinish() const;
 	bool isDead() const;
 	bool isMoving() const;
 	void drawCharacter(CGRAPHIC& layer);
-	void eraseCharacter(CGRAPHIC& layer);
+	void displayCharacter(CGRAPHIC& layer);
 };

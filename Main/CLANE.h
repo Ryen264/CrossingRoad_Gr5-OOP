@@ -31,6 +31,8 @@ public:
 	virtual void setIsMoveRight(bool);
 	virtual void setTimeCount(int);
 	virtual void setDelayTime(int);
+	void setYHeight(int y);
+	void updateYObj();
 
 	void DrawLane(CGRAPHIC& layer);
 	void DrawObjects(CGRAPHIC& layer);

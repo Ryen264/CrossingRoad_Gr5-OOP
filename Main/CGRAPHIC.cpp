@@ -41,10 +41,8 @@ CGRAPHIC::~CGRAPHIC() {
 	this->screen = NULL;
 }
 void CGRAPHIC::display(int fromX, int fromY, int toX, int toY) {
-	if (toX < 0)
-		toX = SCREEN_WIDTH - 1;
-	if (toY < 0)
-		toY = SCREEN_HEIGHT - 1;
+	if (toX < 0 || toX > SCREEN_WIDTH - 1) toX = SCREEN_WIDTH - 1;
+	if (toY < 0 || toY > SCREEN_HEIGHT - 1) toY = SCREEN_HEIGHT - 1;
 	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	DWORD dwBytesWritten = 0;
 	wchar_t pBuffer{};

@@ -42,18 +42,18 @@ void CPLAYER::setAlive(bool alive) {
 void CPLAYER::setMove(int moving) {
     this->moving = moving;
 }
-void CPLAYER::moveCharacter() {
+
+bool CPLAYER::moveCharacter() {
     if (this->moving == UP) {
-        if (this->y > -1)
-            this->y--;
-        if (this->y == -1) {
-            this->finish = true;
-            this->y = BOARD_HEIGHT - 1;
-        }
+        if (y <= UP_LANE) return true;
+        this->y--;
     }
     else if (this->moving == DOWN) {
-        if (this->y < BOARD_HEIGHT - 1)
-            this->y++;
+        if (y >= DOWN_LANE) {
+            alive = false; //die when go to the bottom
+            return false;
+        }
+        this->y++;
     }
     else if (this->moving == RIGHT) {
         if (this->x < BOARD_WIDTH - 1)
@@ -67,6 +67,7 @@ void CPLAYER::moveCharacter() {
         if (this->isRight)
             this->isRight = false;
     }
+    return false;
 }
 void CPLAYER::increaseScore(int point) {
     this->score += point;
@@ -84,11 +85,10 @@ bool CPLAYER::isMoving() const {
     return this->moving != 0;
 }
 void CPLAYER::drawCharacter(CGRAPHIC& layer) {
-    CDINOSAUR character(this->x * BLOCK_WIDTH, this->y * BLOCK_HEIGHT + START_HEIGHT, this->isRight);
+    CDINOSAUR character(this->x * BLOCK_WIDTH, this->y * BLOCK_HEIGHT + START_BOARD_HEIGHT, this->isRight);
     character.DrawBlock(layer);
 }
-void CPLAYER::eraseCharacter(CGRAPHIC& layer) {
-    for (int i = 0; i < BLOCK_WIDTH; i++)
-        for (int j = 0; j < BLOCK_HEIGHT; j++)
-            layer.screen[this->x * BLOCK_WIDTH + i][this->y * BLOCK_HEIGHT + START_HEIGHT+ j] = {L'@', BLACK, -1};
+void CPLAYER::displayCharacter(CGRAPHIC& layer) {
+    int fromX = this->x * BLOCK_WIDTH, fromY = this->y * BLOCK_HEIGHT + START_BOARD_HEIGHT;
+    layer.display(fromX, fromY, fromX + BLOCK_WIDTH, fromY + BLOCK_HEIGHT);
 }

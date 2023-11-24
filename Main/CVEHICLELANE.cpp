@@ -9,7 +9,7 @@ CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) {
 
     if (lightPos >= BOARD_WIDTH) lightPos = -1;
 
-    this->x = x; this->y = y; this->ID = VEHICLELANE_ID;
+    this->x = x * BLOCK_WIDTH; this->y = y * BLOCK_HEIGHT + START_BOARD_HEIGHT; this->ID = VEHICLELANE_ID;
 
     this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
     for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)

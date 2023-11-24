@@ -7,7 +7,7 @@ const int SCREEN_WIDTH = 208;
 const int SCREEN_HEIGHT = 51;
 const int BLOCK_WIDTH = 16;
 const int BLOCK_HEIGHT = 6;
-const int START_HEIGHT = 3;
+const int START_BOARD_HEIGHT = 3;
 
 struct THEME {
 	COLORREF colorTable[16];

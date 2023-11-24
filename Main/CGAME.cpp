@@ -70,6 +70,7 @@ void CGAME::start() {
 	//resetConsole(); - anti-Configure 
 }
 void CGAME::playGame() {
+	system("cls");
 	startMap();
 	isThreadRunning = true;
 	thread threadNewGame(&CGAME::SubThreadNewGame, this);
@@ -79,6 +80,14 @@ void CGAME::playGame() {
 			switch (temp) {
 			case 'W': case 'S': case 'A': case 'D': {
 				cPlayer->setMove(temp);
+				if (cPlayer->moveCharacter()) {
+					if (numberOfLane > BOARD_HEIGHT - 3) push_frontLane(VEHICLELANE_ID);
+					else push_frontLane(GRASSLANE_ID);
+					pop_backLane();
+					numberOfLane--;
+					startMap();
+				};
+				cPlayer->setMove(0);
 				break;
 			}
 			case 'P': {
@@ -89,12 +98,12 @@ void CGAME::playGame() {
 			}
 			}
 		}
-		else if (cPlayer->isDead()) {
+		else {
 			if (isReset()) {
 				resetData();
 				startMap();
 				cPlayer->setMove(0);
-				cPlayer->set(BOARD_WIDTH / 2, 0, true, 0);
+				cPlayer->set(BOARD_WIDTH / 2, UP_LANE, true, 0);
 			}
 			else {
 				exitThread(&threadNewGame);
@@ -104,56 +113,25 @@ void CGAME::playGame() {
 	}
 }
 void CGAME::startMap() {
-	system("cls");
 	for (int i = 0; i < BOARD_HEIGHT; i++)
 		aLanes[i]->DrawLane(BgdLayer);
 }
 
 void CGAME::resetData() {
-	while (!aLanes.empty()) {
-		CLANE* pointer = aLanes.back();
-		aLanes.pop_back();
-		if (pointer != NULL)
-			delete pointer;
-		pointer = NULL;
-	}
-	aLanes.push_back(new CGRASSLANE(0, START_HEIGHT));
+	this->numberOfLane = 5;
 
-	int condition = 0, laneCase{};
-	for (int i = 1; i < BOARD_HEIGHT - 1; i++) {
-		laneCase = random(LANE_ID_LIST);
+	while (!aLanes.empty())
+		pop_backLane();
+	aLanes.clear();
 
-		switch (laneCase) {
-		case VEHICLELANE_ID: {
-			aLanes.push_back(new CVEHICLELANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3));
-			condition = 0;
-			break;
-		}
-		case GRASSLANE_ID: {
-			aLanes.push_back(new CGRASSLANE(0, i * BLOCK_HEIGHT + START_HEIGHT));
-			condition = 0;
-			break;
-		}
-		case TRAINLANE_ID: {
-			aLanes.push_back(new CTRAINLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, 10, 5));
-			condition = 0;
-			break;
-		}
-		case RIVERLANE_LAND_ID: {
-			if (condition == 0) {
-				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, true));
-				condition = RIVERLANE_NOLAND_ID;
-			}
-			else
-				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, false));
-			break;
-		}
-		default:
-			aLanes.push_back(new CGRASSLANE(0, i * BLOCK_HEIGHT + START_HEIGHT));
-			condition = 0;
-		}
-	}
-	aLanes.push_back(new CGRASSLANE(0, (BOARD_HEIGHT - 1) * BLOCK_HEIGHT + START_HEIGHT));
+	push_frontLane(RIVERLANE_LAND_ID);
+	push_frontLane(GRASSLANE_ID);
+	push_frontLane(GRASSLANE_ID);
+	int numberOfRandomLane = (numberOfLane < BOARD_HEIGHT - 3) ? numberOfLane : BOARD_HEIGHT - 3;
+	for (int i = 0; i < numberOfRandomLane; i++)
+		push_frontLane(VEHICLELANE_ID);
+	for (int i = 0; i < BOARD_HEIGHT - 3 - numberOfRandomLane; i++)
+		push_frontLane(GRASSLANE_ID);
 }
 void CGAME::saveData(string fileName) {
 	ofstream file(fileName, ios::out);
@@ -191,55 +169,15 @@ void CGAME::loadData(string fileName) {
 			int laneID;
 			int timeCount, delayTime;
 			file >> laneID >> direction >> timeCount >> delayTime;
-			switch (laneID) {
-			case VEHICLELANE_ID: {
-				aLanes.push_back(new CVEHICLELANE(0, i * BLOCK_HEIGHT, delayTime));
-				break;
-			}
-			case GRASSLANE_ID: {
-				aLanes.push_back(new CGRASSLANE(0, i * BLOCK_HEIGHT));
-				break;
-			}
-			case RIVERLANE_LAND_ID: {
-				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT, delayTime, 1));
-				break;
-			}
-			case RIVERLANE_NOLAND_ID: {
-				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT, delayTime, 0));
-				break;
-			}
-			case TRAINLANE_ID: {
-				aLanes.push_back(new CTRAINLANE(0, i * BLOCK_HEIGHT, delayTime, 0,0));
-				break;
-			}
-			default:
-				aLanes.push_back(NULL);
-			}
-			aLanes[i]->setIsMoveRight(direction);
-			aLanes[i]->setTimeCount(timeCount);
+			
+			push_frontLane(laneID);
+			aLanes.front()->setIsMoveRight(direction);
+			aLanes.front()->setTimeCount(timeCount);
 			// Doc trang thai tung o
 			for (int j = 0; j < BOARD_WIDTH; j++) {
 				int posID;
 				file >> posID;
-				switch (posID) {
-				case CAR_ID: {
-					aLanes[i]->pushObj(j, CAR_ID);
-				}
-				case TRUCK_ID: {
-					aLanes[i]->pushObj(j, TRUCK_ID);
-				}
-				case BUS_HEAD_ID: {
-					aLanes[i]->pushObj(j, BUS_HEAD_ID);
-				}
-				case BUS_TAIL_ID: {
-					aLanes[i]->pushObj(j, BUS_TAIL_ID);
-				}
-				case TRAIN_HEAD_ID: {
-					aLanes[i]->pushObj(j, TRAIN_HEAD_ID);
-				}
-				case TRAIN_BODY_ID:
-					aLanes[i]->pushObj(j, TRAIN_BODY_ID);
-				}
+				aLanes.front()->pushObj(j, posID);
 			}
 		}
 		file.close();
@@ -326,6 +264,7 @@ void CGAME::changeFileName(int index) {
 		cout << "Invalid index. Cannot change file name." << endl;
 	}
 }
+
 int CGAME::Menu() {
 	system("cls");
 	this->drawMenu();
@@ -357,7 +296,7 @@ int CGAME::Menu() {
 	return 0;
 }
 void CGAME::NewGame() {
-	cPlayer->set(BOARD_WIDTH / 2, BOARD_HEIGHT - 1, true, 0);
+	cPlayer->set(BOARD_WIDTH / 2, UP_LANE, true, 0);
 	resetData();
 	playGame();
 }
@@ -435,35 +374,27 @@ void CGAME::About() {
 
 void CGAME::SubThreadNewGame() {
 	while (isThreadRunning) {
-		{
-			if (!cPlayer->isDead())
-			{
-				if (cPlayer->isMoving()) {
-					cPlayer->eraseCharacter(ObjLayer);
-					cPlayer->moveCharacter();
-				}
-				cPlayer->setMove(0);
-				for (int i = 1; i < BOARD_HEIGHT - 1; i++) //ignore the first and the last lanes
-					aLanes[i]->Move();
-				//Xu ly va cham
-				if (isInjured()) {
-					cPlayer->setAlive(false);
-					//Hieu ung va cham
-					cout << cPlayer->getScore();
-					continue;
-				}
-				//Xy ly finish
-				if (cPlayer->isFinish()) {
-					cPlayer->increaseScore();
-					cPlayer->set(-1, BOARD_HEIGHT - 1);
-					cPlayer->setFinish(false);
-					resetData();
-					startMap();
-					displayBgd();
-				}
-				drawMap();
-				displayObj();
+		if (!cPlayer->isDead()) {
+			for (int i = 0; i < BOARD_HEIGHT; i++)
+				aLanes[i]->Move();
+			//Xu ly va cham
+			if (isInjured()) {
+				cPlayer->setAlive(false);
+				//Hieu ung va cham
+				cout << cPlayer->getScore();
+				continue;
 			}
+			//Xy ly finish
+			if (cPlayer->isFinish() || numberOfLane == -1) {
+				cPlayer->increaseScore();
+				cPlayer->set(-1, UP_LANE);
+				cPlayer->setFinish(false);
+				resetData();
+				startMap();
+				displayBgd();
+			}
+			drawMap();
+			displayObj();
 		}
 	}
 }
@@ -502,12 +433,54 @@ int CGAME::Pause(HANDLE t) {
 	}
 	return 0;
 }
+
 bool CGAME::isInjured() const {
 	return this->aLanes[this->cPlayer->getY()]->checkPos(this->cPlayer->getX());
 }
 bool CGAME::isReset() {
 	this->drawPlayAgain();
 	return toupper(_getch()) == 'Y';
+}
+void CGAME::push_frontLane(int ID) {
+	if (ID == 0) ID = GRASSLANE_ID;
+	
+	for (int i = 0; i < (int)aLanes.size(); i++)
+		if (aLanes[i] != NULL) aLanes[i]->setYHeight(i + 1);
+
+	switch (ID) {
+	case VEHICLELANE_ID: {
+		aLanes.push_front(new CVEHICLELANE(0, 0, rand() % 3));
+		conditionLane = 0;
+		break;
+	}
+	case GRASSLANE_ID: {
+		aLanes.push_front(new CGRASSLANE(0, 0));
+		conditionLane = 0;
+		break;
+	}
+	case TRAINLANE_ID: {
+		aLanes.push_front(new CTRAINLANE(0, 0, rand() % 3, 10, 5));
+		conditionLane = 0;
+		break;
+	}
+	case RIVERLANE_LAND_ID: {
+		if (conditionLane == 0) {
+			aLanes.push_front(new CRIVERLANE(0, 0, rand() % 3, true));
+			conditionLane = RIVERLANE_NOLAND_ID;
+		}
+		else
+			aLanes.push_front(new CRIVERLANE(0, 0, rand() % 3, false));
+		break;
+	}
+	default:
+		aLanes.push_front(new CGRASSLANE(0, 0));
+		conditionLane = 0;
+	}
+}
+void CGAME::pop_backLane() {
+	CLANE* tmp = aLanes.back();
+	aLanes.pop_back();
+	if (tmp != NULL) delete tmp;
 }
 
 //Drawing functions
@@ -548,7 +521,6 @@ void CGAME::drawPlayAgain() {
 void CGAME::drawSaveGame()
 {
 }
-
 void CGAME::drawLoadGame()
 {
 	cout << "===== Load Game =====" << endl;
@@ -564,22 +536,23 @@ void CGAME::drawLoadGame()
 	cout << "========================" << endl;
 	cout << "Enter the number of the game: ";
 }
-
-
 void CGAME::drawInputUserTxt()
 {
 }
-
 void CGAME::drawInputUserNumber()
 {
 }
 
-void CGAME::displayBgd() {
-	BgdLayer.display();
+void CGAME::displayBgd(int fromX, int fromY, int toX, int toY) {
+	if (toX < 0 || toX > SCREEN_WIDTH - 1) toX = SCREEN_WIDTH - 1;
+	if (toY < 0 || toY > SCREEN_HEIGHT - 1) toY = SCREEN_HEIGHT - 1;
+	BgdLayer.display(fromX, fromY, toX, toY);
 }
-void CGAME::displayObj() {
-	for (int i = 0; i < SCREEN_WIDTH; i++)
-		for (int j = 0; j < SCREEN_HEIGHT; j++)
+void CGAME::displayObj(int fromX, int fromY, int toX, int toY) {
+	if (toX < 0 || toX > SCREEN_WIDTH - 1) toX = SCREEN_WIDTH - 1;
+	if (toY < 0 || toY > SCREEN_HEIGHT - 1) toY = SCREEN_HEIGHT - 1;
+	for (int i = fromX; i <= toX; i++)
+		for (int j = fromY; j <= toY; j++)
 		{
 			if (ObjLayer.screen[i][j].bgdColor == -1)
 				ObjLayer.screen[i][j].bgdColor = BgdLayer.screen[i][j].bgdColor;
@@ -588,13 +561,14 @@ void CGAME::displayObj() {
 			if (ObjLayer.screen[i][j].buffer == L' ')
 				ObjLayer.screen[i][j].buffer = BgdLayer.screen[i][j].buffer;
 		}
-	ObjLayer.display();
+	ObjLayer.display(fromX, fromY, toX, toY);
 }
-void CGAME::displayScreen() {
-	BgdLayer.display();
-	ObjLayer.display();
+void CGAME::displayScreen(int fromX, int fromY, int toX, int toY) {
+	if (toX < 0 || toX > SCREEN_WIDTH - 1) toX = SCREEN_WIDTH - 1;
+	if (toY < 0 || toY > SCREEN_HEIGHT - 1) toY = SCREEN_HEIGHT - 1;
+	BgdLayer.display(fromX, fromY, toX, toY);
+	ObjLayer.display(fromX, fromY, toX, toY);
 }
-
 
 void ShowCur(bool CursorVisibility) {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);

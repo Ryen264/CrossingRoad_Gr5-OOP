@@ -11,6 +11,7 @@ public:
 	~COBJECT();
 	int getID() const;
 	void setPos(int x, int y);
+	void setY(int y);
 	void DrawBlock(CGRAPHIC& layer);
 };
 //Object IDs

@@ -5,7 +5,7 @@ CRIVERLANE::CRIVERLANE(int x, int y, int delayTime, bool haveLand) {
 	this->isMoveRight = rand() % 2;
 	this->delayTime = delayTime;
 
-	this->x = x; this->y = y; this->haveLand = haveLand;
+	this->x = x * BLOCK_WIDTH; this->y = y * BLOCK_HEIGHT + START_BOARD_HEIGHT; this->haveLand = haveLand;
 	this->ID = (haveLand) ? RIVERLANE_LAND_ID : RIVERLANE_NOLAND_ID;
 	vector<wstring> frame = (haveLand) ? FRAME_LAND : FRAME_NOLAND;
 

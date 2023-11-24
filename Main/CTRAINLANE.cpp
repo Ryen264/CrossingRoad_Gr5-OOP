@@ -6,7 +6,7 @@ CTRAINLANE::CTRAINLANE(int x, int y, int delayTime, int trainDelay, int trainWai
     this->isMoveRight = rand() % 2;
     this->delayTime = delayTime; this->trainDelay = trainDelay; this->trainWait = trainWait;
 
-    this->x = x; this->y = y; this->ID = TRAINLANE_ID;
+    this->x = x * BLOCK_WIDTH; this->y = y * BLOCK_HEIGHT + START_BOARD_HEIGHT; this->ID = TRAINLANE_ID;
 
     this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
     for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)

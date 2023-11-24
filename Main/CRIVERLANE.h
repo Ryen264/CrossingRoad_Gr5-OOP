@@ -23,7 +23,7 @@ L"██▄▄▄█▄███▄▄▄█▄█",
 L"████████▄▄▄█▄███",
 L"██▄▄▄█▄█████████"
 	};
-	const vector<int> OBJECT_ID_LIST = { PERRY_ID, CAPYBARA_ID, 0 };
+	const vector<int> OBJECT_ID_LIST = { PERRY_ID, CAPYBARA_ID, 0, 0};
 public:
 	CRIVERLANE(int x = 0, int y = 0, int delayTime = 0, bool haveLand = true);
 	void pushDeque();
