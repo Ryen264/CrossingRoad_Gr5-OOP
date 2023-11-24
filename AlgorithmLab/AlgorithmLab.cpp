@@ -42,7 +42,7 @@ void move(deque<int*>& arr, bool isRight = true, int redPoint = -1) {
         (isRight) ? arr.pop_back() : arr.pop_front();
     }
     //push front
-    int id = (isRight) ? redPoint - 1 : redPoint + 1;
+    int id = redPoint;
     if (isRight) {
         for (; id >= 0 && arr[id] != NULL; id--);
         if (id >= 0) {
@@ -88,24 +88,28 @@ x   x   x     x x
 
 int main() {
     srand(0);
-    deque<int> arr = { 1, 0, 2, 0, 3, 0, 0, 0, 9, 0 };
+    deque<int> arr = { 1, 0, 2, 3, 3, 0, 0, 0, 9, 0 };
     deque<int*> brr = initDeque(arr);
 
-    cout << brr << endl;
-    move(brr, false, 4);
-    cout << brr << endl;
-    move(brr, false, 4);
-    cout << brr << endl;
-    move(brr, false, 4);
-    cout << brr << endl;
-    move(brr, false, 4);
-    cout << brr << endl;
-    move(brr, false, 4);
-    cout << brr << endl;
-    move(brr, false, 4);
-    cout << brr << endl;
-    move(brr, false, 4);
-    cout << brr << endl;
+    cout << arr << endl;
+    arr.insert(arr.begin() + 4, 9);
+    cout << arr << endl;
+
+    //cout << brr << endl;
+    //move(brr, false, 4);
+    //cout << brr << endl;
+    //move(brr, false, 4);
+    //cout << brr << endl;
+    //move(brr, false, 4);
+    //cout << brr << endl;
+    //move(brr, false, 4);
+    //cout << brr << endl;
+    //move(brr, false, 4);
+    //cout << brr << endl;
+    //move(brr, false, 4);
+    //cout << brr << endl;
+    //move(brr, false, 4);
+    //cout << brr << endl;
 
     deleteDeque(brr);
 

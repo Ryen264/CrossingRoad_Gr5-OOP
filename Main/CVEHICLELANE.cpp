@@ -4,7 +4,7 @@ CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) {
         this->lane.push_front(NULL);
     this->isMoveRight = rand() % 2;
     this->delayTime = delayTime;
-    this->lightPos = 6;
+    this->lightPos = -1;
     if (lightPos >= BOARD_WIDTH) lightPos = -1;
 
     this->x = x; this->y = y; this->ID = VEHICLELANE_ID;

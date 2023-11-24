@@ -39,8 +39,8 @@ L"                "
 		L"                ",
 		L"                ",
 		L"                ",
-		L"                ",
-	};*/
+		L"                "
+	};
 	/*const vector<wstring> FRAME_LEFT =
 	{
 		L"█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▄           ",
@@ -106,22 +106,22 @@ L"                "
 //L"                "
 //};
 
-const vector <wstring> FRAME_LEFT = {
-L"  ██████████    ",
-L" ▄▄▄▄▄▄▄▄▄▄▄▄   ",
-L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ",
-L"                ",
-L"                ",
-L"                "
-};
-const vector <wstring> FRAME_RIGHT = {
-L"  ██████████    ",
-L" ▄▄▄▄▄▄▄▄▄▄▄▄   ",
-L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ",
-L"                ",
-L"                ",
-L"                "
-};
+//const vector <wstring> FRAME_LEFT = {
+//L"  ██████████    ",
+//L" ▄▄▄▄▄▄▄▄▄▄▄▄   ",
+//L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ",
+//L"                ",
+//L"                ",
+//L"                "
+//};
+//const vector <wstring> FRAME_RIGHT = {
+//L"  ██████████    ",
+//L" ▄▄▄▄▄▄▄▄▄▄▄▄   ",
+//L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ",
+//L"                ",
+//L"                ",
+//L"                "
+//};
 protected:
     int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1;
     PIXEL** block;
