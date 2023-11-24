@@ -21,7 +21,7 @@ CCAPYBARA::CCAPYBARA(int x, int y, bool isRight) {
 		block[0][4].txtColor = LIGHT_BROWN;
 		block[1][4].txtColor = LIGHT_BROWN;
 		block[2][4].txtColor = LIGHT_BROWN;
-		block[3][4].txtColor = SADDLE_BROWN;
+		block[3][4].txtColor = LIGHT_BROWN;
 		for (int i = 4; i <= 8; i++)
 		{
 			block[i][4].txtColor = LIGHT_BROWN;
@@ -30,6 +30,7 @@ CCAPYBARA::CCAPYBARA(int x, int y, bool isRight) {
 		block[1][3].txtColor = LIGHT_BROWN;
 		block[2][3].txtColor = SADDLE_BROWN;
 		block[2][3].bgdColor = LIGHT_BROWN;
+		block[3][3].txtColor = SADDLE_BROWN;
 		for (int i = 3; i <= 11; i++)
 		{
 			block[i][2].txtColor = LIGHT_BROWN;
@@ -40,6 +41,7 @@ CCAPYBARA::CCAPYBARA(int x, int y, bool isRight) {
 		block[5][2].txtColor = LIGHT_BROWN;
 		block[5][2].bgdColor = LIGHT_BROWN;
 		block[6][2].bgdColor = LIGHT_BROWN;
+		block[6][2].txtColor = BLACK;
 		block[7][2].txtColor = BLACK;
 		block[7][2].bgdColor = LIGHT_BROWN;
 		block[8][2].txtColor = LIGHT_BROWN;
@@ -50,6 +52,10 @@ CCAPYBARA::CCAPYBARA(int x, int y, bool isRight) {
 		block[11][2].txtColor = SADDLE_BROWN;
 		block[3][1].txtColor = BRIGHT_YELLOW;
 		block[4][1].txtColor = BRIGHT_YELLOW;
+		for (int i = 4; i < 12; i++)
+		{
+			block[i][3].txtColor = LIGHT_BROWN;
+		}
 	}
 	else {
 		for (int i = 0; i <= 8; i++)
@@ -65,6 +71,7 @@ CCAPYBARA::CCAPYBARA(int x, int y, bool isRight) {
 			block[i][4].txtColor = LIGHT_BROWN;
 		}
 		block[8][3].txtColor = SADDLE_BROWN;
+		block[8][4].txtColor = LIGHT_BROWN;
 		for (int i = 9; i <= 11; i++)
 		{
 			block[i][4].txtColor = LIGHT_BROWN;
@@ -75,7 +82,9 @@ CCAPYBARA::CCAPYBARA(int x, int y, bool isRight) {
 		block[2][2].txtColor = LIGHT_BROWN;
 		block[3][2].txtColor = LIGHT_BROWN;
 		block[4][2].bgdColor = LIGHT_BROWN;
+		block[4][2].txtColor = BLACK;
 		block[5][2].bgdColor = LIGHT_BROWN;
+		block[5][2].txtColor = BLACK;
 		block[6][2].bgdColor = LIGHT_BROWN;
 		block[6][2].txtColor = LIGHT_BROWN;
 		block[7][2].txtColor = SADDLE_BROWN;

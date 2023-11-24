@@ -24,7 +24,7 @@ CPERRY::CPERRY(int x, int y, bool isRight) {
 		block[12][2].txtColor = WHITE;
 		block[12][2].bgdColor = SKY_BLUE;
 		block[13][2].txtColor = BLACK;
-		block[13][2].bgdColor = BLACK;
+		block[13][2].bgdColor = SKY_BLUE;
 		block[11][2].txtColor = SKY_BLUE;
 		block[10][2].txtColor = BLACK;
 		block[10][2].bgdColor = SKY_BLUE;
@@ -71,13 +71,15 @@ CPERRY::CPERRY(int x, int y, bool isRight) {
 		block[3][2].txtColor = WHITE;
 		block[3][2].bgdColor = SKY_BLUE;
 		block[2][2].txtColor = BLACK;
-		block[2][2].bgdColor = -1;
+		block[2][2].bgdColor = SKY_BLUE;
 		block[4][2].txtColor = SKY_BLUE;
 		block[5][2].txtColor = BLACK;
 		block[5][2].bgdColor = SKY_BLUE;
 		block[6][2].txtColor = WHITE;
 		block[6][2].bgdColor = SKY_BLUE;
 		block[7][2].txtColor = SKY_BLUE;
+
+		
 
 		block[0][3].txtColor = BRIGHT_YELLOW;
 		block[1][3].txtColor = BRIGHT_YELLOW;
