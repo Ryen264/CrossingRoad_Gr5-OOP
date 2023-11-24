@@ -70,6 +70,7 @@ void CGAME::start() {
 	//resetConsole(); - anti-Configure 
 }
 void CGAME::playGame() {
+	resetData();
 	startMap();
 	isThreadRunning = true;
 	thread threadNewGame(&CGAME::SubThreadNewGame, this);
@@ -94,7 +95,7 @@ void CGAME::playGame() {
 				resetData();
 				startMap();
 				cPlayer->setMove(0);
-				cPlayer->set(BOARD_WIDTH / 2, 0, true, 0);
+				cPlayer->set(BOARD_WIDTH / 2, 0, true,true, 0);
 			}
 			else {
 				exitThread(&threadNewGame);
@@ -160,7 +161,7 @@ void CGAME::saveData(string fileName) {
 
 	if (file.is_open()) {
 		// <x> <y> <score> <isRight> //Thông tin người chơi
-		file << cPlayer->getX() << " " << cPlayer->getY() << " " << cPlayer->getScore() << " " << cPlayer->getIsRight() << endl;
+		file << cPlayer->getX() << " " << cPlayer->getY() << " " << cPlayer->getScore() << " " <<cPlayer->getIsAlive() <<" "<<cPlayer->getIsRight() << endl;
 		file << this->level << endl;
 		// <type lane ID> <isMoveRight> <timeCount> <isStop> <delayTime> [<object ID>/0]
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
@@ -181,10 +182,10 @@ void CGAME::loadData(string fileName) {
 	ifstream file(fileName, ios::in);
 	if (file.is_open()) {
 		int x, y, score;
-		bool isRight;//player
+		bool isRight,isAlive;//player
 		// Doc thong tin nguoi choi
-		file >> x >> y >> score >> isRight;
-		cPlayer->set(x, y, isRight, score);
+		file >> x >> y >> score >>isAlive >>isRight;
+		cPlayer->set(x, y, isAlive,isRight, score);
 		file >> level;
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
 			bool direction;
@@ -221,25 +222,7 @@ void CGAME::loadData(string fileName) {
 			for (int j = 0; j < BOARD_WIDTH; j++) {
 				int posID;
 				file >> posID;
-				switch (posID) {
-				case CAR_ID: {
-					aLanes[i]->pushObj(j, CAR_ID);
-				}
-				case TRUCK_ID: {
-					aLanes[i]->pushObj(j, TRUCK_ID);
-				}
-				case BUS_HEAD_ID: {
-					aLanes[i]->pushObj(j, BUS_HEAD_ID);
-				}
-				case BUS_TAIL_ID: {
-					aLanes[i]->pushObj(j, BUS_TAIL_ID);
-				}
-				case TRAIN_HEAD_ID: {
-					aLanes[i]->pushObj(j, TRAIN_HEAD_ID);
-				}
-				case TRAIN_BODY_ID:
-					aLanes[i]->pushObj(j, TRAIN_BODY_ID);
-				}
+				aLanes[i]->pushObj(j, posID);
 			}
 		}
 		file.close();
@@ -495,6 +478,8 @@ int CGAME::Pause(HANDLE t) {
 	}
 	case'6': {
 		this->resumeThread(t);
+		this->savename = "";
+		isSaved = false;
 		return BACK_TO_MENU_CODE;
 	}
 	default:
@@ -506,8 +491,12 @@ bool CGAME::isInjured() const {
 	return this->aLanes[this->cPlayer->getY()]->checkPos(this->cPlayer->getX());
 }
 bool CGAME::isReset() {
-	this->drawPlayAgain();
-	return toupper(_getch()) == 'Y';
+	do 	{
+		this->drawPlayAgain();
+		int temp = toupper(_getch());
+		if (temp == 'Y') return true;
+		else if (temp == 'N') return false;
+	} while (1);
 }
 
 //Drawing functions

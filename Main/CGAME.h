@@ -23,7 +23,7 @@ class CGAME {
     vector<CLANE*> aLanes;
     deque<string> fileNameList;
     bool isSaved = false;
-    string savename;
+    string savename ="";
     int level = 0;
     //Thread variables
     bool isThreadRunning = true;
