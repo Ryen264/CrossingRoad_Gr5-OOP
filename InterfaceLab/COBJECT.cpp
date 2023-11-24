@@ -20,7 +20,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
 		// VE PERRY
 
-		block[12][2].txtColor = WHITE;
+		/*block[12][2].txtColor = WHITE;
 		block[12][2].bgdColor = SKY_BLUE;
 		block[13][2].txtColor = BLACK;
 		block[13][2].bgdColor = BLACK;
@@ -54,7 +54,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[6][3].bgdColor = ORANGE;
 		block[7][3].txtColor = ORANGE;
 		block[6][4].txtColor = ORANGE;
-		block[7][4].txtColor = BRIGHT_YELLOW;
+		block[7][4].txtColor = BRIGHT_YELLOW;*/
 
 		// VE HOA
         /*block[6][2].txtColor = BRIGHT_YELLOW;
@@ -67,7 +67,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
         block[7][3].bgdColor = -1;*/
 
 		//CAPYBARA
-		/*block[0][2].txtColor = LIGHT_BROWN;
+		block[0][2].txtColor = LIGHT_BROWN;
 		block[1][2].txtColor = LIGHT_BROWN;
 		block[2][2].txtColor = LIGHT_BROWN;
 		block[3][2].txtColor = SADDLE_BROWN;
@@ -98,12 +98,12 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[11][2].txtColor = SADDLE_BROWN;
 		block[11][2].txtColor = SADDLE_BROWN;
 		block[3][1].txtColor = BRIGHT_YELLOW;
-		block[4][1].txtColor = BRIGHT_YELLOW;*/
+		block[4][1].txtColor = BRIGHT_YELLOW;
 
 	}
 	else {
 		// VE PERRY
-		block[3][1].txtColor = RED;
+		/*block[3][1].txtColor = RED;
 		block[3][1].bgdColor = -1;
 		block[4][1].txtColor = RED;
 		block[4][1].bgdColor = -1;
@@ -146,7 +146,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 			block[i][4].txtColor = SKY_BLUE;
 		}
 		block[8][4].txtColor = BRIGHT_YELLOW;
-		block[9][4].txtColor = ORANGE;
+		block[9][4].txtColor = ORANGE;*/
 
 		/*block[7][1].txtColor = SKY_BLUE;
 		block[0][2].txtColor = BRIGHT_YELLOW;
@@ -187,7 +187,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
         block[7][3].bgdColor = -1;*/
 
 		//CAPYBARA
-		/*for (int i = 0; i <= 8; i++)
+		for (int i = 0; i <= 8; i++)
 		{
 			block[i][3].txtColor = LIGHT_BROWN;
 		}
@@ -222,7 +222,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[8][4].txtColor = LIGHT_BROWN;
 
 		block[7][1].txtColor = BRIGHT_YELLOW;
-		block[8][1].txtColor = BRIGHT_YELLOW;*/
+		block[8][1].txtColor = BRIGHT_YELLOW;
 	}
 }
 COBJECT::~COBJECT() {

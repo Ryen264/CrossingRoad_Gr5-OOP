@@ -12,7 +12,7 @@ CCAPYBARA::CCAPYBARA(int x, int y, bool isRight) {
 	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
 		for (int j = 0; j < BLOCK_HEIGHT * this->numberOfHeight; j++)
 			if (frame[j][i] != L' ')
-				this->block[i][j] = { frame[j][i], RED, -1 };
+				this->block[i][j] = { frame[j][i], -1, -1 };
 			else
 				this->block[i][j] = { frame[j][i], -1, -1 };
 

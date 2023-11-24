@@ -17,7 +17,7 @@ int main() {
 	CGRAPHIC ObjLayer;
 	ObjLayer.clear(-1, -1);
 
-	COBJECT testobject(0, 0, false);
+	COBJECT testobject(0, 0, true);
 	//draw object
 	testobject.DrawBlock(ObjLayer);
 	ObjLayer.display();
