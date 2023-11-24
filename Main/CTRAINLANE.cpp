@@ -18,11 +18,13 @@ CTRAINLANE::CTRAINLANE(int x, int y, int delayTime, int trainDelay, int trainWai
 			this->block[i][j] = { FRAME[j][i], LIGHT_GREEN, LIGHT_BROWN };
 	//set colors
 	for (int i = 0; i < 16; i++) {
+        block[i][0].bgdColor = LIGHT_GREEN;
 		block[i][1].txtColor = DARK_GREEN;
 		block[i][2].txtColor = WHITE;
 		block[i][3].txtColor = SADDLE_BROWN;
 		block[i][4].txtColor = SADDLE_BROWN;
-		block[i][5].bgdColor = WHITE;
+        block[i][5].bgdColor = LIGHT_GREEN;
+		block[i][5].txtColor = WHITE;
 	}
 	for (int i = 1; i <= 16; i++) {
 		if ((i + 3) % 4 == 0) {
@@ -40,6 +42,7 @@ CTRAINLANE::CTRAINLANE(int x, int y, int delayTime, int trainDelay, int trainWai
 	block[11][1].bgdColor = SADDLE_BROWN;
 	block[12][2].bgdColor = SADDLE_BROWN;
 	block[13][2].bgdColor = SADDLE_BROWN;
+    block[14][4].bgdColor = SADDLE_BROWN;
 	block[15][1].bgdColor = SADDLE_BROWN;
 	block[15][1].bgdColor = SADDLE_BROWN;
 }

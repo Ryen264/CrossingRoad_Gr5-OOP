@@ -38,6 +38,12 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) {
 				block[i][0].bgdColor = WHITE;
 				block[i][1].bgdColor = WHITE;
 			}
+			block[0][2].bgdColor = WHITE;
+			block[1][2].bgdColor = WHITE;
+			block[0][3].bgdColor = WHITE;
+			block[1][3].bgdColor = WHITE;
+			block[14][3].bgdColor = WHITE;
+			block[13][3].bgdColor = WHITE;
 			block[4][2].txtColor = DARK_BLUE;
 			block[4][2].bgdColor = LIGHT_GRAY;
 			block[4][3].txtColor = DARK_BLUE;
@@ -66,6 +72,9 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) {
 			}
 			block[9][0].bgdColor = LIGHT_GRAY;
 			block[9][1].txtColor = DARK_BLUE;
+			block[10][0].bgdColor = LIGHT_GREEN;
+			block[11][0].bgdColor = LIGHT_GREEN;
+			block[14][1].bgdColor = DARK_GREEN;
 }
 		else {
 			for (int i = 0; i < 16; i++) {
@@ -73,7 +82,12 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) {
 				block[i][5].bgdColor = DARK_GRAY;
 				block[i][4].txtColor = DARK_GRAY;
 				block[i][4].bgdColor = LIGHT_GRAY;
+				block[i][0].bgdColor = WHITE;
+				block[i][1].bgdColor = WHITE;
+				block[i][3].bgdColor = WHITE;
+				block[i][2].bgdColor = WHITE;
 			}
+			block[9][3].txtColor = WHITE;
 			for (int i = 0; i < 3; i++) {
 				block[2 + i][5].bgdColor = BLACK;
 				block[10 + i][5].bgdColor = BLACK;
@@ -104,6 +118,12 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) {
 				block[i][0].bgdColor = WHITE;
 				block[i][1].bgdColor = WHITE;
 			}
+			block[1][3].bgdColor = WHITE;
+			block[2][3].bgdColor = WHITE;
+			block[14][2].bgdColor = WHITE;
+			block[15][2].bgdColor = WHITE;
+			block[14][3].bgdColor = WHITE;
+			block[15][3].bgdColor = WHITE;
 			block[11][2].txtColor = DARK_BLUE;
 			block[11][2].bgdColor = LIGHT_GRAY;
 			block[11][3].txtColor = DARK_BLUE;
@@ -132,6 +152,11 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) {
 			}
 			block[6][0].bgdColor = LIGHT_GRAY;
 			block[6][1].txtColor = DARK_BLUE;
+			block[4][0].bgdColor = LIGHT_GREEN;
+			block[5][0].bgdColor = LIGHT_GREEN;
+			block[1][1].bgdColor = DARK_GREEN;
+			block[3][0].txtColor = -1;
+
 		}
 		else {
 			for (int i = 0; i < 16; i++) {
@@ -139,7 +164,12 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) {
 				block[i][5].bgdColor = DARK_GRAY;
 				block[i][4].txtColor = DARK_GRAY;
 				block[i][4].bgdColor = LIGHT_GRAY;
+				block[i][1].bgdColor = WHITE;
+				block[i][0].bgdColor = WHITE;
+				block[i][3].bgdColor = WHITE;
+				block[i][2].bgdColor = WHITE;
 			}
+			block[6][3].txtColor = WHITE;
 			for (int i = 0; i < 3; i++) {
 				block[3 + i][5].bgdColor = BLACK;
 				block[11 + i][5].bgdColor = BLACK;
