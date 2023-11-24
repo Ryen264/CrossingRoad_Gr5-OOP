@@ -72,6 +72,9 @@
     <ClCompile Include="CFINISHLANE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CEGG.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLANE.h">
@@ -126,6 +129,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CFINISHLANE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CEGG.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

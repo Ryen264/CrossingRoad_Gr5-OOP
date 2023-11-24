@@ -131,6 +131,7 @@
     <ClCompile Include="CCAPYBARA.cpp" />
     <ClCompile Include="CCAR.cpp" />
     <ClCompile Include="CDINOSAUR.cpp" />
+    <ClCompile Include="CEGG.cpp" />
     <ClCompile Include="CFINISHLANE.cpp" />
     <ClCompile Include="CGRAPHIC.cpp" />
     <ClCompile Include="CGRASSLANE.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="CCAPYBARA.h" />
     <ClInclude Include="CCAR.h" />
     <ClInclude Include="CDINOSAUR.h" />
+    <ClInclude Include="CEGG.h" />
     <ClInclude Include="CFINISHLANE.h" />
     <ClInclude Include="CGRAPHIC.h" />
     <ClInclude Include="CGRASSLANE.h" />
