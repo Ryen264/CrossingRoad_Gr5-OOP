@@ -1,5 +1,4 @@
 ﻿#include "CGAME.h"
-//Friend functions
 CGAME::CGAME() {
 	this->Configure();
 	this->cPlayer = new CPLAYER;
@@ -80,14 +79,6 @@ void CGAME::playGame() {
 			switch (temp) {
 			case 'W': case 'S': case 'A': case 'D': {
 				cPlayer->setMove(temp);
-				if (cPlayer->moveCharacter()) {
-					if (numberOfLane > BOARD_HEIGHT - 3) push_frontLane(VEHICLELANE_ID);
-					else push_frontLane(GRASSLANE_ID);
-					pop_backLane();
-					numberOfLane--;
-					startMap();
-				};
-				cPlayer->setMove(0);
 				break;
 			}
 			case 'P': {
@@ -118,18 +109,17 @@ void CGAME::startMap() {
 }
 
 void CGAME::resetData() {
-	this->numberOfLane = 5;
-
+	this->numberOfLane = 5 + (rand() % 5);
 	while (!aLanes.empty())
 		pop_backLane();
 	aLanes.clear();
 
-	push_frontLane(RIVERLANE_LAND_ID);
+	push_frontLane(RIVERLANE_ID);
 	push_frontLane(GRASSLANE_ID);
 	push_frontLane(GRASSLANE_ID);
 	int numberOfRandomLane = (numberOfLane < BOARD_HEIGHT - 3) ? numberOfLane : BOARD_HEIGHT - 3;
 	for (int i = 0; i < numberOfRandomLane; i++)
-		push_frontLane(VEHICLELANE_ID);
+		push_frontLane(random(LANE_ID_LIST));
 	for (int i = 0; i < BOARD_HEIGHT - 3 - numberOfRandomLane; i++)
 		push_frontLane(GRASSLANE_ID);
 }
@@ -177,7 +167,7 @@ void CGAME::loadData(string fileName) {
 			for (int j = 0; j < BOARD_WIDTH; j++) {
 				int posID;
 				file >> posID;
-				aLanes.front()->pushObj(j, posID);
+				aLanes[i]->pushDeque(posID);
 			}
 		}
 		file.close();
@@ -375,6 +365,16 @@ void CGAME::About() {
 void CGAME::SubThreadNewGame() {
 	while (isThreadRunning) {
 		if (!cPlayer->isDead()) {
+			if (cPlayer->isMoving()) {
+				if (cPlayer->moveCharacter()) {
+					if (numberOfLane > BOARD_HEIGHT - 3) push_frontLane(random(LANE_ID_LIST));
+					else push_frontLane(GRASSLANE_ID);
+					pop_backLane();
+					numberOfLane--;
+					startMap();
+				};
+				cPlayer->setMove(0);
+			}
 			for (int i = 0; i < BOARD_HEIGHT; i++)
 				aLanes[i]->Move();
 			//Xu ly va cham
@@ -465,17 +465,13 @@ void CGAME::push_frontLane(int ID) {
 		break;
 	}
 	case TRAINLANE_ID: {
-		aLanes.push_front(new CTRAINLANE(0, 0, rand() % 3, 10, 5));
+		aLanes.push_front(new CTRAINLANE(0, 0, rand() % 2, 10 + rand() % 5));
 		conditionLane = 0;
 		break;
 	}
-	case RIVERLANE_LAND_ID: {
-		if (conditionLane == 0) {
-			aLanes.push_front(new CRIVERLANE(0, 0, rand() % 3, true));
-			conditionLane = RIVERLANE_NOLAND_ID;
-		}
-		else
-			aLanes.push_front(new CRIVERLANE(0, 0, rand() % 3, false));
+	case RIVERLANE_ID: {
+		aLanes.push_front(new CRIVERLANE(0, 0, rand() % 3));
+		conditionLane = 0;
 		break;
 	}
 	default:

@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "CGRAPHIC.h"
-#include"CGRAPHIC.h"
 #include "COBJECT.h"
 #include <deque>
 using namespace std;
@@ -12,7 +11,7 @@ protected:
 	bool isStop = false;
 	int delayTime;
 
-	int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1, ID;
+	int x, y, numberOfBlock = 1, ID;
 	PIXEL** block = NULL;
 public:
 	~CLANE();
@@ -21,7 +20,8 @@ public:
 	virtual bool checkPos(int pos);
 	virtual void Move();
 	virtual bool isMove() const;
-	virtual void pushObj(int x, int ID);
+	virtual void pushDeque(int ID);
+
 
 	int PosID(int pos) const;
 	virtual bool getIsMoveRight();
@@ -40,6 +40,7 @@ public:
 //Lanes IDs
 const int VEHICLELANE_ID = 20001;
 const int GRASSLANE_ID = 20002;
-const int RIVERLANE_LAND_ID = 20003;
-const int RIVERLANE_NOLAND_ID = 21003;
+const int RIVERLANE_ID = 20003;
 const int TRAINLANE_ID = 20004;
+
+vector<int> operator-(const vector<int> first, const vector<int> second);

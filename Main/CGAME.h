@@ -16,8 +16,6 @@
 #include <string>
 using namespace std;
 class CGAME {
-    const int NUMBER_OF_TYPE_LANE = 3;
-
     CPLAYER* cPlayer;
     deque<CLANE*> aLanes;
     deque<string> fileNameList;
@@ -88,7 +86,7 @@ public:
 const int QUIT_CODE = -1000;
 const int BACK_TO_MENU_CODE = -1001;
 
-const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, GRASSLANE_ID, TRAINLANE_ID};
+const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, GRASSLANE_ID, TRAINLANE_ID, RIVERLANE_ID};
 
 void ShowCur(bool CursorVisibility);
 void DisableResizeWindow();

@@ -6,7 +6,7 @@ CLANE::~CLANE() {
         if (back != NULL) delete back;
     }
     this->lane.clear();
-    for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
+    for (int i = 0; i < BLOCK_WIDTH; i++)
         delete[] this->block[i];
     delete[] this->block;
 }
@@ -21,7 +21,7 @@ bool CLANE::isMove() const
 {
     return !this->isStop;
 }
-void CLANE::pushObj(int x, int ID) {}
+void CLANE::pushDeque(int ID) {}
 
 int CLANE::PosID(int pos) const {
     if (pos < 0 || pos >= BOARD_WIDTH - 1) return 0;
@@ -63,9 +63,9 @@ void CLANE::updateYObj() {
 
 void CLANE::DrawLane(CGRAPHIC& layer) {
     for (int k = 0; k < BOARD_WIDTH; k++) {
-        for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-            for (int j = 0; j < BLOCK_HEIGHT * this->numberOfHeight; j++)
-                layer.screen[this->x + k * BLOCK_WIDTH * this->numberOfWidth + i][this->y + j] = block[i][j];
+        for (int i = 0; i < BLOCK_WIDTH; i++)
+            for (int j = 0; j < BLOCK_HEIGHT; j++)
+                layer.screen[this->x + k * BLOCK_WIDTH + i][this->y + j] = block[i][j];
     }
 }
 void CLANE::DrawObjects(CGRAPHIC& layer)
@@ -82,4 +82,18 @@ void CLANE::DrawObjects(CGRAPHIC& layer)
                     layer.screen[this-> x + i * BLOCK_WIDTH + k][this->y + l] = { L' ', -1, -1 };
         }
     }
+}
+
+vector<int> operator-(const vector<int> first, const vector<int> second) {
+    vector<int> res{};
+    for (int i = 0; i < (int)first.size(); i++) {
+        bool exist = false;
+        for (int j = 0; j < (int)second.size(); j++)
+            if (first[i] == second[j]) {
+                exist = true;
+                break;
+            }
+        if (!exist) res.push_back(first[i]);
+    }
+    return res;
 }

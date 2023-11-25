@@ -3,9 +3,9 @@
 #include "CPERRY.h"
 #include "CCAPYBARA.h"
 class CRIVERLANE : public CLANE {
-	int delayTime;
-	bool haveLand;
-	const vector <wstring> FRAME_LAND =
+	int delayTime, condition = 0, countObject = 0;
+	int numberOfCapybara = 0;
+	const vector <wstring> FRAME =
 	{
 L"██▄█████▄███▄███",
 L"▄█▄▄▄▄▄▄▄▄▄▄▄▄█▄",
@@ -14,19 +14,10 @@ L"██▄▄▄█▄███▄▄▄█▄█",
 L"████████▄▄▄█▄███",
 L"██▄▄▄█▄█████████"
 	};
-	const vector <wstring> FRAME_NOLAND =
-	{
-L"██▄█████▄███▄███",
-L"█▄▄▄█▄████▄▄▄█▄█",
-L"██████▄▄▄█▄█████",
-L"██▄▄▄█▄███▄▄▄█▄█",
-L"████████▄▄▄█▄███",
-L"██▄▄▄█▄█████████"
-	};
-	const vector<int> OBJECT_ID_LIST = { PERRY_ID, CAPYBARA_ID, 0, 0};
+	const vector<int> OBJECT_ID_LIST = { PERRY_ID, CAPYBARA_ID, 0, 0, 0, 0};
 public:
-	CRIVERLANE(int x = 0, int y = 0, int delayTime = 0, bool haveLand = true);
-	void pushDeque();
+	CRIVERLANE(int x = 0, int y = 0, int delayTime = 0);
+	void pushDeque(int ID = 0);
 	void Move();
 	bool checkPos(int pos);
 };
