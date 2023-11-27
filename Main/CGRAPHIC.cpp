@@ -65,13 +65,6 @@ void CGRAPHIC::clear(int txtColor, int bgdColor) {
 		for (int y = 0; y < SCREEN_HEIGHT; y++)
 			this->screen[x][y] = { L' ', txtColor, bgdColor };
 }
-/*
-void CGRAPHIC::Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor) {
-	int x = first_x, y = first_y;
-	for (int i = 0; i < wsContent.length(); i++)
-		this->screen[x + i][y] = { wsContent[i], txtColor, bgdColor };
-}
-*/
 void CGRAPHIC::Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor) {
 	int x = first_x, y = first_y;
 	for (int i = 0; i < wsContent.length(); i++) {
@@ -80,14 +73,6 @@ void CGRAPHIC::Text(wstring wsContent, int first_x, int first_y, int txtColor, i
 		}
 	}
 }
-/*
-void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor) {
-	int x = first_x, y = first_y;
-	for (int i = 0; i < contentsArr.size(); i++)
-		for (int j = 0; j < contentsArr[i].length(); j++)
-			this->screen[x + j][y + i] = { contentsArr[i][j], txtColor, bgdColor };
-}
-*/
 
 void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor) {
 	int x = first_x, y = first_y;

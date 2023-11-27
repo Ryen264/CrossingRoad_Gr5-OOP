@@ -63,51 +63,17 @@ void CLANE::updateYObj() {
     for (int i = 0; i < (int)this->lane.size(); i++)
         if (lane[i] != NULL) lane[i]->setY(this->y);
 }
-
 void CLANE::DrawLane(CGRAPHIC& layer) {
     int laneX = this->x;
     int laneY = this->y;
     for (int k = 0; k < BOARD_WIDTH; k++) {
-        int blockStartX = laneX + k * BLOCK_WIDTH * this->numberOfWidth;
+        int blockStartX = laneX + k * BLOCK_WIDTH;
         int blockStartY = laneY;
-        for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++) {
-            memcpy(&layer.screen[blockStartX + i][blockStartY], &block[i][0], BLOCK_HEIGHT * this->numberOfHeight * sizeof(PIXEL));
+        for (int i = 0; i < BLOCK_WIDTH; i++) {
+            memcpy(&layer.screen[blockStartX + i][blockStartY], &block[i][0], BLOCK_HEIGHT * sizeof(PIXEL));
         }
     }
 }
-/*
-void CLANE::DrawLane(CGRAPHIC& layer) {
-    int laneX = this->x;
-    int laneY = this->y;
-
-    for (int k = 0; k < BOARD_WIDTH; k++) {
-        int blockStartX = laneX + k * BLOCK_WIDTH * this->numberOfWidth;
-        int blockStartY = laneY;
-
-        for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-            for (int j = 0; j < BLOCK_HEIGHT * this->numberOfHeight; j++)
-                layer.screen[blockStartX + i][blockStartY + j] = block[i][j];
-    }
-}
-*/
-/*
-void CLANE::DrawObjects(CGRAPHIC& layer) {
-    for (int i = 0; i < BOARD_WIDTH; i++) {
-        int laneX = this->x + i * BLOCK_WIDTH;
-        int laneY = this->y;
-        if (lane[i] != NULL) {
-            lane[i]->setPos(laneX, laneY);
-            lane[i]->DrawBlock(layer);
-        }
-        else {
-            for (int k = 0; k < BLOCK_WIDTH; k++)
-                for (int l = 0; l < BLOCK_HEIGHT; l++)
-                    layer.screen[laneX + k][laneY + l] = { L' ', -1, -1 };
-        }
-    }
-}
-*/
-
 void CLANE::DrawObjects(CGRAPHIC& layer) {
     int laneY = this->y;
     for (int i = 0; i < BOARD_WIDTH; i++) {
@@ -126,7 +92,6 @@ void CLANE::DrawObjects(CGRAPHIC& layer) {
         }
     }
 }
-
 vector<int> operator-(const vector<int> first, const vector<int> second) {
     vector<int> res{};
     for (int i = 0; i < (int)first.size(); i++) {

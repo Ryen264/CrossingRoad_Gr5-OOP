@@ -9,7 +9,6 @@ protected:
 	PIXEL** block;
 public:
 	~COBJECT();
-	void setY(int y);
 	int getID() const;
 	void setPos(int x, int y);
 	void setY(int y);

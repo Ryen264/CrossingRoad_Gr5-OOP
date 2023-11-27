@@ -4,9 +4,6 @@ COBJECT::~COBJECT() {
 		delete[] this->block[i];
 	delete[] this->block;
 }
-void COBJECT::setY(int y) {
-	this->y = y;
-}
 int COBJECT::getID() const {
 	return this->ID;
 }
@@ -20,8 +17,8 @@ void COBJECT::setY(int y) {
 void COBJECT::DrawBlock(CGRAPHIC& layer) {
 	int startX = this->x;
 	int startY = this->y;
-	int endX = startX + BLOCK_WIDTH * this->numberOfWidth;
-	int endY = startY + BLOCK_HEIGHT * this->numberOfHeight;
+	int endX = startX + BLOCK_WIDTH;
+	int endY = startY + BLOCK_HEIGHT;
 	for (int i = startX; i < endX; i++)
 		for (int j = startY; j < endY; j++)
 			layer.screen[i][j] = block[i - startX][j - startY];

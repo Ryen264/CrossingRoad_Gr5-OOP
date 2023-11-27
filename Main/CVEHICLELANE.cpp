@@ -4,7 +4,7 @@ CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) {
         this->lane.push_front(NULL);
     this->isMoveRight = rand() % 2;
     this->delayTime = delayTime;
-    this->lightPos = 6;
+    this->lightPos = -1;
     if (lightPos >= BOARD_WIDTH) lightPos = -1;
 
     this->x = x * BLOCK_WIDTH; this->y = y * BLOCK_HEIGHT + START_BOARD_HEIGHT; this->ID = VEHICLELANE_ID;
@@ -204,9 +204,6 @@ void CVEHICLELANE::Move() {
                 int id = lightPos - 1;
                 for (; id >= 0 && lane[id] != NULL; id--);
                 if (id >= 0) {
-                    cout << id << endl;
-                    char ch{};
-                    cin >> ch;
                     //lane.erase(lane.begin() + id);
                     //pushNormally();
                 }
@@ -215,9 +212,6 @@ void CVEHICLELANE::Move() {
                 int id = lightPos + 1;
                 for (; id < BOARD_WIDTH && lane[id] != NULL; id++);
                 if (id < BOARD_WIDTH) {
-                    cout << id << endl;
-                    char ch{};
-                    cin >> ch;
                     //lane.erase(lane.begin() + id);
                     //pushNormally();
                 }
