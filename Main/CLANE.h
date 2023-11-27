@@ -11,7 +11,7 @@ protected:
 	bool isStop = false;
 	int delayTime;
 
-	int x, y, numberOfBlock = 1, ID;
+	int x, y, ID;
 	PIXEL** block = NULL;
 public:
 	~CLANE();
