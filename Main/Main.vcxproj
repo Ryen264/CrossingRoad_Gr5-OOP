@@ -141,6 +141,9 @@
     <ClCompile Include="CTRAFFICLIGHT.cpp" />
     <ClCompile Include="CTRAIN.cpp" />
     <ClCompile Include="CTRAINLANE.cpp" />
+    <ClCompile Include="CTREE_1_BLOCK_1.cpp" />
+    <ClCompile Include="CTREE_1_BLOCK_2.cpp" />
+    <ClCompile Include="CTREE_2_BLOCK.cpp" />
     <ClCompile Include="CTRUCK.cpp" />
     <ClCompile Include="CVEHICLELANE.cpp" />
     <ClCompile Include="CGAME.cpp" />
@@ -163,6 +166,9 @@
     <ClInclude Include="CTRAFFICLIGHT.h" />
     <ClInclude Include="CTRAIN.h" />
     <ClInclude Include="CTRAINLANE.h" />
+    <ClInclude Include="CTREE_1_BLOCK_1.h" />
+    <ClInclude Include="CTREE_1_BLOCK_2.h" />
+    <ClInclude Include="CTREE_2_BLOCK.h" />
     <ClInclude Include="CTRUCK.h" />
     <ClInclude Include="CVEHICLELANE.h" />
     <ClInclude Include="CGAME.h" />

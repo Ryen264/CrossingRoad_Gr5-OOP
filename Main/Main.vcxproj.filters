@@ -75,6 +75,15 @@
     <ClCompile Include="CEGG.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CTREE_1_BLOCK_1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTREE_1_BLOCK_2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTREE_2_BLOCK.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLANE.h">
@@ -132,6 +141,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CEGG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTREE_1_BLOCK_1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTREE_1_BLOCK_2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTREE_2_BLOCK.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
