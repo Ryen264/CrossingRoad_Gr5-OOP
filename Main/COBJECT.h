@@ -5,13 +5,14 @@ const int BOARD_HEIGHT = 8;
 
 class COBJECT {
 protected:
-	int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1, ID;
+	int x, y, numberOfBlock = 1, ID;
 	PIXEL** block;
 public:
 	~COBJECT();
 	void setY(int y);
 	int getID() const;
 	void setPos(int x, int y);
+	void setY(int y);
 	void DrawBlock(CGRAPHIC& layer);
 };
 //Object IDs

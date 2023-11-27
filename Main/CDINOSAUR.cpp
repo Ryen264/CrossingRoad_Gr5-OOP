@@ -4,13 +4,13 @@ CDINOSAUR::CDINOSAUR(int x, int y, bool isRight) {
 	this->ID = DINOSAUR_ID;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
 
-	this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
-	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-		this->block[i] = new PIXEL[BLOCK_HEIGHT * this->numberOfHeight];
+	this->block = new PIXEL * [BLOCK_WIDTH];
+	for (int i = 0; i < BLOCK_WIDTH; i++)
+		this->block[i] = new PIXEL[BLOCK_HEIGHT];
 
-	//set buffers
-	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-		for (int j = 0; j < BLOCK_HEIGHT * this->numberOfHeight; j++)
+	//set buffer
+	for (int i = 0; i < BLOCK_WIDTH; i++)
+		for (int j = 0; j < BLOCK_HEIGHT; j++)
 			if (frame[j][i] != ' ')
 				this->block[i][j] = { frame[j][i], BLACK, -1 };
 			else

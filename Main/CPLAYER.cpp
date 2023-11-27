@@ -46,18 +46,18 @@ void CPLAYER::setAlive(bool alive) {
 void CPLAYER::setMove(int moving) {
     this->moving = moving;
 }
-void CPLAYER::moveCharacter() {
+
+bool CPLAYER::moveCharacter() {
     if (this->moving == UP) {
-        if (this->y > -1)
-            this->y--;
-        if (this->y == -1) {
-            this->finish = true;
-            this->y = BOARD_HEIGHT - 1;
-        }
+        if (y <= UP_LANE) return true;
+        this->y--;
     }
     else if (this->moving == DOWN) {
-        if (this->y < BOARD_HEIGHT - 1)
-            this->y++;
+        if (y >= DOWN_LANE) {
+            alive = false; //die when go to the bottom
+            return false;
+        }
+        this->y++;
     }
     else if (this->moving == RIGHT) {
         if (this->x < BOARD_WIDTH - 1)
@@ -71,6 +71,7 @@ void CPLAYER::moveCharacter() {
         if (this->isRight)
             this->isRight = false;
     }
+    return false;
 }
 void CPLAYER::increaseScore(int point) {
     this->score += point;
@@ -94,10 +95,7 @@ void CPLAYER::drawCharacter(CGRAPHIC& layer) {
     character.DrawBlock(layer);
 }
 void CPLAYER::eraseCharacter(CGRAPHIC& layer) {
-    wchar_t blankChar = L' '; 
-    int startX = this->x * BLOCK_WIDTH;
-    int startY = this->y * BLOCK_HEIGHT + START_HEIGHT;
     for (int i = 0; i < BLOCK_WIDTH; i++)
         for (int j = 0; j < BLOCK_HEIGHT; j++)
-            layer.screen[startX + i][startY + j] = { blankChar, -1, -1 };
+            layer.screen[this->x * BLOCK_WIDTH + i][this->y * BLOCK_HEIGHT + START_HEIGHT+ j] = {L'@', BLACK, -1};
 }

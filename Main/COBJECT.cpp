@@ -1,6 +1,6 @@
 #include "COBJECT.h"
 COBJECT::~COBJECT() {
-	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
+	for (int i = 0; i < BLOCK_WIDTH; i++)
 		delete[] this->block[i];
 	delete[] this->block;
 }
@@ -13,6 +13,9 @@ int COBJECT::getID() const {
 void COBJECT::setPos(int x, int y)
 {
 	this->x = x; this->y = y;
+}
+void COBJECT::setY(int y) {
+	this->y = y;
 }
 void COBJECT::DrawBlock(CGRAPHIC& layer) {
 	int startX = this->x;

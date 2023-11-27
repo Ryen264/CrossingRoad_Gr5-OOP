@@ -7,7 +7,7 @@ const int SCREEN_WIDTH = 208;
 const int SCREEN_HEIGHT = 51;
 const int BLOCK_WIDTH = 16;
 const int BLOCK_HEIGHT = 6;
-const int START_HEIGHT = 3;
+const int START_BOARD_HEIGHT = 3;
 
 struct THEME {
 	COLORREF colorTable[16];
@@ -48,4 +48,5 @@ public:
 	void clear(int txtColor, int bgdColor);
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
+	//void draw...(int fromX, int fromY);
 };

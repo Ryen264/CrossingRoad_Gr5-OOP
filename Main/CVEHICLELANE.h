@@ -6,7 +6,8 @@
 const int TRAFFICLIGHT_DELAY = 20;
 const int TRAFFICLIGHT_WAIT = 20;
 class CVEHICLELANE : public CLANE {
-	int delayTime, condition = 0;
+	int delayTime, condition = 0, countObject = 0;
+	int numberOfCar = 0, numberOfTruck = 0;
 	bool isStop = false;
 	const vector <wstring> FRAME =
 	{
@@ -17,16 +18,16 @@ L"▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀ ",
 L"                ",
 L"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"
 	};
-	const vector<int> OBJECT_ID_LIST = {0,0,0,0,0,0,0, CAR_ID, TRUCK_ID, BUS_HEAD_ID, 0, 0, 0, 0, 0, 0, 0, 0};
+	const vector<int> OBJECT_ID_LIST = { CAR_ID, TRUCK_ID, BUS_HEAD_ID, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 	//trafic light
 	int lightPos, timeLight = 0;
 public:
 	CVEHICLELANE(int x = 0, int y = 0, int delayTime = 0);
-	void pushDeque(int redPoint = -1);
-	void pushObj(int x, int ID);
-	void Move();
+	void pushDeque(int ID = 0);
+	void pushNormally();
 	void lightWork();
+	void Move();
 
 	void setStop(bool isStop);
 	bool getStop() const;

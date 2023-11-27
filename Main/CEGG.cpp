@@ -3,9 +3,9 @@ CEGG::CEGG(int x, int y) {
 	this->x = x; this->y = y;
 	this->ID = EGG_ID;
 
-	this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
-	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
-		this->block[i] = new PIXEL[BLOCK_HEIGHT * this->numberOfHeight];
+	this->block = new PIXEL * [BLOCK_WIDTH];
+	for (int i = 0; i < BLOCK_WIDTH; i++)
+		this->block[i] = new PIXEL[BLOCK_HEIGHT];
 
 	//set buffer
 	for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
