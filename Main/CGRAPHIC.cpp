@@ -40,22 +40,26 @@ CGRAPHIC::~CGRAPHIC() {
 	delete[] this->screen;
 	this->screen = NULL;
 }
+
 void CGRAPHIC::display(int fromX, int fromY, int toX, int toY) {
 	if (toX < 0)
 		toX = SCREEN_WIDTH - 1;
 	if (toY < 0)
 		toY = SCREEN_HEIGHT - 1;
+
 	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	DWORD dwBytesWritten = 0;
 	wchar_t pBuffer{};
 	WORD pColor;
+
 	for (int y = fromY; y <= toY; y++)
 		for (int x = fromX; x <= toX; x++) {
+			auto& currentScreen = screen[x][y];
+			pBuffer = (currentScreen.buffer == L'@') ? L' ' : currentScreen.buffer;
 			COORD cPos = { x, y };
-			pBuffer = (screen[x][y].buffer == L'@') ? L' ' : screen[x][y].buffer;
 			WriteConsoleOutputCharacter(hStdout, &pBuffer, 1, cPos, &dwBytesWritten);
 
-			pColor = screen[x][y].bgdColor * 16 + screen[x][y].txtColor;
+			pColor = currentScreen.bgdColor * 16 + currentScreen.txtColor;
 			WriteConsoleOutputAttribute(hStdout, &pColor, 1, cPos, &dwBytesWritten);
 		}
 }
@@ -64,14 +68,42 @@ void CGRAPHIC::clear(int txtColor, int bgdColor) {
 		for (int y = 0; y < SCREEN_HEIGHT; y++)
 			this->screen[x][y] = { L' ', txtColor, bgdColor };
 }
+/*
 void CGRAPHIC::Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor) {
 	int x = first_x, y = first_y;
 	for (int i = 0; i < wsContent.length(); i++)
 		this->screen[x + i][y] = { wsContent[i], txtColor, bgdColor };
 }
+*/
+void CGRAPHIC::Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor) {
+	int x = first_x, y = first_y;
+	for (int i = 0; i < wsContent.length(); i++) {
+		if (x + i < SCREEN_WIDTH && y < SCREEN_HEIGHT) {
+			this->screen[x + i][y] = { wsContent[i], txtColor, bgdColor };
+		}
+	}
+}
+/*
 void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor) {
 	int x = first_x, y = first_y;
 	for (int i = 0; i < contentsArr.size(); i++)
 		for (int j = 0; j < contentsArr[i].length(); j++)
 			this->screen[x + j][y + i] = { contentsArr[i][j], txtColor, bgdColor };
 }
+*/
+
+void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor) {
+	int x = first_x, y = first_y;
+
+	for (int i = 0; i < contentsArr.size(); i++) {
+		if (y + i < SCREEN_HEIGHT) {
+			for (int j = 0; j < contentsArr[i].length(); j++) {
+				if (x + j < SCREEN_WIDTH) {
+					this->screen[x + j][y + i] = { contentsArr[i][j], txtColor, bgdColor };
+				}
+			}
+		}
+	}
+}
+
+

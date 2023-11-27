@@ -25,6 +25,7 @@ class CGAME {
     bool isSaved = false;
     string savename ="";
     int level = 0;
+    int countLane = 0;
     //Thread variables
     bool isThreadRunning = true;
 
@@ -90,4 +91,6 @@ const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, GRASSLANE_ID, RIVERLANE_LAND_
 void ShowCur(bool CursorVisibility);
 void DisableResizeWindow();
 void ShowScrollbar(BOOL Show);
+
+vector<int> operator-(vector<int> a, vector<int> b);
 

@@ -17,7 +17,7 @@ L"▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀ ",
 L"                ",
 L"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"
 	};
-	const vector<int> OBJECT_ID_LIST = { CAR_ID, TRUCK_ID, BUS_HEAD_ID, 0, 0, 0, 0, 0, 0, 0, 0};
+	const vector<int> OBJECT_ID_LIST = {0,0,0,0,0,0,0, CAR_ID, TRUCK_ID, BUS_HEAD_ID, 0, 0, 0, 0, 0, 0, 0, 0};
 
 	//trafic light
 	int lightPos, timeLight = 0;

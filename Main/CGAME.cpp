@@ -70,7 +70,7 @@ void CGAME::start() {
 	//resetConsole(); - anti-Configure 
 }
 void CGAME::playGame() {
-	resetData();
+	//resetData();
 	startMap();
 	isThreadRunning = true;
 	thread threadNewGame(&CGAME::SubThreadNewGame, this);
@@ -111,6 +111,8 @@ void CGAME::startMap() {
 }
 
 void CGAME::resetData() {
+	vector<int> availableLanes = LANE_ID_LIST;
+
 	while (!aLanes.empty()) {
 		CLANE* pointer = aLanes.back();
 		aLanes.pop_back();
@@ -122,36 +124,40 @@ void CGAME::resetData() {
 
 	int condition = 0, laneCase{};
 	for (int i = 1; i < BOARD_HEIGHT - 1; i++) {
-		laneCase = random(LANE_ID_LIST);
+		if (condition != 0) {
+			availableLanes = LANE_ID_LIST - vector<int>{condition};
+		}
+		laneCase = random(availableLanes);
 
 		switch (laneCase) {
 		case VEHICLELANE_ID: {
 			aLanes.push_back(new CVEHICLELANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3));
-			condition = 0;
+			countLane++;
+			if (countLane > 2) condition = VEHICLELANE_ID;
 			break;
 		}
 		case GRASSLANE_ID: {
 			aLanes.push_back(new CGRASSLANE(0, i * BLOCK_HEIGHT + START_HEIGHT));
-			condition = 0;
+			condition = GRASSLANE_ID;
+			countLane = 0;
 			break;
 		}
 		case TRAINLANE_ID: {
 			aLanes.push_back(new CTRAINLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, 10, 5));
-			condition = 0;
+			condition = TRAINLANE_ID;
+			countLane = 0;
 			break;
 		}
 		case RIVERLANE_LAND_ID: {
-			if (condition == 0) {
-				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, true));
-				condition = RIVERLANE_NOLAND_ID;
-			}
-			else
-				aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, false));
+			aLanes.push_back(new CRIVERLANE(0, i * BLOCK_HEIGHT + START_HEIGHT, rand() % 3, true));
+			condition = RIVERLANE_LAND_ID;
+			countLane = 0;
 			break;
 		}
 		default:
 			aLanes.push_back(new CGRASSLANE(0, i * BLOCK_HEIGHT + START_HEIGHT));
-			condition = 0;
+			condition = GRASSLANE_ID;
+			countLane = 0;
 		}
 	}
 	aLanes.push_back(new CGRASSLANE(0, (BOARD_HEIGHT - 1) * BLOCK_HEIGHT + START_HEIGHT));
@@ -430,7 +436,7 @@ void CGAME::SubThreadNewGame() {
 					aLanes[i]->Move();
 				//Xu ly va cham
 				if (isInjured()) {
-					cPlayer->setAlive(false);
+					aLanes[cPlayer->getY()]->injuredPlayer(*cPlayer);
 					//Hieu ung va cham
 					cout << cPlayer->getScore();
 					continue;
@@ -554,7 +560,6 @@ void CGAME::drawLoadGame()
 	cout << "Enter the number of the game: ";
 }
 
-
 void CGAME::drawInputUserTxt()
 {
 }
@@ -566,6 +571,7 @@ void CGAME::drawInputUserNumber()
 void CGAME::displayBgd() {
 	BgdLayer.display();
 }
+/*
 void CGAME::displayObj() {
 	for (int i = 0; i < SCREEN_WIDTH; i++)
 		for (int j = 0; j < SCREEN_HEIGHT; j++)
@@ -579,11 +585,27 @@ void CGAME::displayObj() {
 		}
 	ObjLayer.display();
 }
+*/
+void CGAME::displayObj() {
+	for (int i = 0; i < SCREEN_WIDTH; i++)
+		for (int j = 0; j < SCREEN_HEIGHT; j++) {
+			auto& objScreen = ObjLayer.screen[i][j];
+			auto& bgdScreen = BgdLayer.screen[i][j];
+
+			if (objScreen.bgdColor == -1)
+				objScreen.bgdColor = bgdScreen.bgdColor;
+			if (objScreen.txtColor == -1)
+				objScreen.txtColor = bgdScreen.txtColor;
+			if (objScreen.buffer == L' ')
+				objScreen.buffer = bgdScreen.buffer;
+		}
+	ObjLayer.display();
+}
+
 void CGAME::displayScreen() {
 	BgdLayer.display();
 	ObjLayer.display();
 }
-
 
 void ShowCur(bool CursorVisibility) {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -604,3 +626,24 @@ void ShowScrollbar(BOOL Show)
 	HWND hWnd = GetConsoleWindow();
 	ShowScrollBar(hWnd, SB_BOTH, Show);
 }
+vector<int> operator-(vector<int> a, vector<int> b) {
+	vector<int> res{};
+	for (int i = 0; i < (int)a.size(); i++) {
+		bool exist = false;
+		for (int j = 0; j < (int)b.size(); j++)
+			if (a[i] == b[j]) {
+				exist = true;
+				break;
+			}
+		if (!exist) res.push_back(a[i]);
+	}
+	return res;
+}
+
+//{1, 2, 3} - {2} = {1, 3}
+/*
+if have GRASSLANE (set condition)
+	aLanes.push(LANE_ID_LIST - {GRASSLANE_ID}) -> TRAIN, RIVER, VEHICLE
+
+	in resetData
+*/

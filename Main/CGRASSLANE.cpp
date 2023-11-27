@@ -1,9 +1,15 @@
 #include "CGRASSLANE.h"
 CGRASSLANE::CGRASSLANE(int x, int y) {
-    for (int i = 0; i < BOARD_WIDTH; i++)
-        this->lane.push_front(NULL);
-
-	this->x = x; this->y = y; this->ID = GRASSLANE_ID;
+	bool haveEgg = false;
+	for (int i = 0; i < BOARD_WIDTH; i++) {
+		if (!haveEgg && rand() % 30 == 0) {
+			this->lane.push_front(new CEGG(i * BLOCK_WIDTH, this->y));
+			haveEgg = true;
+		}
+		else this->lane.push_front(NULL);
+	}
+	
+	this->x = x ; this->y = y; this->ID = GRASSLANE_ID;
 
     this->block = new PIXEL * [BLOCK_WIDTH * this->numberOfWidth];
     for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
@@ -58,3 +64,17 @@ CGRASSLANE::CGRASSLANE(int x, int y) {
 		}
 	}
 }
+void CGRASSLANE::injuredPlayer(CPLAYER& player) {
+	int i = player.getX();
+	if (lane[i] == NULL) return;
+	switch (lane[i]->getID()) {
+	case EGG_ID: {
+		player.increaseScore(10);
+		COBJECT* tmp = lane[i];
+		if (tmp != NULL) delete tmp;
+		lane[i] = tmp = NULL;
+		break;
+	}
+	}
+}
+
