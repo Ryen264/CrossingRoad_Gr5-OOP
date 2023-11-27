@@ -10,6 +10,9 @@ CLANE::~CLANE() {
         delete[] this->block[i];
     delete[] this->block;
 }
+void CLANE::injuredPlayer(CPLAYER& player) {
+    player.setAlive(false);
+}
 void CLANE::changeDirection() {
 	this->isMoveRight = !this->isMoveRight;
 }
@@ -62,24 +65,64 @@ void CLANE::updateYObj() {
 }
 
 void CLANE::DrawLane(CGRAPHIC& layer) {
+    int laneX = this->x;
+    int laneY = this->y;
     for (int k = 0; k < BOARD_WIDTH; k++) {
-        for (int i = 0; i < BLOCK_WIDTH; i++)
-            for (int j = 0; j < BLOCK_HEIGHT; j++)
-                layer.screen[this->x + k * BLOCK_WIDTH + i][this->y + j] = block[i][j];
+        int blockStartX = laneX + k * BLOCK_WIDTH * this->numberOfWidth;
+        int blockStartY = laneY;
+        for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++) {
+            memcpy(&layer.screen[blockStartX + i][blockStartY], &block[i][0], BLOCK_HEIGHT * this->numberOfHeight * sizeof(PIXEL));
+        }
     }
 }
-void CLANE::DrawObjects(CGRAPHIC& layer)
-{
-    for (int i = 0; i < BOARD_WIDTH; i++)
-    {
+/*
+void CLANE::DrawLane(CGRAPHIC& layer) {
+    int laneX = this->x;
+    int laneY = this->y;
+
+    for (int k = 0; k < BOARD_WIDTH; k++) {
+        int blockStartX = laneX + k * BLOCK_WIDTH * this->numberOfWidth;
+        int blockStartY = laneY;
+
+        for (int i = 0; i < BLOCK_WIDTH * this->numberOfWidth; i++)
+            for (int j = 0; j < BLOCK_HEIGHT * this->numberOfHeight; j++)
+                layer.screen[blockStartX + i][blockStartY + j] = block[i][j];
+    }
+}
+*/
+/*
+void CLANE::DrawObjects(CGRAPHIC& layer) {
+    for (int i = 0; i < BOARD_WIDTH; i++) {
+        int laneX = this->x + i * BLOCK_WIDTH;
+        int laneY = this->y;
         if (lane[i] != NULL) {
-            lane[i]->setPos(this->x + i * BLOCK_WIDTH, this->y);
+            lane[i]->setPos(laneX, laneY);
             lane[i]->DrawBlock(layer);
         }
         else {
             for (int k = 0; k < BLOCK_WIDTH; k++)
                 for (int l = 0; l < BLOCK_HEIGHT; l++)
-                    layer.screen[this-> x + i * BLOCK_WIDTH + k][this->y + l] = { L' ', -1, -1 };
+                    layer.screen[laneX + k][laneY + l] = { L' ', -1, -1 };
+        }
+    }
+}
+*/
+
+void CLANE::DrawObjects(CGRAPHIC& layer) {
+    int laneY = this->y;
+    for (int i = 0; i < BOARD_WIDTH; i++) {
+        int laneX = this->x + i * BLOCK_WIDTH;
+        if (lane[i] != NULL) {
+            lane[i]->setPos(laneX, laneY);
+            lane[i]->DrawBlock(layer);
+        } else {
+            int blockStartX = laneX;
+            for (int k = 0; k < BLOCK_WIDTH; k++) {
+                int blockStartY = laneY;
+                for (int l = 0; l < BLOCK_HEIGHT; l++) {
+                    layer.screen[blockStartX + k][blockStartY + l] = { L' ', -1, -1 };
+                }
+            }
         }
     }
 }

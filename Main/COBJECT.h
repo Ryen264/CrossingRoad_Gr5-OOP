@@ -9,6 +9,7 @@ protected:
 	PIXEL** block;
 public:
 	~COBJECT();
+	void setY(int y);
 	int getID() const;
 	void setPos(int x, int y);
 	void setY(int y);
@@ -26,5 +27,6 @@ const int BUS_HEAD_ID = 30007;
 const int BUS_TAIL_ID = 31007;
 
 const int TRAFFICLIGHT_ID = 40001;
+const int EGG_ID = 40002;
 
 int random(vector<int> arr);

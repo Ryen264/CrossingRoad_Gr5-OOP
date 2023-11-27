@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "CLANE.h"
+#include"CEGG.h"
 class CGRASSLANE : public CLANE {
 	const vector <wstring> FRAME =
 	{
@@ -20,4 +21,5 @@ L"████████████████",
 
 public:
 	CGRASSLANE(int x = 0, int y = 0);
+	void injuredPlayer(CPLAYER& player);
 };

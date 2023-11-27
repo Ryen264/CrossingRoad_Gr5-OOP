@@ -591,3 +591,24 @@ void ShowScrollbar(BOOL Show)
 	HWND hWnd = GetConsoleWindow();
 	ShowScrollBar(hWnd, SB_BOTH, Show);
 }
+vector<int> operator-(vector<int> a, vector<int> b) {
+	vector<int> res{};
+	for (int i = 0; i < (int)a.size(); i++) {
+		bool exist = false;
+		for (int j = 0; j < (int)b.size(); j++)
+			if (a[i] == b[j]) {
+				exist = true;
+				break;
+			}
+		if (!exist) res.push_back(a[i]);
+	}
+	return res;
+}
+
+//{1, 2, 3} - {2} = {1, 3}
+/*
+if have GRASSLANE (set condition)
+	aLanes.push(LANE_ID_LIST - {GRASSLANE_ID}) -> TRAIN, RIVER, VEHICLE
+
+	in resetData
+*/

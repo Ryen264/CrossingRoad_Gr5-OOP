@@ -92,3 +92,5 @@ void ShowCur(bool CursorVisibility);
 void DisableResizeWindow();
 void ShowScrollbar(BOOL Show);
 
+vector<int> operator-(vector<int> a, vector<int> b);
+

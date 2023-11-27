@@ -1,4 +1,4 @@
-#include "CVEHICLELANE.h"
+﻿#include "CVEHICLELANE.h"
 CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) {
     for (int i = 0; i < BOARD_WIDTH; i++)
         this->lane.push_front(NULL);

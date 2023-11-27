@@ -1,4 +1,5 @@
 #include "CCAR.h"
+
 CCAR::CCAR(int x, int y, bool isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
 	this->ID = CAR_ID;
@@ -84,4 +85,3 @@ CCAR::CCAR(int x, int y, bool isRight) {
 		block[12][1].txtColor = DARK_RED;
 	}
 }
-

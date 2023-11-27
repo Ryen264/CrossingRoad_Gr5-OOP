@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "CGRAPHIC.h"
 #include "COBJECT.h"
+#include"CPLAYER.h"
 #include <deque>
 using namespace std;
 class CLANE {
@@ -15,7 +16,7 @@ protected:
 	PIXEL** block = NULL;
 public:
 	~CLANE();
-	int getID() const;
+	virtual void injuredPlayer(CPLAYER& player);
 	virtual void changeDirection();
 	virtual bool checkPos(int pos);
 	virtual void Move();
@@ -27,6 +28,7 @@ public:
 	virtual bool getIsMoveRight();
 	virtual int getTimeCount();
 	virtual int getDelayTime();
+	int getID() const;
 
 	virtual void setIsMoveRight(bool);
 	virtual void setTimeCount(int);
