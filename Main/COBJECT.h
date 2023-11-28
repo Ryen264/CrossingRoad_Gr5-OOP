@@ -27,5 +27,6 @@ const int BUS_TAIL_ID = 31007;
 
 const int TRAFFICLIGHT_ID = 40001;
 const int EGG_ID = 40002;
+const int UFO_ID = 40003;
 
 int random(vector<int> arr);

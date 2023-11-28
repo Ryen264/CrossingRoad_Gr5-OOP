@@ -84,6 +84,9 @@
     <ClCompile Include="CTREE_2_BLOCK.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CUFO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLANE.h">
@@ -150,6 +153,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CTREE_2_BLOCK.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CUFO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

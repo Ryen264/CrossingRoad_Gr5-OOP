@@ -145,6 +145,7 @@
     <ClCompile Include="CTREE_1_BLOCK_2.cpp" />
     <ClCompile Include="CTREE_2_BLOCK.cpp" />
     <ClCompile Include="CTRUCK.cpp" />
+    <ClCompile Include="CUFO.cpp" />
     <ClCompile Include="CVEHICLELANE.cpp" />
     <ClCompile Include="CGAME.cpp" />
     <ClCompile Include="CLANE.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="CTREE_1_BLOCK_2.h" />
     <ClInclude Include="CTREE_2_BLOCK.h" />
     <ClInclude Include="CTRUCK.h" />
+    <ClInclude Include="CUFO.h" />
     <ClInclude Include="CVEHICLELANE.h" />
     <ClInclude Include="CGAME.h" />
     <ClInclude Include="CLANE.h" />
