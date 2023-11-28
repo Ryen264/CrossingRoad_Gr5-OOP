@@ -5,11 +5,11 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
 	this->block = new PIXEL * [48];
 	for (int i = 0; i <48; i++)
-		this->block[i] = new PIXEL[30];
+		this->block[i] = new PIXEL[28];
 
 	//set buffer
 	for (int i = 0; i < 48; i++)
-		for (int j = 0; j < 30; j++)
+		for (int j = 0; j < 28; j++)
 			if (frame[j][i] != L' ')
 				this->block[i][j] = { frame[j][i], BLACK, WHITE };
 			else
@@ -58,8 +58,39 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		{
 			block[i][6].bgdColor = LIGHT_GRAY;
 		}
-		int x = 27;
+		int x1 = 17;
+		int x2 = 29;
 		int y = 7;
+		for (int i = x1; i <= x2; i++)
+		{
+			block[i][y].bgdColor = BRIGHT_YELLOW;
+
+		}
+		for (int i = y; i < 23; i++)
+		{
+			x1--; x2++; y++;
+			for (int i = x1; i <= x2; i++)
+			{
+				block[i][y].bgdColor = BRIGHT_YELLOW;
+
+			}
+		}
+		for (int i = 3; i < 44; i++)
+		{
+			block[i][24].bgdColor = BRIGHT_YELLOW;
+		}
+		for (int i = 7; i < 40; i++)
+		{
+			block[i][25].bgdColor = BRIGHT_YELLOW;
+		}
+		for (int i = 11; i < 36; i++)
+		{
+			block[i][26].bgdColor = BRIGHT_YELLOW;
+		}
+		for (int i = 15; i < 32; i++)
+		{
+			block[i][27].bgdColor = BRIGHT_YELLOW;
+		}
 		
 	
 		//VE TRUNG
@@ -470,6 +501,80 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 				//	block[i][5].txtColor = BLACK;
 				//	block[i + 1][5].txtColor = BLACK;
 				//}
+	//VE UF0
+	for (int i = 17; i < 29; i++)
+	{
+		block[i][0].bgdColor = SKY_BLUE;
+	}
+
+	block[24][0].bgdColor = WHITE;
+	block[25][0].bgdColor = WHITE;
+
+	for (int i = 15; i < 31; i++)
+	{
+		block[i][1].bgdColor = SKY_BLUE;
+	}
+	block[23][1].bgdColor = SKY_BLUE;
+	block[23][1].txtColor = WHITE;
+	block[24][1].bgdColor = WHITE;
+	block[25][1].bgdColor = WHITE;
+	block[26][1].bgdColor = SKY_BLUE;
+	block[26][1].txtColor = WHITE;
+	for (int i = 15; i < 31; i++)
+	{
+		block[i][2].bgdColor = SKY_BLUE;
+	}
+	block[28][2].bgdColor = SKY_BLUE;
+	block[28][2].txtColor = WHITE;
+	for (int i = 12; i < 34; i++)
+	{
+		block[i][3].bgdColor = LIGHT_GRAY;
+	}
+	for (int i = 9; i < 37; i++)
+	{
+		block[i][4].bgdColor = LIGHT_GRAY;
+	}
+	for (int i = 9; i < 37; i++)
+	{
+		block[i][5].bgdColor = LIGHT_GRAY;
+	}
+	for (int i = 12; i < 34; i++)
+	{
+		block[i][6].bgdColor = LIGHT_GRAY;
+	}
+	int x1 = 17;
+	int x2 = 29;
+	int y1 = 7;
+	for (int i = x1; i <= x2; i++)
+	{
+		block[i][y1].bgdColor = BRIGHT_YELLOW;
+
+	}
+	for (int i = y1; i < 23; i++)
+	{
+		x1--; x2++; y1++;
+		for (int i = x1; i <= x2; i++)
+		{
+			block[i][y1].bgdColor = BRIGHT_YELLOW;
+
+		}
+	}
+	for (int i = 3; i < 44; i++)
+	{
+		block[i][24].bgdColor = BRIGHT_YELLOW;
+	}
+	for (int i = 7; i < 40; i++)
+	{
+		block[i][25].bgdColor = BRIGHT_YELLOW;
+	}
+	for (int i = 11; i < 36; i++)
+	{
+		block[i][26].bgdColor = BRIGHT_YELLOW;
+	}
+	for (int i = 15; i < 32; i++)
+	{
+		block[i][27].bgdColor = BRIGHT_YELLOW;
+	}
 }
 COBJECT::~COBJECT() {
 	for (int i = 0; i <48; i++)
@@ -478,6 +583,6 @@ COBJECT::~COBJECT() {
 }
 void COBJECT::DrawBlock(CGRAPHIC& layer) {
 	for (int i = 0; i < 48; i++)
-		for (int j = 0; j < 30; j++)
+		for (int j = 0; j < 28; j++)
 			layer.screen[this->x + i][this->y + j] = block[i][j];
 }
