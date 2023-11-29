@@ -71,7 +71,35 @@ const vector<wstring> PAUSE_MENU = {
 		L"█  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀       █",//28
 		L"▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀" //29
 };
-
+const vector<wstring> Drawer = {
+L"█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█"
+L"█                ▀▀▀▀     █",
+L"█                         █",
+L"█                         █",
+L"█       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
+L"█                ▄▄▄▄     █",
+L"█                         █",
+L"█                         █",
+L"█       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
+L"█                         █",
+L"█                ▀▀▀▀     █",
+L"█                         █",
+L"█                         █",
+L"█       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
+L"█                ▄▄▄▄     █",
+L"█                         █",
+L"█                         █",
+L"█       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
+L"█                         █",
+L"█                ▀▀▀▀     █",
+L"█                         █",
+L"█                         █",
+L"█       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
+L"█                ▄▄▄▄     █",
+L"█                         █",
+L"█                         █",
+L"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"
+};
 class CGRAPHIC {
 public:
 	PIXEL** screen;
@@ -82,4 +110,5 @@ public:
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawPauseMenu(vector<wstring> PauseMenu, int first_x, int first_y);
+	void DrawDrawer(vector<wstring>contentsArr, int firsr_x, int first_y, int txtColor = 0, int bgdColor = 2);
 };
