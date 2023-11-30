@@ -12,9 +12,9 @@ CTREE_1_BLOCK_2::CTREE_1_BLOCK_2(int x, int y, bool isRight) {
 	for (int i = 0; i < BLOCK_WIDTH; i++)
 		for (int j = 0; j < BLOCK_HEIGHT; j++)
 			if (frame[j][i] != L' ')
-				this->block[i][j] = { frame[j][i], -1, -1 };
+				this->block[i][j] = { frame[j][i], BLACK, LIGHT_GREEN };
 			else
-				this->block[i][j] = { frame[j][i], -1, -1 };
+				this->block[i][j] = { frame[j][i], BLACK, LIGHT_GREEN };
 
 	//set colors
 	if (isRight) {
