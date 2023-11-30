@@ -100,6 +100,14 @@ L"█                         █",
 L"█                         █",
 L"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"
 };
+const vector<wstring> SmallDrawer= {
+L"█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█"
+L"█                     ▀▀▀▀      █",
+L"█                               █",
+L"█                               █",
+L"█            ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█"
+};
+
 class CGRAPHIC {
 public:
 	PIXEL** screen;
@@ -110,5 +118,7 @@ public:
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawPauseMenu(vector<wstring> PauseMenu, int first_x, int first_y);
-	void DrawDrawer(vector<wstring>contentsArr, int firsr_x, int first_y, int txtColor = 0, int bgdColor = 2);
+	void DrawDrawer(vector<wstring>contentsArr, int first_x, int first_y, int txtColor = 0, int bgdColor = -1);
+	void DrawSmallDrawer(vector<wstring>contentsArr, int first_x, int first_y, int txtColor = 0, int bgdColor = -1);
+	
 };

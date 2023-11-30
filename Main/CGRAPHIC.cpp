@@ -163,9 +163,13 @@ void CGRAPHIC::DrawPauseMenu(vector<wstring> PauseMenu, int first_x, int first_y
 	screen[first_x + 14][first_y + 6].bgdColor = LIGHT_GREEN;
 }
 
-void CGRAPHIC::DrawDrawer(vector<wstring> contentsArr, int firsr_x, int first_y, int txtColor, int bgdColor)
+void CGRAPHIC::DrawDrawer(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor)
 {
-	int x = firsr_x;
+	vector<wstring> frame = Drawer;
+	for (int i = 0; i < 26; i++)
+		for (int j = 0; j < 26; j++)
+			this->screen[first_x + i][j] = { frame[j][i], BLACK, -1 };
+	int x = first_x;
 	int y = first_y;
 	for (int j = 0; j < 26; j++)
 	{
@@ -259,4 +263,14 @@ void CGRAPHIC::DrawDrawer(vector<wstring> contentsArr, int firsr_x, int first_y,
 			this->screen[x + i][y + j].txtColor = SADDLE_BROWN;
 		}
 	}
+}
+
+void CGRAPHIC::DrawSmallDrawer(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor)
+{
+	vector<wstring> frame = SmallDrawer;
+	for (int i = 0; i < 26; i++)
+		for (int j = 0; j < 26; j++)
+			this->screen[first_x + i][j] = { frame[j][i], BLACK, -1 };
+	int x = first_x;
+	int y = first_y;
 }
