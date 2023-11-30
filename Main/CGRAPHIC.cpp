@@ -168,100 +168,130 @@ void CGRAPHIC::DrawDrawer(vector<wstring> contentsArr, int first_x, int first_y,
 	vector<wstring> frame = Drawer;
 	for (int i = 0; i < 26; i++)
 		for (int j = 0; j < 26; j++)
-			this->screen[first_x + i][j] = { frame[j][i], BLACK, SADDLE_BROWN };
+			this->screen[first_x + i][j] = { frame[j][i], BLACK, -1 };
 	int x = first_x;
 	int y = first_y;
-	for (int j = 0; j < 26; j++)
+	for (int j = 1; j < 26; j++)
 	{
-		for (int i = 0; i < 8; i++)
+		for (int i = 1; i < 8; i++)
 		{
-			this->screen[x + i][y + j].bgdColor = SADDLE_BROWN;
+			this->screen[x+i][y+j].txtColor = SADDLE_BROWN;
 		}
 	}
-	for (int i = 8; i < 26; i++)
+	for (int i = 1; i < 8; i++)
 	{
-		this->screen[x + i][y].bgdColor = LIGHT_BROWN;
-	}
-	for (int j = 1; j < 3; j++)
-	{
-		for (int i = 8; i < 26; i++)
-		{
-			this->screen[x + i][y + j].bgdColor = LIGHT_BROWN;
-			this->screen[x + i][y + j].txtColor = SADDLE_BROWN;
-		}
+		this->screen[x+i][y].bgdColor = SADDLE_BROWN;
 	}
 	for (int i = 8; i < 26; i++)
 	{
-		this->screen[x + i][y + 3].bgdColor = LIGHT_BROWN;
+		this->screen[x+i][y].bgdColor = LIGHT_BROWN;
 	}
 	for (int i = 8; i < 26; i++)
 	{
-		this->screen[x + i][y + 4].bgdColor = LIGHT_BROWN;
+		this->screen[x+i][y+1].txtColor = LIGHT_BROWN;
 	}
-	this->screen[26][4].bgdColor = BLACK;
-	for (int i = 8; i < 26; i++)
+	for (int i = 17; i < 21; i++)
 	{
-		this->screen[x + i][y + 5].bgdColor = LIGHT_BROWN;
-		this->screen[x + i][y + 5].txtColor = SADDLE_BROWN;
-	}
-	for (int j = 6; j < 8; j++)
-	{
-		for (int i = 8; i < 26; i++)
-		{
-			this->screen[x + i][y + j].bgdColor = LIGHT_BROWN;
-		}
+		this->screen[x+i][y+1].txtColor = LIGHT_BROWN;
+		this->screen[x+i][y+1].bgdColor = SADDLE_BROWN;
 	}
 	for (int i = 8; i < 26; i++)
 	{
-		this->screen[x + i][y + 8].bgdColor = LIGHT_BROWN;
+		this->screen[x+i][y+2].txtColor = LIGHT_BROWN;
+	}
+	for (int i = 8; i < 26; i++)
+	{
+		this->screen[x+i][y+3].txtColor = LIGHT_BROWN;
+	}
+	for (int i = 8; i < 26; i++)
+	{
+		this->screen[x+i][y+4].bgdColor = LIGHT_BROWN;
+	}
+	this->screen[x+26][y+4].bgdColor = BLACK;
+	for (int i = 8; i < 26; i++)
+	{
+		this->screen[x+i][y+5].txtColor = LIGHT_BROWN;
+	}
+	for (int i = 17; i < 21; i++)
+	{
+		this->screen[x+i][y+5].txtColor = SADDLE_BROWN;
+		this->screen[x+i][y+5].bgdColor = LIGHT_BROWN;
+	}
+	for (int i = 8; i < 26; i++)
+	{
+		this->screen[x+i][y+6].txtColor = LIGHT_BROWN;
+	}
+	for (int i = 8; i < 26; i++)
+	{
+		this->screen[x+i][y+7].txtColor = LIGHT_BROWN;
+	}
+	for (int i = 8; i < 26; i++)
+	{
+		this->screen[x+i][y+8].bgdColor = LIGHT_BROWN;
 	}
 	this->screen[26][8].bgdColor = BLACK;
 	for (int j = 9; j < 13; j++)
 	{
 		for (int i = 8; i < 26; i++)
 		{
-			this->screen[x + i][y + j].bgdColor = LIGHT_BROWN;
-			this->screen[x + i][y + j].txtColor = SADDLE_BROWN;
+			this->screen[x+i][y+j].txtColor = LIGHT_BROWN;
 		}
+	}
+	for (int i = 17; i < 21; i++)
+	{
+		this->screen[x+i][y+10].bgdColor = LIGHT_BROWN;
+		this->screen[x+i][y+10].txtColor = SADDLE_BROWN;
 	}
 	for (int i = 8; i < 26; i++)
 	{
-		this->screen[x + i][y + 13].bgdColor = LIGHT_BROWN;
+		this->screen[x+i][y+13].bgdColor = LIGHT_BROWN;
 	}
-	this->screen[26][13].bgdColor = BLACK;
+	this->screen[x+26][y+13].bgdColor = BLACK;
 	for (int j = 14; j < 17; j++)
 	{
 		for (int i = 8; i < 26; i++)
 		{
-			this->screen[x + i][y + j].bgdColor = LIGHT_BROWN;
-			this->screen[x + i][y + j].txtColor = SADDLE_BROWN;
+			this->screen[x+i][y+j].txtColor = LIGHT_BROWN;
 		}
+	}
+	for (int i = 17; i < 21; i++)
+	{
+		this->screen[x+i][y+14].txtColor = SADDLE_BROWN;
+		this->screen[x+i][y+14].bgdColor = LIGHT_BROWN;
 	}
 	for (int i = 8; i < 26; i++)
 	{
-		this->screen[x + i][17].bgdColor = LIGHT_BROWN;
+		this->screen[x+i][y+17].bgdColor = LIGHT_BROWN;
 	}
-	this->screen[26][17].bgdColor = BLACK;
+	this->screen[x+26][y+17].bgdColor = BLACK;
 	for (int j = 18; j < 22; j++)
 	{
 		for (int i = 8; i < 26; i++)
 		{
-			this->screen[x + i][y + j].bgdColor = LIGHT_BROWN;
-			this->screen[x + i][y + j].txtColor = SADDLE_BROWN;
+			this->screen[x+i][y+j].txtColor = LIGHT_BROWN;
 		}
+	}
+	for (int i = 17; i < 21; i++)
+	{
+		this->screen[x+i][y+19].txtColor = SADDLE_BROWN;
+		this->screen[x+i][y+19].bgdColor = LIGHT_BROWN;
 	}
 	for (int i = 8; i < 26; i++)
 	{
-		this->screen[x + i][y + 22].bgdColor = LIGHT_BROWN;
+		this->screen[x+i][y+22].bgdColor = LIGHT_BROWN;
 	}
-	this->screen[26][22].bgdColor = BLACK;
+	this->screen[x+26][y+22].bgdColor = BLACK;
 	for (int j = 23; j < 26; j++)
 	{
 		for (int i = 8; i < 26; i++)
 		{
-			this->screen[x + i][y + j].bgdColor = LIGHT_BROWN;
-			this->screen[x + i][y + j].txtColor = SADDLE_BROWN;
+			this->screen[x+i][y+j].txtColor = LIGHT_BROWN;
 		}
+	}
+	for (int i = 17; i < 21; i++)
+	{
+		this->screen[x+i][y+23].txtColor = SADDLE_BROWN;
+		this->screen[x+i][y+23].bgdColor = LIGHT_BROWN;
 	}
 }
 
