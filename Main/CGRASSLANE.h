@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "CLANE.h"
 #include"CEGG.h"
+#include"CTREE_1_BLOCK_2.h"
 class CGRASSLANE : public CLANE {
 	const vector <wstring> FRAME =
 	{

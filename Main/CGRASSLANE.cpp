@@ -2,7 +2,8 @@
 CGRASSLANE::CGRASSLANE(int x, int y) {
 	bool haveEgg = false;
 	for (int i = 0; i < BOARD_WIDTH; i++) {
-		if (!haveEgg && rand() % 30 == 0) {
+		if (i == 0 || i == 1) this->lane.push_front(new CTREE_1_BLOCK_2(i * BLOCK_WIDTH, this->y));
+		else if (!haveEgg && rand() % 30 == 0) {
 			this->lane.push_front(new CEGG(i * BLOCK_WIDTH, this->y));
 			haveEgg = true;
 		}
