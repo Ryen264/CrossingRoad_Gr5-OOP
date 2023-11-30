@@ -2,8 +2,8 @@
 COBJECT::COBJECT(int x, int y, int isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
-	int WIDTH = 16;
-	int HEIGHT = 6;
+	int WIDTH = 34;
+	int HEIGHT = 8;
 	this->block = new PIXEL * [WIDTH];
 	for (int i = 0; i <WIDTH; i++)
 		this->block[i] = new PIXEL[HEIGHT];
@@ -12,14 +12,70 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 	for (int i = 0; i < WIDTH; i++)
 		for (int j = 0; j < HEIGHT; j++)
 			if (frame[j][i] != L' ')
-				this->block[i][j] = { frame[j][i], -1, -1 };
+				this->block[i][j] = { frame[j][i], BLACK, -1 };
 			else
 				this->block[i][j] = { frame[j][i], BLACK, WHITE };
 
 	//set colors
 
 	if (isRight) {
-		
+		block[16][0].bgdColor = BRIGHT_YELLOW;
+		block[17][0].bgdColor = BRIGHT_YELLOW;
+		for (int i = 18; i < 26; i++)
+		{
+			block[i][0].bgdColor = WHITE;
+		}
+			block[26][0].bgdColor = BRIGHT_YELLOW;
+			block[27][0].bgdColor = BRIGHT_YELLOW;
+			// X 15 28
+			// Y 1  2
+			for (int j = 1; j < 3; j++)
+			{
+				for (int i = 15; i < 29; i++)
+				{
+					block[i][j].txtColor = BRIGHT_YELLOW;
+				}
+			}
+
+		for (int i = 1; i < 13; i++)
+		{
+			block[i][3].bgdColor = SADDLE_BROWN;
+		}
+		for (int j = 4; j < 7; j++)
+		{
+			for (int i = 1; i < 13; i++)
+			{
+				block[i][j].txtColor = SADDLE_BROWN;
+			}
+		}
+		for (int i = 13; i < 33; i++)
+		{
+			block[i][3].bgdColor = LIGHT_BROWN;
+		}
+		for (int i = 13; i < 22; i++)
+		{
+			block[i][4].txtColor = LIGHT_BROWN;
+		}
+		for (int i = 22; i < 26; i++)
+		{
+			block[i][4].txtColor = LIGHT_BROWN;
+			block[i][4].bgdColor = SADDLE_BROWN;
+		}
+		for (int i = 22; i < 32; i++)
+		{
+			block[i][4].txtColor = LIGHT_BROWN;
+		}
+		for (int j = 5; j < 7; j++)
+		{
+			for (int i = 13; i < 32; i++)
+			{
+				block[i][j].txtColor = LIGHT_BROWN;
+			}
+		}
+		for (int i = 1; i < 32; i++)
+		{
+			block[i][7].bgdColor = SADDLE_BROWN;
+		}
 		//VE UF0
 		/*for (int i = 17; i < 29; i++)
 		{
@@ -592,6 +648,6 @@ COBJECT::~COBJECT() {
 }
 void COBJECT::DrawBlock(CGRAPHIC& layer) {
 	for (int i = 0; i < 34; i++)
-		for (int j = 0; j < 6; j++)
+		for (int j = 0; j < 8; j++)
 			layer.screen[this->x + i][this->y + j] = block[i][j];
 }

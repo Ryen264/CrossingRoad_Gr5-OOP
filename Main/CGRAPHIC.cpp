@@ -168,7 +168,7 @@ void CGRAPHIC::DrawDrawer(vector<wstring> contentsArr, int first_x, int first_y,
 	vector<wstring> frame = Drawer;
 	for (int i = 0; i < 26; i++)
 		for (int j = 0; j < 26; j++)
-			this->screen[first_x + i][j] = { frame[j][i], BLACK, -1 };
+			this->screen[first_x + i][j] = { frame[j][i], BLACK, SADDLE_BROWN };
 	int x = first_x;
 	int y = first_y;
 	for (int j = 0; j < 26; j++)
@@ -265,12 +265,68 @@ void CGRAPHIC::DrawDrawer(vector<wstring> contentsArr, int first_x, int first_y,
 	}
 }
 
-void CGRAPHIC::DrawSmallDrawer(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor)
+void CGRAPHIC::DrawSmallDrawer(vector<wstring> SmallDrawer, int first_x, int first_y, int txtColor, int bgdColor)
 {
 	vector<wstring> frame = SmallDrawer;
-	for (int i = 0; i < 26; i++)
-		for (int j = 0; j < 26; j++)
+	for (int i = 0; i < 34; i++)
+		for (int j = 0; j < 8; j++)
 			this->screen[first_x + i][j] = { frame[j][i], BLACK, -1 };
 	int x = first_x;
 	int y = first_y;
+	this->screen[x+16][y].bgdColor = BRIGHT_YELLOW;
+	this->screen[x+17][y].bgdColor = BRIGHT_YELLOW;
+	for (int i = 18; i < 26; i++)
+	{
+		this->screen[x+i][y].bgdColor = WHITE;
+	}
+	this->screen[x+26][y].bgdColor = BRIGHT_YELLOW;
+	this->screen[x+27][y].bgdColor = BRIGHT_YELLOW;
+	for (int j = 1; j < 3; j++)
+	{
+		for (int i = 15; i < 29; i++)
+		{
+			this->screen[x+i][y+j].txtColor = BRIGHT_YELLOW;
+		}
+	}
+
+	for (int i = 1; i < 13; i++)
+	{
+		this->screen[x+i][y+3].bgdColor = SADDLE_BROWN;
+	}
+	for (int j = 4; j < 7; j++)
+	{
+		for (int i = 1; i < 13; i++)
+		{
+			this->screen[x+i][y+j].txtColor = SADDLE_BROWN;
+		}
+	}
+	for (int i = 13; i < 33; i++)
+	{
+		this->screen[x+i][y+3].bgdColor = LIGHT_BROWN;
+	}
+	for (int i = 13; i < 22; i++)
+	{
+		this->screen[x+i][y+4].txtColor = LIGHT_BROWN;
+	}
+	for (int i = 22; i < 26; i++)
+	{
+		this->screen[x+i][y+4].txtColor = LIGHT_BROWN;
+		this->screen[x+i][y+4].bgdColor = SADDLE_BROWN;
+	}
+	for (int i = 22; i < 32; i++)
+	{
+		this->screen[x+i][y+4].txtColor = LIGHT_BROWN;
+	}
+	for (int j = 5; j < 7; j++)
+	{
+		for (int i = 13; i < 32; i++)
+		{
+			this->screen[x+i][y+j].txtColor = LIGHT_BROWN;
+		}
+	}
+	for (int i = 1; i < 32; i++)
+	{
+		this->screen[x+i][y+7].bgdColor = SADDLE_BROWN;
+	}
+
 }
