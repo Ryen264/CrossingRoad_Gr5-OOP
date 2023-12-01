@@ -156,8 +156,7 @@ bool CPLAYER::moveCharacter() {
             this->xBoard++;
         }
         if (xBoard == BOARD_WIDTH) {
-            this->x = 0;
-            this->xBoard = 0;
+            setxBoard(BOARD_WIDTH);
             this->alive = false;
             return false;
         }
@@ -169,8 +168,7 @@ bool CPLAYER::moveCharacter() {
             this->xBoard--;
         }
         if (xBoard == -1) {
-            this->x = 0;
-            this->xBoard = 0;
+            setxBoard(0);
             this->alive = false;
             return false;
         }

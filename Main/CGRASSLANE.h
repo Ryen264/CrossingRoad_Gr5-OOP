@@ -12,8 +12,8 @@ class CGRASSLANE : public CLANE {
 	{
 L"                ",
 L"                ",
-L"        ▄▀       ",
-L"     ▀▄ ▀        ",
+L"        ▄▀      ",
+L"     ▀▄ ▀       ",
 L"                ",
 L"                "
 //L"████████████████",

@@ -105,7 +105,7 @@ void CGAME::playGame() {
 
 void CGAME::resetData() {
 	if (level == 1) this->numberOfLane = 5;
-	else this->numberOfLane += 1 + rand() % 3;
+	else this->numberOfLane += (1 + (rand() % 3));
 	while (!aLanes.empty()) pop_backLane();
 	aLanes.clear();
 
@@ -584,7 +584,7 @@ void CGAME::SubThreadNewGame() {
 				if (cPlayer->getDependObj()->getID() == PERRY_ID || cPlayer->moveCharacter()) {
 					if (numberOfLane > BOARD_HEIGHT - 3) pushRandomLane();
 					else if (numberOfLane == BOARD_HEIGHT - 3) push_frontLane(FINISHLANE_ID);
-					else if (numberOfLane == BOARD_HEIGHT - 2) push_frontLane(GRASSLANE_FULL_ID);
+					else if (numberOfLane == BOARD_HEIGHT - 4) push_frontLane(GRASSLANE_FULL_ID);
 					else push_frontLane(GRASSLANE_ID);
 					pop_backLane();
 					numberOfLane--;
