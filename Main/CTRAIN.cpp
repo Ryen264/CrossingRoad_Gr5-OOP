@@ -21,6 +21,8 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) : COBJECT(x, y) {
 	//set colors
 	if (isRight)
 		if (isHead) {
+			block[0][2].txtColor = WHITE;
+			block[1][2].txtColor = WHITE;
 			for (int i = 0; i < 13; i++) {
 				block[i][4].txtColor = DARK_GRAY;
 				block[i][4].bgdColor = LIGHT_GRAY;
@@ -74,6 +76,8 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) : COBJECT(x, y) {
 }
 		else {
 			for (int i = 0; i < 16; i++) {
+				block[i][2].txtColor = WHITE;
+				block[i][2].bgdColor = WHITE;
 				block[i][5].txtColor = LIGHT_GREEN;
 				block[i][5].bgdColor = DARK_GRAY;
 				block[i][4].txtColor = DARK_GRAY;
@@ -81,7 +85,6 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) : COBJECT(x, y) {
 				block[i][0].bgdColor = WHITE;
 				block[i][1].bgdColor = WHITE;
 				block[i][3].bgdColor = WHITE;
-				block[i][2].bgdColor = WHITE;
 			}
 			block[9][3].txtColor = WHITE;
 			for (int i = 0; i < 3; i++) {
@@ -101,6 +104,8 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) : COBJECT(x, y) {
 		}
 	else {
 		if (isHead) {
+			block[14][2].txtColor = WHITE;
+			block[15][2].txtColor = WHITE;
 			for (int i = 3; i < 16; i++) {
 				block[i][4].txtColor = DARK_GRAY;
 				block[i][4].bgdColor = LIGHT_GRAY;
@@ -156,6 +161,8 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) : COBJECT(x, y) {
 		}
 		else {
 			for (int i = 0; i < 16; i++) {
+				block[i][2].txtColor = WHITE;
+				block[i][2].bgdColor = WHITE;
 				block[i][5].txtColor = LIGHT_GREEN;
 				block[i][5].bgdColor = DARK_GRAY;
 				block[i][4].txtColor = DARK_GRAY;
@@ -163,7 +170,6 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) : COBJECT(x, y) {
 				block[i][1].bgdColor = WHITE;
 				block[i][0].bgdColor = WHITE;
 				block[i][3].bgdColor = WHITE;
-				block[i][2].bgdColor = WHITE;
 			}
 			block[6][3].txtColor = WHITE;
 			for (int i = 0; i < 3; i++) {

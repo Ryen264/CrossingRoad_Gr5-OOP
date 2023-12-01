@@ -2,7 +2,6 @@
 CDINOSAUR::CDINOSAUR(int x, int y, bool isRight, int color) : COBJECT(x, y) {
 	this->isRight = isRight; this->ID = DINOSAUR_ID;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
-
 	//set buffer
 	for (int i = 0; i < BLOCK_WIDTH; i++)
 		for (int j = 0; j < BLOCK_HEIGHT; j++)
