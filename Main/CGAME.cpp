@@ -532,22 +532,6 @@ void CGAME::SubThreadNewGame() {
             }
             COBJECT* nextObj = aLanes[yBoardNext]->getPos(xBoardNext);
 
-            if (cPlayer->isMoving() && !(nextObj != NULL && nextObj->getID() == TREE_ID)) {
-                if (cPlayer->getDependObj()->getID() == PERRY_ID || cPlayer->moveCharacter()) {
-					if (numberOfLane > BOARD_HEIGHT - 3) pushRandomLane();
-					else if (numberOfLane == BOARD_HEIGHT - 3) push_frontLane(FINISHLANE_ID);
-					else push_frontLane(GRASSLANE_ID);
-                    pop_backLane();
-                    numberOfLane--;
-                    startMap();
-                };
-                //Reset moving
-                cPlayer->setMove(0);
-                //Update depend obj 
-                cPlayer->setDependObj(nextObj);
-            }
-            aLanes[yBoard]->injuredPlayer(*cPlayer);
-
             //Update player's pos with depend obj and delete depend obj if the func returns true
             switch (cPlayer->updateDepend()) {
             case EGG_ID: {
@@ -584,12 +568,28 @@ void CGAME::SubThreadNewGame() {
             }
             }
 
+			if (cPlayer->isMoving() && !(nextObj != NULL && nextObj->getID() == TREE_ID)) {
+				if (cPlayer->getDependObj()->getID() == PERRY_ID || cPlayer->moveCharacter()) {
+					if (numberOfLane > BOARD_HEIGHT - 3) pushRandomLane();
+					else if (numberOfLane == BOARD_HEIGHT - 3) push_frontLane(FINISHLANE_ID);
+					else push_frontLane(GRASSLANE_ID);
+					pop_backLane();
+					numberOfLane--;
+					startMap();
+				};
+				//Reset moving
+				cPlayer->setMove(0);
+				//Update depend obj 
+				cPlayer->setDependObj(nextObj);
+			}
+			aLanes[yBoard]->injuredPlayer(*cPlayer);
+
             drawMap();
             displayScreen();
 
             if (cPlayer->isDead()) {
                 //Hieu ung va cham
-                cout << cPlayer->getScore();
+				cout << cPlayer->getScore() << " " << this->level << endl;
                 continue;
             }
             //Xy ly finish
@@ -599,6 +599,7 @@ void CGAME::SubThreadNewGame() {
                 cPlayer->setFinish(false);
                 resetData();
                 startMap();
+				this->level++;
             }
         }
     }
