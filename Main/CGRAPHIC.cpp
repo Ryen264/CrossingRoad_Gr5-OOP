@@ -360,3 +360,42 @@ void CGRAPHIC::DrawSmallDrawer(vector<wstring> SmallDrawer, int first_x, int fir
 	}
 
 }
+void CGRAPHIC::DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y) {
+	vector<wstring> frame = FLOPPY_DISC;
+
+	//set buffer
+	for (int i = 0; i < 54; i++)
+		for (int j = 0; j < 29; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, DARK_BLUE };
+
+	//set colors
+	screen[first_x + 50][first_y + 0].bgdColor = -1;
+	screen[first_x + 51][first_y + 0].bgdColor = -1;
+	screen[first_x + 52][first_y + 0].bgdColor = -1;
+	screen[first_x + 53][first_y + 0].bgdColor = -1;
+	screen[first_x + 52][first_y + 1].bgdColor = -1;
+	screen[first_x + 53][first_y + 1].bgdColor = -1;
+	for (int i = 12; i < 41; i++)
+		for (int j = 1; j < 10; j++)
+			screen[first_x + i][first_y + j].bgdColor = LIGHT_GRAY;
+	for (int i = 8; i < 46; i++)
+		screen[first_x + i][first_y + 11].bgdColor = WHITE;
+	for (int i = 5; i < 49; i++)
+		for (int j = 12; j < 28; j++)
+			screen[first_x + i][first_y + j].bgdColor = WHITE;
+	for (int i = 0; i < 4; i++) {
+		screen[first_x + 28 + i][first_y + 23].bgdColor = LIGHT_GRAY;
+		screen[first_x + 39 + i][first_y + 23].bgdColor = LIGHT_GRAY;
+		screen[first_x + 28 + i][first_y + 24].bgdColor = LIGHT_GRAY;
+		screen[first_x + 39 + i][first_y + 24].bgdColor = LIGHT_GRAY;
+	}
+}
+
+void CGRAPHIC::DrawLetter(char ch, int first_x, int first_y, int txtColor, int bgdColor) {
+	DrawObject(LETTER[ch - 'A'], first_x, first_y,txtColor, bgdColor);
+}
+void CGRAPHIC::drawString(string str, int x, int y, int num , int txtColor, int bgdColor) {
+	if (num < 0) num = str.length();
+	for (int i = str.length() - num; i < str.length(); i++)
+		DrawLetter(str[i], x + i * 3, y, txtColor, bgdColor);
+}
