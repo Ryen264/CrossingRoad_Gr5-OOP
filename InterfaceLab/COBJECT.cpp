@@ -2,8 +2,8 @@
 COBJECT::COBJECT(int x, int y, int isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
-	int WIDTH = 28;
-	int HEIGHT = 27;
+	int WIDTH = 48;
+	int HEIGHT = 28;
 	this->block = new PIXEL * [WIDTH];
 	for (int i = 0; i <WIDTH; i++)
 		this->block[i] = new PIXEL[HEIGHT];
@@ -21,7 +21,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 	if (isRight) {
 
 		//DRAWER
-		for (int j = 1; j < 26; j++)
+		/*for (int j = 1; j < 26; j++)
 		{
 			for (int i = 1; i < 8; i++)
 			{
@@ -228,6 +228,8 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 				block[i][j].txtColor = SADDLE_BROWN;
 			}
 		}*/
+
+
 		//SMALL DRAWER
 		/*block[16][0].bgdColor = BRIGHT_YELLOW;
 		block[17][0].bgdColor = BRIGHT_YELLOW;
@@ -288,27 +290,31 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		}*/
 
 		//VE UF0
-		/*for (int i = 17; i < 29; i++)
+	    for (int i = 17; i < 29; i++)
 		{
 			block[i][0].bgdColor = SKY_BLUE;
 		}
 		
 		block[24][0].bgdColor = WHITE;
 		block[25][0].bgdColor = WHITE;
-		
-		for (int i = 15; i < 31; i++)
+
+		block[15][1].txtColor = BLACK;
+		block[15][1].bgdColor = SKY_BLUE;
+		for (int i = 16; i < 31; i++)
 		{
-			block[i][1].bgdColor = SKY_BLUE;
+			block[i][1].txtColor = SKY_BLUE;
 		}
+		block[30][1].txtColor = BLACK;
+		block[30][1].bgdColor = SKY_BLUE;
 		block[23][1].bgdColor = SKY_BLUE;
 		block[23][1].txtColor = WHITE;
-		block[24][1].bgdColor = WHITE;
-		block[25][1].bgdColor = WHITE;
+		block[24][1].txtColor = WHITE;
+		block[25][1].txtColor = WHITE;
 		block[26][1].bgdColor = SKY_BLUE;
 		block[26][1].txtColor = WHITE;
 		for (int i = 15; i < 31; i++)
 		{
-			block[i][2].bgdColor = SKY_BLUE;
+			block[i][2].txtColor = SKY_BLUE;
 		}
 		block[28][2].bgdColor = SKY_BLUE;
 		block[28][2].txtColor = WHITE;
@@ -318,7 +324,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		}
 		for (int i = 9; i < 37; i++)
 		{
-			block[i][4].bgdColor = LIGHT_GRAY;
+			block[i][4].txtColor = LIGHT_GRAY;
 		}
 		for (int i = 9; i < 37; i++)
 		{
@@ -333,7 +339,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		int y = 7;
 		for (int i = x1; i <= x2; i++)
 		{
-			block[i][y].bgdColor = BRIGHT_YELLOW;
+			block[i][y].txtColor = BRIGHT_YELLOW;
 
 		}
 		for (int i = y; i < 23; i++)
@@ -341,26 +347,10 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 			x1--; x2++; y++;
 			for (int i = x1; i <= x2; i++)
 			{
-				block[i][y].bgdColor = BRIGHT_YELLOW;
+				block[i][y].txtColor = BRIGHT_YELLOW;
 
 			}
 		}
-		for (int i = 3; i < 44; i++)
-		{
-			block[i][24].bgdColor = BRIGHT_YELLOW;
-		}
-		for (int i = 7; i < 40; i++)
-		{
-			block[i][25].bgdColor = BRIGHT_YELLOW;
-		}
-		for (int i = 11; i < 36; i++)
-		{
-			block[i][26].bgdColor = BRIGHT_YELLOW;
-		}
-		for (int i = 15; i < 32; i++)
-		{
-			block[i][27].bgdColor = BRIGHT_YELLOW;
-		}*/
 		
 	
 		//VE TRUNG
@@ -853,12 +843,12 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 //WIDTH=15
 //HEIGHT=6
 COBJECT::~COBJECT() {
-	for (int i = 0; i <28; i++)
+	for (int i = 0; i <48; i++)
 		delete[] this->block[i];
 	delete[] this->block;
 }
 void COBJECT::DrawBlock(CGRAPHIC& layer) {
-	for (int i = 0; i < 28; i++)
-		for (int j = 0; j < 27; j++)
+	for (int i = 0; i < 48; i++)
+		for (int j = 0; j < 28; j++)
 			layer.screen[this->x + i][this->y + j] = block[i][j];
 }
