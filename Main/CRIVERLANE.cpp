@@ -1,16 +1,11 @@
 #include "CRIVERLANE.h"
-CRIVERLANE::CRIVERLANE(int x, int y, int delayTime) {
+CRIVERLANE::CRIVERLANE(int x, int y, int delayTime) : CLANE(x, y) {
 	for (int i = 0; i < BOARD_WIDTH; i++)
 		this->lane.push_front(NULL);
 	this->isMoveRight = rand() % 2;
 	this->delayTime = delayTime;
+
 	this->ID = RIVERLANE_ID;
-
-	this->x = x * BLOCK_WIDTH; this->y = y * BLOCK_HEIGHT + START_BOARD_HEIGHT;
-
-	this->block = new PIXEL * [BLOCK_WIDTH];
-	for (int i = 0; i < BLOCK_WIDTH; i++)
-		this->block[i] = new PIXEL[BLOCK_HEIGHT];
 
 	//set buffer
 	for (int i = 0; i < BLOCK_WIDTH; i++)
@@ -106,12 +101,8 @@ CRIVERLANE::CRIVERLANE(int x, int y, int delayTime) {
 		block[i][5].txtColor = BLUE;
 	block[6][5].txtColor = BLUE;
 }
-void CRIVERLANE::pushDeque(int ID) {
+void CRIVERLANE::push_frontObject(int ID) {
 	if (isMoveRight) {
-		COBJECT* back = lane.back();
-		if (back != NULL) delete back;
-		this->lane.pop_back();
-
 		switch (ID) {
 		case PERRY_ID: {
 			lane.push_front(new CPERRY(0, this->y, true));
@@ -126,10 +117,6 @@ void CRIVERLANE::pushDeque(int ID) {
 		}
 	}
 	else {
-		COBJECT* front = lane.front();
-		if (front != NULL) delete front;
-		this->lane.pop_front();
-
 		switch (ID) {
 		case PERRY_ID: {
 			lane.push_back(new CPERRY(0, this->y, false));
@@ -143,6 +130,7 @@ void CRIVERLANE::pushDeque(int ID) {
 			lane.push_back(NULL);
 		}
 	}
+	updatePosObj();
 }
 void CRIVERLANE::Move() {
 	timeCount++;
@@ -151,7 +139,8 @@ void CRIVERLANE::Move() {
 		//Random push a perry or 1-3 capybaras
 		if (condition == 0) {
 			int ID = random(OBJECT_ID_LIST);
-			pushDeque(ID);
+			pop_backObject();
+			push_frontObject(ID);
 			switch (ID) {
 			case CAPYBARA_ID: {
 				countObject = 1;
@@ -171,7 +160,8 @@ void CRIVERLANE::Move() {
 		else {
 			switch (condition) {
 			case CAPYBARA_ID: {
-				pushDeque(CAPYBARA_ID);
+				pop_backObject();
+				push_frontObject(CAPYBARA_ID);
 				countObject++;
 				if (countObject >= numberOfCapybara) {
 					condition = -CAPYBARA_ID;
@@ -180,12 +170,14 @@ void CRIVERLANE::Move() {
 				break;
 			}
 			case -CAPYBARA_ID: {
-				pushDeque(random(OBJECT_ID_LIST - vector<int>{CAPYBARA_ID}));
+				pop_backObject();
+				push_frontObject(random(OBJECT_ID_LIST - vector<int>{CAPYBARA_ID}));
 				condition = 0;
 				break;
 			}
 			case -PERRY_ID: {
-				pushDeque(random(OBJECT_ID_LIST - vector<int>{PERRY_ID}));
+				pop_backObject();
+				push_frontObject(random(OBJECT_ID_LIST - vector<int>{PERRY_ID}));
 				condition = 0;
 				break;
 			} default:
@@ -194,6 +186,10 @@ void CRIVERLANE::Move() {
 		}
 	}
 }
-bool CRIVERLANE::checkPos(int pos) {
-	return this->lane[pos] == NULL;
+void CRIVERLANE::injuredPlayer(CPLAYER& player) {
+	int i = player.getXBoard();
+	if (lane[i] == NULL) {
+		player.setAlive(false);
+		return;
+	}
 }

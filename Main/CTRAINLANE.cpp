@@ -1,20 +1,17 @@
 #include "CTRAINLANE.h"
-CTRAINLANE::CTRAINLANE(int x, int y, int delayTime, int numberOfTrain) {
+CTRAINLANE::CTRAINLANE(int x, int y, int delayTime, int numberOfTrain) : CLANE(x, y) {
     for (int i = 0; i < BOARD_WIDTH; i++)
         this->lane.push_front(NULL);
     this->isMoveRight = rand() % 2;
     this->delayTime = delayTime; this->numberOfTrain = numberOfTrain;
 
-    this->x = x * BLOCK_WIDTH; this->y = y * BLOCK_HEIGHT + START_BOARD_HEIGHT; this->ID = TRAINLANE_ID;
-
-	this->block = new PIXEL * [BLOCK_WIDTH];
-	for (int i = 0; i < BLOCK_WIDTH; i++)
-		this->block[i] = new PIXEL[BLOCK_HEIGHT];
+    this->ID = TRAINLANE_ID;
 
 	//set buffer
 	for (int i = 0; i < BLOCK_WIDTH; i++)
 		for (int j = 0; j < BLOCK_HEIGHT; j++)
 			this->block[i][j] = { FRAME[j][i], LIGHT_GREEN, LIGHT_BROWN };
+
 	//set colors
 	for (int i = 0; i < 16; i++) {
         block[i][0].bgdColor = LIGHT_GREEN;
@@ -46,12 +43,8 @@ CTRAINLANE::CTRAINLANE(int x, int y, int delayTime, int numberOfTrain) {
 	block[15][1].bgdColor = SADDLE_BROWN;
 }
 
-void CTRAINLANE::pushDeque(int ID) {
+void CTRAINLANE::push_frontObject(int ID) {
 	if (isMoveRight) {
-		COBJECT* back = lane.back();
-		if (back != NULL) delete back;
-		this->lane.pop_back();
-
 		switch (ID) {
 		case TRAIN_HEAD_ID: {
 			lane.push_front(new CTRAIN(0, this->y, true, true));
@@ -66,10 +59,6 @@ void CTRAINLANE::pushDeque(int ID) {
 		}
 	}
 	else {
-		COBJECT* front = lane.front();
-		if (front != NULL) delete front;
-		this->lane.pop_front();
-
 		switch (ID) {
 		case TRAIN_HEAD_ID: {
 			lane.push_back(new CTRAIN(0, this->y, false, true));
@@ -83,6 +72,7 @@ void CTRAINLANE::pushDeque(int ID) {
 			lane.push_back(NULL);
 		}
 	}
+	updatePosObj();
 }
 void CTRAINLANE::Move()
 {
@@ -91,12 +81,14 @@ void CTRAINLANE::Move()
 		timeCount = 0;
 		//Push head first and n train body respectively
 		if (countTrain <= numberOfTrain) {
-			if (countTrain == 0) pushDeque(TRAIN_HEAD_ID);
-			else pushDeque(TRAIN_BODY_ID);
+			pop_backObject();
+			if (countTrain == 0) push_frontObject(TRAIN_HEAD_ID);
+			else push_frontObject(TRAIN_BODY_ID);
 			countTrain++;
 		}
 		else if (countTrain <= numberOfTrain + BOARD_WIDTH) {
-			pushDeque(0);
+			pop_backObject();
+			push_frontObject();
 			countTrain++;
 		}
 		else if (rand() % 5 == 0) countTrain = 0;
@@ -107,7 +99,6 @@ void CTRAINLANE::setStop(bool isStop)
 {
     this->isStop = isStop;
 }
-
 bool CTRAINLANE::getStop() const
 {
     return isStop;

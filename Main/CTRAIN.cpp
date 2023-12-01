@@ -1,6 +1,6 @@
 #include "CTRAIN.h"
-CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) {
-	this->x = x; this->y = y; this->isRight = isRight; this->isHead = isHead;
+CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) : COBJECT(x, y) {
+	this->isRight = isRight; this->isHead = isHead;
 	this->ID = (isHead) ? TRAIN_HEAD_ID : TRAIN_BODY_ID;
 	vector<wstring> frame{};
 	if (isRight)
@@ -9,10 +9,6 @@ CTRAIN::CTRAIN(int x, int y, bool isRight, bool isHead) {
 	else
 		if (isHead) frame = FRAME_HEAD_LEFT;
 		else frame = FRAME_BODY_LEFT;
-
-	this->block = new PIXEL * [BLOCK_WIDTH];
-	for (int i = 0; i < BLOCK_WIDTH; i++)
-		this->block[i] = new PIXEL[BLOCK_HEIGHT];
 
 	//set buffer
 	for (int i = 0; i < BLOCK_WIDTH; i++)

@@ -1,13 +1,7 @@
 #include "CCAR.h"
-
-CCAR::CCAR(int x, int y, bool isRight) {
-	this->x = x; this->y = y; this->isRight = isRight;
-	this->ID = CAR_ID;
+CCAR::CCAR(int x, int y, bool isRight) : COBJECT(x, y) {
+	this->isRight = isRight; this->ID = CAR_ID;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
-
-	this->block = new PIXEL * [BLOCK_WIDTH];
-	for (int i = 0; i < BLOCK_WIDTH; i++)
-		this->block[i] = new PIXEL[BLOCK_HEIGHT];
 
 	//set buffer
 	for (int i = 0; i < BLOCK_WIDTH; i++)

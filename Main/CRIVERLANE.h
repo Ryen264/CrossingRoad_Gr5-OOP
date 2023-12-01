@@ -17,7 +17,7 @@ L"██▄▄▄█▄█████████"
 	const vector<int> OBJECT_ID_LIST = { PERRY_ID, CAPYBARA_ID, 0, 0, 0, 0};
 public:
 	CRIVERLANE(int x = 0, int y = 0, int delayTime = 0);
-	void pushDeque(int ID = 0);
+	void push_frontObject(int ID = 0);
 	void Move();
-	bool checkPos(int pos);
+	void injuredPlayer(CPLAYER& player);
 };

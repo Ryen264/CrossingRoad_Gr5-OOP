@@ -1,11 +1,6 @@
 #include "CEGG.h"
-CEGG::CEGG(int x, int y) {
-	this->x = x; this->y = y;
+CEGG::CEGG(int x, int y) : COBJECT(x, y) {
 	this->ID = EGG_ID;
-
-	this->block = new PIXEL * [BLOCK_WIDTH];
-	for (int i = 0; i < BLOCK_WIDTH; i++)
-		this->block[i] = new PIXEL[BLOCK_HEIGHT];
 
 	//set buffer
 	for (int i = 0; i < BLOCK_WIDTH; i++)
@@ -15,9 +10,7 @@ CEGG::CEGG(int x, int y) {
 			else
 				this->block[i][j] = { FRAME[j][i], -1, -1 };
 
-
 	//set colors
-
 	block[5][1].txtColor = BLACK;
 	block[5][1].bgdColor = -1;
 	block[6][1].txtColor = BLACK;
@@ -49,5 +42,4 @@ CEGG::CEGG(int x, int y) {
 	block[6][4].bgdColor = -1;
 	block[7][4].txtColor = BLACK;
 	block[7][4].bgdColor = -1;
-
 }

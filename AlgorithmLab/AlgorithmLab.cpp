@@ -86,14 +86,41 @@ x   x   x     x x
   x     x   x x   y
 */
 
+void push(deque<int>& arr, bool isRight, int lightPos) {
+    if (arr[lightPos] != 0 && arr[lightPos] == 3) {
+        if (isRight) arr.insert(arr.begin() + lightPos - 1, 0);
+        else arr.insert(arr.begin() + lightPos + 2, 0);
+    }
+    else {
+        if (isRight) arr.insert(arr.begin() + lightPos, 0);
+        else arr.insert(arr.begin() + lightPos + 1, 0);
+    }
+    if (isRight) arr.pop_back();
+    else arr.pop_front();
+}
+
 int main() {
     srand(0);
-    deque<int> arr = { 1, 0, 2, 3, 3, 0, 0, 0, 9, 0 };
-    deque<int*> brr = initDeque(arr);
+    deque<int> arr1 = { 1, 0, 2, 4, 3, 0, 0, 0, 9, 0 };
+    deque<int> arr2 = { 0, 9, 0, 1 ,3, 4, 0, 2, 0, 1 };
+    //deque<int*> brr = initDeque(arr);
 
-    cout << arr << endl;
-    arr.insert(arr.begin() + 4, 9);
-    cout << arr << endl;
+    bool isRight = true;
+    int lightPos = 4;
+
+    cout << arr1 << endl;
+    for (int i = 0; i < 5; i++) {
+        push(arr1, true, lightPos);
+        cout << arr1 << endl;
+    }
+
+    cout << endl << endl;
+
+    cout << arr2 << endl;
+    for (int i = 0; i < 5; i++) {
+        push(arr2, false, lightPos);
+        cout << arr2 << endl;
+    }
 
     //cout << brr << endl;
     //move(brr, false, 4);
@@ -111,7 +138,7 @@ int main() {
     //move(brr, false, 4);
     //cout << brr << endl;
 
-    deleteDeque(brr);
+    //deleteDeque(brr);
 
     /*CGAME testGame;
     testGame.start();*/

@@ -1,5 +1,4 @@
 #include "CGAME.h"
-#include"CDINOSAUR.h"
 int main() {
     CGAME CrossingGame;
    

@@ -7,7 +7,7 @@ using namespace std;
 class CLANE {
 protected:
 	deque<COBJECT*> lane;
-	bool isMoveRight; //chiều di chuyển
+	bool isMoveRight = true; //chiều di chuyển
 	int timeCount = 0;
 	bool isStop = false;
 	int delayTime;
@@ -15,13 +15,15 @@ protected:
 	int x, y, ID;
 	PIXEL** block = NULL;
 public:
-	~CLANE();
+	CLANE(int x = 0, int y = 0);
+	virtual ~CLANE();
 	virtual void injuredPlayer(CPLAYER& player);
 	virtual void changeDirection();
-	virtual bool checkPos(int pos);
+    virtual bool checkPos(int pos);
 	virtual void Move();
 	virtual bool isMove() const;
-	virtual void pushDeque(int ID);
+	virtual void push_frontObject(int ID);
+	void pop_backObject();
 
 
 	int PosID(int pos) const;
@@ -29,20 +31,24 @@ public:
 	virtual int getTimeCount();
 	virtual int getDelayTime();
 	int getID() const;
+	COBJECT* getPos(int i) const;
 
 	virtual void setIsMoveRight(bool);
 	virtual void setTimeCount(int);
 	virtual void setDelayTime(int);
-	void setYHeight(int y);
-	void updateYObj();
+	void setPos(int i, COBJECT* val);
+	virtual void setyBoard(int yBoard);
+	void updatePosObj();
+
 
 	void DrawLane(CGRAPHIC& layer);
-	void DrawObjects(CGRAPHIC& layer);
+	virtual void DrawObjects(CGRAPHIC& layer);
 };
 //Lanes IDs
 const int VEHICLELANE_ID = 20001;
 const int GRASSLANE_ID = 20002;
 const int RIVERLANE_ID = 20003;
 const int TRAINLANE_ID = 20004;
+const int FINISHLANE_ID = 20005;
 
 vector<int> operator-(const vector<int> first, const vector<int> second);

@@ -15,7 +15,7 @@ L"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
 
 public:
 	CTRAINLANE(int x = 0, int y = 0, int delayTime = 0, int numberOfTrain = 0);
-	void pushDeque(int ID = 0);
+	void push_frontObject(int ID = 0);
 	void Move();
 
 	void setStop(bool isStop);

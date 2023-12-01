@@ -1,8 +1,7 @@
-#pragma once
-#include "COBJECT.h"
-class CFINISHLANE : public COBJECT {
-	bool isRight;
-	const vector <wstring> FRAME_RIGHT =
+﻿#pragma once
+#include "CLANE.h"
+class CFINISHLANE : public CLANE {
+	const vector <wstring> FRAME =
 	{
 	L"████████████████",
 	L"████████████████",
@@ -11,18 +10,8 @@ class CFINISHLANE : public COBJECT {
 	L"████████████████",
 	L"████████████████"
 	};
-	const vector <wstring> FRAME_LEFT =
-	{
-	L"████████████████",
-	L"████████████████",
-	L"████████████████",
-	L"████████████████",
-	L"████████████████",
-	L"████████████████"
-	};
-
 
 public:
-	CFINISHLANE(int x = 0, int y = 0, bool isRight = true);
+	CFINISHLANE(int x = 0, int y = 0);
 };
 

@@ -1,12 +1,7 @@
 #include "CPERRY.h"
-CPERRY::CPERRY(int x, int y, bool isRight) {
-	this->x = x; this->y = y; this->isRight = isRight;
-	this->ID = PERRY_ID;
+CPERRY::CPERRY(int x, int y, bool isRight) : COBJECT(x, y) {
+	this->isRight = isRight; this->ID = PERRY_ID;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
-
-	this->block = new PIXEL * [BLOCK_WIDTH];
-	for (int i = 0; i < BLOCK_WIDTH; i++)
-		this->block[i] = new PIXEL[BLOCK_HEIGHT];
 
 	//set buffer
 	for (int i = 0; i < BLOCK_WIDTH; i++)
@@ -18,9 +13,6 @@ CPERRY::CPERRY(int x, int y, bool isRight) {
 
 	//set colors
 	if (isRight) {
-
-		// VE PERRY
-
 		block[12][2].txtColor = WHITE;
 		block[12][2].bgdColor = SKY_BLUE;
 		block[13][2].txtColor = BLACK;
@@ -56,12 +48,8 @@ CPERRY::CPERRY(int x, int y, bool isRight) {
 		block[7][3].txtColor = ORANGE;
 		block[6][4].txtColor = ORANGE;
 		block[7][4].txtColor = BRIGHT_YELLOW;
-
-		
-
 	}
 	else {
-		
 		block[3][1].txtColor = RED;
 		block[3][1].bgdColor = -1;
 		block[4][1].txtColor = RED;
@@ -78,8 +66,6 @@ CPERRY::CPERRY(int x, int y, bool isRight) {
 		block[6][2].txtColor = WHITE;
 		block[6][2].bgdColor = SKY_BLUE;
 		block[7][2].txtColor = SKY_BLUE;
-
-		
 
 		block[0][3].txtColor = BRIGHT_YELLOW;
 		block[1][3].txtColor = BRIGHT_YELLOW;
@@ -103,11 +89,8 @@ CPERRY::CPERRY(int x, int y, bool isRight) {
 		block[11][3].bgdColor = ORANGE;
 
 		for (int i = 2; i < 8; i++)
-		{
 			block[i][4].txtColor = SKY_BLUE;
-		}
 		block[8][4].txtColor = BRIGHT_YELLOW;
 		block[9][4].txtColor = ORANGE;
-
 	}
 }

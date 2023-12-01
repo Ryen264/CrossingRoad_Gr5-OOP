@@ -8,11 +8,17 @@ protected:
 	int x, y, ID;
 	PIXEL** block;
 public:
-	~COBJECT();
+	COBJECT(int x = 0, int y = 0);
+	virtual ~COBJECT();
 	int getID() const;
 	void setPos(int x, int y);
+	void setX(int x);
 	void setY(int y);
+    int getX() const;
+    int getY() const;
 	void DrawBlock(CGRAPHIC& layer);
+
+	virtual void setColor(vector<int> color);
 };
 //Object IDs
 const int CAR_ID = 30001;
@@ -27,5 +33,6 @@ const int BUS_TAIL_ID = 31007;
 
 const int TRAFFICLIGHT_ID = 40001;
 const int EGG_ID = 40002;
+const int TREE_ID = 40003;
 
 int random(vector<int> arr);

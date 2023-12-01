@@ -1,4 +1,14 @@
 #include "CLANE.h"
+CLANE::CLANE(int xBoard, int yBoard) {
+    if (xBoard < 0) xBoard = 0;
+    this->x = xBoard * BLOCK_WIDTH;
+    if (yBoard < 0) yBoard = 0;
+    this->y = yBoard * BLOCK_HEIGHT + START_BOARD_HEIGHT;
+
+    this->block = new PIXEL * [BLOCK_WIDTH];
+    for (int i = 0; i < BLOCK_WIDTH; i++)
+        this->block[i] = new PIXEL[BLOCK_HEIGHT];
+}
 CLANE::~CLANE() {
     while (!this->lane.empty()) {
         COBJECT* back = lane.back();
@@ -11,6 +21,8 @@ CLANE::~CLANE() {
     delete[] this->block;
 }
 void CLANE::injuredPlayer(CPLAYER& player) {
+    int i = player.getXBoard();
+    if (lane[i] == NULL) return;
     player.setAlive(false);
 }
 void CLANE::changeDirection() {
@@ -24,7 +36,19 @@ bool CLANE::isMove() const
 {
     return !this->isStop;
 }
-void CLANE::pushDeque(int ID) {}
+void CLANE::push_frontObject(int ID) {}
+void CLANE::pop_backObject() {
+    if (isMoveRight) {
+        COBJECT* back = lane.back();
+        if (back != NULL) delete back;
+        this->lane.pop_back();
+    }
+    else {
+        COBJECT* front = lane.front();
+        if (front != NULL) delete front;
+        this->lane.pop_front();
+    }
+}
 
 int CLANE::PosID(int pos) const {
     if (pos < 0 || pos >= BOARD_WIDTH - 1) return 0;
@@ -42,6 +66,11 @@ int CLANE::getDelayTime() {
 int CLANE::getID() const {
     return this->ID;
 }
+COBJECT* CLANE::getPos(int i) const {
+    if (i < 0) i = 0;
+    if (i >= (int)lane.size()) i = (int)lane.size() - 1;
+    return lane[i];
+}
 
 void CLANE::setIsMoveRight(bool right) {
     this->isMoveRight = right;
@@ -52,44 +81,36 @@ void CLANE::setTimeCount(int time) {
 void CLANE::setDelayTime(int time) {
     this->delayTime = time;
 }
-void CLANE::setYHeight(int y) {
-    if (y < 0) y = 0;
-    if (y > BOARD_HEIGHT - 1) y = BOARD_HEIGHT - 1;
-    this->y = y * BLOCK_HEIGHT + START_BOARD_HEIGHT;
+void CLANE::setPos(int i, COBJECT* val) {
+    if (i < 0) i = 0;
+    if (i >= (int)lane.size()) i = (int)lane.size() - 1;
+    this->lane[i] = val;
+}
+void CLANE::setyBoard(int yBoard) {
+    if (yBoard < 0) yBoard = 0;
+    if (yBoard > BOARD_HEIGHT - 1) yBoard = BOARD_HEIGHT - 1;
+    this->y = yBoard * BLOCK_HEIGHT + START_BOARD_HEIGHT;
+    updatePosObj();
+}
+void CLANE::updatePosObj() {
+    for (int i = 0; i < BOARD_WIDTH; i++)
+        if (lane[i] != NULL) lane[i]->setPos(i * BLOCK_WIDTH, this->y);
+}
 
-    updateYObj();
-}
-void CLANE::updateYObj() {
-    for (int i = 0; i < (int)this->lane.size(); i++)
-        if (lane[i] != NULL) lane[i]->setY(this->y);
-}
 void CLANE::DrawLane(CGRAPHIC& layer) {
-    int laneX = this->x;
-    int laneY = this->y;
-    for (int k = 0; k < BOARD_WIDTH; k++) {
-        int blockStartX = laneX + k * BLOCK_WIDTH;
-        int blockStartY = laneY;
-        for (int i = 0; i < BLOCK_WIDTH; i++) {
-            memcpy(&layer.screen[blockStartX + i][blockStartY], &block[i][0], BLOCK_HEIGHT * sizeof(PIXEL));
-        }
-    }
+    for (int k = 0; k < BOARD_WIDTH; k++)
+        for (int i = 0; i < BLOCK_WIDTH; i++)
+            for (int j = 0; j < BLOCK_HEIGHT; j++)
+                layer.screen[x + i + k * BLOCK_WIDTH][y + j] = block[i][j];
 }
 void CLANE::DrawObjects(CGRAPHIC& layer) {
-    int laneY = this->y;
-    for (int i = 0; i < BOARD_WIDTH; i++) {
-        int laneX = this->x + i * BLOCK_WIDTH;
-        if (lane[i] != NULL) {
-            lane[i]->setPos(laneX, laneY);
-            lane[i]->DrawBlock(layer);
-        } else {
-            int blockStartX = laneX;
-            for (int k = 0; k < BLOCK_WIDTH; k++) {
-                int blockStartY = laneY;
-                for (int l = 0; l < BLOCK_HEIGHT; l++) {
-                    layer.screen[blockStartX + k][blockStartY + l] = { L' ', -1, -1 };
-                }
-            }
-        }
+    for (int k = 0; k < BOARD_WIDTH; k++) {
+        if (lane[k] != NULL) lane[k]->DrawBlock(layer);
+        //else {
+        //    for (int i = 0; i < BLOCK_WIDTH; i++)
+        //        for (int j = 0; j < BLOCK_HEIGHT; j++)
+        //            layer.screen[x + i + k * BLOCK_WIDTH][y + j] = { L' ', -1, -1 };
+        //}
     }
 }
 vector<int> operator-(const vector<int> first, const vector<int> second) {

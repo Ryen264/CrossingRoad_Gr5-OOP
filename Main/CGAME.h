@@ -5,6 +5,7 @@
 #include "CGRASSLANE.h"
 #include "CTRAINLANE.h"
 #include "CRIVERLANE.h"
+#include "CFINISHLANE.h"
 
 #include <iostream>
 #include <conio.h>
@@ -21,8 +22,10 @@ class CGAME {
     deque<string> fileNameList;
     bool isSaved = false;
     string savename;
+    bool isNextTree = false;
 
-    int level = 0, numberOfLane, conditionLane = 0;
+    int level = 1, numberOfLane = 0;
+    int conditionLane = 0, countLane = 0, numberOfConditionLane = 0;
 
     //Thread variables
     bool isThreadRunning = true;
@@ -36,11 +39,11 @@ public:
 
     void start();
     void playGame();
-    void startMap();
 
     void resetData();
     void saveData(string fileName);
     void loadData(string fileName);
+
     string inputUserTxt();
     int inputUserNumber();
     bool checkFileName(string fileName);
@@ -57,19 +60,28 @@ public:
     void Help();
     void About();
 
-    void SubThreadNewGame();
+
+    int Pause(HANDLE t);
+    bool isReset();
+
     void exitThread(thread* t);
     void resumeThread(HANDLE t);
-    int Pause(HANDLE t);
 
     bool isInjured() const;
-    bool isReset();
+    void updateYLane();
+    void pushRandomLane();
     void push_frontLane(int ID);
     void pop_backLane();
 
+
+    void SubThreadNewGame();
+
+    void startMap();
+    void drawMap();
+
     void intro();
     void outtro();
-    void drawMap();
+
     void drawMenu();
     void drawPause();
     void drawPlayAgain();
@@ -78,15 +90,13 @@ public:
 	void drawInputUserTxt();
     void drawInputUserNumber();
 
-    void displayBgd(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
-    void displayObj(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
     void displayScreen(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
 };
 //Return codes
 const int QUIT_CODE = -1000;
 const int BACK_TO_MENU_CODE = -1001;
 
-const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, GRASSLANE_ID, TRAINLANE_ID, RIVERLANE_ID};
+const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, TRAINLANE_ID, RIVERLANE_ID};
 
 void ShowCur(bool CursorVisibility);
 void DisableResizeWindow();
