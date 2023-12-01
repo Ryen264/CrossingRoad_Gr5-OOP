@@ -116,7 +116,8 @@ void CGAME::resetData() {
 	for (int i = 0; i < numberOfRandomLane; i++) pushRandomLane();
 	for (int i = 0; i < BOARD_HEIGHT - 3 - numberOfRandomLane; i++) {
 		if (i == 0) push_frontLane(FINISHLANE_ID);
-		else push_frontLane(GRASSLANE_FULL_ID);
+		else if (i == 1) push_frontLane(GRASSLANE_FULL_ID);
+		else push_frontLane(GRASSLANE_ID);
 	}
 }
 void CGAME::saveData(string fileName) {
@@ -583,6 +584,7 @@ void CGAME::SubThreadNewGame() {
 				if (cPlayer->getDependObj()->getID() == PERRY_ID || cPlayer->moveCharacter()) {
 					if (numberOfLane > BOARD_HEIGHT - 3) pushRandomLane();
 					else if (numberOfLane == BOARD_HEIGHT - 3) push_frontLane(FINISHLANE_ID);
+					else if (numberOfLane == BOARD_HEIGHT - 2) push_frontLane(GRASSLANE_FULL_ID);
 					else push_frontLane(GRASSLANE_ID);
 					pop_backLane();
 					numberOfLane--;
