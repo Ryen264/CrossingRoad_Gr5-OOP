@@ -290,7 +290,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		}*/
 
 		//VE UF0
-	    for (int i = 17; i < 29; i++)
+	    /*for (int i = 17; i < 29; i++)
 		{
 			block[i][0].bgdColor = SKY_BLUE;
 		}
@@ -350,7 +350,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 				block[i][y].txtColor = BRIGHT_YELLOW;
 
 			}
-		}
+		}*/
 		
 	
 		//VE TRUNG
