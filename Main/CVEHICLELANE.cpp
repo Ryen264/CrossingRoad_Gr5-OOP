@@ -239,9 +239,10 @@ void CVEHICLELANE::DrawObjects(CGRAPHIC& layer) {
         }
     }
     if (lightPos >= 0) {
-        PIXEL** blockLight = ptrafficLight->getBlock();
-        for (int i = 0; i < BLOCK_WIDTH; i++)
-            for (int j = 0; j < BLOCK_HEIGHT; j++)
-                if (blockLight[i][j].txtColor >= 0) layer.screen[i + ptrafficLight->getX()][j + ptrafficLight->getY()] = blockLight[i][j];
+        ptrafficLight->DrawBlock(layer, true);
+        //PIXEL** blockLight = ptrafficLight->getBlock();
+        //for (int i = 0; i < BLOCK_WIDTH; i++)
+        //    for (int j = 0; j < BLOCK_HEIGHT; j++)
+        //        if (blockLight[i][j].txtColor >= 0) layer.screen[i + ptrafficLight->getX()][j + ptrafficLight->getY()] = blockLight[i][j];
     }
 }

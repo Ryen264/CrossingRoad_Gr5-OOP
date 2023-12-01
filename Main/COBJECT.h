@@ -16,9 +16,9 @@ public:
 	void setY(int y);
     int getX() const;
     int getY() const;
-	void DrawBlock(CGRAPHIC& layer);
+	void DrawBlock(CGRAPHIC& layer, bool isPass = false);
 
-	virtual void setColor(vector<int> color);
+	virtual void setColor(int color);
 };
 //Object IDs
 const int CAR_ID = 30001;

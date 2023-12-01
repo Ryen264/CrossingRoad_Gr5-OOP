@@ -110,13 +110,13 @@ void CGAME::resetData() {
 	aLanes.clear();
 
 	push_frontLane(RIVERLANE_ID);
-	push_frontLane(GRASSLANE_ID);
-	push_frontLane(GRASSLANE_ID);
+	push_frontLane(GRASSLANE_SURROUND_ID);
+	push_frontLane(GRASSLANE_AROUND_ID);
 	int numberOfRandomLane = (numberOfLane < BOARD_HEIGHT - 3) ? numberOfLane : BOARD_HEIGHT - 3;
 	for (int i = 0; i < numberOfRandomLane; i++) pushRandomLane();
 	for (int i = 0; i < BOARD_HEIGHT - 3 - numberOfRandomLane; i++) {
 		if (i == 0) push_frontLane(FINISHLANE_ID);
-		else push_frontLane(GRASSLANE_ID);
+		else push_frontLane(GRASSLANE_FULL_ID);
 	}
 }
 void CGAME::saveData(string fileName) {
@@ -457,7 +457,6 @@ void CGAME::pushRandomLane()
 }
 void CGAME::push_frontLane(int ID) {
 	if (ID == 0) ID = GRASSLANE_ID;
-
     for (int i = 0; i < (int)aLanes.size(); i++)
         if (aLanes[i] != NULL) aLanes[i]->setyBoard(i + 1);
 
@@ -492,6 +491,18 @@ void CGAME::push_frontLane(int ID) {
 	}
 	case FINISHLANE_ID: {
 		aLanes.push_front(new CFINISHLANE(0, 0));
+		break;
+	}
+	case GRASSLANE_FULL_ID: {
+		aLanes.push_front(new CGRASSLANE(0, 0, FULL_TREE_TYPELANE));
+		break;
+	}
+	case GRASSLANE_SURROUND_ID: {
+		aLanes.push_front(new CGRASSLANE(0, 0, SURROUND_TREE_TYPELANE));
+		break;
+	}
+	case GRASSLANE_AROUND_ID: {
+		aLanes.push_front(new CGRASSLANE(0, 0, AROUND_TREE_TYPELANE));
 		break;
 	}
 	default:
@@ -536,7 +547,7 @@ void CGAME::SubThreadNewGame() {
                 if (cPlayer->getDependObj()->getID() == PERRY_ID || cPlayer->moveCharacter()) {
 					if (numberOfLane > BOARD_HEIGHT - 3) pushRandomLane();
 					else if (numberOfLane == BOARD_HEIGHT - 3) push_frontLane(FINISHLANE_ID);
-					else push_frontLane(GRASSLANE_ID);
+					else push_frontLane(GRASSLANE_FULL_ID);
                     pop_backLane();
                     numberOfLane--;
                     startMap();
