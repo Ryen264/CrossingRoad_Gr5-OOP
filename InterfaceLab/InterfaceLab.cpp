@@ -5,8 +5,8 @@
 int main() {
 	SetupTheme();
 	CGRAPHIC BgdLayer;
-	BgdLayer.clear(BLACK, BLUE);
-
+	BgdLayer.clear(BLACK, WHITE);
+	BgdLayer.display();
 	//CLANE testlane1(0, 0), testlane2(0, BLOCK_HEIGHT);
 	////draw background
 	//testlane1.DrawBlock(BgdLayer);
@@ -14,11 +14,10 @@ int main() {
 	//BgdLayer.display();
 
 
-	CGRAPHIC ObjLayer;
-	ObjLayer.clear(-1, -1);
-
-	COBJECT testobject(0, 0, false);
+	CGRAPHIC ObjLayer = BgdLayer;
+	COBJECT testobject;
 	//draw object
+
 	testobject.DrawBlock(ObjLayer);
 	ObjLayer.display();
 	_getch();

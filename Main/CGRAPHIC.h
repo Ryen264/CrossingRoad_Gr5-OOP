@@ -38,7 +38,7 @@ struct PIXEL {
 	wchar_t buffer;
 	int txtColor, bgdColor;
 };
-const vector<vector<wstring>> ALPHABET = {
+const vector<vector<wstring>> LETTER = {
  {  L"█▀█",
 	L"█▀█",
 	L"▀ ▀"},
@@ -117,6 +117,72 @@ const vector<vector<wstring>> ALPHABET = {
  {  L"▀▀█",
 	L"▄▀ ",
 	L"▀▀▀"},
+{	L"   ",
+	L"   ",
+	L"   " },
+{	L"▄█ ",
+	L" █ ",
+	L"▀▀▀" },
+{	L"▀▀█",
+	L"█▀▀",
+	L"▀▀▀" },
+{	L"▀▀█",
+	L"▀▀█",
+	L"▀▀▀" },
+{	L"█ █",
+	L"▀▀█",
+	L"  ▀" },
+{	L"█▀▀",
+	L"▀▀█",
+	L"▀▀▀" },
+{	L"█▀▀",
+	L"█▀█",
+	L"▀▀▀" },
+{	L"▀▀█",
+	L"  █",
+	L"  ▀" },
+{	L"█▀█",
+	L"█▀█",
+	L"▀▀▀" },
+{	L"█▀█",
+	L"▀▀█",
+	L"  ▀" },
+{	L"█▀█",
+	L"█ █",
+	L"▀▀▀" }
+};
+
+const vector<wstring> PAUSE_MENU = {
+		L"   ▄▄▀▀▀▀▀▀▀▀▀▀▀█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▀▀▀▀▀▀▀▀▀▀▀▄▄   ",//0
+		L" ▄▀▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▄▄▀▄ ",//1
+		L"▄▀ █ █    ▄▄▄▄▄▄▄▄▄  █                          █ ▀▄",//2
+		L"█  █ █   █ ▄▄      █ █    ▄▄                    █  █",//3
+		L"█  █ █   █ ▀▀      █ █  ▄▀  ▀▄  ▄               █  █",//4
+		L"█  █ █ ▄▄█         █ █  █    █  ▄               █  █",//5
+		L"█  █ █ ▀▄▀     █▀▀▀  █   ▀▄▄▀                   █  █",//6
+		L"█  █ █   █▄▀▀██▀     █                          █  █",//7
+		L"█  █ █   ▀   ▀       █                          █  █",//8
+		L"█  █  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀                           █  █",//9
+		L"█  █      ▄             ▄               ▄▄▄     █  █",//10
+		L"█  █   ▄▄██ ▄ █         ██▄▄           █   █    █  █",//11
+		L"█  █   ████ █ █         ████▀            █▀     █  █",//12
+		L"█  █     ▀█   ▀         █▀               ▄      █  █",//13
+		L"█  █                                            █  █",//14
+		L"█  █   █▀▀▀▀▀█         █▀▀▀▀▀█        █▀▀▀▀▀█   █  █",//15
+		L"█  █   █     █         █     █        █     █   █  █",//16
+		L"█  █   █     █         █     █        █     █   █  █",//17
+		L"█  █   ▀▀▀▀▀▀▀         ▀▀▀▀▀▀▀        ▀▀▀▀▀▀▀   █  █",//18
+		L"█  █           ▄▄▄▄▄▄             ▄             █  █",//19
+		L"█  █           █▄▄█▄██         ▄▀ █ ▀▄          █  █",//20
+		L"█  █           █     █         █  ▀  █          █  █",//21
+		L"█  █           █▄▄▄▄▄█          ▀▄▄▄▀           █  █",//22
+		L"█  █                                            █  █",//23
+		L"█  █           █▀▀▀▀▀█         █▀▀▀▀▀█          █  █",//24
+		L"█  █           █     █         █     █     ▄▄▄▄▄█  █",//25
+		L"█  █           █     █         █     █     █  ▄▀   █",//26
+		L"█  █           ▀▀▀▀▀▀▀         ▀▀▀▀▀▀▀     █▄▀     █",//27
+		L"█  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀       █",//28
+		L"▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀" //29
 };
 const vector<wstring> Drawer = {
 L"█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█",
@@ -157,6 +223,39 @@ L"██████████████████████████
 L"█████████████████████████████████",
 L"█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█"
 };
+
+const vector<wstring> FLOPPY_DISC = {
+		L"██████████████████████████████████████████████████    ",
+		L"██                                                ██  ",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                          ████       ████         ██",
+		L"██                        ██    ██   ██    ██       ██",
+		L"██                        ██    ██   ██    ██       ██",
+		L"██                          ████       ████         ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██████████████████████████████████████████████████████"
+};
+
 class CGRAPHIC {
 public:
 	PIXEL** screen;
@@ -167,6 +266,12 @@ public:
 	void clear(int txtColor, int bgdColor);
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
-	void DrawDrawer(vector<wstring>Drawer, int first_x, int first_y, int txtColor = 0, int bgdColor = -1);
-	void DrawSmallDrawer(vector<wstring>SmallDrawer, int first_x, int first_y, int txtColor = 0, int bgdColor = -1);
+	void DrawLetter(char ch ,int first_x, int first_y, int txtColor, int bgdColor);
+	void drawString(string str, int x, int y, int num = -1, int txtColor, int bgdColor);
+
+	void DrawPauseMenu(vector<wstring> PauseMenu, int first_x, int first_y);
+	void DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y);
+	void DrawDrawer(vector<wstring>contentsArr, int first_x, int first_y, int txtColor = 0, int bgdColor = -1);
+	void DrawSmallDrawer(vector<wstring>contentsArr, int first_x, int first_y, int txtColor = 0, int bgdColor = -1);
+	
 };

@@ -143,6 +143,7 @@
     <ClCompile Include="CTRAINLANE.cpp" />
     <ClCompile Include="CTREE.cpp" />
     <ClCompile Include="CTRUCK.cpp" />
+    <ClCompile Include="CUFO.cpp" />
     <ClCompile Include="CVEHICLELANE.cpp" />
     <ClCompile Include="CGAME.cpp" />
     <ClCompile Include="CLANE.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="CTRAINLANE.h" />
     <ClInclude Include="CTREE.h" />
     <ClInclude Include="CTRUCK.h" />
+    <ClInclude Include="CUFO.h" />
     <ClInclude Include="CVEHICLELANE.h" />
     <ClInclude Include="CGAME.h" />
     <ClInclude Include="CLANE.h" />
