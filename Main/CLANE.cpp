@@ -104,14 +104,8 @@ void CLANE::DrawLane(CGRAPHIC& layer) {
                 layer.screen[x + i + k * BLOCK_WIDTH][y + j] = block[i][j];
 }
 void CLANE::DrawObjects(CGRAPHIC& layer) {
-    for (int k = 0; k < BOARD_WIDTH; k++) {
+    for (int k = 0; k < BOARD_WIDTH; k++)
         if (lane[k] != NULL) lane[k]->DrawBlock(layer);
-        //else {
-        //    for (int i = 0; i < BLOCK_WIDTH; i++)
-        //        for (int j = 0; j < BLOCK_HEIGHT; j++)
-        //            layer.screen[x + i + k * BLOCK_WIDTH][y + j] = { L' ', -1, -1 };
-        //}
-    }
 }
 vector<int> operator-(const vector<int> first, const vector<int> second) {
     vector<int> res{};

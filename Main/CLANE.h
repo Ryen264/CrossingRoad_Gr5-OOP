@@ -41,7 +41,7 @@ public:
 	void updatePosObj();
 
 
-	void DrawLane(CGRAPHIC& layer);
+	virtual void DrawLane(CGRAPHIC& layer);
 	virtual void DrawObjects(CGRAPHIC& layer);
 };
 //Lanes IDs

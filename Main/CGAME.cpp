@@ -1,7 +1,7 @@
 ﻿#include "CGAME.h"
 CGAME::CGAME() {
 	this->Configure();
-	this->cPlayer = new CPLAYER(0,0);
+	this->cPlayer = new CPLAYER(0, 0);
 }
 CGAME::~CGAME() {
 	delete this->cPlayer;
@@ -105,7 +105,7 @@ void CGAME::playGame() {
 
 void CGAME::resetData() {
 	if (level == 1) this->numberOfLane = 5;
-	else this->numberOfLane += 1 + rand() % 3;
+	else this->numberOfLane += (1 + (rand() % 3));
 	while (!aLanes.empty()) pop_backLane();
 	aLanes.clear();
 
@@ -116,7 +116,8 @@ void CGAME::resetData() {
 	for (int i = 0; i < numberOfRandomLane; i++) pushRandomLane();
 	for (int i = 0; i < BOARD_HEIGHT - 3 - numberOfRandomLane; i++) {
 		if (i == 0) push_frontLane(FINISHLANE_ID);
-		else push_frontLane(GRASSLANE_FULL_ID);
+		else if (i == 1) push_frontLane(GRASSLANE_FULL_ID);
+		else push_frontLane(GRASSLANE_ID);
 	}
 }
 void CGAME::saveData(string fileName) {
@@ -586,7 +587,7 @@ void CGAME::SubThreadNewGame() {
             //Xy ly finish
             if (cPlayer->isFinish() || numberOfLane == -1) {
                 cPlayer->increaseScore();
-                cPlayer->set(-1, UP_LANE);
+                cPlayer->set(BOARD_WIDTH / 2, UP_LANE);
                 cPlayer->setFinish(false);
                 resetData();
                 startMap();
