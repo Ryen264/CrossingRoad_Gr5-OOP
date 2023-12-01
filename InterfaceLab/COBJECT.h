@@ -23,8 +23,6 @@ class COBJECT {
 //L"                "
 //	};
 
-
-
 //const vector <wstring> FRAME_LEFT = {
 //L"    ▄    ▄▄▄    ",
 //L"   ▀▀▀ ▄██  ▄   ",
@@ -41,7 +39,6 @@ class COBJECT {
 //L"  ▀▀▀   ▀█▄ ▄█▀ ",
 //L"          ▀ ▀   "
 //};
-
 
 //const vector <wstring> FRAME_LEFT = {
 //L"                ",
@@ -113,7 +110,6 @@ class COBJECT {
 //L"████████████████",
 //L"████████████████"
 //};
-
 
 //const vector <wstring> FRAME_RIGHT = {
 //L"                ▄▀▀▀▀▀▀▀▀▀▀▀▀▄                 ",
@@ -338,6 +334,7 @@ L"             ▀▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀▀  
 };
 protected:
     int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1;
+	int WIDTH = BLOCK_WIDTH, HEIGHT = BLOCK_HEIGHT;
     PIXEL** block;
 public:
 	COBJECT(int x = 0, int y = 0, int isRight = true);

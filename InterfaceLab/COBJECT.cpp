@@ -2,8 +2,10 @@
 COBJECT::COBJECT(int x, int y, int isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
-	int WIDTH = 48;
-	int HEIGHT = 28;
+	
+	WIDTH = 48;
+	HEIGHT = 28;
+
 	this->block = new PIXEL * [WIDTH];
 	for (int i = 0; i <WIDTH; i++)
 		this->block[i] = new PIXEL[HEIGHT];
@@ -228,8 +230,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 				block[i][j].txtColor = SADDLE_BROWN;
 			}
 		}*/
-
-
 		//SMALL DRAWER
 		/*block[16][0].bgdColor = BRIGHT_YELLOW;
 		block[17][0].bgdColor = BRIGHT_YELLOW;
@@ -288,7 +288,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		{
 			block[i][7].bgdColor = SADDLE_BROWN;
 		}*/
-
 		//VE UF0
 	    /*for (int i = 17; i < 29; i++)
 		{
@@ -351,8 +350,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
 			}
 		}*/
-		
-	
 		//VE TRUNG
 		/*block[5][1].txtColor = BLACK;
 		block[5][1].bgdColor = -1;
@@ -386,7 +383,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[7][4].txtColor = BLACK;
 		block[7][4].bgdColor = -1;*/
 		// VE PERRY
-
 		/*block[12][2].txtColor = WHITE;
 		block[12][2].bgdColor = SKY_BLUE;
 		block[13][2].txtColor = BLACK;
@@ -422,7 +418,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[7][3].txtColor = ORANGE;
 		block[6][4].txtColor = ORANGE;
 		block[7][4].txtColor = BRIGHT_YELLOW;*/
-
 		// VE HOA
         /*block[6][2].txtColor = BRIGHT_YELLOW;
         block[6][2].bgdColor = -1;
@@ -432,7 +427,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
         block[8][2].bgdColor = -1;
         block[7][3].txtColor = BRIGHT_YELLOW;
         block[7][3].bgdColor = -1;*/
-
 		//CAPYBARA
 		/*block[0][2].txtColor = LIGHT_BROWN;
 		block[1][2].txtColor = LIGHT_BROWN;
@@ -466,8 +460,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[11][2].txtColor = SADDLE_BROWN;
 		block[3][1].txtColor = BRIGHT_YELLOW;
 		block[4][1].txtColor = BRIGHT_YELLOW;*/
-
-
 		////VE DUONG
 		//block[0][0].txtColor = WHITE;
 		//block[15][0].txtColor = WHITE;
@@ -482,7 +474,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		//	block[i + 1][0].txtColor = WHITE;
 		//}
 
-
 		//block[0][1].txtColor = BLACK;
 		//block[15][1].txtColor = BLACK;
 		//for (int i = 1; i < 14; i += 4)
@@ -496,7 +487,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		//	block[i + 1][1].txtColor = BLACK;
 		//}
 
-
 		//block[0][2].txtColor = WHITE;
 		//block[15][2].txtColor = WHITE;
 		//for (int i = 1; i < 14; i += 4)
@@ -509,7 +499,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		//	block[i][2].txtColor = WHITE;
 		//	block[i + 1][2].txtColor = WHITE;
 		//}
-
 
 		//block[0][3].txtColor = BLACK;
 		//block[15][3].txtColor = BLACK;
@@ -549,12 +538,8 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		//	block[i][5].txtColor = BLACK;
 		//	block[i + 1][5].txtColor = BLACK;
 		//}
-
 	}
 	else {
-	
-
-	
 		/*for (int i = 17; i < 28; i++)
 		{
 			block[i][0].bgdColor = SKY_BLUE;
@@ -632,7 +617,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		}
 		block[8][3].txtColor = BRIGHT_YELLOW;
 		block[9][3].txtColor = ORANGE;*/
-
 		//VE HOA
 	   /* block[6][2].txtColor = RED;
 		block[6][2].bgdColor = -1;
@@ -642,7 +626,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[8][2].bgdColor = -1;
 		block[7][3].txtColor = RED;
 		block[7][3].bgdColor = -1;*/
-
 		//CAPYBARA
 		/*for (int i = 0; i <= 8; i++)
 		{
@@ -680,175 +663,167 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
 		block[7][1].txtColor = BRIGHT_YELLOW;
 		block[8][1].txtColor = BRIGHT_YELLOW;*/
-
-
 		//VE DUONG
-				//block[0][0].txtColor = WHITE;
-				//block[15][0].txtColor = WHITE;
-				//for (int i = 1; i < 14; i+=4)
-				//{
-				//	block[i][0].txtColor = BLACK;
-				//	block[i+1][0].txtColor = BLACK;
-				//}
-				//for (int i = 3; i < 12; i += 4)
-				//{
-				//	block[i][0].txtColor = WHITE;
-				//	block[i + 1][0].txtColor = WHITE;
+		//block[0][0].txtColor = WHITE;
+		//block[15][0].txtColor = WHITE;
+		//for (int i = 1; i < 14; i+=4)
+		//{
+		//	block[i][0].txtColor = BLACK;
+		//	block[i+1][0].txtColor = BLACK;
+		//}
+		//for (int i = 3; i < 12; i += 4)
+		//{
+		//	block[i][0].txtColor = WHITE;
+		//	block[i + 1][0].txtColor = WHITE;
 
+		//block[0][1].txtColor = BLACK;
+		//block[15][1].txtColor = BLACK;
+		//for (int i = 1; i < 14; i += 4)
+		//{
+		//	block[i][1].txtColor = WHITE;
+		//	block[i + 1][1].txtColor = WHITE;
+		//}
+		//for (int i = 3; i < 12; i += 4)
+		//{
+		//	block[i][1].txtColor = BLACK;
+		//	block[i + 1][1].txtColor = BLACK;
+		//}
 
+		//block[0][2].txtColor = WHITE;
+		//block[15][2].txtColor = WHITE;
+		//for (int i = 1; i < 14; i += 4)
+		//{
+		//	block[i][2].txtColor = BLACK;
+		//	block[i + 1][2].txtColor = BLACK;
+		//}
+		//for (int i = 3; i < 12; i += 4)
+		//{
+		//	block[i][2].txtColor = WHITE;
+		//	block[i + 1][2].txtColor = WHITE;
+		//}
 
+		//block[0][3].txtColor = BLACK;
+		//block[15][3].txtColor = BLACK;
+		//for (int i = 1; i < 14; i += 4)
+		//{
+		//	block[i][3].txtColor = WHITE;
+		//	block[i + 1][3].txtColor = WHITE;
+		//}
+		//for (int i = 3; i < 12; i += 4)
+		//{
+		//	block[i][3].txtColor = BLACK;
+		//	block[i + 1][3].txtColor = BLACK;
+		//}
 
-				//block[0][1].txtColor = BLACK;
-				//block[15][1].txtColor = BLACK;
-				//for (int i = 1; i < 14; i += 4)
-				//{
-				//	block[i][1].txtColor = WHITE;
-				//	block[i + 1][1].txtColor = WHITE;
-				//}
-				//for (int i = 3; i < 12; i += 4)
-				//{
-				//	block[i][1].txtColor = BLACK;
-				//	block[i + 1][1].txtColor = BLACK;
-				//}
+		//block[0][4].txtColor = WHITE;
+		//block[15][4].txtColor = WHITE;
+		//for (int i = 1; i < 14; i += 4)
+		//{
+		//	block[i][4].txtColor = BLACK;
+		//	block[i + 1][4].txtColor = BLACK;
+		//}
+		//for (int i = 3; i < 12; i += 4)
+		//{
+		//	block[i][4].txtColor = WHITE;
+		//	block[i + 1][4].txtColor = WHITE;
+		//}
 
+		//block[0][5].txtColor = BLACK;
+		//block[15][5].txtColor = BLACK;
+		//for (int i = 1; i < 14; i += 4)
+		//{
+		//	block[i][5].txtColor = WHITE;
+		//	block[i + 1][5].txtColor = WHITE;
+		//}
+		//for (int i = 3; i < 12; i += 4)
+		//{
+		//	block[i][5].txtColor = BLACK;
+		//	block[i + 1][5].txtColor = BLACK;
+		//}
+		//VE UF0
+		/*for (int i = 17; i < 29; i++)
+		{
+			block[i][0].bgdColor = SKY_BLUE;
+		}
 
-				//block[0][2].txtColor = WHITE;
-				//block[15][2].txtColor = WHITE;
-				//for (int i = 1; i < 14; i += 4)
-				//{
-				//	block[i][2].txtColor = BLACK;
-				//	block[i + 1][2].txtColor = BLACK;
-				//}
-				//for (int i = 3; i < 12; i += 4)
-				//{
-				//	block[i][2].txtColor = WHITE;
-				//	block[i + 1][2].txtColor = WHITE;
-				//}
+		block[24][0].bgdColor = WHITE;
+		block[25][0].bgdColor = WHITE;
 
-
-				//block[0][3].txtColor = BLACK;
-				//block[15][3].txtColor = BLACK;
-				//for (int i = 1; i < 14; i += 4)
-				//{
-				//	block[i][3].txtColor = WHITE;
-				//	block[i + 1][3].txtColor = WHITE;
-				//}
-				//for (int i = 3; i < 12; i += 4)
-				//{
-				//	block[i][3].txtColor = BLACK;
-				//	block[i + 1][3].txtColor = BLACK;
-				//}
-
-				//block[0][4].txtColor = WHITE;
-				//block[15][4].txtColor = WHITE;
-				//for (int i = 1; i < 14; i += 4)
-				//{
-				//	block[i][4].txtColor = BLACK;
-				//	block[i + 1][4].txtColor = BLACK;
-				//}
-				//for (int i = 3; i < 12; i += 4)
-				//{
-				//	block[i][4].txtColor = WHITE;
-				//	block[i + 1][4].txtColor = WHITE;
-				//}
-
-				//block[0][5].txtColor = BLACK;
-				//block[15][5].txtColor = BLACK;
-				//for (int i = 1; i < 14; i += 4)
-				//{
-				//	block[i][5].txtColor = WHITE;
-				//	block[i + 1][5].txtColor = WHITE;
-				//}
-				//for (int i = 3; i < 12; i += 4)
-				//{
-				//	block[i][5].txtColor = BLACK;
-				//	block[i + 1][5].txtColor = BLACK;
-				//}
-	//VE UF0
-	/*for (int i = 17; i < 29; i++)
-	{
-		block[i][0].bgdColor = SKY_BLUE;
-	}
-
-	block[24][0].bgdColor = WHITE;
-	block[25][0].bgdColor = WHITE;
-
-	for (int i = 15; i < 31; i++)
-	{
-		block[i][1].bgdColor = SKY_BLUE;
-	}
-	block[23][1].bgdColor = SKY_BLUE;
-	block[23][1].txtColor = WHITE;
-	block[24][1].bgdColor = WHITE;
-	block[25][1].bgdColor = WHITE;
-	block[26][1].bgdColor = SKY_BLUE;
-	block[26][1].txtColor = WHITE;
-	for (int i = 15; i < 31; i++)
-	{
-		block[i][2].bgdColor = SKY_BLUE;
-	}
-	block[28][2].bgdColor = SKY_BLUE;
-	block[28][2].txtColor = WHITE;
-	for (int i = 12; i < 34; i++)
-	{
-		block[i][3].bgdColor = LIGHT_GRAY;
-	}
-	for (int i = 9; i < 37; i++)
-	{
-		block[i][4].bgdColor = LIGHT_GRAY;
-	}
-	for (int i = 9; i < 37; i++)
-	{
-		block[i][5].bgdColor = LIGHT_GRAY;
-	}
-	for (int i = 12; i < 34; i++)
-	{
-		block[i][6].bgdColor = LIGHT_GRAY;
-	}
-	int x1 = 17;
-	int x2 = 29;
-	int y1 = 7;
-	for (int i = x1; i <= x2; i++)
-	{
-		block[i][y1].bgdColor = BRIGHT_YELLOW;
-
-	}
-	for (int i = y1; i < 23; i++)
-	{
-		x1--; x2++; y1++;
+		for (int i = 15; i < 31; i++)
+		{
+			block[i][1].bgdColor = SKY_BLUE;
+		}
+		block[23][1].bgdColor = SKY_BLUE;
+		block[23][1].txtColor = WHITE;
+		block[24][1].bgdColor = WHITE;
+		block[25][1].bgdColor = WHITE;
+		block[26][1].bgdColor = SKY_BLUE;
+		block[26][1].txtColor = WHITE;
+		for (int i = 15; i < 31; i++)
+		{
+			block[i][2].bgdColor = SKY_BLUE;
+		}
+		block[28][2].bgdColor = SKY_BLUE;
+		block[28][2].txtColor = WHITE;
+		for (int i = 12; i < 34; i++)
+		{
+			block[i][3].bgdColor = LIGHT_GRAY;
+		}
+		for (int i = 9; i < 37; i++)
+		{
+			block[i][4].bgdColor = LIGHT_GRAY;
+		}
+		for (int i = 9; i < 37; i++)
+		{
+			block[i][5].bgdColor = LIGHT_GRAY;
+		}
+		for (int i = 12; i < 34; i++)
+		{
+			block[i][6].bgdColor = LIGHT_GRAY;
+		}
+		int x1 = 17;
+		int x2 = 29;
+		int y1 = 7;
 		for (int i = x1; i <= x2; i++)
 		{
 			block[i][y1].bgdColor = BRIGHT_YELLOW;
 
 		}
-	}
-	for (int i = 3; i < 44; i++)
-	{
-		block[i][24].bgdColor = BRIGHT_YELLOW;
-	}
-	for (int i = 7; i < 40; i++)
-	{
-		block[i][25].bgdColor = BRIGHT_YELLOW;
-	}
-	for (int i = 11; i < 36; i++)
-	{
-		block[i][26].bgdColor = BRIGHT_YELLOW;
-	}
-	for (int i = 15; i < 32; i++)
-	{
-		block[i][27].bgdColor = BRIGHT_YELLOW;
-	}*/
+		for (int i = y1; i < 23; i++)
+		{
+			x1--; x2++; y1++;
+			for (int i = x1; i <= x2; i++)
+			{
+				block[i][y1].bgdColor = BRIGHT_YELLOW;
+
+			}
+		}
+		for (int i = 3; i < 44; i++)
+		{
+			block[i][24].bgdColor = BRIGHT_YELLOW;
+		}
+		for (int i = 7; i < 40; i++)
+		{
+			block[i][25].bgdColor = BRIGHT_YELLOW;
+		}
+		for (int i = 11; i < 36; i++)
+		{
+			block[i][26].bgdColor = BRIGHT_YELLOW;
+		}
+		for (int i = 15; i < 32; i++)
+		{
+			block[i][27].bgdColor = BRIGHT_YELLOW;
+		}*/
 	}
 }
-//WIDTH=15
-//HEIGHT=6
+
 COBJECT::~COBJECT() {
-	for (int i = 0; i <48; i++)
+	for (int i = 0; i < WIDTH; i++)
 		delete[] this->block[i];
 	delete[] this->block;
 }
 void COBJECT::DrawBlock(CGRAPHIC& layer) {
-	for (int i = 0; i < 48; i++)
-		for (int j = 0; j < 28; j++)
+	for (int i = 0; i < WIDTH; i++)
+		for (int j = 0; j < HEIGHT; j++)
 			layer.screen[this->x + i][this->y + j] = block[i][j];
 }
