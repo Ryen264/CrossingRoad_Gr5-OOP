@@ -38,6 +38,72 @@ struct PIXEL {
 	wchar_t buffer;
 	int txtColor, bgdColor;
 };
+
+class CGRAPHIC {
+	int WIDTH, HEIGHT;
+public:
+	PIXEL** screen;
+	CGRAPHIC(PIXEL** screen = NULL);
+	CGRAPHIC(PIXEL pixel, int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
+	~CGRAPHIC();
+	void displayPixel(int x = 0, int y = 0);
+	void display(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
+	void clear(int txtColor, int bgdColor);
+	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
+	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
+	void DrawLetter(char ch ,int first_x, int first_y, int txtColor, int bgdColor);
+	void drawString(string str, int x, int y, int txtColor, int bgdColor, int num = -1);
+	void drawTime(clock_t second, int first_x, int first_y, int txtColor, int bgdColor);
+	void drawDot(int first_x, int first_y, int txtColor, int bgdColor);
+	void erasePixel(int fromX, int fromY, int toX, int toY);
+
+	void DrawPauseChoose(int first_x, int first_y);
+	void DrawPauseMenu(int first_x, int first_y);
+	void DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y);
+	void DrawDrawer(int first_x, int first_y);
+	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);
+	
+};
+const vector<wstring> DOT = {
+	L"███",
+	L"▀▀▀"
+};
+const vector<wstring> COLON = {
+	L"█",
+	L" ",
+	L"█" };
+const vector<vector<wstring>> NUMBER = {
+{	L"█▀█",
+	L"█ █",
+	L"▀▀▀" },
+{	L"▄█ ",
+	L" █ ",
+	L"▀▀▀" },
+{	L"▀▀█",
+	L"█▀▀",
+	L"▀▀▀" },
+{	L"▀▀█",
+	L"▀▀█",
+	L"▀▀▀" },
+{	L"█ █",
+	L"▀▀█",
+	L"  ▀" },
+{	L"█▀▀",
+	L"▀▀█",
+	L"▀▀▀" },
+{	L"█▀▀",
+	L"█▀█",
+	L"▀▀▀" },
+{	L"▀▀█",
+	L"  █",
+	L"  ▀" },
+{	L"█▀█",
+	L"█▀█",
+	L"▀▀▀" },
+{	L"█▀█",
+	L"▀▀█",
+	L"  ▀" },
+};
 const vector<vector<wstring>> LETTER = {
  {  L"█▀█",
 	L"█▀█",
@@ -116,40 +182,7 @@ const vector<vector<wstring>> LETTER = {
 	L" ▀ "},
  {  L"▀▀█",
 	L"▄▀ ",
-	L"▀▀▀"},
-{	L"   ",
-	L"   ",
-	L"   " },
-{	L"▄█ ",
-	L" █ ",
-	L"▀▀▀" },
-{	L"▀▀█",
-	L"█▀▀",
-	L"▀▀▀" },
-{	L"▀▀█",
-	L"▀▀█",
-	L"▀▀▀" },
-{	L"█ █",
-	L"▀▀█",
-	L"  ▀" },
-{	L"█▀▀",
-	L"▀▀█",
-	L"▀▀▀" },
-{	L"█▀▀",
-	L"█▀█",
-	L"▀▀▀" },
-{	L"▀▀█",
-	L"  █",
-	L"  ▀" },
-{	L"█▀█",
-	L"█▀█",
-	L"▀▀▀" },
-{	L"█▀█",
-	L"▀▀█",
-	L"  ▀" },
-{	L"█▀█",
-	L"█ █",
-	L"▀▀▀" }
+	L"▀▀▀"}
 };
 
 const vector<wstring> PAUSE_MENU = {
@@ -158,7 +191,7 @@ const vector<wstring> PAUSE_MENU = {
 		L"▄▀ █ █    ▄▄▄▄▄▄▄▄▄  █                          █ ▀▄",//2
 		L"█  █ █   █ ▄▄      █ █    ▄▄                    █  █",//3
 		L"█  █ █   █ ▀▀      █ █  ▄▀  ▀▄  ▄               █  █",//4
-		L"█  █ █ ▄▄█         █ █  █    █  ▄               █  █",//5
+		L"█  █ █ ▄▄█  ▄▄▄    █ █  █    █  ▄               █  █",//5
 		L"█  █ █ ▀▄▀     █▀▀▀  █   ▀▄▄▀                   █  █",//6
 		L"█  █ █   █▄▀▀██▀     █                          █  █",//7
 		L"█  █ █   ▀   ▀       █                          █  █",//8
@@ -254,24 +287,4 @@ const vector<wstring> FLOPPY_DISC = {
 		L"██                                                  ██",
 		L"██                                                  ██",
 		L"██████████████████████████████████████████████████████"
-};
-
-class CGRAPHIC {
-public:
-	PIXEL** screen;
-	CGRAPHIC(PIXEL** screen = NULL);
-	~CGRAPHIC();
-	void displayPixel(int x = 0, int y = 0);
-	void display(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
-	void clear(int txtColor, int bgdColor);
-	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
-	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
-	void DrawLetter(char ch ,int first_x, int first_y, int txtColor, int bgdColor);
-	void drawString(string str, int x, int y, int txtColor, int bgdColor, int num = -1);
-
-	void DrawPauseMenu(vector<wstring> PauseMenu, int first_x, int first_y);
-	void DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y);
-	void DrawDrawer(vector<wstring>contentsArr, int first_x, int first_y, int txtColor = 0, int bgdColor = -1);
-	void DrawSmallDrawer(vector<wstring>contentsArr, int first_x, int first_y, int txtColor = 0, int bgdColor = -1);
-	
 };

@@ -23,6 +23,7 @@ void SetupTheme(THEME theme) {
 }
 
 CGRAPHIC::CGRAPHIC(PIXEL** screen) {
+	WIDTH = SCREEN_WIDTH; HEIGHT = SCREEN_HEIGHT;
 	this->screen = new PIXEL * [SCREEN_WIDTH];
 	for (int i = 0; i < SCREEN_WIDTH; i++) {
 		this->screen[i] = new PIXEL[SCREEN_HEIGHT];
@@ -36,8 +37,19 @@ CGRAPHIC::CGRAPHIC(PIXEL** screen) {
 		}
 	}
 }
+CGRAPHIC::CGRAPHIC(PIXEL pixel, int fromX, int fromY, int toX, int toY) {
+	if (toX < 0) toX = SCREEN_WIDTH;
+	if (toY < 0) toY = SCREEN_HEIGHT;
+	WIDTH = toX - fromX + 1; HEIGHT = toY - fromY + 1;
+	this->screen = new PIXEL * [WIDTH];
+	for (int i = 0; i < WIDTH; i++) {
+		this->screen[i] = new PIXEL[HEIGHT];
+		for (int j = 0; j < HEIGHT; j++)
+			this->screen[i][j] = pixel;
+	}
+}
 CGRAPHIC::~CGRAPHIC() {
-	for (int i = 0; i < SCREEN_WIDTH; i++) {
+	for (int i = 0; i < WIDTH; i++) {
 		delete[] this->screen[i];
 		this->screen[i] = NULL;
 	}
@@ -89,7 +101,7 @@ void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y,
 		}
 	}
 }
-void CGRAPHIC::DrawPauseMenu(vector<wstring> PauseMenu, int first_x, int first_y) {
+void CGRAPHIC::DrawPauseMenu(int first_x, int first_y) {
 	vector<wstring> frame = PAUSE_MENU;
 	//set buffer
 	for (int i = 0; i < 52; i++)
@@ -163,7 +175,7 @@ void CGRAPHIC::DrawPauseMenu(vector<wstring> PauseMenu, int first_x, int first_y
 	screen[first_x + 13][first_y + 6].bgdColor = LIGHT_GREEN;
 	screen[first_x + 14][first_y + 6].bgdColor = LIGHT_GREEN;
 }
-void CGRAPHIC::DrawDrawer(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor)
+void CGRAPHIC::DrawDrawer(int first_x, int first_y)
 {
 	vector<wstring> frame = Drawer;
 	for (int i = 0; i < 26; i++)
@@ -294,27 +306,26 @@ void CGRAPHIC::DrawDrawer(vector<wstring> contentsArr, int first_x, int first_y,
 		this->screen[x+i][y+23].bgdColor = LIGHT_BROWN;
 	}
 }
-void CGRAPHIC::DrawSmallDrawer(vector<wstring> SmallDrawer, int first_x, int first_y, int txtColor, int bgdColor)
+void CGRAPHIC::DrawSmallDrawer(int first_x, int first_y, int drawerColor)
 {
 	vector<wstring> frame = SmallDrawer;
 	for (int i = 0; i < 34; i++)
 		for (int j = 0; j < 8; j++)
 			this->screen[first_x + i][j] = { frame[j][i], BLACK, -1 };
-	int x = first_x;
-	int y = first_y;
-	this->screen[x+16][y].bgdColor = BRIGHT_YELLOW;
-	this->screen[x+17][y].bgdColor = BRIGHT_YELLOW;
+	int x = first_x, y = first_y;
+	this->screen[x+16][y].bgdColor = drawerColor;
+	this->screen[x+17][y].bgdColor = drawerColor;
 	for (int i = 18; i < 26; i++)
 	{
 		this->screen[x+i][y].bgdColor = WHITE;
 	}
-	this->screen[x+26][y].bgdColor = BRIGHT_YELLOW;
-	this->screen[x+27][y].bgdColor = BRIGHT_YELLOW;
+	this->screen[x+26][y].bgdColor = drawerColor;
+	this->screen[x+27][y].bgdColor = drawerColor;
 	for (int j = 1; j < 3; j++)
 	{
 		for (int i = 15; i < 29; i++)
 		{
-			this->screen[x+i][y+j].txtColor = BRIGHT_YELLOW;
+			this->screen[x+i][y+j].txtColor = drawerColor;
 		}
 	}
 
@@ -397,4 +408,27 @@ void CGRAPHIC::drawString(string str, int x, int y, int txtColor, int bgdColor, 
 	if (num < 0) num = str.length();
 	for (int i = str.length() - num; i < str.length(); i++)
 		DrawLetter(str[i], x + i * 3, y, txtColor, bgdColor);
+}
+void CGRAPHIC::drawTime(clock_t second, int first_x, int first_y, int txtColor, int bgdColor) {
+	clock_t minute = second / 60;
+	second %= 60;
+	int width = 3;
+	int startX = first_x;
+	DrawObject(NUMBER[minute / 10], startX, first_y, txtColor, bgdColor);
+	startX += width + 1;
+	DrawObject(NUMBER[minute % 10], startX, first_y, txtColor, bgdColor);
+	startX += width + 1;
+	DrawObject(COLON, startX, first_y, txtColor, bgdColor);
+	startX += 2;
+	DrawObject(NUMBER[second / 10], startX, first_y, txtColor, bgdColor);
+	startX += width + 1;
+	DrawObject(NUMBER[second % 10], startX, first_y, txtColor, bgdColor);
+}
+void CGRAPHIC::drawDot(int first_x, int first_y, int txtColor, int bgdColor) {
+	DrawObject(DOT, first_x, first_y, txtColor, bgdColor);
+}
+void CGRAPHIC::erasePixel(int fromX, int fromY, int toX, int toY) {
+	for (int i = fromX; i <= toX; i++)
+		for (int j = fromY; j <= toY; j++)
+			screen[i][j] = { L' ', -1, -1 };
 }

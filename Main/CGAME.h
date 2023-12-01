@@ -83,7 +83,6 @@ public:
     void outtro();
 
     void drawMenu();
-    void drawPause();
     void drawPlayAgain();
     void drawSaveGame();
     void drawLoadGame();
@@ -91,12 +90,19 @@ public:
     void drawInputUserNumber();
 
     void displayScreen(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
+    void displayScreen(CGRAPHIC& ObjLayer, CGRAPHIC& BgdLayer, int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
 };
 //Return codes
 const int QUIT_CODE = -1000;
 const int BACK_TO_MENU_CODE = -1001;
 
 const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, TRAINLANE_ID, RIVERLANE_ID};
+
+bool isUpButton(int button);
+bool isDownButton(int button);
+bool isRightButton(int button);
+bool isLeftButton(int button);
+bool isEnterButton(int button);
 
 void ShowCur(bool CursorVisibility);
 void DisableResizeWindow();

@@ -365,27 +365,105 @@ void CGAME::About() {
 int CGAME::Pause(HANDLE t) {
 	SuspendThread(t);
 	//setup tmpLayers
-	system("cls");
-	this->drawPause();
-	int key = toupper(_getch());
-	switch (key) {
-	case '1': {
-		this->resumeThread(t);
-		break;
-	}
-	case '2': {
-		this->savename = this->SaveGame();
-		this->resumeThread(t);
-		break;
-	}
-	case'6': {
-		this->resumeThread(t);
-		this->savename = "";
-		isSaved = false;
-		return BACK_TO_MENU_CODE;
-	}
-	default:
-		this->resumeThread(t);
+	int fromX = (SCREEN_WIDTH - 52) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
+		toX = fromX + 52, toY = fromY + 30;
+	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 }, fromX, fromY, toX, toY);
+	tmpBgdLayer.DrawPauseMenu(fromX, fromY);
+	tmpBgdLayer.display(fromX, fromY, toX, toY);
+
+	const int SETTING_OPTION = 9;
+	const int RESUME_OPTION = 25;
+	const int HELP_OPTION = 41;
+	const int SAVE_OPTION = 17;
+	const int EXIT_OPTION = 33;
+	const int yFirstLine = 16, ySecondLine = 25;
+
+	int xOption = RESUME_OPTION, yOption = yFirstLine;
+	tmpObjLayer.drawDot(xOption, yOption, BLACK, -1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	while (1) {
+		int temp = toupper(_getch());
+		tmpObjLayer.erasePixel(xOption, yOption, xOption + 3, yOption + 2);
+		if (!isEnterButton(temp)) {
+			if (isUpButton(temp)) {
+				switch (xOption) {
+				case SAVE_OPTION:
+					xOption = RESUME_OPTION;
+					yOption = yFirstLine;
+					break;
+				case EXIT_OPTION:
+					xOption = HELP_OPTION;
+					yOption = yFirstLine;
+					break;
+				}
+			}
+			if (isDownButton(temp)) {
+				switch (xOption) {
+				case SETTING_OPTION:
+					xOption = SAVE_OPTION;
+					yOption = ySecondLine;
+					break;
+				case RESUME_OPTION: case HELP_OPTION:
+					xOption = EXIT_OPTION;
+					yOption = ySecondLine;
+					break;
+				}
+			}
+			if (isRightButton(temp)) {
+				switch (xOption) {
+				case SETTING_OPTION:
+					xOption = RESUME_OPTION;
+					break;
+				case RESUME_OPTION:
+					xOption = HELP_OPTION;
+					break;
+				case SAVE_OPTION:
+					xOption = EXIT_OPTION;
+					break;
+				}
+			}
+			if (isLeftButton(temp)) {
+				switch (xOption) {
+				case HELP_OPTION:
+					xOption = RESUME_OPTION;
+					break;
+				case RESUME_OPTION:
+					xOption = SETTING_OPTION;
+					break;
+				case EXIT_OPTION:
+					xOption = SAVE_OPTION;
+					break;
+				}
+			}
+			tmpObjLayer.drawDot(xOption, yOption, BLACK, -1);
+			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+		}
+		else {
+			tmpObjLayer.drawDot(xOption, yOption, RED, -1);
+			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+
+			Sleep(5);
+			switch (xOption) {
+			case SETTING_OPTION:
+				//setting
+				break;
+			case RESUME_OPTION:
+				resumeThread(t);
+				break;
+			case HELP_OPTION:
+				//help
+				break;
+			case SAVE_OPTION:
+				savename = SaveGame();
+				resumeThread(t);
+				break;
+			case EXIT_OPTION:
+				resumeThread(t);
+				savename = "";
+				isSaved = false;
+				return BACK_TO_MENU_CODE;
+			}
+		}
 	}
 	return 0;
 }
@@ -627,16 +705,6 @@ void CGAME::drawMenu() {
 	cout << "6: Quit" << endl;
 	cout << "Enter: ";
 }
-void CGAME::drawPause() {
-	cout << "PAUSE" << endl;
-	cout << "1: Resume" << endl;
-	cout << "2: Save game" << endl;
-	cout << "3. Setting" << endl;
-	cout << "4. Help" << endl;
-	cout << "5. About" << endl;
-	cout << "6. Back to menu" << endl;
-	cout << "Enter: ";
-}
 void CGAME::drawPlayAgain() {
 	cout << "Play again (Y/N)?" << endl;
 }
@@ -676,7 +744,33 @@ void CGAME::displayScreen(int fromX, int fromY, int toX, int toY) {
 		}
 	ObjLayer.display();
 }
+void CGAME::displayScreen(CGRAPHIC& ObjLayer, CGRAPHIC& BgdLayer, int fromX, int fromY, int toX, int toY) {
+	if (toX < 0 || toX > SCREEN_WIDTH - 1) toX = SCREEN_WIDTH - 1;
+	if (toY < 0 || toY > SCREEN_HEIGHT - 1) toY = SCREEN_HEIGHT - 1;
+	for (int x = fromX; x <= toX; x++)
+		for (int y = fromY; y <= toY; y++) {
+			PIXEL& objPixel = ObjLayer.screen[x - fromX][y - fromY], bgdPixel = BgdLayer.screen[x][y];
+			if (objPixel.txtColor < 0) objPixel = bgdPixel;
+			else if (objPixel.bgdColor < 0) objPixel.bgdColor = bgdPixel.bgdColor;
+		}
+	ObjLayer.display(0, 0, toX - fromX, toY - fromY);
+}
 
+bool isUpButton(int button) {
+	return button == 'W' || button == 38;
+}
+bool isDownButton(int button) {
+	return button == 'S' || button == 40;
+}
+bool isRightButton(int button) {
+	return button == 'D' || button == 39;
+}
+bool isLeftButton(int button) {
+	return button == 'A' || button == 37;
+}
+bool isEnterButton(int button) {
+	return button == 27 || button == 32;
+}
 void ShowCur(bool CursorVisibility) {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO ConCurInf;
