@@ -64,4 +64,16 @@ void CGRASSLANE::push_frontObject(int ID) {
     }
     updatePosObj();
 }
-
+void CGRASSLANE::DrawLane(CGRAPHIC& layer) {
+    for (int k = 0; k < BOARD_WIDTH; k++)
+        if (rand() % 3 == 0) {
+            for (int i = 0; i < BLOCK_WIDTH; i++)
+                for (int j = 0; j < BLOCK_HEIGHT; j++)
+                    layer.screen[x + i + k * BLOCK_WIDTH][y + j] = block[i][j];
+        }
+        else {
+            for (int i = 0; i < BLOCK_WIDTH; i++)
+                for (int j = 0; j < BLOCK_HEIGHT; j++)
+                    layer.screen[x + i + k * BLOCK_WIDTH][y + j] = {L' ', LIGHT_GREEN, LIGHT_GREEN};
+        }
+}

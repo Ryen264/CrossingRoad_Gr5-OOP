@@ -16,16 +16,11 @@ L"        ▄▀      ",
 L"     ▀▄ ▀       ",
 L"                ",
 L"                "
-//L"████████████████",
-//L"████████████████",
-//L"████████████████",
-//L"████████████████",
-//L"████████████████",
-//L"████████████████"
 	};
 	const vector<int> OBJECT_ID_LIST = { EGG_ID,TREE_ID,0,0,0,0,0,0,0 };
 public:
 	CGRASSLANE(int x = 0, int y = 0, vector<int> typeLane = {});
     void injuredPlayer(CPLAYER& player);
 	void push_frontObject(int ID = 0);
+	void DrawLane(CGRAPHIC& layer);
 };
