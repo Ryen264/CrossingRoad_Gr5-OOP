@@ -72,6 +72,7 @@ public:
     void pushRandomLane();
     void push_frontLane(int ID);
     void pop_backLane();
+    void moveNewLane();
 
     void SubThreadNewGame();
 

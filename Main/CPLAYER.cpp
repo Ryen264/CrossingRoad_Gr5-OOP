@@ -48,13 +48,17 @@ int CPLAYER::getColorCharacter() const {
 }
 
 void CPLAYER::set(int xBoard, int yBoard, bool live, bool right, int score) {
-    if (xBoard < 0) xBoard = 0;
-    this->x = xBoard * BLOCK_WIDTH;
-    this->xBoard = xBoard;
+    if (xBoard >= 0)
+    {
+        this->x = xBoard * BLOCK_WIDTH;
+        this->xBoard = xBoard;
+    }
 
-    if (yBoard < 0) yBoard = 0;
-    this->y = yBoard * BLOCK_HEIGHT + START_BOARD_HEIGHT;
-    this->yBoard = yBoard;
+    if (yBoard >= 0)
+    {
+        this->y = yBoard * BLOCK_HEIGHT + START_BOARD_HEIGHT;
+        this->yBoard = yBoard;
+    }
 
     this->alive = live;
     this->isRight = right;
@@ -74,15 +78,19 @@ void CPLAYER::setMove(int moving) {
     this->moving = moving;
 }
 void CPLAYER::setPos(int xBoard, int yBoard) {
-    if (xBoard < 0) xBoard = 0;
     if (xBoard >= BOARD_WIDTH) xBoard = BOARD_WIDTH - 1;
-    this->x = xBoard * BLOCK_WIDTH;
-    this->xBoard = xBoard;
+    if (xBoard >= 0)
+    {
+        this->x = xBoard * BLOCK_WIDTH;
+        this->xBoard = xBoard;
+    }
 
-    if (yBoard < 0) yBoard = 0;
     if (yBoard >= BOARD_HEIGHT) yBoard = BOARD_HEIGHT - 1;
-    this->y = yBoard * BLOCK_HEIGHT + START_BOARD_HEIGHT;
-    this->yBoard = yBoard;
+    if (yBoard >= 0)
+    {
+        this->y = yBoard * BLOCK_HEIGHT + START_BOARD_HEIGHT;
+        this->yBoard = yBoard;
+    }
 }
 void CPLAYER::setDependObj(COBJECT* obj) {
     dependObj = obj;
@@ -113,13 +121,15 @@ int CPLAYER::updateDepend() {
 		this->xBoard = this->x / BLOCK_WIDTH;
 		this->y = dependObj->getY();
 		this->yBoard = (this->y - START_BOARD_HEIGHT) / BLOCK_HEIGHT;
+        this->alive = true;
 		return CAPYBARA_ID;
 	}
 	case PERRY_ID: {
-		// this->setyBoard(yBoard - 1);
+        this->alive = true;
 		return PERRY_ID;
 	}
 	case EGG_ID: {
+        this->alive = true;
 		this->increaseScore(10);
 		return EGG_ID;
 	}

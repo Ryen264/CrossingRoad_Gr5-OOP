@@ -462,19 +462,10 @@ void CGAME::push_frontLane(int ID) {
 
     // delay time cang nho thi push cang nhanh , delaytime ti le ngich vs level
 	// level 1-3 : speed rand() %4 ; level 4-7 : rand() % 3 ; level >=8 : rand() %2
-	int speedRange = 0;
-	if (level >= 1 && level <= 3) {
-		speedRange = 4;
-	}
-	else if (level >= 4 && level <= 7) {
-		speedRange = 3;
-	}
-	else {
-		speedRange = 2;
-	}
+	
 	switch (ID) {
 	case VEHICLELANE_ID: {
-		aLanes.push_front(new CVEHICLELANE(0, 0, rand() % speedRange));
+		aLanes.push_front(new CVEHICLELANE(0, 0, rand() % 3));
 		break;
 	}
 	case GRASSLANE_ID: {
@@ -482,11 +473,11 @@ void CGAME::push_frontLane(int ID) {
 		break;
 	}
 	case TRAINLANE_ID: {
-		aLanes.push_front(new CTRAINLANE(0, 0, rand() % speedRange, 10 + rand() % 5));
+		aLanes.push_front(new CTRAINLANE(0, 0, rand() % 2, 10 + rand() % 5));
 		break;
 	}
 	case RIVERLANE_ID: {
-		aLanes.push_front(new CRIVERLANE(0, 0, rand() % speedRange));
+		aLanes.push_front(new CRIVERLANE(0, 0, rand() % 3));
 		break;
 	}
 	case FINISHLANE_ID: {
@@ -516,6 +507,13 @@ void CGAME::pop_backLane() {
 	if (tmp != NULL) delete tmp;
 	tmp = NULL;
 }
+void CGAME::moveNewLane() {
+	if (numberOfLane > BOARD_HEIGHT - 3) pushRandomLane();
+	else if (numberOfLane == BOARD_HEIGHT - 3) push_frontLane(FINISHLANE_ID);
+	else push_frontLane(GRASSLANE_ID);
+	pop_backLane();
+	numberOfLane--;
+}
 
 void CGAME::SubThreadNewGame() {
     while (isThreadRunning) {
@@ -542,11 +540,12 @@ void CGAME::SubThreadNewGame() {
                 xBoardNext = xBoard; yBoardNext = yBoard;
             }
             COBJECT* nextObj = aLanes[yBoardNext]->getPos(xBoardNext);
-
-            //Update player's pos with depend obj and delete depend obj if the func returns true
+			
+			aLanes[yBoard]->injuredPlayer(*cPlayer);
+            
+			//Update player's pos with depend obj and delete depend obj if the func returns true
             switch (cPlayer->updateDepend()) {
             case EGG_ID: {
-                xBoard = cPlayer->getXBoard(), yBoard = cPlayer->getYBoard();
                 COBJECT* cur = aLanes[yBoard]->getPos(xBoard);
                 if (cur != NULL) delete cur;
                 cur = NULL;
@@ -555,37 +554,19 @@ void CGAME::SubThreadNewGame() {
                 break;
             }
             case PERRY_ID: {
-                xBoard = cPlayer->getXBoard(), yBoard = cPlayer->getYBoard();
-                COBJECT* cur = aLanes[yBoard]->getPos(xBoard);
-                COBJECT* nextObj = aLanes[yBoard - 1]->getPos(xBoard);
-                if (!(nextObj->getID() == TREE_ID)) {
-                    cPlayer->setPos(xBoard, yBoard - 1);
-                    aLanes[yBoard]->setPos(xBoard, NULL);
-                    cPlayer->setDependObj(NULL);
-                    if (cur != NULL) delete cur;
-                    cur = NULL;
-                    if (nextObj != NULL) delete nextObj;
-                    nextObj = NULL;
-                }
-                else {
-                    if (cur != NULL) {
-                        delete cur;
-                        cur = NULL;
-                    }
-                    aLanes[yBoard]->setPos(xBoard, NULL);
-                    cPlayer->setDependObj(NULL);
-                }
+				COBJECT* cur = aLanes[yBoard]->getPos(xBoard);
+				aLanes[yBoard]->setPos(xBoard, NULL);
+				if (cur != NULL) delete cur;
+				cur = NULL;
+                if (!(nextObj->getID() == TREE_ID)) cPlayer->setPos(xBoard, yBoard - 1);
+				cPlayer->setDependObj(NULL);
                 break;
             }
             }
 
-			if (cPlayer->isMoving() && !(nextObj != NULL && nextObj->getID() == TREE_ID)) {
-				if (cPlayer->getDependObj()->getID() == PERRY_ID || cPlayer->moveCharacter()) {
-					if (numberOfLane > BOARD_HEIGHT - 3) pushRandomLane();
-					else if (numberOfLane == BOARD_HEIGHT - 3) push_frontLane(FINISHLANE_ID);
-					else push_frontLane(GRASSLANE_ID);
-					pop_backLane();
-					numberOfLane--;
+			if (cPlayer->isMoving() && !(nextObj->getID() == TREE_ID)) {
+				if (cPlayer->moveCharacter()) {
+					moveNewLane();
 					startMap();
 				};
 				//Reset moving
@@ -593,8 +574,7 @@ void CGAME::SubThreadNewGame() {
 				//Update depend obj 
 				cPlayer->setDependObj(nextObj);
 			}
-			aLanes[yBoard]->injuredPlayer(*cPlayer);
-
+			
             drawMap();
             displayScreen();
 
