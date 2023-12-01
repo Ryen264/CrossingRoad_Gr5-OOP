@@ -1,5 +1,5 @@
 #include "CPLAYER.h"
-CPLAYER::CPLAYER(int xBoard, int yBoard, vector<int> color) {
+CPLAYER::CPLAYER(int xBoard, int yBoard, int colorCharacter) {
     this->x = xBoard * BLOCK_WIDTH;
     this->xBoard = xBoard;
     this->y = yBoard * BLOCK_HEIGHT + START_BOARD_HEIGHT;
@@ -8,8 +8,8 @@ CPLAYER::CPLAYER(int xBoard, int yBoard, vector<int> color) {
     this->score = 0;
     this->moving = 0;
 
-    this->color = color;
-    this->pCharacterR = new CDINOSAUR(x, y, true, color), this->pCharacterL = new CDINOSAUR(x, y, false, color);
+    this->colorCharacter = colorCharacter;
+    this->pCharacterR = new CDINOSAUR(x, y, true, colorCharacter); this->pCharacterL = new CDINOSAUR(x, y, false, colorCharacter);
 }
 CPLAYER::~CPLAYER() {
     if (pCharacterR != NULL) delete pCharacterR;
@@ -43,8 +43,8 @@ COBJECT* CPLAYER::getDependObj() const {
 int CPLAYER::getMoving() const {
     return this->moving;
 }
-vector<int> CPLAYER::getColorCharacter() const {
-    return color;
+int CPLAYER::getColorCharacter() const {
+    return colorCharacter;
 }
 
 void CPLAYER::set(int xBoard, int yBoard, bool live, bool right, int score) {
@@ -88,19 +88,21 @@ void CPLAYER::setDependObj(COBJECT* obj) {
     dependObj = obj;
 }
 void CPLAYER::setxBoard(int xboard) {
-    if (xBoard < 0) xBoard = 0;
     if (xBoard >= BOARD_WIDTH) xBoard = BOARD_WIDTH - 1;
-    this->x = xBoard * BLOCK_WIDTH;
-    this->xBoard = xBoard;
+    if (xBoard >= 0) {
+        this->x = xBoard * BLOCK_WIDTH;
+        this->xBoard = xBoard;
+    }
 }
 void CPLAYER::setyBoard(int yboard) {
-    if (yBoard < 0) yBoard = 0;
     if (yBoard >= BOARD_HEIGHT) yBoard = BOARD_HEIGHT - 1;
-    this->y = yBoard * BLOCK_HEIGHT + START_BOARD_HEIGHT;
-    this->yBoard = yBoard;
+    if (yBoard >= 0) {
+        this->y = yBoard * BLOCK_HEIGHT + START_BOARD_HEIGHT;
+        this->yBoard = yBoard;
+    }
 }
-void CPLAYER::setColorCharacter(vector<int> color) {
-    this->color = color;
+void CPLAYER::setColorCharacter(int color) {
+    this->colorCharacter = color;
     pCharacterR->setColor(color); pCharacterL->setColor(color);
 }
 int CPLAYER::updateDepend() {
@@ -192,10 +194,10 @@ bool CPLAYER::isMoving() const {
 void CPLAYER::drawCharacter(CGRAPHIC& layer) {
     if (isRight) {
         pCharacterR->setPos(x, y);
-        pCharacterR->DrawBlock(layer);
+        pCharacterR->DrawBlock(layer, true);
     }
     else {
         pCharacterL->setPos(x, y);
-        pCharacterL->DrawBlock(layer);
+        pCharacterL->DrawBlock(layer, true);
     }
 }

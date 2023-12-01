@@ -73,7 +73,6 @@ public:
     void push_frontLane(int ID);
     void pop_backLane();
 
-
     void SubThreadNewGame();
 
     void startMap();

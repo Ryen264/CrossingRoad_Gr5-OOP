@@ -93,7 +93,7 @@ void CLANE::setyBoard(int yBoard) {
     updatePosObj();
 }
 void CLANE::updatePosObj() {
-    for (int i = 0; i < BOARD_WIDTH; i++)
+    for (int i = 0; i < (int)lane.size(); i++)
         if (lane[i] != NULL) lane[i]->setPos(i * BLOCK_WIDTH, this->y);
 }
 

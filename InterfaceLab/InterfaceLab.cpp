@@ -13,7 +13,6 @@ int main() {
 	//testlane2.DrawBlock(BgdLayer);
 	//BgdLayer.display();
 
-
 	CGRAPHIC ObjLayer = BgdLayer;
 	COBJECT testobject;
 	//draw object

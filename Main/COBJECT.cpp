@@ -35,12 +35,19 @@ void COBJECT::setY(int y) {
 	this->y = y;
 }
 
-void COBJECT::DrawBlock(CGRAPHIC& layer) {
-	for (int i = 0; i < BLOCK_WIDTH; i++)
-		for (int j = 0; j < BLOCK_HEIGHT; j++)
-			layer.screen[i + x][j + y] = block[i][j];
+void COBJECT::DrawBlock(CGRAPHIC& layer, bool isPass) {
+	if (!isPass) {
+		for (int i = 0; i < BLOCK_WIDTH; i++)
+			for (int j = 0; j < BLOCK_HEIGHT; j++)
+				layer.screen[i + x][j + y] = block[i][j];
+	}
+	else {
+		for (int i = 0; i < BLOCK_WIDTH; i++)
+			for (int j = 0; j < BLOCK_HEIGHT; j++)
+				if (block[i][j].txtColor >= 0) layer.screen[i + x][j + y] = block[i][j];
+	}
 }
-void COBJECT::setColor(vector<int> color) {}
+void COBJECT::setColor(int color) {}
 
 int random(vector<int> arr) {
 	int size = (int)arr.size();

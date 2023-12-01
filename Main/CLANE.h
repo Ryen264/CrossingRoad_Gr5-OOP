@@ -47,6 +47,9 @@ public:
 //Lanes IDs
 const int VEHICLELANE_ID = 20001;
 const int GRASSLANE_ID = 20002;
+const int GRASSLANE_FULL_ID = 21002;
+const int GRASSLANE_SURROUND_ID = 22002;
+const int GRASSLANE_AROUND_ID = 23002;
 const int RIVERLANE_ID = 20003;
 const int TRAINLANE_ID = 20004;
 const int FINISHLANE_ID = 20005;
