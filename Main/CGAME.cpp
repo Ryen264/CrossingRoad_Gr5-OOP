@@ -1,7 +1,7 @@
 ﻿#include "CGAME.h"
 CGAME::CGAME() {
 	this->Configure();
-	this->cPlayer = new CPLAYER(0,0,RED_CHARACTER);
+	this->cPlayer = new CPLAYER(0, 0);
 }
 CGAME::~CGAME() {
 	delete this->cPlayer;
@@ -606,7 +606,7 @@ void CGAME::SubThreadNewGame() {
             //Xy ly finish
             if (cPlayer->isFinish() || numberOfLane == -1) {
                 cPlayer->increaseScore();
-                cPlayer->set(-1, UP_LANE);
+                cPlayer->set(BOARD_WIDTH / 2, UP_LANE);
                 cPlayer->setFinish(false);
                 resetData();
                 startMap();

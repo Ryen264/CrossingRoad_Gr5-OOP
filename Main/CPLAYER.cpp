@@ -74,15 +74,19 @@ void CPLAYER::setMove(int moving) {
     this->moving = moving;
 }
 void CPLAYER::setPos(int xBoard, int yBoard) {
-    if (xBoard < 0) xBoard = 0;
     if (xBoard >= BOARD_WIDTH) xBoard = BOARD_WIDTH - 1;
-    this->x = xBoard * BLOCK_WIDTH;
-    this->xBoard = xBoard;
+    if (xBoard >= 0)
+    {
+        this->x = xBoard * BLOCK_WIDTH;
+        this->xBoard = xBoard;
+    }
 
-    if (yBoard < 0) yBoard = 0;
     if (yBoard >= BOARD_HEIGHT) yBoard = BOARD_HEIGHT - 1;
-    this->y = yBoard * BLOCK_HEIGHT + START_BOARD_HEIGHT;
-    this->yBoard = yBoard;
+    if (yBoard >= 0)
+    {
+        this->y = yBoard * BLOCK_HEIGHT + START_BOARD_HEIGHT;
+        this->yBoard = yBoard;
+    }
 }
 void CPLAYER::setDependObj(COBJECT* obj) {
     dependObj = obj;
