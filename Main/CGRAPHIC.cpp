@@ -390,3 +390,12 @@ void CGRAPHIC::DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int firs
 		screen[first_x + 39 + i][first_y + 24].bgdColor = LIGHT_GRAY;
 	}
 }
+
+void CGRAPHIC::DrawLetter(char ch, int first_x, int first_y, int txtColor, int bgdColor) {
+	DrawObject(LETTER[ch - 'A'], first_x, first_y,txtColor, bgdColor);
+}
+void CGRAPHIC::drawString(string str, int x, int y, int num , int txtColor, int bgdColor) {
+	if (num < 0) num = str.length();
+	for (int i = str.length() - num; i < str.length(); i++)
+		DrawLetter(str[i], x + i * 3, y, txtColor, bgdColor);
+}

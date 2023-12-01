@@ -38,7 +38,7 @@ struct PIXEL {
 	wchar_t buffer;
 	int txtColor, bgdColor;
 };
-const vector<vector<wstring>> ALPHABET = {
+const vector<vector<wstring>> LETTER = {
  {  L"█▀█",
 	L"█▀█",
 	L"▀ ▀"},
@@ -115,8 +115,41 @@ const vector<vector<wstring>> ALPHABET = {
 	L" █ ",
 	L" ▀ "},
  {  L"▀▀█",
-	L"▄▀",
+	L"▄▀ ",
 	L"▀▀▀"},
+{	L"   ",
+	L"   ",
+	L"   " },
+{	L"▄█ ",
+	L" █ ",
+	L"▀▀▀" },
+{	L"▀▀█",
+	L"█▀▀",
+	L"▀▀▀" },
+{	L"▀▀█",
+	L"▀▀█",
+	L"▀▀▀" },
+{	L"█ █",
+	L"▀▀█",
+	L"  ▀" },
+{	L"█▀▀",
+	L"▀▀█",
+	L"▀▀▀" },
+{	L"█▀▀",
+	L"█▀█",
+	L"▀▀▀" },
+{	L"▀▀█",
+	L"  █",
+	L"  ▀" },
+{	L"█▀█",
+	L"█▀█",
+	L"▀▀▀" },
+{	L"█▀█",
+	L"▀▀█",
+	L"  ▀" },
+{	L"█▀█",
+	L"█ █",
+	L"▀▀▀" }
 };
 
 const vector<wstring> PAUSE_MENU = {
@@ -232,6 +265,9 @@ public:
 	void clear(int txtColor, int bgdColor);
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
+	void DrawLetter(char ch ,int first_x, int first_y, int txtColor, int bgdColor);
+	void drawString(string str, int x, int y, int num = -1, int txtColor, int bgdColor);
+
 	void DrawPauseMenu(vector<wstring> PauseMenu, int first_x, int first_y);
 	void DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y);
 	void DrawDrawer(vector<wstring>contentsArr, int first_x, int first_y, int txtColor = 0, int bgdColor = -1);
