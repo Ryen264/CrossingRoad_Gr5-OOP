@@ -10,13 +10,12 @@ const vector<int> AROUND_TREE_TYPELANE = { TREE_ID, 0, TREE_ID, 0, 0, 0, 0, 0, 0
 class CGRASSLANE : public CLANE {
 	const vector <wstring> FRAME =
 	{
-L"         ▄▄▄    ",
-L"       ▄██      ",
-L"   ▀█▄ █▀       ",
-L"     ▀▀       █ ",
-L"        ▀█▄ ▄█▀ ",
-L"          ▀ ▀   "
- 
+L"                ",
+L"                ",
+L"        ▄▀       ",
+L"     ▀▄ ▀        ",
+L"                ",
+L"                "
 //L"████████████████",
 //L"████████████████",
 //L"████████████████",
