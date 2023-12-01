@@ -13,7 +13,7 @@ CTREE::CTREE(int x, int y, bool isDouble) : COBJECT(x, y) {
 
 	//set colors
 	if (isDouble) {
-		for (int i = 1; i < 6; i++)
+		for (int i = 1; i <= 6; i++)
 		{
 			block[i][1].txtColor = LIGHT_GREEN;
 		}
@@ -76,6 +76,11 @@ CTREE::CTREE(int x, int y, bool isDouble) : COBJECT(x, y) {
 		
 	}
 	else {
+		for (int i = 2; i <= 6; i++) {
+			block[i][1].txtColor = LIGHT_GREEN;
+			block[i][1].bgdColor = LIGHT_GREEN;
+		}
+		block[4][5].bgdColor = SADDLE_BROWN;
 		for (int i = 1; i <= 5; i++)
 			block[i][0].bgdColor = LIGHT_GREEN;
 		block[6][0].bgdColor = DARK_GREEN;
