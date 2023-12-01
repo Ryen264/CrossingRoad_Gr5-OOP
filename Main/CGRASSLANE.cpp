@@ -22,7 +22,7 @@ CGRASSLANE::CGRASSLANE(int x, int y) : CLANE(x, y) {
 	//set buffer
 	for (int i = 0; i < BLOCK_WIDTH; i++)
 		for (int j = 0; j < BLOCK_HEIGHT; j++)
-            this->block[i][j] = { FRAME[j][i], LIGHT_GREEN, LIGHT_GREEN };
+            this->block[i][j] = { FRAME[j][i], DARK_GREEN, LIGHT_GREEN };
 }
 
 void CGRASSLANE::injuredPlayer(CPLAYER& player) {}

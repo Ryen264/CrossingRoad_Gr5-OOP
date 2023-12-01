@@ -267,7 +267,7 @@ public:
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawLetter(char ch ,int first_x, int first_y, int txtColor, int bgdColor);
-	void drawString(string str, int x, int y, int num = -1, int txtColor, int bgdColor);
+	void drawString(string str, int x, int y, int txtColor, int bgdColor, int num = -1);
 
 	void DrawPauseMenu(vector<wstring> PauseMenu, int first_x, int first_y);
 	void DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y);

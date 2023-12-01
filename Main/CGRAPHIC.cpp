@@ -89,173 +89,6 @@ void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y,
 		}
 	}
 }
-void CGRAPHIC::DrawDrawer(vector<wstring>Drawer, int first_x, int first_y, int txtColor, int bgdColor)
-{
-    vector<wstring> frame = Drawer;
-    for (int i = 0; i < 26; i++)
-        for (int j = 0; j < 26; j++)
-            this->screen[first_x + i][j] = { frame[j][i], BLACK, -1 };
-    int x = first_x;
-    int y = first_y;
-    for (int j = 1; j < 26; j++)
-    {
-        for (int i = 1; i < 8; i++)
-        {
-            this->screen[x + i][y + j].txtColor = SADDLE_BROWN;
-        }
-    }
-    for (int i = 1; i < 8; i++)
-    {
-        this->screen[x + i][y].bgdColor = SADDLE_BROWN;
-    }
-    for (int i = 8; i < 26; i++)
-    {
-        this->screen[x + i][y].bgdColor = LIGHT_BROWN;
-    }
-    for (int i = 8; i < 26; i++)
-    {
-        this->screen[x + i][y + 1].txtColor = LIGHT_BROWN;
-    }
-    for (int i = 17; i < 21; i++)
-    {
-        this->screen[x + i][y + 1].txtColor = LIGHT_BROWN;
-        this->screen[x + i][y + 1].bgdColor = SADDLE_BROWN;
-    }
-    for (int i = 8; i < 26; i++)
-    {
-        this->screen[x + i][y + 2].txtColor = LIGHT_BROWN;
-    }
-    for (int i = 8; i < 26; i++)
-    {
-        this->screen[x + i][y + 3].txtColor = LIGHT_BROWN;
-    }
-    for (int i = 8; i < 26; i++)
-    {
-        this->screen[x + i][y + 4].bgdColor = LIGHT_BROWN;
-    }
-    this->screen[x + 26][y + 4].bgdColor = BLACK;
-    for (int i = 8; i < 26; i++)
-    {
-        this->screen[x + i][y + 5].txtColor = LIGHT_BROWN;
-    }
-    for (int i = 17; i < 21; i++)
-    {
-        this->screen[x + i][y + 5].txtColor = SADDLE_BROWN;
-        this->screen[x + i][y + 5].bgdColor = LIGHT_BROWN;
-    }
-    for (int i = 8; i < 26; i++)
-    {
-        this->screen[x + i][y + 6].txtColor = LIGHT_BROWN;
-    }
-    for (int i = 8; i < 26; i++)
-    {
-        this->screen[x + i][y + 7].txtColor = LIGHT_BROWN;
-    }
-    for (int i = 8; i < 26; i++)
-    {
-        this->screen[x + i][y + 8].bgdColor = LIGHT_BROWN;
-    }
-    this->screen[26][8].bgdColor = BLACK;
-    for (int j = 9; j < 13; j++)
-    {
-        for (int i = 8; i < 26; i++)
-        {
-            this->screen[x + i][y + j].txtColor = LIGHT_BROWN;
-        }
-    }
-    for (int i = 17; i < 21; i++)
-    {
-        this->screen[x + i][y + 10].bgdColor = LIGHT_BROWN;
-        this->screen[x + i][y + 10].txtColor = SADDLE_BROWN;
-    }
-    for (int i = 8; i < 26; i++)
-    {
-        this->screen[x + i][y + 13].bgdColor = LIGHT_BROWN;
-    }
-    this->screen[x + 26][y + 13].bgdColor = BLACK;
-    for (int j = 14; j < 17; j++)
-    {
-        for (int i = 8; i < 26; i++)
-        {
-            this->screen[x + i][y + j].txtColor = LIGHT_BROWN;
-        }
-    }
-    for (int i = 17; i < 21; i++)
-    {
-        this->screen[x + i][y + 14].txtColor = SADDLE_BROWN;
-        this->screen[x + i][y + 14].bgdColor = LIGHT_BROWN;
-    }
-    for (int i = 8; i < 26; i++)
-    {
-        this->screen[x + i][y + 17].bgdColor = LIGHT_BROWN;
-    }
-    this->screen[x + 26][y + 17].bgdColor = BLACK;
-    for (int j = 18; j < 22; j++)
-    {
-        for (int i = 8; i < 26; i++)
-        {
-            this->screen[x + i][y + j].txtColor = LIGHT_BROWN;
-        }
-    }
-    for (int i = 17; i < 21; i++)
-    {
-        this->screen[x + i][y + 19].txtColor = SADDLE_BROWN;
-        this->screen[x + i][y + 19].bgdColor = LIGHT_BROWN;
-    }
-    for (int i = 8; i < 26; i++)
-    {
-        this->screen[x + i][y + 22].bgdColor = LIGHT_BROWN;
-    }
-    this->screen[x + 26][y + 22].bgdColor = BLACK;
-    for (int j = 23; j < 26; j++)
-    {
-        for (int i = 8; i < 26; i++)
-        {
-            this->screen[x + i][y + j].txtColor = LIGHT_BROWN;
-        }
-    }
-    for (int i = 17; i < 21; i++)
-    {
-        this->screen[x + i][y + 23].txtColor = SADDLE_BROWN;
-        this->screen[x + i][y + 23].bgdColor = LIGHT_BROWN;
-    }
-}
-
-void CGRAPHIC::DrawSmallDrawer(vector<wstring> SmallDrawer, int first_x, int first_y, int txtColor, int bgdColor)
-{
-    vector<wstring> frame = SmallDrawer;
-    for (int i = 0; i < 34; i++)
-        for (int j = 0; j < 8; j++)
-            this->screen[first_x + i][j] = { frame[j][i], BLACK, -1 };
-    int x = first_x;
-    int y = first_y;
-    this->screen[x + 16][y].bgdColor = BRIGHT_YELLOW;
-    this->screen[x + 17][y].bgdColor = BRIGHT_YELLOW;
-    for (int i = 18; i < 26; i++)
-    {
-        this->screen[x + i][y].bgdColor = WHITE;
-    }
-    this->screen[x + 26][y].bgdColor = BRIGHT_YELLOW;
-    this->screen[x + 27][y].bgdColor = BRIGHT_YELLOW;
-    for (int j = 1; j < 3; j++)
-    {
-        for (int i = 15; i < 29; i++)
-        {
-            this->screen[x + i][y + j].txtColor = BRIGHT_YELLOW;
-        }
-    }
-
-	for (int i = 0; i < contentsArr.size(); i++) {
-		if (y + i < SCREEN_HEIGHT) {
-			for (int j = 0; j < contentsArr[i].length(); j++) {
-				if (x + j < SCREEN_WIDTH) {
-					this->screen[x + j][y + i] = { contentsArr[i][j], txtColor, bgdColor };
-				}
-			}
-		}
-	}
-}
-
 void CGRAPHIC::DrawPauseMenu(vector<wstring> PauseMenu, int first_x, int first_y) {
 	vector<wstring> frame = PAUSE_MENU;
 	//set buffer
@@ -330,7 +163,6 @@ void CGRAPHIC::DrawPauseMenu(vector<wstring> PauseMenu, int first_x, int first_y
 	screen[first_x + 13][first_y + 6].bgdColor = LIGHT_GREEN;
 	screen[first_x + 14][first_y + 6].bgdColor = LIGHT_GREEN;
 }
-
 void CGRAPHIC::DrawDrawer(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor)
 {
 	vector<wstring> frame = Drawer;
@@ -462,7 +294,6 @@ void CGRAPHIC::DrawDrawer(vector<wstring> contentsArr, int first_x, int first_y,
 		this->screen[x+i][y+23].bgdColor = LIGHT_BROWN;
 	}
 }
-
 void CGRAPHIC::DrawSmallDrawer(vector<wstring> SmallDrawer, int first_x, int first_y, int txtColor, int bgdColor)
 {
 	vector<wstring> frame = SmallDrawer;
@@ -562,7 +393,7 @@ void CGRAPHIC::DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int firs
 void CGRAPHIC::DrawLetter(char ch, int first_x, int first_y, int txtColor, int bgdColor) {
 	DrawObject(LETTER[ch - 'A'], first_x, first_y,txtColor, bgdColor);
 }
-void CGRAPHIC::drawString(string str, int x, int y, int num , int txtColor, int bgdColor) {
+void CGRAPHIC::drawString(string str, int x, int y, int txtColor, int bgdColor, int num) {
 	if (num < 0) num = str.length();
 	for (int i = str.length() - num; i < str.length(); i++)
 		DrawLetter(str[i], x + i * 3, y, txtColor, bgdColor);

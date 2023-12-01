@@ -19,7 +19,6 @@ CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) : CLANE(x, y) {
     for (int i = 0; i < 16; i++)
         this->block[i][0].bgdColor = LIGHT_GREEN;
 }
-
 CVEHICLELANE::~CVEHICLELANE() {
     if (ptrafficLight != NULL) delete ptrafficLight;
 }
@@ -164,7 +163,6 @@ void CVEHICLELANE::lightWork()
     ptrafficLight->setLightColor(GREEN_TRAFFICLIGHT);
     timeLight = 0;
 }
-
 void CVEHICLELANE::Move() {
     if (lightPos >= 0) lightWork();
     timeCount++;
