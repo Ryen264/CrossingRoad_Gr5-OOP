@@ -1,7 +1,7 @@
 ﻿#include "CGAME.h"
 CGAME::CGAME() {
 	this->Configure();
-	this->cPlayer = new CPLAYER(0,0,RED_CHARACTER);
+	this->cPlayer = new CPLAYER(0,0);
 }
 CGAME::~CGAME() {
 	delete this->cPlayer;

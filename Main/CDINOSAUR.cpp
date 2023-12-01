@@ -89,10 +89,25 @@ void CDINOSAUR::setColor(int color) {
 			block[i][2].bgdColor = colorArr[0];
 			block[i][2].txtColor = colorArr[0];
 		}
-		for (int i = 5; i <= 8; i++)
+		for (int i = 3; i <= 6; i++)
 		{
 			block[i][3].bgdColor = colorArr[0];
 		}
+		for (int i = 7; i <= 9; i++) {
+			block[i][3].bgdColor = colorArr[1];
+			block[i][3].txtColor = colorArr[0];
+		}
+		for (int i = 7; i <= 9; i++) {
+			block[i][4].bgdColor = colorArr[1];
+			block[i][4].txtColor = BLACK;
+		}
+		for (int i = 10; i <= 11; i++)
+		{
+			block[i][3].bgdColor = colorArr[0];
+			block[i][3].txtColor = colorArr[0];
+		}
+		block[13][3].bgdColor = colorArr[0];
+		
 		//for (int i = 7; i <= 11; i++)
 		//	block[i][3].txtColor = color[0];
 
@@ -102,7 +117,6 @@ void CDINOSAUR::setColor(int color) {
 
 		for (int i = 7; i <= 9; i++) {
 			block[i][3].bgdColor = colorArr[1];
-			block[i][4].bgdColor = colorArr[1];
 		}
 	}
 }
