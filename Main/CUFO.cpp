@@ -13,9 +13,9 @@ CUFO::CUFO(int x, int y, bool isRight) {
 	for (int i = 0; i < WIDTH; i++)
 		for (int j = 0; j < HEIGHT; j++)
 			if (frame[j][i] != ' ')
-				this->block[i][j] = { frame[j][i], BLACK, -1 };
-			else
 				this->block[i][j] = { frame[j][i], -1, -1 };
+			else
+				this->block[i][j] = { frame[j][i], BLACK, -1 };
 
 	//set colors
 	if (isRight) {
