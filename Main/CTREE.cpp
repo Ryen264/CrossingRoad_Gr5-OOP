@@ -76,42 +76,43 @@ CTREE::CTREE(int x, int y, bool isDouble) : COBJECT(x, y) {
 		
 	}
 	else {
-		for (int i = 2; i <= 6; i++) {
+		for (int i = 6; i <= 10; i++) {
 			block[i][1].txtColor = LIGHT_GREEN;
 			block[i][1].bgdColor = LIGHT_GREEN;
 		}
 		block[4][5].bgdColor = SADDLE_BROWN;
-		for (int i = 1; i <= 5; i++)
+		for (int i = 5; i <= 9; i++)
 			block[i][0].bgdColor = LIGHT_GREEN;
 		block[6][0].bgdColor = DARK_GREEN;
 		block[7][y].bgdColor = DARK_GREEN;
-		for (int i = 1; i <= 7; i++)
+		for (int i = 5; i <= 11; i++)
 		{
-			if (i == 1)
+			if (i == 5)
 			{
 				block[i][1].txtColor = DARK_GREEN;
 				block[i][1].bgdColor = LIGHT_GREEN;
 			}
-			else if (i == 7)
+			else if (i == 11)
 				block[i][1].txtColor = DARK_GREEN;
 		}
-		for (int i = 1; i <= 3; i++)
+		for (int i = 5; i <= 7; i++)
 			block[i][2].txtColor = DARK_GREEN;
-		for (int i = 4; i <= 6; i++)
+		for (int i = 8; i <= 10; i++)
 		{
 			block[i][2].txtColor = DARK_GREEN;
 			block[i][2].bgdColor = LIGHT_GREEN;
 		}
-		block[7][2].txtColor = DARK_GREEN;
+		block[11][2].txtColor = DARK_GREEN;
 
-		block[3][3].bgdColor = SADDLE_BROWN;
-		block[5][3].bgdColor = SADDLE_BROWN;
+		block[7][3].bgdColor = SADDLE_BROWN;
+		block[9][3].bgdColor = SADDLE_BROWN;
 
-		block[3][4].txtColor = SADDLE_BROWN;
-		block[3][4].bgdColor = BLACK;
-		block[4][4].txtColor = SADDLE_BROWN;
-		block[4][4].bgdColor = BLACK;
-		block[5][4].txtColor = SADDLE_BROWN;
-		block[5][4].bgdColor = BLACK;
+		block[7][4].txtColor = SADDLE_BROWN;
+		block[7][4].bgdColor = BLACK;
+		block[8][4].txtColor = SADDLE_BROWN;
+		block[8][4].bgdColor = BLACK;
+		block[9][4].txtColor = SADDLE_BROWN;
+		block[9][4].bgdColor = BLACK;
+		block[8][5].bgdColor = SADDLE_BROWN;
 	}
 }
