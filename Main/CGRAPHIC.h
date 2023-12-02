@@ -59,6 +59,7 @@ public:
 
 	void drawCharacterFrame(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
 	void drawCell(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
+	void drawCheck(int first_x, int first_y, int txtColor = DARK_GREEN, int bgdColor = -1);
 
 	void DrawDrawer(int first_x, int first_y);
 	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);
@@ -83,6 +84,11 @@ const vector<wstring> CELL = {
 	L"█     █",
 	L"█     █",
 	L"▀▀▀▀▀▀▀"
+};
+const vector<wstring> CHECK = {
+	L"    ▄▀█",
+	L"█▀▄▀▄▀ ",
+	L" ▀▄▀   "
 };
 const vector<wstring> CHARACTER_FRAME = {
 	L"█               █",

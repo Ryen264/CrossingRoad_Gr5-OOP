@@ -141,6 +141,15 @@ void CGRAPHIC::drawCell(int first_x, int first_y, int txtColor, int bgdColor) {
 		screen[first_x + i][first_y + 3].bgdColor = -1;
 }
 
+void CGRAPHIC::drawCheck(int first_x, int first_y, int txtColor = DARK_GREEN, int bgdColor = -1) {
+	DrawObject(CHECK, first_x, first_y, txtColor, bgdColor);
+	screen[first_x + 1][first_y + 1].bgdColor = LIGHT_GREEN;
+	screen[first_x + 2][first_y + 2].bgdColor = LIGHT_GREEN;
+	screen[first_x + 3][first_y + 1].bgdColor = LIGHT_GREEN;
+	screen[first_x + 4][first_y + 1].bgdColor = LIGHT_GREEN;
+	screen[first_x + 5][first_y + 0].bgdColor = LIGHT_GREEN;
+}
+
 void CGRAPHIC::DrawDrawer(int first_x, int first_y)
 {
 	vector<wstring> frame = Drawer;
