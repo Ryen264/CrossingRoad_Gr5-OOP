@@ -73,6 +73,7 @@ public:
 
 	void DrawPauseMenu(int first_x, int first_y);
 	void DrawChooseCharacterMenu(int first_x, int first_y);
+	void DrawPerryTalk(int first_x, int first_y);
 
 };
 const vector<wstring> COLON = {
@@ -404,4 +405,25 @@ L"  ▄▄ ▄▀▀▄ ▄▄▄  ",
 L"▄▀  ▀    ▀   ▀▄",
 L"█             █",
 L" ▀▄▄▄▄▄▄▄▄▄▄▄▀ ",
+};
+const vector<wstring>PERRY_TALK = {
+L" ▄█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▄                       ",
+L"█▀                                     ▀█                      ",
+L"█                                       █                      ",
+L"█                                       █                      ",
+L"█                                       █                      ",
+L"█                                       █                      ",
+L"█                                       █                      ",
+L"█                                       █                      ",
+L"▀█▄                                   ▄█▀                      ",
+L"  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█   █▀▀▀▀                        ",
+L"                               ▀▄  █                           ",
+L"                                ▀▄  █                          ",
+L"                                  ▀▄▄█                         ",
+L"                                         ▀▄                    ",
+L"                                       ▄▄▀▄▄▄▄▄▄▄▄▄▄▄▄         ",
+L"                                      ██▄█████████████ ▄▄▄▀▀▀▀▄",
+L"                                     ▄▄▄██▄███████████▀▄▀█▀▄█▄▀",
+L"                                      ▀▀▀▄█▀██▀▀██▀▀██▀▀▀▀     ",
+L"                                         ▀▀ ▀▀ ▀▀▀ ▀▀▀         "
 };

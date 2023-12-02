@@ -735,6 +735,157 @@ void CGRAPHIC::DrawChooseCharacterMenu(int first_x, int first_y) {
 		for (int j = 0; j < 3; j++)
 			drawCell(6 + i * 14 + first_x, 11 + j * 6 + first_y, BLACK, colorArr[i][j]);
 }
+void CGRAPHIC::DrawPerryTalk(int first_x, int first_y)
+{
+	//set buffer
+	for (int i = 0; i < 64; i++)
+		for (int j = 0; j < 19; j++)
+			screen[first_x + i][first_y + j] = { PAUSE_MENU[j][i], BLACK, -1 };
+	//set color
+	int x = first_x;
+	int y = first_y;
+	for (int i = 3; i < 38; i++)
+	{
+		this->screen[x+i][y].bgdColor = WHITE;
+	}
+	for (int i = 1; i < 40; i++)
+	{
+		this->screen[x+i][y+1].bgdColor = WHITE;
+	}
+	for (int j = 2; j < 8; j++)
+	{
+		for (int i = 1; i < 40; i++)
+		{
+			this->screen[x+i][y+j].bgdColor = WHITE;
+		}
+	}
+
+	for (int i = 2; i < 39; i++)
+	{
+		this->screen[x+i][y+8].bgdColor = WHITE;
+	}
+	this->screen[x+31][y+9].bgdColor = WHITE;
+	this->screen[x+32][y+9].bgdColor = WHITE;
+	this->screen[x+33][y+9].bgdColor = WHITE;
+	for (int i = 32; i < 35; i++)
+	{
+		this->screen[x+i][y+10].bgdColor = WHITE;
+	}
+	for (int i = 33; i < 36; i++)
+	{
+		this->screen[x+i][y+11].bgdColor = WHITE;
+	}
+	this->screen[x+35][y+12].bgdColor = WHITE;
+	this->screen[x+36][y+12].bgdColor = WHITE;
+	for (int i = 39; i < 55; i++)
+	{
+		this->screen[x+i][y+14].txtColor = SKY_BLUE;
+	}
+	this->screen[x+41][y+14].txtColor = BLACK;
+	this->screen[x+41][y+14].bgdColor = SKY_BLUE;
+	this->screen[x+39][y+15].txtColor = WHITE;
+	this->screen[x+40][y+15].bgdColor = SKY_BLUE;
+	this->screen[x+40][y+15].txtColor = BRIGHT_YELLOW;
+	this->screen[x+41][y+15].txtColor = SKY_BLUE;
+	this->screen[x+42][y+15].txtColor = SKY_BLUE;
+	this->screen[x+43][y+15].txtColor = WHITE;
+	for (int i = 45; i < 54; i++)
+	{
+		this->screen[x+i][y+15].txtColor = SKY_BLUE;
+	}
+	this->screen[x+54][y+15].txtColor = BRIGHT_YELLOW;
+	this->screen[x+54][y+15].bgdColor = -1;
+	this->screen[x+55][y+15].txtColor = BRIGHT_YELLOW;
+	this->screen[x+55][y+15].bgdColor = -1;
+	this->screen[x+56][y+15].txtColor = BRIGHT_YELLOW;
+	this->screen[x+56][y+15].bgdColor = -1;
+	this->screen[x+57][y+15].txtColor = ORANGE;
+	this->screen[x+57][y+15].bgdColor = -1;
+	this->screen[x+58][y+15].txtColor = ORANGE;
+	this->screen[x+58][y+15].bgdColor = BRIGHT_YELLOW;
+	this->screen[x+59][y+15].txtColor = BRIGHT_YELLOW;
+	this->screen[x+59][y+15].bgdColor = ORANGE;
+	this->screen[x+60][y+15].txtColor = ORANGE;
+	this->screen[x+60][y+15].bgdColor = BRIGHT_YELLOW;
+	this->screen[x+61][y+15].txtColor = BRIGHT_YELLOW;
+	this->screen[x+61][y+15].bgdColor = ORANGE;
+	this->screen[x+62][y+15].txtColor = BRIGHT_YELLOW;
+	this->screen[x+62][y+15].bgdColor = -1;
+
+	this->screen[x+40][y+16].txtColor = BRIGHT_YELLOW;
+	this->screen[x+41][y+16].txtColor = BRIGHT_YELLOW;
+	this->screen[x+42][y+16].txtColor = BRIGHT_YELLOW;
+	this->screen[x+42][y+16].bgdColor = SKY_BLUE;
+
+	this->screen[x+40][y+16].txtColor = BRIGHT_YELLOW;
+	this->screen[x+40][y+16].bgdColor = ORANGE;
+	this->screen[x+39][y+16].txtColor = BRIGHT_YELLOW;
+	this->screen[x+39][y+16].bgdColor = -1;
+	this->screen[x+38][y+16].txtColor = BRIGHT_YELLOW;
+	this->screen[x+38][y+16].bgdColor = SKY_BLUE;
+	this->screen[x+39][y+16].txtColor = BRIGHT_YELLOW;
+	this->screen[x+39][y+16].bgdColor = SKY_BLUE;
+	this->screen[x+37][y+16].txtColor = BRIGHT_YELLOW;
+	this->screen[x+37][y+16].bgdColor = -1;
+
+	for (int i = 43; i < 54; i++)
+	{
+		this->screen[x+i][y+16].txtColor = SKY_BLUE;
+	}
+	this->screen[x+54][y+16].txtColor = ORANGE;
+	this->screen[x+54][y+16].bgdColor = BRIGHT_YELLOW;
+	this->screen[x+55][y+16].txtColor = ORANGE;
+	this->screen[x+55][y+16].bgdColor = BRIGHT_YELLOW;
+	this->screen[x+56][y+16].txtColor = ORANGE;
+	this->screen[x+56][y+16].bgdColor = BRIGHT_YELLOW;
+	this->screen[x+57][y+16].txtColor = BRIGHT_YELLOW;
+	this->screen[x+58][y+16].txtColor = ORANGE;
+	this->screen[x+58][y+16].bgdColor = BRIGHT_YELLOW;
+	this->screen[x+59][y+16].txtColor = ORANGE;
+	this->screen[x+59][y+16].bgdColor = BRIGHT_YELLOW;
+	this->screen[x+60][y+16].txtColor = BRIGHT_YELLOW;
+	this->screen[x+61][y+16].txtColor = ORANGE;
+	this->screen[x+61][y+16].bgdColor = BRIGHT_YELLOW;
+	this->screen[x+62][y+16].txtColor = ORANGE;
+	this->screen[x+62][y+16].bgdColor = BRIGHT_YELLOW;
+	for (int i = 38; i < 40; i++)
+	{
+		this->screen[x+i][y+17].txtColor = ORANGE;
+		this->screen[x+i][y+17].bgdColor = -1;
+	}
+	this->screen[x+40][y+17].txtColor = ORANGE;
+	this->screen[x+40][y+17].bgdColor = -1;
+	this->screen[x+41][y+17].txtColor = SKY_BLUE;
+	this->screen[x+41][y+17].bgdColor = BRIGHT_YELLOW;
+	for (int i = 42; i < 54; i++)
+	{
+		this->screen[x+i][y+17].txtColor = SKY_BLUE;
+		this->screen[x+i][y+17].bgdColor = -1;
+	}
+	this->screen[x+54][y+17].txtColor = BRIGHT_YELLOW;
+	this->screen[x+54][y+17].bgdColor = -1;
+	this->screen[x+55][y+17].txtColor = BRIGHT_YELLOW;
+	this->screen[x+55][y+17].bgdColor = -1;
+	this->screen[x+56][y+17].txtColor = ORANGE;
+	this->screen[x+56][y+17].bgdColor = -1;
+	this->screen[x+57][y+17].txtColor = ORANGE;
+	this->screen[x+57][y+17].bgdColor = -1;
+	for (int i = 40; i < 54; i++)
+	{
+		this->screen[x+i][y+18].txtColor = SKY_BLUE;
+		this->screen[x+i][y+18].bgdColor = -1;
+	}
+	for (int i = 47; i < 50; i++)
+	{
+		this->screen[x+i][y+18].txtColor = ORANGE;
+		this->screen[x+i][y+18].bgdColor = -1;
+	}
+	for (int i = 51; i < 54; i++)
+	{
+		this->screen[x+i][y+18].txtColor = BRIGHT_YELLOW;
+		this->screen[x+i][y+18].bgdColor = -1;
+	}
+}
 void CGRAPHIC::DrawPauseMenu(int first_x, int first_y) {
 	//set buffer
 	for (int i = 0; i < 53; i++)
