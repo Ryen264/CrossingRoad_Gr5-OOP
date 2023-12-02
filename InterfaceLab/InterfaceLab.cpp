@@ -16,7 +16,7 @@ int main() {
 	CGRAPHIC ObjLayer = BgdLayer;
 	//COBJECT testobject;
 	//draw object
-
+	ObjLayer.drawClipBoard(0,0,46,20);
 	//testobject.DrawBlock(ObjLayer);
 	ObjLayer.display();
 	_getch();

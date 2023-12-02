@@ -13,13 +13,13 @@ struct THEME {
 	int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
 		SADDLE_BROWN, DARK_RED, RED, ORANGE,
 		BLUE, DARK_BLUE, LIGHT_CYAN, LIGHT_GRAY,
-		FELD_GRAU, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN; //All colors used, <id>: color used, -1: else
+		SAND, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN; //All colors used, <id>: color used, -1: else
 };
 const THEME THEME_BASIC = { {
 	RGB(0, 0, 0), RGB(135, 206, 235), RGB(255, 255, 255), RGB(34,177,76),
 	RGB(139, 69, 19), RGB(139, 0, 0), RGB(255, 0, 0), RGB(255, 85, 0),
 	RGB(25, 140, 255), RGB(0, 77, 153), RGB(224, 255, 255), RGB(180, 180, 180),
-	RGB(77, 93, 83), RGB(255, 170, 29), RGB(144, 238, 144), RGB(181, 101, 29)},
+	RGB(255, 249, 189), RGB(255, 170, 29), RGB(144, 238, 144), RGB(181, 101, 29)},
 	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 const THEME THEME_LAND = { {
 	RGB(255, 255, 255), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0),
@@ -29,7 +29,7 @@ const THEME THEME_LAND = { {
 extern int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
 SADDLE_BROWN, DARK_RED, RED, ORANGE,
 BLUE, DARK_BLUE, LIGHT_CYAN, LIGHT_GRAY,
-FELD_GRAU, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN;
+SAND, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN;
 
 void SetupTheme(THEME theme = THEME_BASIC);
 
@@ -46,4 +46,5 @@ public:
 	void clear(int txtColor, int bgdColor);
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
+	void drawClipBoard(int first_x, int first_y, int width, int height);
 };
