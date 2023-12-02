@@ -3,8 +3,8 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
 	
-	WIDTH = 43;
-	HEIGHT = 21;
+	WIDTH = 16;
+	HEIGHT = 5;
 
 	this->block = new PIXEL * [WIDTH];
 	for (int i = 0; i <WIDTH; i++)
@@ -21,8 +21,58 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 	//set colors
 
 	if (isRight) {
+
+		//HAT
+		block[6][0].txtColor = SADDLE_BROWN;
+		block[6][0].bgdColor = -1;
+		block[7][0].txtColor = SADDLE_BROWN;
+		block[8][0].txtColor = SADDLE_BROWN;
+		block[9][0].txtColor = SADDLE_BROWN;
+		block[0][0].bgdColor = -1;
+
+		block[4][1].txtColor = BLACK;
+		block[4][1].bgdColor = -1;
+		block[5][1].txtColor = SADDLE_BROWN;
+		block[5][1].bgdColor = BLACK;
+		block[6][1].txtColor = SADDLE_BROWN;
+		block[6][1].bgdColor = BLACK;
+		block[7][1].txtColor = SADDLE_BROWN;
+		block[7][1].bgdColor = BLACK;
+		block[8][1].txtColor = SADDLE_BROWN;
+		block[8][1].bgdColor = BLACK;
+		for (int i = 9; i < 12; i++)
+		{
+			block[i][1].txtColor = SADDLE_BROWN;
+		}
+		block[0][2].txtColor = SADDLE_BROWN;
+		block[1][2].txtColor = SADDLE_BROWN;
+		block[2][2].txtColor = SADDLE_BROWN;
+		block[2][2].bgdColor = -1;
+		block[3][2].txtColor = SADDLE_BROWN;
+		block[3][2].bgdColor = -1;
+		block[4][2].txtColor = BLACK;
+		block[4][2].bgdColor = SADDLE_BROWN;
+		block[5][2].txtColor = BLACK;
+		block[5][2].bgdColor = SADDLE_BROWN;
+
+		for (int i = 6; i < 11; i++)
+		{
+			block[i][2].txtColor = BLACK;
+		}
+		block[11][2].txtColor = BLACK;
+		block[11][2].bgdColor = SADDLE_BROWN;
+		for (int i = 1; i <= 14; i++)
+		{
+			block[i][3].txtColor = SADDLE_BROWN;
+			block[i][3].bgdColor = -1;
+		}
+		for (int i = 5; i < 13; i++)
+		{
+			block[i][4].txtColor = SADDLE_BROWN;
+			block[i][4].bgdColor = -1;
+		}
 		//BIG DINOSAUR
-		for (int i = 23; i < 39; i++)
+		/*for (int i = 23; i < 39; i++)
 		{
 			block[i][0].bgdColor = DARK_GREEN;
 		}

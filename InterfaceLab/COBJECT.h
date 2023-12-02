@@ -361,7 +361,7 @@ L"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"
 };*/
 
 //BIG_DINOSAUR
-const vector<wstring>FRAME_LEFT = {
+/*const vector<wstring>FRAME_LEFT = {
 L"                      █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█  ",
 L"                    █▀▀                ▀▀█",
 L"                    █      ███           █",
@@ -405,7 +405,22 @@ L"   █                     ▄▄█▀▀            ",
 L"    █▄▄▄▄▄▄    ▄▄▄    ▄▄█▀                ",
 L"          █  ▄▀   ▀▄  █                   ",
 L"          █  █     █  █                   ",
-L"          ▀▀▀▀     ▀▀▀▀                   " };
+L"          ▀▀▀▀     ▀▀▀▀                   " };*/
+//HAT
+const vector<wstring>FRAME_RIGHT = {
+L"      ▄██▄     ",
+L"    ▄▀▀▀████   ",
+L"██▄▄▀▀█████▄   ",
+L" ▀▀███████████▄",
+L"     ▀▀▀▀▀▀▀▀  ",
+};
+const vector<wstring>FRAME_LEFT = {
+L"      ▄██▄     ",
+L"    ▄▀▀▀████   ",
+L"██▄▄▀▀█████▄   ",
+L" ▀▀███████████▄",
+L"     ▀▀▀▀▀▀▀▀  ",
+};
 protected:
     int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1;
 	int WIDTH = BLOCK_WIDTH, HEIGHT = BLOCK_HEIGHT;

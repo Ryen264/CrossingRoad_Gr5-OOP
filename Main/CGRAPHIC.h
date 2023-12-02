@@ -64,6 +64,7 @@ public:
 	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);
 	void DrawDinasourPicture(int first_x, int first_y, int drawerColor = DARK_GREEN, int Belly = LIGHT_GREEN);
 	void DrawBigDinoSaur(int first_x, int first_y);
+	void DrawHat(int first_x, int first_y);
 };
 const vector<wstring> DOT = {
 	L"███",
@@ -324,3 +325,10 @@ L"    █▄▄▄▄▄▄    ▄▄▄    ▄▄█▀                ",
 L"          █  ▄▀   ▀▄  █                   ",
 L"          █  █     █  █                   ",
 L"          ▀▀▀▀     ▀▀▀▀                   " };
+const vector<wstring>HAT = {
+L"      ▄██▄     ",
+L"    ▄▀▀▀████   ",
+L"██▄▄▀▀█████▄   ",
+L" ▀▀███████████▄",
+L"     ▀▀▀▀▀▀▀▀  ",
+};

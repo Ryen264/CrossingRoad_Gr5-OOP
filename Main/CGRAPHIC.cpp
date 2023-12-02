@@ -573,6 +573,60 @@ void CGRAPHIC::DrawBigDinoSaur(int first_x, int first_y)
 	this->screen[x+21][y+19].bgdColor = DARK_GREEN;
 
 }
+void CGRAPHIC::DrawHat(int first_x, int first_y)
+{
+	vector<wstring>frame = HAT;
+	//set buffer
+	for (int i = 0; i < 16; i++)
+		for (int j = 0; j < 5; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], SADDLE_BROWN, -1 };
+	//set color
+	int x = first_x;
+	int y = first_y;
+	this->screen[x+6][y].txtColor = SADDLE_BROWN;
+	this->screen[x+6][y].bgdColor = -1;
+	this->screen[x+7][y].txtColor = SADDLE_BROWN;
+	this->screen[x+8][y].txtColor = SADDLE_BROWN;
+	this->screen[x+9][y].txtColor = SADDLE_BROWN;
+	this->screen[x+9][y].bgdColor = -1;
+
+	this->screen[x+4][y+1].txtColor = BLACK;
+	this->screen[x+4][y+1].bgdColor = -1;
+	this->screen[x+5][y+1].txtColor = SADDLE_BROWN;
+	this->screen[x+5][y+1].bgdColor = BLACK;
+	this->screen[x+6][y+1].txtColor = SADDLE_BROWN;
+	this->screen[x+6][y+1].bgdColor = BLACK;
+	this->screen[x+7][y+1].txtColor = SADDLE_BROWN;
+	this->screen[x+7][y+1].bgdColor = BLACK;
+	this->screen[x+8][y+1].txtColor = SADDLE_BROWN;
+	this->screen[x+8][y+1].bgdColor = BLACK;
+	for (int i = 9; i < 12; i++)
+	{
+		this->screen[x+i][y+1].txtColor = SADDLE_BROWN;
+	}
+	this->screen[x][y+2].txtColor = SADDLE_BROWN;
+	this->screen[x+1][y+2].txtColor = SADDLE_BROWN;
+	this->screen[x+2][y+2].txtColor = SADDLE_BROWN;
+	this->screen[x+2][y+2].bgdColor = -1;
+	this->screen[x+3][y+2].txtColor = SADDLE_BROWN;
+	this->screen[x+3][y+2].bgdColor = -1;
+	this->screen[x+4][y+2].txtColor = BLACK;
+	this->screen[x+4][y+2].bgdColor = SADDLE_BROWN;
+	this->screen[x+5][y+2].txtColor = BLACK;
+	this->screen[x+5][y+2].bgdColor = SADDLE_BROWN;
+
+	for (int i = 6; i < 11; i++)
+	{
+		this->screen[x+i][y+2].txtColor = BLACK;
+	}
+	this->screen[x+11][y+2].txtColor = BLACK;
+	this->screen[x+11][y+2].bgdColor = SADDLE_BROWN;
+	for (int i = 1; i <= 14; i++)
+	{
+		this->screen[x+i][y+3].txtColor = SADDLE_BROWN;
+		this->screen[x+i][y+3].bgdColor = -1;
+	}
+}
 void CGRAPHIC::DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y) {
 	vector<wstring> frame = FLOPPY_DISC;
 
