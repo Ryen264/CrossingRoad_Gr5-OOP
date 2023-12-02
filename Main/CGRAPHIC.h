@@ -65,6 +65,8 @@ public:
 	void DrawDinasourPicture(int first_x, int first_y, int drawerColor = DARK_GREEN, int Belly = LIGHT_GREEN);
 	void DrawBigDinoSaur(int first_x, int first_y);
 	void DrawHat(int first_x, int first_y);
+	void DrawCloud_1(int first_x, int first_y);
+	void DrawCloud_2(int first_x, int first_y);
 };
 const vector<wstring> DOT = {
 	L"███",
@@ -331,4 +333,16 @@ L"    ▄▀▀▀████   ",
 L"██▄▄▀▀█████▄   ",
 L" ▀▀███████████▄",
 L"     ▀▀▀▀▀▀▀▀  ",
+};
+const vector<wstring>FRAME_CLOUD_1 = {
+L"     ▄▀▀▄      ",
+L" ▄▀▀▀    ▀▀▀▀▄ ",
+L"█             █",
+L" ▀▄▄▄▄▄▄▄▄▄▄▄▀ "
+};
+const vector<wstring>FRAME_CLOUD_2 = {
+L"  ▄▄ ▄▀▀▄ ▄▄▄  ",
+L"▄▀  ▀    ▀   ▀▄",
+L"█             █",
+L" ▀▄▄▄▄▄▄▄▄▄▄▄▀ ",
 };

@@ -627,6 +627,76 @@ void CGRAPHIC::DrawHat(int first_x, int first_y)
 		this->screen[x+i][y+3].bgdColor = -1;
 	}
 }
+void CGRAPHIC::DrawCloud_1(int first_x, int first_y)
+{
+	vector<wstring>frame = FRAME_CLOUD_1;
+	//set buffer
+	for (int i = 0; i < 16; i++)
+		for (int j = 0; j < 24; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, -1 };
+	//set color
+	int x = first_x;
+	int y = first_y;
+	this->screen[x+5][y].bgdColor = -1;
+	this->screen[x+6][y].bgdColor = WHITE;
+	this->screen[x+7][y].bgdColor = WHITE;
+	this->screen[x+8][y].bgdColor = -1;
+	this->screen[x+1][y+1].bgdColor = -1;
+	this->screen[x+14][y+1].bgdColor = -1;
+	for (int i = 2; i < 14; i++)
+	{
+		this->screen[x+i][y+1].bgdColor = WHITE;
+	}
+	for (int i = 1; i < 14; i++)
+	{
+		this->screen[x+i][y+2].bgdColor = WHITE;
+		this->screen[x+i][y+2].txtColor = WHITE;
+	}
+	this->screen[x+1][y+3].bgdColor = -1;
+	this->screen[x+14][y+3].bgdColor = -1;
+	for (int i = 2; i < 14; i++)
+	{
+		this->screen[x+i][y+3].bgdColor = WHITE;
+	}
+}
+void CGRAPHIC::DrawCloud_2(int first_x, int first_y)
+{
+	vector<wstring> frame = FRAME_CLOUD_2;
+
+	//set buffer
+	for (int i = 0; i < 16; i++)
+		for (int j = 0; j < 4; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, -1 };
+
+	//set color
+	int x = first_x;
+	int y = first_y;
+	this->screen[x+2][y].bgdColor = -1;
+	this->screen[x+3][y].bgdColor = -1;
+	this->screen[x+5][y].bgdColor = -1;
+	this->screen[x+8][y].bgdColor = -1;
+	this->screen[x+10][y].bgdColor = -1;
+	this->screen[x+11][y].bgdColor = -1;
+	this->screen[x+12][y].bgdColor = -1;
+	for (int i = 1; i < 15; i++)
+	{
+		this->screen[x+i][y+1].bgdColor = WHITE;
+	}
+	this->screen[x][y+1].bgdColor = -1;
+	this->screen[x+15][y+1].bgdColor = -1;
+	for (int i = 1; i < 14; i++)
+	{
+		this->screen[x+i][y+2].bgdColor = WHITE;
+		this->screen[x+i][y+2].txtColor = WHITE;
+	}
+	this->screen[x+1][y+3].bgdColor - 1;
+	this->screen[x+14][y+3].bgdColor - 1;
+	for (int i = 2; i < 14; i++)
+	{
+		this->screen[x + i][y + 3].bgdColor = WHITE;
+	}
+}
+
 void CGRAPHIC::DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y) {
 	vector<wstring> frame = FLOPPY_DISC;
 

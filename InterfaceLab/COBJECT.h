@@ -407,7 +407,7 @@ L"          █  ▄▀   ▀▄  █                   ",
 L"          █  █     █  █                   ",
 L"          ▀▀▀▀     ▀▀▀▀                   " };*/
 //HAT
-const vector<wstring>FRAME_RIGHT = {
+/*const vector<wstring>FRAME_RIGHT = {
 L"      ▄██▄     ",
 L"    ▄▀▀▀████   ",
 L"██▄▄▀▀█████▄   ",
@@ -420,6 +420,33 @@ L"    ▄▀▀▀████   ",
 L"██▄▄▀▀█████▄   ",
 L" ▀▀███████████▄",
 L"     ▀▀▀▀▀▀▀▀  ",
+};*/
+//CLOUD 1
+/*const vector<wstring> FRAME_RIGHT = {
+L"     ▄▀▀▄      ",
+L" ▄▀▀▀    ▀▀▀▀▄ ",
+L"█             █",
+L" ▀▄▄▄▄▄▄▄▄▄▄▄▀ "
+};
+
+const vector<wstring> FRAME_LEFT = {
+L"     ▄▀▀▄      ",
+L" ▄▀▀▀    ▀▀▀▀▄ ",
+L"█             █",
+L" ▀▄▄▄▄▄▄▄▄▄▄▄▀"
+};*/
+//CLOUD 2
+const vector<wstring>FRAME_RIGHT = {
+L"  ▄▄ ▄▀▀▄ ▄▄▄  ",
+L"▄▀  ▀    ▀   ▀▄",
+L"█             █",
+L" ▀▄▄▄▄▄▄▄▄▄▄▄▀ ",
+};
+const vector<wstring>FRAME_LEFT = {
+L"  ▄▄ ▄▀▀▄ ▄▄▄  ",
+L"▄▀  ▀    ▀   ▀▄",
+L"█             █",
+L" ▀▄▄▄▄▄▄▄▄▄▄▄▀ ",
 };
 protected:
     int x, y, numberOfBlock = 1, numberOfHeight = 1, numberOfWidth = 1;
