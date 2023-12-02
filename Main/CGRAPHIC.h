@@ -50,7 +50,7 @@ public:
 	void display(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
 	void clear(int txtColor, int bgdColor);
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
-	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
+	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor, bool isPass = true);
 	void erasePixel(int fromX, int fromY, int toX, int toY);
 
 	void DrawLetter(char ch, int first_x, int first_y, int txtColor, int bgdColor);
@@ -58,7 +58,7 @@ public:
 	void drawTime(clock_t second, int first_x, int first_y, int txtColor, int bgdColor);
 
 	void drawCharacterFrame(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
-	void drawCell(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
+	void drawCell(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1, bool isPass = true);
 
 	void DrawDrawer(int first_x, int first_y);
 	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);

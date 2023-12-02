@@ -11,13 +11,13 @@ int main() {
 	////draw background
 	//testlane1.DrawBlock(BgdLayer);
 	//testlane2.DrawBlock(BgdLayer);
-	//BgdLayer.display();
+	BgdLayer.display();
 
 	CGRAPHIC ObjLayer = BgdLayer;
-	COBJECT testobject;
+	//COBJECT testobject;
 	//draw object
 
-	testobject.DrawBlock(ObjLayer);
+	//testobject.DrawBlock(ObjLayer);
 	ObjLayer.display();
 	_getch();
 	return 0;

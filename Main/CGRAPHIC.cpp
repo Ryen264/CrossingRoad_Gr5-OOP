@@ -90,14 +90,15 @@ void CGRAPHIC::Text(wstring wsContent, int first_x, int first_y, int txtColor, i
 	for (int i = 0; i < wsContent.length(); i++)
 		if (x + i < SCREEN_WIDTH && y < SCREEN_HEIGHT) this->screen[x + i][y] = { wsContent[i], txtColor, bgdColor };
 }
-void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor) {
+void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor, bool isPass) {
 	int x = first_x, y = first_y;
 	for (int i = 0; i < contentsArr.size(); i++) {
 		if (y + i < SCREEN_HEIGHT) {
 			for (int j = 0; j < contentsArr[i].length(); j++)
 				if (x + j < SCREEN_WIDTH) {
-					if (contentsArr[i][j] != L' ')
-						screen[x + j][y + i] = { contentsArr[i][j], txtColor, bgdColor };
+					if (isPass) {
+						if (contentsArr[i][j] != L' ') screen[x + j][y + i] = { contentsArr[i][j], txtColor, bgdColor };
+					} else screen[x + j][y + i] = { contentsArr[i][j], txtColor, bgdColor };
 				}
 		}
 	}
@@ -135,8 +136,8 @@ void CGRAPHIC::drawTime(clock_t second, int first_x, int first_y, int txtColor, 
 void CGRAPHIC::drawCharacterFrame(int first_x, int first_y, int txtColor, int bgdColor) {
 	DrawObject(CHARACTER_FRAME, first_x, first_y, txtColor, bgdColor);
 }
-void CGRAPHIC::drawCell(int first_x, int first_y, int txtColor, int bgdColor) {
-	DrawObject(CELL, first_x, first_y, txtColor, bgdColor);
+void CGRAPHIC::drawCell(int first_x, int first_y, int txtColor, int bgdColor, bool isPass) {
+	DrawObject(CELL, first_x, first_y, txtColor, bgdColor, isPass);
 	for (int i = 0; i < 8; i++)
 		screen[first_x + i][first_y + 3].bgdColor = -1;
 }
@@ -707,6 +708,11 @@ void CGRAPHIC::DrawChooseCharacterMenu(int first_x, int first_y) {
 	screen[first_x][first_y + 29].bgdColor = LIGHT_GRAY;
 	screen[first_x + 52][first_y + 29].bgdColor = LIGHT_GRAY;
 
+	screen[first_x][first_y].bgdColor = LIGHT_GRAY;
+	screen[first_x + 52][first_y].bgdColor = LIGHT_GRAY;
+	screen[first_x][first_y + 29].bgdColor = LIGHT_GRAY;
+	screen[first_x + 52][first_y + 29].bgdColor = LIGHT_GRAY;
+
 	for (int i = 0; i < 18; i++) {
 		screen[first_x + 17 + i][first_y + 0].bgdColor = LIGHT_GRAY;
 		screen[first_x + 17 + i][first_y + 1].bgdColor = LIGHT_GRAY;
@@ -714,6 +720,11 @@ void CGRAPHIC::DrawChooseCharacterMenu(int first_x, int first_y) {
 	for (int i = 4; i < 49; i++)
 		for (int j = 2; j < 28; j++)
 			screen[first_x + i][first_y + j].bgdColor = SAND;
+
+	screen[first_x + 48][first_y + 26].bgdColor = DARK_BLUE;
+	screen[first_x + 46][first_y + 27].bgdColor = DARK_BLUE;
+	screen[first_x + 47][first_y + 27].bgdColor = DARK_BLUE;
+	screen[first_x + 48][first_y + 27].bgdColor = DARK_BLUE;
 
 	//character frame
 	for (int i = 6; i <= 20; i++)
@@ -723,8 +734,12 @@ void CGRAPHIC::DrawChooseCharacterMenu(int first_x, int first_y) {
 	//color cells
 	vector<vector<int>> colorArr = { {RED, BLUE, DARK_GREEN}, {BRIGHT_YELLOW, SAND, SADDLE_BROWN}, {DARK_GRAY, DARK_RED, DARK_BLUE} };
 	for (int i = 0; i < 3; i++)
-		for (int j = 0; j < 3; j++)
-			drawCell(6 + i * 14 + first_x, 11 + j * 6 + first_y, BLACK, colorArr[i][j]);
+		for (int j = 0; j < 3; j++) {
+			int x = 6 + j * 14 + first_x, y = 11 + i * 6 + first_y;
+			DrawObject(CELL, x, y, BLACK, colorArr[i][j], false);
+			for (int k = 0; k < 8; k++)
+				screen[x + k][y + 3].bgdColor = SAND;
+		}
 }
 void CGRAPHIC::DrawPauseMenu(int first_x, int first_y) {
 	//set buffer
@@ -747,16 +762,17 @@ void CGRAPHIC::DrawPauseMenu(int first_x, int first_y) {
 		for (int j = 2; j < 28; j++)
 			screen[first_x + i][first_y + j].bgdColor = SAND;
 
+	screen[first_x + 48][first_y + 26].bgdColor = DARK_BLUE;
+	screen[first_x + 46][first_y + 27].bgdColor = DARK_BLUE;
+	screen[first_x + 47][first_y + 27].bgdColor = DARK_BLUE;
+	screen[first_x + 48][first_y + 27].bgdColor = DARK_BLUE;
+
 	//character frame
 	for (int i = 6; i <= 20; i++)
 		for (int j = 2; j <= 9; j++)
 			screen[first_x + i][first_y + j].bgdColor = WHITE;
 
 	//buttons
-	screen[first_x + 48][first_y + 26].bgdColor = DARK_BLUE;
-	screen[first_x + 46][first_y + 27].bgdColor = DARK_BLUE;
-	screen[first_x + 47][first_y + 27].bgdColor = DARK_BLUE;
-	screen[first_x + 48][first_y + 27].bgdColor = DARK_BLUE;
 	for (int i = 7; i <= 14; i++)
 		for (int j = 10; j <= 13; j++)
 			screen[first_x + i][first_y + j].txtColor = DARK_GRAY;

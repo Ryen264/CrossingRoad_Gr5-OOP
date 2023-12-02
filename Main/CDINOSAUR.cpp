@@ -23,10 +23,10 @@ void CDINOSAUR::setColor(int color) {
 	else if (color == DARK_GRAY) colorArr = { color, LIGHT_GRAY };
 	else if (color == SADDLE_BROWN) colorArr = { color, LIGHT_BROWN };
 	else if (color == BRIGHT_YELLOW) colorArr = { color, WHITE };
-	else if (color == SAND) colorArr = { color, BRIGHT_YELLOW };
-	else if (color == RED) colorArr = { color, LIGHT_GRAY };
+	else if (color == SAND) colorArr = { ORANGE, SAND };
+	else if (color == RED) colorArr = { color, BRIGHT_YELLOW };
 	else if (color == DARK_BLUE) colorArr = { color, BLUE };
-	else if (color == BLUE) colorArr = { color, LIGHT_GRAY };
+	else if (color == BLUE) colorArr = { color, SKY_BLUE };
 	else colorArr = { DARK_GREEN, LIGHT_GREEN };
 
 	if (isRight) {
