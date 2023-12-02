@@ -43,7 +43,8 @@ class CGRAPHIC {
 	int WIDTH, HEIGHT;
 public:
 	PIXEL** screen;
-	CGRAPHIC(PIXEL** screen = NULL);
+	CGRAPHIC();
+	CGRAPHIC(const CGRAPHIC& second);
 	CGRAPHIC(PIXEL pixel);
 	~CGRAPHIC();
 	void displayPixel(int x = 0, int y = 0);
@@ -58,7 +59,6 @@ public:
 	void drawTime(clock_t second, int first_x, int first_y, int txtColor, int bgdColor);
 
 	void drawCharacterFrame(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
-	void drawCell(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
 	void drawCheck(int first_x, int first_y, int txtColor = DARK_GREEN, int bgdColor = -1);
 	void drawCell(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1, bool isPass = true);
 

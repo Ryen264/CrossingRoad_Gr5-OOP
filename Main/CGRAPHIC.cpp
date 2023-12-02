@@ -22,19 +22,22 @@ void SetupTheme(THEME theme) {
 	SetConsoleScreenBufferInfoEx(hStdout, &csbiex);
 }
 
-CGRAPHIC::CGRAPHIC(PIXEL** screen) {
+CGRAPHIC::CGRAPHIC() {
 	WIDTH = SCREEN_WIDTH; HEIGHT = SCREEN_HEIGHT;
-	this->screen = new PIXEL * [SCREEN_WIDTH];
-	for (int i = 0; i < SCREEN_WIDTH; i++) {
-		this->screen[i] = new PIXEL[SCREEN_HEIGHT];
-		if (screen == NULL) {
-			for (int j = 0; j < SCREEN_HEIGHT; j++)
-				this->screen[i][j] = { L' ', BLACK, WHITE };
-		}
-		else {
-			for (int j = 0; j < SCREEN_HEIGHT; j++)
-				this->screen[i][j] = screen[i][j];
-		}
+	this->screen = new PIXEL * [WIDTH];
+	for (int i = 0; i < WIDTH; i++) {
+		this->screen[i] = new PIXEL[HEIGHT];
+		for (int j = 0; j < HEIGHT; j++)
+			this->screen[i][j] = { L' ', BLACK, WHITE };
+	}
+}
+CGRAPHIC::CGRAPHIC(const CGRAPHIC& second) {
+	WIDTH = SCREEN_WIDTH; HEIGHT = SCREEN_HEIGHT;
+	this->screen = new PIXEL * [WIDTH];
+	for (int i = 0; i < WIDTH; i++) {
+		this->screen[i] = new PIXEL[HEIGHT];
+		for (int j = 0; j < HEIGHT; j++)
+			this->screen[i][j] = screen[i][j];
 	}
 }
 CGRAPHIC::CGRAPHIC(PIXEL pixel) {
@@ -48,10 +51,10 @@ CGRAPHIC::CGRAPHIC(PIXEL pixel) {
 }
 CGRAPHIC::~CGRAPHIC() {
 	for (int i = 0; i < WIDTH; i++) {
-		delete[] this->screen[i];
+		if (this->screen[i] != NULL) delete[] this->screen[i];
 		this->screen[i] = NULL;
 	}
-	delete[] this->screen;
+	if (this->screen != NULL) delete[] this->screen;
 	this->screen = NULL;
 }
 
@@ -741,7 +744,7 @@ void CGRAPHIC::DrawChooseCharacterMenu(int first_x, int first_y) {
 			screen[first_x + i][first_y + j].bgdColor = WHITE;
 
 	//color cells
-	vector<vector<int>> colorArr = { {RED, BLUE, DARK_GREEN}, {BRIGHT_YELLOW, SAND, SADDLE_BROWN}, {DARK_GRAY, DARK_RED, DARK_BLUE} };
+	vector<vector<int>> colorArr = { {RED, BLUE, DARK_GREEN}, {BRIGHT_YELLOW, ORANGE, SADDLE_BROWN}, {DARK_GRAY, DARK_RED, DARK_BLUE} };
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++) {
 			int x = 6 + j * 14 + first_x, y = 11 + i * 6 + first_y;
