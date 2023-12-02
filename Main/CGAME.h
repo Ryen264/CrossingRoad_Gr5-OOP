@@ -60,8 +60,9 @@ public:
     void Help();
     void About();
 
-
     int Pause(HANDLE t);
+    void ChooseCharacter();
+
     bool isReset();
 
     void exitThread(thread* t);
@@ -90,7 +91,7 @@ public:
     void drawInputUserNumber();
 
     void displayScreen(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
-    void displayScreen(CGRAPHIC& ObjLayer, CGRAPHIC& BgdLayer, int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
+    void displayScreen(CGRAPHIC& ObjLayer, const CGRAPHIC& BgdLayer, int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
 };
 //Return codes
 const int QUIT_CODE = -1000;
@@ -103,6 +104,9 @@ bool isDownButton(int button);
 bool isRightButton(int button);
 bool isLeftButton(int button);
 bool isEnterButton(int button);
+
+int getiMatrix(int val, vector<vector<int>>& matrix);
+int getjMatrix(int val, vector<vector<int>>& matrix);
 
 void ShowCur(bool CursorVisibility);
 void DisableResizeWindow();

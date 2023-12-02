@@ -44,34 +44,51 @@ class CGRAPHIC {
 public:
 	PIXEL** screen;
 	CGRAPHIC(PIXEL** screen = NULL);
-	CGRAPHIC(PIXEL pixel, int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
+	CGRAPHIC(PIXEL pixel);
 	~CGRAPHIC();
 	void displayPixel(int x = 0, int y = 0);
 	void display(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
 	void clear(int txtColor, int bgdColor);
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
-	void DrawLetter(char ch ,int first_x, int first_y, int txtColor, int bgdColor);
-	void drawString(string str, int x, int y, int txtColor, int bgdColor, int num = -1);
-	void drawTime(clock_t second, int first_x, int first_y, int txtColor, int bgdColor);
-	void drawDot(int first_x, int first_y, int txtColor, int bgdColor);
 	void erasePixel(int fromX, int fromY, int toX, int toY);
 
-	void DrawPauseChoose(int first_x, int first_y);
-	void DrawPauseMenu(int first_x, int first_y);
-	void DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y);
+	void DrawLetter(char ch, int first_x, int first_y, int txtColor, int bgdColor);
+	void drawString(string str, int x, int y, int txtColor, int bgdColor, int num = -1);
+	void drawTime(clock_t second, int first_x, int first_y, int txtColor, int bgdColor);
+
+	void drawCharacterFrame(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
+	void drawCell(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
+
 	void DrawDrawer(int first_x, int first_y);
 	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);
-	
-};
-const vector<wstring> DOT = {
-	L"███",
-	L"▀▀▀"
+
+	void DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y);
+
+	void DrawPauseMenu(int first_x, int first_y);
+	void DrawChooseCharacterMenu(int first_x, int first_y);
+
 };
 const vector<wstring> COLON = {
 	L"█",
 	L" ",
 	L"█" };
+const vector<wstring> CELL = {
+	L"█▀▀▀▀▀█",
+	L"█     █",
+	L"█     █",
+	L"▀▀▀▀▀▀▀"
+};
+const vector<wstring> CHARACTER_FRAME = {
+	L"█               █",
+	L"█               █",
+	L"█               █",
+	L"█               █",
+	L"█               █",
+	L"█               █",
+	L"█               █",
+	L"▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀"
+};
 const vector<vector<wstring>> NUMBER = {
 {	L"█▀█",
 	L"█ █",
@@ -186,37 +203,72 @@ const vector<vector<wstring>> LETTER = {
 };
 
 const vector<wstring> PAUSE_MENU = {
-		L"   ▄▄▀▀▀▀▀▀▀▀▀▀▀█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▀▀▀▀▀▀▀▀▀▀▀▄▄   ",//0
-		L" ▄▀▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▄▄▀▄ ",//1
-		L"▄▀ █ █    ▄▄▄▄▄▄▄▄▄  █                          █ ▀▄",//2
-		L"█  █ █   █ ▄▄      █ █    ▄▄                    █  █",//3
-		L"█  █ █   █ ▀▀      █ █  ▄▀  ▀▄  ▄               █  █",//4
-		L"█  █ █ ▄▄█  ▄▄▄    █ █  █    █  ▄               █  █",//5
-		L"█  █ █ ▀▄▀     █▀▀▀  █   ▀▄▄▀                   █  █",//6
-		L"█  █ █   █▄▀▀██▀     █                          █  █",//7
-		L"█  █ █   ▀   ▀       █                          █  █",//8
-		L"█  █  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀                           █  █",//9
-		L"█  █      ▄             ▄               ▄▄▄     █  █",//10
-		L"█  █   ▄▄██ ▄ █         ██▄▄           █   █    █  █",//11
-		L"█  █   ████ █ █         ████▀            █▀     █  █",//12
-		L"█  █     ▀█   ▀         █▀               ▄      █  █",//13
-		L"█  █                                            █  █",//14
-		L"█  █   █▀▀▀▀▀█         █▀▀▀▀▀█        █▀▀▀▀▀█   █  █",//15
-		L"█  █   █     █         █     █        █     █   █  █",//16
-		L"█  █   █     █         █     █        █     █   █  █",//17
-		L"█  █   ▀▀▀▀▀▀▀         ▀▀▀▀▀▀▀        ▀▀▀▀▀▀▀   █  █",//18
-		L"█  █           ▄▄▄▄▄▄             ▄             █  █",//19
-		L"█  █           █▄▄█▄██         ▄▀ █ ▀▄          █  █",//20
-		L"█  █           █     █         █  ▀  █          █  █",//21
-		L"█  █           █▄▄▄▄▄█          ▀▄▄▄▀           █  █",//22
-		L"█  █                                            █  █",//23
-		L"█  █           █▀▀▀▀▀█         █▀▀▀▀▀█          █  █",//24
-		L"█  █           █     █         █     █     ▄▄▄▄▄█  █",//25
-		L"█  █           █     █         █     █     █  ▄▀   █",//26
-		L"█  █           ▀▀▀▀▀▀▀         ▀▀▀▀▀▀▀     █▄▀     █",//27
-		L"█  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀       █",//28
-		L"▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀" //29
+		//01234567890123456789012345678901234567890123456789012
+		L"▄▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▄",//0
+		L"█  ▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▄▄▄  █",//1
+		L"█  █ █               █                           █  █",//2
+		L"█  █ █               █                           █  █",//3
+		L"█  █ █               █                           █  █",//4
+		L"█  █ █               █                           █  █",//5
+		L"█  █ █               █                           █  █",//6
+		L"█  █ █               █                           █  █",//7
+		L"█  █ █               █                           █  █",//8
+		L"█  █ ▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀                           █  █",//9
+		L"█  █      ▄             ▄                ▄▄▄     █  █",//10
+		L"█  █   ▄▄██ ▄ █         ██▄▄            █   █    █  █",//11
+		L"█  █   ████ █ █         ████▀             █▀     █  █",//12
+		L"█  █     ▀█   ▀         █▀                ▄      █  █",//13
+		L"█  █                                             █  █",//14
+		L"█  █   █▀▀▀▀▀█         █▀▀▀▀▀█         █▀▀▀▀▀█   █  █",//15
+		L"█  █   █     █         █     █         █     █   █  █",//16
+		L"█  █   █     █         █     █         █     █   █  █",//17
+		L"█  █   ▀▀▀▀▀▀▀         ▀▀▀▀▀▀▀         ▀▀▀▀▀▀▀   █  █",//18
+		L"█  █           ▄▄▄▄▄▄             ▄              █  █",//19
+		L"█  █           █▄▄█▄██         ▄▀ █ ▀▄           █  █",//20
+		L"█  █           █     █         █  ▀  █           █  █",//21
+		L"█  █           █▄▄▄▄▄█          ▀▄▄▄▀            █  █",//22
+		L"█  █                                             █  █",//23
+		L"█  █           █▀▀▀▀▀█         █▀▀▀▀▀█           █  █",//24
+		L"█  █           █     █         █     █      ▄▄▄▄▄█  █",//25
+		L"█  █           █     █         █     █      █  ▄▀   █",//26
+		L"█  █           ▀▀▀▀▀▀▀         ▀▀▀▀▀▀▀      █▄▀     █",//27
+		L"█  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀       █",//28
+		L"▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀" //29
 };
+
+const vector<wstring> CHOOSE_CHARACTER_MENU = {
+		L"▄▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▄",//0
+		L"█  ▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄▄▄▄▄▄▄▄▄▄▄▄  █",//1
+		L"█  █ █               █                           █  █",//2
+		L"█  █ █               █                           █  █",//3
+		L"█  █ █               █                           █  █",//4
+		L"█  █ █               █                           █  █",//5
+		L"█  █ █               █                           █  █",//6
+		L"█  █ █               █                           █  █",//7
+		L"█  █ █               █                           █  █",//8
+		L"█  █ ▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀                           █  █",//9
+		L"█  █                                             █  █",//10
+		L"█  █  █▀▀▀▀▀█       █▀▀▀▀▀█       █▀▀▀▀▀█        █  █",//11
+		L"█  █  █     █       █     █       █     █        █  █",//12
+		L"█  █  █     █       █     █       █     █        █  █",//13
+		L"█  █  ▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀        █  █",//14
+		L"█  █                                             █  █",//15
+		L"█  █                                             █  █",//16
+		L"█  █  █▀▀▀▀▀█       █▀▀▀▀▀█       █▀▀▀▀▀█        █  █",//17
+		L"█  █  █     █       █     █       █     █        █  █",//18
+		L"█  █  █     █       █     █       █     █        █  █",//19
+		L"█  █  ▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀        █  █",//20
+		L"█  █                                             █  █",//21
+		L"█  █                                             █  █",//22
+		L"█  █  █▀▀▀▀▀█       █▀▀▀▀▀█       █▀▀▀▀▀█        █  █",//23
+		L"█  █  █     █       █     █       █     █        █  █",//24
+		L"█  █  █     █       █     █       █     █   ▄▄▄▄▄█  █",//25
+		L"█  █  ▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀   █  ▄▀   █",//26
+		L"█  █                                        █▄▀     █",//27
+		L"█  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀       █",//28
+		L"▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀" //29
+};
+
 const vector<wstring> Drawer = {
 L"█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█",
 L"█████████████████▀▀▀▀██████",

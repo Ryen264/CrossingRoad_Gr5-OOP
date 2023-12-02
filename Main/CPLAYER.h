@@ -28,7 +28,7 @@ public:
     COBJECT* getDependObj() const;
     int getMoving() const;
 	int getColorCharacter() const;
-
+	string getNameCharacter() const;
 
     void set(int xBoard = 0, int yBoard = 0, bool alive = true, bool right = true, int score = -1);
     bool setIsRight();

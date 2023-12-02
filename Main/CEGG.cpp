@@ -31,8 +31,12 @@ CEGG::CEGG(int x, int y) : COBJECT(x, y) {
 	block[4][3].bgdColor = -1;
 	block[5][3].txtColor = BLACK;
 	block[5][3].bgdColor = WHITE;
-	block[6][3].txtColor = WHITE;
-	block[7][3].txtColor = WHITE;
+
+	block[6][3].txtColor = BLACK;
+	block[6][3].bgdColor = WHITE;
+	block[7][3].txtColor = BLACK;
+	block[7][3].bgdColor = WHITE;
+
 	block[8][3].txtColor = BLACK;
 	block[8][3].bgdColor = WHITE;
 	block[9][3].txtColor = BLACK;

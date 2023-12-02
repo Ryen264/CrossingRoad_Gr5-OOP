@@ -4,7 +4,7 @@ class CTREE : public COBJECT {
 	bool isDouble;
 	const vector <wstring> FRAME_DOUBLE = {
 L" ▄▄▄▄▄▄▄▀▀▀▀▀▀▀▄",
-L"██████▀ ████████",
+L"██████▀█████████",
 L"██▄▄▄██████▄▄▄▄█",
 L"▀▄▄▄▄▄▄▄▀█▀█▀█▀ ",
 L"  █ ▀ █  ▀▄ ▄▀  ",
@@ -12,7 +12,7 @@ L"  ▄█▄█▄  ▄█▄█▄  "
 	};
 	const vector <wstring> FRAME_SINGLE = {
 L"    ▄▀▀▀▀▀▀▀▄   ",
-L"    █▄███████   ",
+L"    █▄▄██████   ",
 L"    ████▄▄▄██   ",
 L"     ▀█▀█▀█▀    ",
 L"      ▀▀█▀▀     ",

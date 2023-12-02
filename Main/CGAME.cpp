@@ -364,26 +364,44 @@ void CGAME::About() {
 
 int CGAME::Pause(HANDLE t) {
 	SuspendThread(t);
-	//setup tmpLayers
-	int fromX = (SCREEN_WIDTH - 52) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
-		toX = fromX + 52, toY = fromY + 30;
-	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 }, fromX, fromY, toX, toY);
-	tmpBgdLayer.DrawPauseMenu(fromX, fromY);
-	tmpBgdLayer.display(fromX, fromY, toX, toY);
+	const int fromX = (SCREEN_WIDTH - 53) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
+		toX = fromX + 53, toY = fromY + 30;
 
-	const int SETTING_OPTION = 9;
-	const int RESUME_OPTION = 25;
-	const int HELP_OPTION = 41;
-	const int SAVE_OPTION = 17;
-	const int EXIT_OPTION = 33;
-	const int yFirstLine = 16, ySecondLine = 25;
+	const int SETTING_OPTION = 7 + fromX;
+	const int RESUME_OPTION = 23 + fromX;
+	const int HELP_OPTION = 39 + fromX;
+	const int SAVE_OPTION = 15 + fromX;
+	const int EXIT_OPTION = 31 + fromX;
+	const int CHARACTER_OPTION = 5 + fromX;
+	const int yFirstLine = 15 + fromY, ySecondLine = 24 + fromY;
 
 	int xOption = RESUME_OPTION, yOption = yFirstLine;
-	tmpObjLayer.drawDot(xOption, yOption, BLACK, -1);
+
+	//setup tmpLayers
+	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
+	//draw menu
+	tmpBgdLayer.DrawPauseMenu(fromX, fromY);
+	//draw character name
+	tmpBgdLayer.drawString(cPlayer->getNameCharacter(), 24 + fromX, 4 + fromY, cPlayer->getColorCharacter(), SAND);
+
+	//draw character
+	CDINOSAUR characterSample(fromX + 5, fromY + 3, true, cPlayer->getColorCharacter());
+	characterSample.DrawBlock(tmpObjLayer);
+	//draw current cell
+	tmpObjLayer.drawCell(xOption, yOption, LIGHT_GREEN);
+
 	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	while (1) {
 		int temp = toupper(_getch());
-		tmpObjLayer.erasePixel(xOption, yOption, xOption + 3, yOption + 2);
+
+		//erase the last step
+		if (xOption != CHARACTER_OPTION)
+			tmpObjLayer.erasePixel(xOption, yOption, xOption + 7, yOption + 4);
+		else {
+			tmpObjLayer.erasePixel(xOption, yOption, xOption + 17, yOption + 8);
+			characterSample.DrawBlock(tmpObjLayer);
+		}
+
 		if (!isEnterButton(temp)) {
 			if (isUpButton(temp)) {
 				switch (xOption) {
@@ -394,6 +412,10 @@ int CGAME::Pause(HANDLE t) {
 				case EXIT_OPTION:
 					xOption = HELP_OPTION;
 					yOption = yFirstLine;
+					break;
+				case SETTING_OPTION: case RESUME_OPTION: case HELP_OPTION:
+					xOption = CHARACTER_OPTION;
+					yOption = 2 + fromY;
 					break;
 				}
 			}
@@ -406,6 +428,10 @@ int CGAME::Pause(HANDLE t) {
 				case RESUME_OPTION: case HELP_OPTION:
 					xOption = EXIT_OPTION;
 					yOption = ySecondLine;
+					break;
+				case CHARACTER_OPTION:
+					xOption = SETTING_OPTION;
+					yOption = yFirstLine;
 					break;
 				}
 			}
@@ -420,6 +446,10 @@ int CGAME::Pause(HANDLE t) {
 				case SAVE_OPTION:
 					xOption = EXIT_OPTION;
 					break;
+				case CHARACTER_OPTION:
+					xOption = RESUME_OPTION;
+					yOption = yFirstLine;
+					break;
 				}
 			}
 			if (isLeftButton(temp)) {
@@ -433,30 +463,42 @@ int CGAME::Pause(HANDLE t) {
 				case EXIT_OPTION:
 					xOption = SAVE_OPTION;
 					break;
+				case CHARACTER_OPTION:
+					xOption = SETTING_OPTION;
+					yOption = yFirstLine;
+					break;
 				}
 			}
-			tmpObjLayer.drawDot(xOption, yOption, BLACK, -1);
+
+			//draw new step
+			if (xOption != CHARACTER_OPTION) tmpObjLayer.drawCell(xOption, yOption, LIGHT_GREEN);
+			else tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
 			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 		}
 		else {
-			tmpObjLayer.drawDot(xOption, yOption, RED, -1);
+			//draw choice
+			if (xOption != CHARACTER_OPTION) tmpObjLayer.drawCell(xOption, yOption, RED);
+			else tmpObjLayer.drawCharacterFrame(xOption, yOption, RED);
 			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 
 			Sleep(5);
 			switch (xOption) {
+			case CHARACTER_OPTION:
+				ChooseCharacter();
+				break;
 			case SETTING_OPTION:
 				//setting
 				break;
 			case RESUME_OPTION:
 				resumeThread(t);
-				break;
+				return 0;
 			case HELP_OPTION:
 				//help
 				break;
 			case SAVE_OPTION:
 				savename = SaveGame();
 				resumeThread(t);
-				break;
+				return 0;
 			case EXIT_OPTION:
 				resumeThread(t);
 				savename = "";
@@ -467,6 +509,98 @@ int CGAME::Pause(HANDLE t) {
 	}
 	return 0;
 }
+void CGAME::ChooseCharacter() {
+	const int fromX = (SCREEN_WIDTH - 53) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
+		toX = fromX + 53, toY = fromY + 30;
+
+	vector<vector<int>> colorArr = { {RED, BLUE, DARK_GREEN}, {BRIGHT_YELLOW, SAND, SADDLE_BROWN}, {DARK_GRAY, DARK_RED, DARK_BLUE} };
+
+	const int xcellStart = 6 + fromX, ycellStart = 11 + fromY;
+
+	int curColor = cPlayer->getColorCharacter(); string curName = cPlayer->getNameCharacter();
+	int iCur = getiMatrix(curColor, colorArr), jCur = getjMatrix(curColor, colorArr);
+	int xOption = xcellStart + iCur * 14, yOption = ycellStart + jCur * 6;
+
+	//setup tmpLayers
+	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
+	//draw menu
+	tmpBgdLayer.DrawChooseCharacterMenu(fromX, fromY);
+
+	//draw character name
+	tmpBgdLayer.drawString(curName, 24 + fromX, 4 + fromY, curColor, SAND);
+	//draw character
+	CDINOSAUR characterSample(fromX + 5, fromY + 3, true, curColor);
+	characterSample.DrawBlock(tmpObjLayer);
+	//draw current cell
+	tmpObjLayer.drawCell(xOption, yOption, LIGHT_GREEN);
+	
+	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	while (1) {
+		int temp = toupper(_getch());
+
+		//erase the last step
+		tmpObjLayer.erasePixel(xOption, yOption, xOption + 7, yOption + 4);
+		if (!isEnterButton(temp)) {
+			if (isUpButton(temp))
+				if (yOption != ycellStart)
+				{
+					yOption -= 6;
+				}
+			if (isDownButton(temp))
+				if (yOption != ycellStart + 2 * 6)
+				{
+					yOption += 6;
+				}
+			if (isRightButton(temp))
+				if (xOption != xcellStart)
+				{
+					xOption -= 14;
+				}
+			if (isLeftButton(temp))
+				if (xOption != xcellStart + 2 * 14)
+				{
+					xOption += 14;
+				}
+
+			//	if (xOption != CHARACTER_OPTION) tmpObjLayer.drawCell(xOption, yOption, LIGHT_GREEN);
+			//	else tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
+			//	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+			//}
+			//else {
+			//	if (xOption != CHARACTER_OPTION) tmpObjLayer.drawCell(xOption, yOption, RED);
+			//	else tmpObjLayer.drawCharacterFrame(xOption, yOption, RED);
+			//	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+
+			//	Sleep(5);
+			//	switch (xOption) {
+			//	case CHARACTER_OPTION:
+			//		ChooseCharacter();
+			//		break;
+			//	case SETTING_OPTION:
+			//		//setting
+			//		break;
+			//	case RESUME_OPTION:
+			//		resumeThread(t);
+			//		return 0;
+			//	case HELP_OPTION:
+			//		//help
+			//		break;
+			//	case SAVE_OPTION:
+			//		savename = SaveGame();
+			//		resumeThread(t);
+			//		return 0;
+			//	case EXIT_OPTION:
+			//		resumeThread(t);
+			//		savename = "";
+			//		isSaved = false;
+			//		return BACK_TO_MENU_CODE;
+			//	}
+			//}
+		}
+	}
+		return;
+}
+
 bool CGAME::isReset() {
 	do {
 		this->drawPlayAgain();
@@ -475,9 +609,7 @@ bool CGAME::isReset() {
 		else if (temp == 'N') return false;
 	} while (1);
 }
-bool CGAME::isInjured() const {
-    return this->aLanes[this->cPlayer->getYBoard()]->checkPos(this->cPlayer->getXBoard());
-}
+
 void CGAME::exitThread(thread* t) {
 	system("cls");
 	isThreadRunning = false;
@@ -489,6 +621,9 @@ void CGAME::resumeThread(HANDLE t) {
 		ResumeThread(t);
 }
 
+bool CGAME::isInjured() const {
+    return this->aLanes[this->cPlayer->getYBoard()]->checkPos(this->cPlayer->getXBoard());
+}
 void CGAME::updateYLane() {
 	for (int i = 0; i < (int)aLanes.size(); i++)
 		if (aLanes[i] != NULL) aLanes[i]->setyBoard(i);
@@ -589,6 +724,7 @@ void CGAME::pop_backLane() {
 void CGAME::moveNewLane() {
 	if (numberOfLane > BOARD_HEIGHT - 3) pushRandomLane();
 	else if (numberOfLane == BOARD_HEIGHT - 3) push_frontLane(FINISHLANE_ID);
+	else if (numberOfLane == BOARD_HEIGHT - 4) push_frontLane(GRASSLANE_FULL_ID);
 	else push_frontLane(GRASSLANE_ID);
 	pop_backLane();
 	numberOfLane--;
@@ -739,21 +875,21 @@ void CGAME::displayScreen(int fromX, int fromY, int toX, int toY) {
 	for (int x = fromX; x <= toX; x++)
 		for (int y = fromY; y <= toY; y++) {
 			PIXEL& objPixel = ObjLayer.screen[x][y], bgdPixel = BgdLayer.screen[x][y];
-			if (objPixel.txtColor < 0) objPixel = bgdPixel;
+			if (objPixel.txtColor < 0 && objPixel.bgdColor < 0) objPixel = bgdPixel;
 			else if (objPixel.bgdColor < 0) objPixel.bgdColor = bgdPixel.bgdColor;
 		}
-	ObjLayer.display();
+	ObjLayer.display(fromX, fromY, toX, toY);
 }
-void CGAME::displayScreen(CGRAPHIC& ObjLayer, CGRAPHIC& BgdLayer, int fromX, int fromY, int toX, int toY) {
+void CGAME::displayScreen(CGRAPHIC& ObjLayer, const CGRAPHIC& BgdLayer, int fromX, int fromY, int toX, int toY) {
 	if (toX < 0 || toX > SCREEN_WIDTH - 1) toX = SCREEN_WIDTH - 1;
 	if (toY < 0 || toY > SCREEN_HEIGHT - 1) toY = SCREEN_HEIGHT - 1;
 	for (int x = fromX; x <= toX; x++)
 		for (int y = fromY; y <= toY; y++) {
-			PIXEL& objPixel = ObjLayer.screen[x - fromX][y - fromY], bgdPixel = BgdLayer.screen[x][y];
-			if (objPixel.txtColor < 0) objPixel = bgdPixel;
+			PIXEL& objPixel = ObjLayer.screen[x][y], bgdPixel = BgdLayer.screen[x][y];
+			if (objPixel.txtColor < 0 && objPixel.bgdColor < 0) objPixel = bgdPixel;
 			else if (objPixel.bgdColor < 0) objPixel.bgdColor = bgdPixel.bgdColor;
 		}
-	ObjLayer.display(0, 0, toX - fromX, toY - fromY);
+	ObjLayer.display(fromX, fromY, toX, toY);
 }
 
 bool isUpButton(int button) {
@@ -769,8 +905,22 @@ bool isLeftButton(int button) {
 	return button == 'A' || button == 37;
 }
 bool isEnterButton(int button) {
-	return button == 27 || button == 32;
+	return button == 13 || button == 32;
 }
+
+int getiMatrix(int val, vector<vector<int>>& matrix) {
+	for (int i = 0; i < (int)matrix.size(); i++)
+		for (int j = 0; j < (int)matrix[i].size(); j++)
+			if (matrix[i][j] == val) return i;
+	return -1;
+}
+int getjMatrix(int val, vector<vector<int>>& matrix) {
+	for (int i = 0; i < (int)matrix.size(); i++)
+		for (int j = 0; j < (int)matrix[i].size(); j++)
+			if (matrix[i][j] == val) return j;
+	return -1;
+}
+
 void ShowCur(bool CursorVisibility) {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO ConCurInf;

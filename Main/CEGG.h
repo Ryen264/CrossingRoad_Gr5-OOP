@@ -5,8 +5,8 @@ class CEGG : public COBJECT {
 L"                ",
 L"     ▄▀▀▄       ",
 L"    ██████      ",
-L"    ▀▄██▄▀      ",
-L"      ▀▀        ",
+L"    ▀▄▄▄▄▀      ",
+L"                ",
 L"                "
 	};
 
