@@ -1,7 +1,7 @@
 #include "COBJECT.h"
 COBJECT::COBJECT(int x, int y, int isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
-	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
+	vector<wstring> frame =  Perry_Talk;
 	
 	WIDTH = 16;
 	HEIGHT = 4;
