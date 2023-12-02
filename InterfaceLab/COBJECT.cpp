@@ -90,6 +90,11 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[5][7].bgdColor = DARK_GREEN;
 		block[6][7].bgdColor = DARK_GREEN;
 		block[7][7].bgdColor = DARK_GREEN;*/
+		
+		
+		
+		
+		
 		//DRAWER
 		/*for (int j = 1; j < 26; j++)
 		{

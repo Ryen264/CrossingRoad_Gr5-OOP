@@ -62,6 +62,7 @@ public:
 	void DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y);
 	void DrawDrawer(int first_x, int first_y);
 	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);
+	void DrawDinasourPicture(int first_x, int first_y, int drawerColor = DARK_GREEN, int Belly = LIGHT_GREEN);
 	
 };
 const vector<wstring> DOT = {
@@ -287,4 +288,17 @@ const vector<wstring> FLOPPY_DISC = {
 		L"██                                                  ██",
 		L"██                                                  ██",
 		L"██████████████████████████████████████████████████████"
+};
+const vector<wstring>DINOSAUR_PICTURE = {
+L"       ▄▄▀▀▀▄▄       ",
+L"▄▄▄▄▄▀▀▄▄▄▄▄▄▄▀▀▄▄▄▄▄",
+L"█                   █",
+L"█    ▄▀▀▀▀▀▀▀▀▀▄    █",
+L"█    █ ██      █    █",
+L"█    █         █    █",
+L"█  █▀█  ▀▀▀▄▄▄▄▀    █",
+L"█   ▀▄  ▄▄▄█        █",
+L"█    █▀  █▀         █",
+L"█                   █",
+L"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"
 };

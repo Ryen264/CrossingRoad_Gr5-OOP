@@ -370,6 +370,85 @@ void CGRAPHIC::DrawSmallDrawer(int first_x, int first_y, int drawerColor)
 	}
 
 }
+void CGRAPHIC::DrawDinasourPicture(int first_x, int first_y, int drawerColor, int Belly)
+{
+	vector<wstring>frame = DINOSAUR_PICTURE;
+	//set buffer
+	for (int i = 0; i < 22; i++)
+		for (int j = 0; j < 11; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, DARK_GREEN };
+	//set color
+	int x = first_x;
+	int y = first_y;
+	for (int i = 9; i < 12; i++)
+		{
+			this->screen[x+i][y].bgdColor = SADDLE_BROWN;
+		}
+		for (int j = 2; j < 11; j++)
+		{
+			this->screen[x][y+j].txtColor = LIGHT_BROWN;
+			this->screen[x+20][y+j].txtColor = LIGHT_BROWN;
+		}
+		for (int i = 1; i < 20; i++)
+		{
+			this->screen[x+i][y+10].txtColor = LIGHT_BROWN;
+		}
+		for (int i = 0; i < 5; i++)
+		{
+			this->screen[x+i][y+1].txtColor = LIGHT_BROWN;
+		}
+		this->screen[x+5][y+1].bgdColor = LIGHT_BROWN;
+		this->screen[x+6][y+1].bgdColor = LIGHT_BROWN;
+		for (int i = 7; i < 14; i++)
+		{
+			this->screen[x+i][y+1].txtColor = LIGHT_BROWN;
+			this->screen[x+i][y+1].bgdColor = SADDLE_BROWN;
+		}
+		this->screen[x+14][y+1].bgdColor = LIGHT_BROWN;
+		this->screen[x+15][y+1].bgdColor = LIGHT_BROWN;
+		for (int i = 16; i < 21; i++)
+		{
+			this->screen[x+i][y+1].txtColor = LIGHT_BROWN;
+		}
+		for (int i = 1; i < 21; i++)
+		{
+			this->screen[x+i][y+2].bgdColor = WHITE;
+		}
+		for (int i = 1; i < 5; i++)
+		{
+			this->screen[x+i][y+3].bgdColor = WHITE;
+		}
+		this->screen[5][3].bgdColor = WHITE;
+		for (int i = 6; i < 15; i++)
+		{
+			this->screen[x+i][y+3].bgdColor = DARK_GREEN;
+		}
+		for (int i = 6; i < 15; i++)
+		{
+			this->screen[x+i][y+4].bgdColor = DARK_GREEN;
+		}
+		for (int i = 6; i < 15; i++)
+		{
+			this->screen[x+i][y+5].bgdColor = DARK_GREEN;
+		}
+		for (int i = 6; i < 15; i++)
+		{
+			this->screen[x+i][y+6].bgdColor = DARK_GREEN;
+		}
+		for (int i = 8; i < 11; i++)
+		{
+			this->screen[x+i][y+6].txtColor = DARK_GREEN;
+			this->screen[x+i][y+6].bgdColor = LIGHT_GREEN;
+		}
+		this->screen[x+4][y+6].bgdColor = DARK_GREEN;
+		for (int i = 8; i < 11; i++)
+		{
+			this->screen[i][7].bgdColor = LIGHT_GREEN;
+		}
+		this->screen[x+5][y+7].bgdColor = DARK_GREEN;
+		this->screen[x+6][y+7].bgdColor = DARK_GREEN;
+		this->screen[x+7][y+7].bgdColor = DARK_GREEN;
+}
 void CGRAPHIC::DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y) {
 	vector<wstring> frame = FLOPPY_DISC;
 
