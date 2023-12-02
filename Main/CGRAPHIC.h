@@ -57,9 +57,13 @@ public:
 	void drawString(string str, int x, int y, int txtColor, int bgdColor, int num = -1);
 	void drawTime(clock_t second, int first_x, int first_y, int txtColor, int bgdColor);
 
+	void drawClipBoard(int first_x, int first_y, int width, int height);
+
 	void drawCharacterFrame(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
 	void drawCell(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
 	void drawCheck(int first_x, int first_y, int txtColor = DARK_GREEN, int bgdColor = -1);
+
+
 
 	void DrawDrawer(int first_x, int first_y);
 	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);

@@ -14,10 +14,10 @@ int main() {
 	//BgdLayer.display();
 
 	CGRAPHIC ObjLayer = BgdLayer;
-	COBJECT testobject;
+	//COBJECT testobject;
 	//draw object
-
-	testobject.DrawBlock(ObjLayer);
+	ObjLayer.drawClipBoard(0,0,46,20);
+	//testobject.DrawBlock(ObjLayer);
 	ObjLayer.display();
 	_getch();
 	return 0;
