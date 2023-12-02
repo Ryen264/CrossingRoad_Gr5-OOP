@@ -51,11 +51,11 @@ string CPLAYER::getNameCharacter() const {
     else if (colorCharacter == BLUE) return "BLUE";
     else if (colorCharacter == DARK_GREEN) return "GREEN";
     else if (colorCharacter == BRIGHT_YELLOW) return "YELLOW";
-    else if (colorCharacter == SAND) return "SAND";
+    else if (colorCharacter == ORANGE) return "ORANGE";
     else if (colorCharacter == SADDLE_BROWN) return "BROWN";
     else if (colorCharacter == DARK_GRAY) return "GRAY";
     else if (colorCharacter == DARK_RED) return "DRED";
-    else if (colorCharacter == DARK_BLUE) return "DLUE";
+    else if (colorCharacter == DARK_BLUE) return "DBLUE";
     else return "GREEN";
 }
 

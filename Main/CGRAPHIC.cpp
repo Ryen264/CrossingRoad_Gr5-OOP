@@ -1,4 +1,4 @@
-#include "CGRAPHIC.h"
+﻿#include "CGRAPHIC.h"
 int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
 SADDLE_BROWN, DARK_RED, RED, ORANGE,
 BLUE, DARK_BLUE, DARK_GRAY, LIGHT_GRAY,
@@ -22,19 +22,22 @@ void SetupTheme(THEME theme) {
 	SetConsoleScreenBufferInfoEx(hStdout, &csbiex);
 }
 
-CGRAPHIC::CGRAPHIC(PIXEL** screen) {
+CGRAPHIC::CGRAPHIC() {
 	WIDTH = SCREEN_WIDTH; HEIGHT = SCREEN_HEIGHT;
-	this->screen = new PIXEL * [SCREEN_WIDTH];
-	for (int i = 0; i < SCREEN_WIDTH; i++) {
-		this->screen[i] = new PIXEL[SCREEN_HEIGHT];
-		if (screen == NULL) {
-			for (int j = 0; j < SCREEN_HEIGHT; j++)
-				this->screen[i][j] = { L' ', BLACK, WHITE };
-		}
-		else {
-			for (int j = 0; j < SCREEN_HEIGHT; j++)
-				this->screen[i][j] = screen[i][j];
-		}
+	this->screen = new PIXEL * [WIDTH];
+	for (int i = 0; i < WIDTH; i++) {
+		this->screen[i] = new PIXEL[HEIGHT];
+		for (int j = 0; j < HEIGHT; j++)
+			this->screen[i][j] = { L' ', BLACK, WHITE };
+	}
+}
+CGRAPHIC::CGRAPHIC(const CGRAPHIC& second) {
+	WIDTH = SCREEN_WIDTH; HEIGHT = SCREEN_HEIGHT;
+	this->screen = new PIXEL * [WIDTH];
+	for (int i = 0; i < WIDTH; i++) {
+		this->screen[i] = new PIXEL[HEIGHT];
+		for (int j = 0; j < HEIGHT; j++)
+			this->screen[i][j] = screen[i][j];
 	}
 }
 CGRAPHIC::CGRAPHIC(PIXEL pixel) {
@@ -48,10 +51,10 @@ CGRAPHIC::CGRAPHIC(PIXEL pixel) {
 }
 CGRAPHIC::~CGRAPHIC() {
 	for (int i = 0; i < WIDTH; i++) {
-		delete[] this->screen[i];
+		if (this->screen[i] != NULL) delete[] this->screen[i];
 		this->screen[i] = NULL;
 	}
-	delete[] this->screen;
+	if (this->screen != NULL) delete[] this->screen;
 	this->screen = NULL;
 }
 
@@ -90,14 +93,15 @@ void CGRAPHIC::Text(wstring wsContent, int first_x, int first_y, int txtColor, i
 	for (int i = 0; i < wsContent.length(); i++)
 		if (x + i < SCREEN_WIDTH && y < SCREEN_HEIGHT) this->screen[x + i][y] = { wsContent[i], txtColor, bgdColor };
 }
-void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor) {
+void CGRAPHIC::DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor, bool isPass) {
 	int x = first_x, y = first_y;
 	for (int i = 0; i < contentsArr.size(); i++) {
 		if (y + i < SCREEN_HEIGHT) {
 			for (int j = 0; j < contentsArr[i].length(); j++)
 				if (x + j < SCREEN_WIDTH) {
-					if (contentsArr[i][j] != L' ')
-						screen[x + j][y + i] = { contentsArr[i][j], txtColor, bgdColor };
+					if (isPass) {
+						if (contentsArr[i][j] != L' ') screen[x + j][y + i] = { contentsArr[i][j], txtColor, bgdColor };
+					} else screen[x + j][y + i] = { contentsArr[i][j], txtColor, bgdColor };
 				}
 		}
 	}
@@ -135,8 +139,8 @@ void CGRAPHIC::drawTime(clock_t second, int first_x, int first_y, int txtColor, 
 void CGRAPHIC::drawCharacterFrame(int first_x, int first_y, int txtColor, int bgdColor) {
 	DrawObject(CHARACTER_FRAME, first_x, first_y, txtColor, bgdColor);
 }
-void CGRAPHIC::drawCell(int first_x, int first_y, int txtColor, int bgdColor) {
-	DrawObject(CELL, first_x, first_y, txtColor, bgdColor);
+void CGRAPHIC::drawCell(int first_x, int first_y, int txtColor, int bgdColor, bool isPass) {
+	DrawObject(CELL, first_x, first_y, txtColor, bgdColor, isPass);
 	for (int i = 0; i < 8; i++)
 		screen[first_x + i][first_y + 3].bgdColor = -1;
 }
@@ -716,6 +720,11 @@ void CGRAPHIC::DrawChooseCharacterMenu(int first_x, int first_y) {
 	screen[first_x][first_y + 29].bgdColor = LIGHT_GRAY;
 	screen[first_x + 52][first_y + 29].bgdColor = LIGHT_GRAY;
 
+	screen[first_x][first_y].bgdColor = LIGHT_GRAY;
+	screen[first_x + 52][first_y].bgdColor = LIGHT_GRAY;
+	screen[first_x][first_y + 29].bgdColor = LIGHT_GRAY;
+	screen[first_x + 52][first_y + 29].bgdColor = LIGHT_GRAY;
+
 	for (int i = 0; i < 18; i++) {
 		screen[first_x + 17 + i][first_y + 0].bgdColor = LIGHT_GRAY;
 		screen[first_x + 17 + i][first_y + 1].bgdColor = LIGHT_GRAY;
@@ -724,16 +733,25 @@ void CGRAPHIC::DrawChooseCharacterMenu(int first_x, int first_y) {
 		for (int j = 2; j < 28; j++)
 			screen[first_x + i][first_y + j].bgdColor = SAND;
 
+	screen[first_x + 48][first_y + 26].bgdColor = DARK_BLUE;
+	screen[first_x + 46][first_y + 27].bgdColor = DARK_BLUE;
+	screen[first_x + 47][first_y + 27].bgdColor = DARK_BLUE;
+	screen[first_x + 48][first_y + 27].bgdColor = DARK_BLUE;
+
 	//character frame
 	for (int i = 6; i <= 20; i++)
 		for (int j = 2; j <= 9; j++)
 			screen[first_x + i][first_y + j].bgdColor = WHITE;
 
 	//color cells
-	vector<vector<int>> colorArr = { {RED, BLUE, DARK_GREEN}, {BRIGHT_YELLOW, SAND, SADDLE_BROWN}, {DARK_GRAY, DARK_RED, DARK_BLUE} };
+	vector<vector<int>> colorArr = { {RED, BLUE, DARK_GREEN}, {BRIGHT_YELLOW, ORANGE, SADDLE_BROWN}, {DARK_GRAY, DARK_RED, DARK_BLUE} };
 	for (int i = 0; i < 3; i++)
-		for (int j = 0; j < 3; j++)
-			drawCell(6 + i * 14 + first_x, 11 + j * 6 + first_y, BLACK, colorArr[i][j]);
+		for (int j = 0; j < 3; j++) {
+			int x = 6 + j * 14 + first_x, y = 11 + i * 6 + first_y;
+			DrawObject(CELL, x, y, BLACK, colorArr[i][j], false);
+			for (int k = 0; k < 8; k++)
+				screen[x + k][y + 3].bgdColor = SAND;
+		}
 }
 void CGRAPHIC::DrawPerryTalk(int first_x, int first_y)
 {
@@ -907,16 +925,17 @@ void CGRAPHIC::DrawPauseMenu(int first_x, int first_y) {
 		for (int j = 2; j < 28; j++)
 			screen[first_x + i][first_y + j].bgdColor = SAND;
 
+	screen[first_x + 48][first_y + 26].bgdColor = DARK_BLUE;
+	screen[first_x + 46][first_y + 27].bgdColor = DARK_BLUE;
+	screen[first_x + 47][first_y + 27].bgdColor = DARK_BLUE;
+	screen[first_x + 48][first_y + 27].bgdColor = DARK_BLUE;
+
 	//character frame
 	for (int i = 6; i <= 20; i++)
 		for (int j = 2; j <= 9; j++)
 			screen[first_x + i][first_y + j].bgdColor = WHITE;
 
 	//buttons
-	screen[first_x + 48][first_y + 26].bgdColor = DARK_BLUE;
-	screen[first_x + 46][first_y + 27].bgdColor = DARK_BLUE;
-	screen[first_x + 47][first_y + 27].bgdColor = DARK_BLUE;
-	screen[first_x + 48][first_y + 27].bgdColor = DARK_BLUE;
 	for (int i = 7; i <= 14; i++)
 		for (int j = 10; j <= 13; j++)
 			screen[first_x + i][first_y + j].txtColor = DARK_GRAY;
@@ -948,4 +967,67 @@ void CGRAPHIC::DrawPauseMenu(int first_x, int first_y) {
 	for (int i = 31; i <= 39; i++)
 		for (int j = 19; j <= 22; j++)
 			screen[first_x + i][first_y + j].txtColor = RED;
+}
+
+
+void CGRAPHIC::drawClipBoard(int first_x, int first_y, int width, int height) {
+	//top
+	for (int i = first_x + 1; i < first_x + width; i++) {
+		screen[i][first_y] = { L'▀' , BLACK, DARK_BLUE };
+		screen[i][first_y + 1] = { L'▄' , BLACK, DARK_BLUE };
+	}
+	screen[first_x][first_y] = { L'▄' , BLACK, -1 };
+	screen[first_x + width][first_y] = { L'▄' , BLACK, -1 };
+	screen[(int)((first_x + width) * 0.32)][first_y].buffer = L'█';
+	screen[(int)((first_x + width) * 0.68)][first_y].buffer = L'█';
+	screen[(int)((first_x + width) * 0.32)][first_y + 1].buffer = L'█';
+	screen[(int)((first_x + width) * 0.68)][first_y + 1].buffer = L'█';
+	for (int i = (int)((first_x + width) * 0.32); i < (int)((first_x + width) * 0.68); i++) {
+		screen[i][first_y].bgdColor = LIGHT_GRAY;
+		screen[i][first_y + 1].bgdColor = LIGHT_GRAY;
+	}
+	//bottom
+	for (int i = first_x + 1; i < first_x + width; i++) {
+		screen[i][first_y + height - 1] = { L'▀' , BLACK, DARK_BLUE };
+		screen[i][first_y + height] = { L'▄' , BLACK, DARK_BLUE };
+	}
+	screen[first_x][first_y + height] = { L'▀' , BLACK, -1 };
+	screen[first_x + width][first_y + height] = { L'▀' , BLACK, -1 };
+	//mid
+	for (int i = first_x + 4; i <= first_x + width - 4; i++)
+		for (int j = first_y + 2; j <= first_y + height - 2; j++)
+			screen[i][j] = { L' ',SAND, SAND };
+	for (int i = first_y + 1; i < first_y + height; i++) {
+		screen[first_x][i] = { L'█',BLACK, DARK_BLUE };
+		screen[first_x + 1][i] = { L' ', DARK_BLUE, DARK_BLUE };
+		screen[first_x + 2][i] = { L' ', DARK_BLUE, DARK_BLUE };
+		screen[first_x + 3][i] = { L'█',BLACK, DARK_BLUE };
+		screen[first_x + width][i] = { L'█',BLACK, DARK_BLUE };
+		screen[first_x + width - 3][i] = { L'█',BLACK, DARK_BLUE };
+		screen[first_x + width - 1][i] = { L' ', DARK_BLUE, DARK_BLUE };
+		screen[first_x + width - 2][i] = { L' ', DARK_BLUE, DARK_BLUE };
+	}
+	screen[first_x + 3][first_y + 1].buffer = L'▄';
+	screen[first_x + width - 3][first_y + 1].buffer = L'▄';
+	screen[first_x + 3][first_y + height - 1].buffer = L'▀';
+	screen[first_x + width - 3][first_y + height - 1].buffer = L'▀';
+	for (int i = 0; i < 5; i++)
+		screen[first_x + width - (4 + i)][first_y + height - 4] = { L'▄', BLACK, SAND };
+
+	screen[first_x + width - 3][first_y + height - 3] = { L' ', BLACK, DARK_BLUE };
+	screen[first_x + width - 4][first_y + height - 3] = { L'▀', BLACK, DARK_BLUE };
+	screen[first_x + width - 5][first_y + height - 3] = { L'▄', BLACK, SAND };
+	screen[first_x + width - 6][first_y + height - 3] = { L' ', BLACK, SAND };
+	screen[first_x + width - 7][first_y + height - 3] = { L' ', BLACK, SAND };
+	screen[first_x + width - 8][first_y + height - 3] = { L'█', BLACK, SAND };
+
+	screen[first_x + width - 3][first_y + height - 2] = { L' ', BLACK, DARK_BLUE };
+	screen[first_x + width - 4][first_y + height - 2] = { L' ', BLACK, DARK_BLUE };
+	screen[first_x + width - 5][first_y + height - 2] = { L' ', BLACK, DARK_BLUE };
+	screen[first_x + width - 6][first_y + height - 2] = { L'▀', BLACK, DARK_BLUE };
+	screen[first_x + width - 7][first_y + height - 2] = { L'▄', BLACK, SAND };
+	screen[first_x + width - 8][first_y + height - 2] = { L'█', BLACK, SAND };
+
+	for (int i = 0; i < 5; i++)
+		screen[first_x + width - (3 + i)][first_y + height - 1] = { L' ', BLACK, DARK_BLUE };
 }

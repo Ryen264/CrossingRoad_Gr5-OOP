@@ -381,9 +381,9 @@ int CGAME::Pause(HANDLE t) {
 	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
 	//draw menu
 	tmpBgdLayer.DrawPauseMenu(fromX, fromY);
-	//draw character name
-	tmpBgdLayer.drawString(cPlayer->getNameCharacter(), 24 + fromX, 4 + fromY, cPlayer->getColorCharacter(), SAND);
 
+	//draw character name
+	tmpObjLayer.drawString(cPlayer->getNameCharacter(), 24 + fromX, 4 + fromY, cPlayer->getColorCharacter(), SAND);
 	//draw character
 	CDINOSAUR characterSample(fromX + 5, fromY + 3, true, cPlayer->getColorCharacter());
 	characterSample.DrawBlock(tmpObjLayer);
@@ -485,15 +485,28 @@ int CGAME::Pause(HANDLE t) {
 			switch (xOption) {
 			case CHARACTER_OPTION:
 				ChooseCharacter();
+				//update new character name
+				tmpObjLayer.erasePixel(24 + fromX, 4 + fromY, 24 + fromX + 23, 4 + fromY + 3);
+				tmpObjLayer.drawString(cPlayer->getNameCharacter(), 24 + fromX, 4 + fromY, cPlayer->getColorCharacter(), SAND);
+				//update new character color
+				characterSample.setColor(cPlayer->getColorCharacter());
+				tmpObjLayer.erasePixel(xOption, yOption, xOption + 17, yOption + 8);
+				characterSample.DrawBlock(tmpObjLayer);
+				//reset choice
+				tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
 				break;
 			case SETTING_OPTION:
 				//setting
+				//reset choice
+				tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
 				break;
 			case RESUME_OPTION:
 				resumeThread(t);
 				return 0;
 			case HELP_OPTION:
 				//help
+				//reset choice
+				tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
 				break;
 			case SAVE_OPTION:
 				savename = SaveGame();
@@ -505,6 +518,7 @@ int CGAME::Pause(HANDLE t) {
 				isSaved = false;
 				return BACK_TO_MENU_CODE;
 			}
+			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 		}
 	}
 	return 0;
@@ -513,13 +527,13 @@ void CGAME::ChooseCharacter() {
 	const int fromX = (SCREEN_WIDTH - 53) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
 		toX = fromX + 53, toY = fromY + 30;
 
-	vector<vector<int>> colorArr = { {RED, BLUE, DARK_GREEN}, {BRIGHT_YELLOW, SAND, SADDLE_BROWN}, {DARK_GRAY, DARK_RED, DARK_BLUE} };
+	vector<vector<int>> colorArr = { {RED, BLUE, DARK_GREEN}, {BRIGHT_YELLOW, ORANGE, SADDLE_BROWN}, {DARK_GRAY, DARK_RED, DARK_BLUE} };
 
 	const int xcellStart = 6 + fromX, ycellStart = 11 + fromY;
 
 	int curColor = cPlayer->getColorCharacter(); string curName = cPlayer->getNameCharacter();
 	int iCur = getiMatrix(curColor, colorArr), jCur = getjMatrix(curColor, colorArr);
-	int xOption = xcellStart + iCur * 14, yOption = ycellStart + jCur * 6;
+	int xOption = xcellStart + jCur * 14, yOption = ycellStart + iCur * 6;
 
 	//setup tmpLayers
 	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
@@ -527,7 +541,7 @@ void CGAME::ChooseCharacter() {
 	tmpBgdLayer.DrawChooseCharacterMenu(fromX, fromY);
 
 	//draw character name
-	tmpBgdLayer.drawString(curName, 24 + fromX, 4 + fromY, curColor, SAND);
+	tmpObjLayer.drawString(curName, 24 + fromX, 4 + fromY, curColor, SAND);
 	//draw character
 	CDINOSAUR characterSample(fromX + 5, fromY + 3, true, curColor);
 	characterSample.DrawBlock(tmpObjLayer);
@@ -542,63 +556,54 @@ void CGAME::ChooseCharacter() {
 		tmpObjLayer.erasePixel(xOption, yOption, xOption + 7, yOption + 4);
 		if (!isEnterButton(temp)) {
 			if (isUpButton(temp))
-				if (yOption != ycellStart)
+				if (iCur > 0)
 				{
 					yOption -= 6;
+					iCur--;
 				}
 			if (isDownButton(temp))
-				if (yOption != ycellStart + 2 * 6)
+				if (iCur < 2)
 				{
 					yOption += 6;
+					iCur++;
 				}
 			if (isRightButton(temp))
-				if (xOption != xcellStart)
-				{
-					xOption -= 14;
-				}
-			if (isLeftButton(temp))
-				if (xOption != xcellStart + 2 * 14)
+				if (jCur < 2)
 				{
 					xOption += 14;
+					jCur++;
 				}
+			if (isLeftButton(temp))
+				if (jCur > 0)
+				{
+					xOption -= 14;
+					jCur--;
+				}
+			//update new color
+			curColor = colorArr[iCur][jCur];
+			//draw new step
+			tmpObjLayer.drawCell(xOption, yOption, LIGHT_GREEN);
+			//draw new model color
+			characterSample.setColor(curColor);
+			characterSample.DrawBlock(tmpObjLayer);
 
-			//	if (xOption != CHARACTER_OPTION) tmpObjLayer.drawCell(xOption, yOption, LIGHT_GREEN);
-			//	else tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
-			//	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
-			//}
-			//else {
-			//	if (xOption != CHARACTER_OPTION) tmpObjLayer.drawCell(xOption, yOption, RED);
-			//	else tmpObjLayer.drawCharacterFrame(xOption, yOption, RED);
-			//	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+		}
+		else {
+			//draw choice
+			tmpObjLayer.drawCell(xOption, yOption, RED);
+			//set new character color
+			cPlayer->setColorCharacter(curColor);
+			//draw new name
+			tmpObjLayer.erasePixel(24 + fromX, 4 + fromY, 24 + fromX + 23, 4 + fromY + 3);
+			curName = cPlayer->getNameCharacter();
+			tmpObjLayer.drawString(curName, 24 + fromX, 4 + fromY, curColor, SAND);
 
-			//	Sleep(5);
-			//	switch (xOption) {
-			//	case CHARACTER_OPTION:
-			//		ChooseCharacter();
-			//		break;
-			//	case SETTING_OPTION:
-			//		//setting
-			//		break;
-			//	case RESUME_OPTION:
-			//		resumeThread(t);
-			//		return 0;
-			//	case HELP_OPTION:
-			//		//help
-			//		break;
-			//	case SAVE_OPTION:
-			//		savename = SaveGame();
-			//		resumeThread(t);
-			//		return 0;
-			//	case EXIT_OPTION:
-			//		resumeThread(t);
-			//		savename = "";
-			//		isSaved = false;
-			//		return BACK_TO_MENU_CODE;
-			//	}
-			//}
+			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+			Sleep(5);
+			return;
 		}
 	}
-		return;
 }
 
 bool CGAME::isReset() {
