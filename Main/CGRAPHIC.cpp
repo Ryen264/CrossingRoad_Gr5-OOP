@@ -376,7 +376,7 @@ void CGRAPHIC::DrawDinasourPicture(int first_x, int first_y, int drawerColor, in
 	//set buffer
 	for (int i = 0; i < 22; i++)
 		for (int j = 0; j < 11; j++)
-			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, DARK_GREEN };
+			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, -1 };
 	//set color
 	int x = first_x;
 	int y = first_y;
@@ -448,6 +448,130 @@ void CGRAPHIC::DrawDinasourPicture(int first_x, int first_y, int drawerColor, in
 		this->screen[x+5][y+7].bgdColor = DARK_GREEN;
 		this->screen[x+6][y+7].bgdColor = DARK_GREEN;
 		this->screen[x+7][y+7].bgdColor = DARK_GREEN;
+}
+void CGRAPHIC::DrawBigDinoSaur(int first_x, int first_y)
+{
+	vector<wstring>frame = BIG_DINASOUR;
+	//set buffer
+	for (int i = 0; i < 43; i++)
+		for (int j = 0; j < 21; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, -1 };
+	//set color
+	int x = first_x;
+	int y = first_y;
+	for (int i = 23; i < 39; i++)
+	{
+		this->screen[x+i][y].bgdColor = DARK_GREEN;
+	}
+	for (int i = 21; i < 41; i++)
+	{
+		this->screen[x+i][y+1].bgdColor = DARK_GREEN;
+	}
+	for (int j = 2; j < 7; j++)
+	{
+		for (int i = 21; i < 41; i++)
+		{
+			this->screen[x+i][y+j].bgdColor = DARK_GREEN;
+		}
+	}
+	for (int i = 21; i < 37; i++)
+	{
+		this->screen[x+i][y+7].bgdColor = DARK_GREEN;
+	}
+	for (int i = 20; i < 37; i++)
+	{
+		this->screen[x+i][y+8].bgdColor = DARK_GREEN;
+	}
+	this->screen[x+1][y+8].bgdColor = DARK_GREEN;
+	this->screen[x+2][y+8].bgdColor = DARK_GREEN;
+	for (int i = 17; i < 31; i++)
+	{
+		this->screen[x+i][y+9].bgdColor = DARK_GREEN;
+	}
+	this->screen[x+1][y+9].bgdColor = DARK_GREEN;
+	this->screen[x+2][y+9].bgdColor = DARK_GREEN;
+	for (int i = 13; i < 35; i++)
+	{
+		this->screen[x+i][y+10].bgdColor = DARK_GREEN;
+	}
+	this->screen[x+1][y+10].bgdColor = DARK_GREEN;
+	this->screen[x+2][y+10].bgdColor = DARK_GREEN;
+	this->screen[x+3][y+10].bgdColor = DARK_GREEN;
+	this->screen[x+4][y+10].bgdColor = DARK_GREEN;
+	for (int i = 11; i < 26; i++)
+	{
+		this->screen[x+i][y+11].bgdColor = DARK_GREEN;
+	}
+	for (int i = 26; i < 31; i++)
+	{
+		this->screen[x+i][y+11].bgdColor = DARK_GREEN;
+		this->screen[x+i][y+11].txtColor = LIGHT_GREEN;
+	}
+	for (int i = 31; i < 35; i++)
+	{
+		this->screen[x+i][y+11].bgdColor = DARK_GREEN;
+	}
+	this->screen[x+1][y+11].bgdColor = DARK_GREEN;
+	this->screen[x+2][y+11].bgdColor = DARK_GREEN;
+	this->screen[x+3][y+11].bgdColor = DARK_GREEN;
+	this->screen[x+4][y+11].bgdColor = DARK_GREEN;
+	this->screen[x+5][y+11].bgdColor = DARK_GREEN;
+	this->screen[x+6][y+11].bgdColor = DARK_GREEN;
+	for (int i = 23; i < 31; i++)
+	{
+		this->screen[x+i][y+12].txtColor = LIGHT_GREEN;
+	}
+	this->screen[x+34][y+12].bgdColor = DARK_GREEN;
+	this->screen[x+33][y+12].bgdColor = DARK_GREEN;
+	for (int i = 1; i < 24; i++)
+	{
+		this->screen[x+i][y+12].bgdColor = DARK_GREEN;
+	}
+	for (int i = 21; i < 31; i++)
+	{
+		this->screen[x+i][y+13].txtColor = LIGHT_GREEN;
+	}
+	for (int i = 1; i < 22; i++)
+	{
+		this->screen[x+i][y+13].bgdColor = DARK_GREEN;
+	}
+	for (int i = 21; i < 31; i++)
+	{
+		this->screen[x+i][y+14].txtColor = LIGHT_GREEN;
+	}
+	for (int i = 2; i < 22; i++)
+	{
+		this->screen[x+i][y+14].bgdColor = DARK_GREEN;
+	}
+	for (int i = 3; i < 22; i++)
+	{
+		this->screen[x+i][y+15].bgdColor = DARK_GREEN;
+	}
+	for (int i = 21; i < 29; i++)
+	{
+		this->screen[x+i][y+15].txtColor = LIGHT_GREEN;
+	}
+	for (int i = 4; i < 27; i++)
+	{
+		this->screen[x+i][y+16].bgdColor = DARK_GREEN;
+	}
+	for (int i = 5; i < 25; i++)
+	{
+		this->screen[x+i][y+17].bgdColor = DARK_GREEN;
+	}
+	for (int i = 11; i < 23; i++)
+	{
+		this->screen[x+i][y+18].bgdColor = DARK_GREEN;
+	}
+	for (int i = 14; i < 19; i++)
+	{
+		this->screen[x+i][y+18].bgdColor = -1;
+	}
+	this->screen[x+11][y+19].bgdColor = DARK_GREEN;
+	this->screen[x+12][y+19].bgdColor = DARK_GREEN;
+	this->screen[x+20][y+19].bgdColor = DARK_GREEN;
+	this->screen[x+21][y+19].bgdColor = DARK_GREEN;
+
 }
 void CGRAPHIC::DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y) {
 	vector<wstring> frame = FLOPPY_DISC;
