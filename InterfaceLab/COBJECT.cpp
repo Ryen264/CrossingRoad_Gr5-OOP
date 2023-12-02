@@ -3,8 +3,8 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
 	vector<wstring> frame = (isRight) ? FRAME_RIGHT : FRAME_LEFT;
 	
-	WIDTH = 22;
-	HEIGHT = 11;
+	WIDTH = 16;
+	HEIGHT = 4;
 
 	this->block = new PIXEL * [WIDTH];
 	for (int i = 0; i <WIDTH; i++)
@@ -14,13 +14,227 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 	for (int i = 0; i < WIDTH; i++)
 		for (int j = 0; j < HEIGHT; j++)
 			if (frame[j][i] != L' ')
-				this->block[i][j] = { frame[j][i], BLACK, -1 };
+				this->block[i][j] = { frame[j][i], -1, -1 };
 			else
 				this->block[i][j] = { frame[j][i], BLACK, WHITE };
 
 	//set colors
 
 	if (isRight) {
+		//CLOUD 2
+		block[2][0].bgdColor = -1;
+		block[3][0].bgdColor = -1;
+		block[5][0].bgdColor = -1;
+		block[8][0].bgdColor = -1;
+		block[10][0].bgdColor = -1;
+		block[11][0].bgdColor = -1;
+		block[12][0].bgdColor = -1;
+		for (int i = 1; i < 15; i++)
+		{
+			block[i][1].bgdColor = WHITE;
+		}
+		block[0][1].bgdColor = -1;
+		block[15][1].bgdColor = -1;
+		for (int i = 1; i < 14; i++)
+		{
+			block[i][2].bgdColor = WHITE;
+			block[i][2].txtColor = WHITE;
+		}
+		block[1][3].bgdColor - 1;
+		block[14][3].bgdColor - 1;
+		for (int i = 2; i < 14; i++)
+		{
+			block[i][3].bgdColor = WHITE;
+		}
+		//CLOUD 1
+		/*block[5][0].bgdColor = -1;
+		block[6][0].bgdColor = WHITE;
+		block[7][0].bgdColor = WHITE;
+		block[8][0].bgdColor = -1;
+		block[1][1].bgdColor = -1;
+		block[14][1].bgdColor = -1;
+		for (int i = 2; i < 14; i++)
+		{
+			block[i][1].bgdColor = WHITE;
+		}
+		for (int i = 1; i < 14; i++)
+		{
+			block[i][2].bgdColor = WHITE;
+			block[i][2].txtColor = WHITE;
+		}
+		block[1][3].bgdColor = -1;
+		block[14][3].bgdColor = -1;
+		for (int i = 2; i < 14; i++)
+		{
+			block[i][3].bgdColor = WHITE;
+		}*/
+		//HAT
+		/*block[6][0].txtColor = SADDLE_BROWN;
+		block[6][0].bgdColor = -1;
+		block[7][0].txtColor = SADDLE_BROWN;
+		block[8][0].txtColor = SADDLE_BROWN;
+		block[9][0].txtColor = SADDLE_BROWN;
+		block[0][0].bgdColor = -1;
+
+		block[4][1].txtColor = BLACK;
+		block[4][1].bgdColor = -1;
+		block[5][1].txtColor = SADDLE_BROWN;
+		block[5][1].bgdColor = BLACK;
+		block[6][1].txtColor = SADDLE_BROWN;
+		block[6][1].bgdColor = BLACK;
+		block[7][1].txtColor = SADDLE_BROWN;
+		block[7][1].bgdColor = BLACK;
+		block[8][1].txtColor = SADDLE_BROWN;
+		block[8][1].bgdColor = BLACK;
+		for (int i = 9; i < 12; i++)
+		{
+			block[i][1].txtColor = SADDLE_BROWN;
+		}
+		block[0][2].txtColor = SADDLE_BROWN;
+		block[1][2].txtColor = SADDLE_BROWN;
+		block[2][2].txtColor = SADDLE_BROWN;
+		block[2][2].bgdColor = -1;
+		block[3][2].txtColor = SADDLE_BROWN;
+		block[3][2].bgdColor = -1;
+		block[4][2].txtColor = BLACK;
+		block[4][2].bgdColor = SADDLE_BROWN;
+		block[5][2].txtColor = BLACK;
+		block[5][2].bgdColor = SADDLE_BROWN;
+
+		for (int i = 6; i < 11; i++)
+		{
+			block[i][2].txtColor = BLACK;
+		}
+		block[11][2].txtColor = BLACK;
+		block[11][2].bgdColor = SADDLE_BROWN;
+		for (int i = 1; i <= 14; i++)
+		{
+			block[i][3].txtColor = SADDLE_BROWN;
+			block[i][3].bgdColor = -1;
+		}
+		for (int i = 5; i < 13; i++)
+		{
+			block[i][4].txtColor = SADDLE_BROWN;
+			block[i][4].bgdColor = -1;
+		}*/
+		//BIG DINOSAUR
+		/*for (int i = 23; i < 39; i++)
+		{
+			block[i][0].bgdColor = DARK_GREEN;
+		}
+		for (int i = 21; i < 41; i++)
+		{
+			block[i][1].bgdColor = DARK_GREEN;
+		}
+		for (int j = 2; j < 7; j++)
+		{
+			for (int i = 21; i < 41; i++)
+			{
+				block[i][j].bgdColor = DARK_GREEN;
+			}
+		}
+		for (int i = 21; i < 37; i++)
+		{
+			block[i][7].bgdColor = DARK_GREEN;
+		}
+		for (int i = 20; i < 37; i++)
+		{
+			block[i][8].bgdColor = DARK_GREEN;
+		}
+		block[1][8].bgdColor = DARK_GREEN;
+		block[2][8].bgdColor = DARK_GREEN;
+		for (int i = 17; i < 31; i++)
+		{
+			block[i][9].bgdColor = DARK_GREEN;
+		}
+		block[1][9].bgdColor = DARK_GREEN;
+		block[2][9].bgdColor = DARK_GREEN;
+		for (int i = 13; i < 35; i++)
+		{
+			block[i][10].bgdColor = DARK_GREEN;
+		}
+		block[1][10].bgdColor = DARK_GREEN;
+		block[2][10].bgdColor = DARK_GREEN;
+		block[3][10].bgdColor = DARK_GREEN;
+		block[4][10].bgdColor = DARK_GREEN;
+		for (int i = 11; i < 26; i++)
+		{
+			block[i][11].bgdColor = DARK_GREEN;
+		}
+		for (int i = 26; i < 31; i++)
+		{
+			block[i][11].bgdColor = DARK_GREEN;
+			block[i][11].txtColor = LIGHT_GREEN;
+		}
+		for (int i = 31; i < 35; i++)
+		{
+			block[i][11].bgdColor = DARK_GREEN;
+		}
+		block[1][11].bgdColor = DARK_GREEN;
+		block[2][11].bgdColor = DARK_GREEN;
+		block[3][11].bgdColor = DARK_GREEN;
+		block[4][11].bgdColor = DARK_GREEN;
+		block[5][11].bgdColor = DARK_GREEN;
+		block[6][11].bgdColor = DARK_GREEN;
+		for (int i = 23; i < 31; i++)
+		{
+			block[i][12].txtColor = LIGHT_GREEN;
+		}
+		block[34][12].bgdColor = DARK_GREEN;
+		block[33][12].bgdColor = DARK_GREEN;
+		for (int i = 1; i < 24; i++)
+		{
+			block[i][12].bgdColor = DARK_GREEN;
+		}
+		for (int i = 21; i < 31; i++)
+		{
+			block[i][13].txtColor = LIGHT_GREEN;
+		}
+		for (int i = 1; i < 22; i++)
+		{
+			block[i][13].bgdColor = DARK_GREEN;
+		}
+		for (int i = 21; i < 31; i++)
+		{
+			block[i][14].txtColor = LIGHT_GREEN;
+		}
+		for (int i = 2; i < 22; i++)
+		{
+			block[i][14].bgdColor = DARK_GREEN;
+		}
+		for (int i = 3; i < 22; i++)
+		{
+			block[i][15].bgdColor = DARK_GREEN;
+		}
+		for (int i = 21; i < 29; i++)
+		{
+			block[i][15].txtColor = LIGHT_GREEN;
+		}
+		for (int i = 4; i < 27; i++)
+		{
+			block[i][16].bgdColor = DARK_GREEN;
+		}
+		for (int i = 5; i < 25; i++)
+		{
+			block[i][17].bgdColor = DARK_GREEN;
+		}
+		for (int i = 11; i < 23; i++)
+		{
+			block[i][18].bgdColor = DARK_GREEN;
+		}
+		for (int i = 14; i < 19; i++)
+		{
+			block[i][18].bgdColor = -1;
+		}
+		block[11][19].bgdColor = DARK_GREEN;
+		block[12][19].bgdColor = DARK_GREEN;
+		block[20][19].bgdColor = DARK_GREEN;
+		block[21][19].bgdColor = DARK_GREEN;
+		
+		/*for (int j = 19; j < 22; j++)
+		{
+
+		}*/
 		//PICTURE DINOSAUR
 		/*for (int i = 9; i < 12; i++)
 		{
@@ -89,7 +303,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		}
 		block[5][7].bgdColor = DARK_GREEN;
 		block[6][7].bgdColor = DARK_GREEN;
-		block[7][7].bgdColor = DARK_GREEN;*/
+		block[7][7].bgdColor = DARK_GREEN;*/	
 		//DRAWER
 		/*for (int j = 1; j < 26; j++)
 		{
@@ -682,7 +896,6 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[8][3].txtColor = BRIGHT_YELLOW;
 		block[9][3].txtColor = ORANGE;*/
 		//VE HOA
-
 	   /* block[6][2].txtColor = RED;
 		block[6][2].bgdColor = -1;
 		block[7][2].txtColor = BRIGHT_YELLOW;

@@ -336,6 +336,332 @@ void CGRAPHIC::DrawSmallDrawer(int first_x, int first_y, int drawerColor)
 	}
 
 }
+void CGRAPHIC::DrawDinasourPicture(int first_x, int first_y, int drawerColor, int Belly)
+{
+	vector<wstring>frame = DINOSAUR_PICTURE;
+	//set buffer
+	for (int i = 0; i < 22; i++)
+		for (int j = 0; j < 11; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, -1 };
+	//set color
+	int x = first_x;
+	int y = first_y;
+	for (int i = 9; i < 12; i++)
+		{
+			this->screen[x+i][y].bgdColor = SADDLE_BROWN;
+		}
+		for (int j = 2; j < 11; j++)
+		{
+			this->screen[x][y+j].txtColor = LIGHT_BROWN;
+			this->screen[x+20][y+j].txtColor = LIGHT_BROWN;
+		}
+		for (int i = 1; i < 20; i++)
+		{
+			this->screen[x+i][y+10].txtColor = LIGHT_BROWN;
+		}
+		for (int i = 0; i < 5; i++)
+		{
+			this->screen[x+i][y+1].txtColor = LIGHT_BROWN;
+		}
+		this->screen[x+5][y+1].bgdColor = LIGHT_BROWN;
+		this->screen[x+6][y+1].bgdColor = LIGHT_BROWN;
+		for (int i = 7; i < 14; i++)
+		{
+			this->screen[x+i][y+1].txtColor = LIGHT_BROWN;
+			this->screen[x+i][y+1].bgdColor = SADDLE_BROWN;
+		}
+		this->screen[x+14][y+1].bgdColor = LIGHT_BROWN;
+		this->screen[x+15][y+1].bgdColor = LIGHT_BROWN;
+		for (int i = 16; i < 21; i++)
+		{
+			this->screen[x+i][y+1].txtColor = LIGHT_BROWN;
+		}
+		for (int i = 1; i < 21; i++)
+		{
+			this->screen[x+i][y+2].bgdColor = WHITE;
+		}
+		for (int i = 1; i < 5; i++)
+		{
+			this->screen[x+i][y+3].bgdColor = WHITE;
+		}
+		this->screen[5][3].bgdColor = WHITE;
+		for (int i = 6; i < 15; i++)
+		{
+			this->screen[x+i][y+3].bgdColor = DARK_GREEN;
+		}
+		for (int i = 6; i < 15; i++)
+		{
+			this->screen[x+i][y+4].bgdColor = DARK_GREEN;
+		}
+		for (int i = 6; i < 15; i++)
+		{
+			this->screen[x+i][y+5].bgdColor = DARK_GREEN;
+		}
+		for (int i = 6; i < 15; i++)
+		{
+			this->screen[x+i][y+6].bgdColor = DARK_GREEN;
+		}
+		for (int i = 8; i < 11; i++)
+		{
+			this->screen[x+i][y+6].txtColor = DARK_GREEN;
+			this->screen[x+i][y+6].bgdColor = LIGHT_GREEN;
+		}
+		this->screen[x+4][y+6].bgdColor = DARK_GREEN;
+		for (int i = 8; i < 11; i++)
+		{
+			this->screen[i][7].bgdColor = LIGHT_GREEN;
+		}
+		this->screen[x+5][y+7].bgdColor = DARK_GREEN;
+		this->screen[x+6][y+7].bgdColor = DARK_GREEN;
+		this->screen[x+7][y+7].bgdColor = DARK_GREEN;
+}
+void CGRAPHIC::DrawBigDinoSaur(int first_x, int first_y)
+{
+	vector<wstring>frame = BIG_DINASOUR;
+	//set buffer
+	for (int i = 0; i < 43; i++)
+		for (int j = 0; j < 21; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, -1 };
+	//set color
+	int x = first_x;
+	int y = first_y;
+	for (int i = 23; i < 39; i++)
+	{
+		this->screen[x+i][y].bgdColor = DARK_GREEN;
+	}
+	for (int i = 21; i < 41; i++)
+	{
+		this->screen[x+i][y+1].bgdColor = DARK_GREEN;
+	}
+	for (int j = 2; j < 7; j++)
+	{
+		for (int i = 21; i < 41; i++)
+		{
+			this->screen[x+i][y+j].bgdColor = DARK_GREEN;
+		}
+	}
+	for (int i = 21; i < 37; i++)
+	{
+		this->screen[x+i][y+7].bgdColor = DARK_GREEN;
+	}
+	for (int i = 20; i < 37; i++)
+	{
+		this->screen[x+i][y+8].bgdColor = DARK_GREEN;
+	}
+	this->screen[x+1][y+8].bgdColor = DARK_GREEN;
+	this->screen[x+2][y+8].bgdColor = DARK_GREEN;
+	for (int i = 17; i < 31; i++)
+	{
+		this->screen[x+i][y+9].bgdColor = DARK_GREEN;
+	}
+	this->screen[x+1][y+9].bgdColor = DARK_GREEN;
+	this->screen[x+2][y+9].bgdColor = DARK_GREEN;
+	for (int i = 13; i < 35; i++)
+	{
+		this->screen[x+i][y+10].bgdColor = DARK_GREEN;
+	}
+	this->screen[x+1][y+10].bgdColor = DARK_GREEN;
+	this->screen[x+2][y+10].bgdColor = DARK_GREEN;
+	this->screen[x+3][y+10].bgdColor = DARK_GREEN;
+	this->screen[x+4][y+10].bgdColor = DARK_GREEN;
+	for (int i = 11; i < 26; i++)
+	{
+		this->screen[x+i][y+11].bgdColor = DARK_GREEN;
+	}
+	for (int i = 26; i < 31; i++)
+	{
+		this->screen[x+i][y+11].bgdColor = DARK_GREEN;
+		this->screen[x+i][y+11].txtColor = LIGHT_GREEN;
+	}
+	for (int i = 31; i < 35; i++)
+	{
+		this->screen[x+i][y+11].bgdColor = DARK_GREEN;
+	}
+	this->screen[x+1][y+11].bgdColor = DARK_GREEN;
+	this->screen[x+2][y+11].bgdColor = DARK_GREEN;
+	this->screen[x+3][y+11].bgdColor = DARK_GREEN;
+	this->screen[x+4][y+11].bgdColor = DARK_GREEN;
+	this->screen[x+5][y+11].bgdColor = DARK_GREEN;
+	this->screen[x+6][y+11].bgdColor = DARK_GREEN;
+	for (int i = 23; i < 31; i++)
+	{
+		this->screen[x+i][y+12].txtColor = LIGHT_GREEN;
+	}
+	this->screen[x+34][y+12].bgdColor = DARK_GREEN;
+	this->screen[x+33][y+12].bgdColor = DARK_GREEN;
+	for (int i = 1; i < 24; i++)
+	{
+		this->screen[x+i][y+12].bgdColor = DARK_GREEN;
+	}
+	for (int i = 21; i < 31; i++)
+	{
+		this->screen[x+i][y+13].txtColor = LIGHT_GREEN;
+	}
+	for (int i = 1; i < 22; i++)
+	{
+		this->screen[x+i][y+13].bgdColor = DARK_GREEN;
+	}
+	for (int i = 21; i < 31; i++)
+	{
+		this->screen[x+i][y+14].txtColor = LIGHT_GREEN;
+	}
+	for (int i = 2; i < 22; i++)
+	{
+		this->screen[x+i][y+14].bgdColor = DARK_GREEN;
+	}
+	for (int i = 3; i < 22; i++)
+	{
+		this->screen[x+i][y+15].bgdColor = DARK_GREEN;
+	}
+	for (int i = 21; i < 29; i++)
+	{
+		this->screen[x+i][y+15].txtColor = LIGHT_GREEN;
+	}
+	for (int i = 4; i < 27; i++)
+	{
+		this->screen[x+i][y+16].bgdColor = DARK_GREEN;
+	}
+	for (int i = 5; i < 25; i++)
+	{
+		this->screen[x+i][y+17].bgdColor = DARK_GREEN;
+	}
+	for (int i = 11; i < 23; i++)
+	{
+		this->screen[x+i][y+18].bgdColor = DARK_GREEN;
+	}
+	for (int i = 14; i < 19; i++)
+	{
+		this->screen[x+i][y+18].bgdColor = -1;
+	}
+	this->screen[x+11][y+19].bgdColor = DARK_GREEN;
+	this->screen[x+12][y+19].bgdColor = DARK_GREEN;
+	this->screen[x+20][y+19].bgdColor = DARK_GREEN;
+	this->screen[x+21][y+19].bgdColor = DARK_GREEN;
+
+}
+void CGRAPHIC::DrawHat(int first_x, int first_y)
+{
+	vector<wstring>frame = HAT;
+	//set buffer
+	for (int i = 0; i < 16; i++)
+		for (int j = 0; j < 5; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], SADDLE_BROWN, -1 };
+	//set color
+	int x = first_x;
+	int y = first_y;
+	this->screen[x+6][y].txtColor = SADDLE_BROWN;
+	this->screen[x+6][y].bgdColor = -1;
+	this->screen[x+7][y].txtColor = SADDLE_BROWN;
+	this->screen[x+8][y].txtColor = SADDLE_BROWN;
+	this->screen[x+9][y].txtColor = SADDLE_BROWN;
+	this->screen[x+9][y].bgdColor = -1;
+
+	this->screen[x+4][y+1].txtColor = BLACK;
+	this->screen[x+4][y+1].bgdColor = -1;
+	this->screen[x+5][y+1].txtColor = SADDLE_BROWN;
+	this->screen[x+5][y+1].bgdColor = BLACK;
+	this->screen[x+6][y+1].txtColor = SADDLE_BROWN;
+	this->screen[x+6][y+1].bgdColor = BLACK;
+	this->screen[x+7][y+1].txtColor = SADDLE_BROWN;
+	this->screen[x+7][y+1].bgdColor = BLACK;
+	this->screen[x+8][y+1].txtColor = SADDLE_BROWN;
+	this->screen[x+8][y+1].bgdColor = BLACK;
+	for (int i = 9; i < 12; i++)
+	{
+		this->screen[x+i][y+1].txtColor = SADDLE_BROWN;
+	}
+	this->screen[x][y+2].txtColor = SADDLE_BROWN;
+	this->screen[x+1][y+2].txtColor = SADDLE_BROWN;
+	this->screen[x+2][y+2].txtColor = SADDLE_BROWN;
+	this->screen[x+2][y+2].bgdColor = -1;
+	this->screen[x+3][y+2].txtColor = SADDLE_BROWN;
+	this->screen[x+3][y+2].bgdColor = -1;
+	this->screen[x+4][y+2].txtColor = BLACK;
+	this->screen[x+4][y+2].bgdColor = SADDLE_BROWN;
+	this->screen[x+5][y+2].txtColor = BLACK;
+	this->screen[x+5][y+2].bgdColor = SADDLE_BROWN;
+
+	for (int i = 6; i < 11; i++)
+	{
+		this->screen[x+i][y+2].txtColor = BLACK;
+	}
+	this->screen[x+11][y+2].txtColor = BLACK;
+	this->screen[x+11][y+2].bgdColor = SADDLE_BROWN;
+	for (int i = 1; i <= 14; i++)
+	{
+		this->screen[x+i][y+3].txtColor = SADDLE_BROWN;
+		this->screen[x+i][y+3].bgdColor = -1;
+	}
+}
+void CGRAPHIC::DrawCloud_1(int first_x, int first_y)
+{
+	vector<wstring>frame = FRAME_CLOUD_1;
+	//set buffer
+	for (int i = 0; i < 16; i++)
+		for (int j = 0; j < 24; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, -1 };
+	//set color
+	int x = first_x;
+	int y = first_y;
+	this->screen[x+5][y].bgdColor = -1;
+	this->screen[x+6][y].bgdColor = WHITE;
+	this->screen[x+7][y].bgdColor = WHITE;
+	this->screen[x+8][y].bgdColor = -1;
+	this->screen[x+1][y+1].bgdColor = -1;
+	this->screen[x+14][y+1].bgdColor = -1;
+	for (int i = 2; i < 14; i++)
+	{
+		this->screen[x+i][y+1].bgdColor = WHITE;
+	}
+	for (int i = 1; i < 14; i++)
+	{
+		this->screen[x+i][y+2].bgdColor = WHITE;
+		this->screen[x+i][y+2].txtColor = WHITE;
+	}
+	this->screen[x+1][y+3].bgdColor = -1;
+	this->screen[x+14][y+3].bgdColor = -1;
+	for (int i = 2; i < 14; i++)
+	{
+		this->screen[x+i][y+3].bgdColor = WHITE;
+	}
+}
+void CGRAPHIC::DrawCloud_2(int first_x, int first_y)
+{
+	vector<wstring> frame = FRAME_CLOUD_2;
+
+	//set buffer
+	for (int i = 0; i < 16; i++)
+		for (int j = 0; j < 4; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, -1 };
+
+	//set color
+	int x = first_x;
+	int y = first_y;
+	this->screen[x+2][y].bgdColor = -1;
+	this->screen[x+3][y].bgdColor = -1;
+	this->screen[x+5][y].bgdColor = -1;
+	this->screen[x+8][y].bgdColor = -1;
+	this->screen[x+10][y].bgdColor = -1;
+	this->screen[x+11][y].bgdColor = -1;
+	this->screen[x+12][y].bgdColor = -1;
+	for (int i = 1; i < 15; i++)
+	{
+		this->screen[x+i][y+1].bgdColor = WHITE;
+	}
+	this->screen[x][y+1].bgdColor = -1;
+	this->screen[x+15][y+1].bgdColor = -1;
+	for (int i = 1; i < 14; i++)
+	{
+		this->screen[x+i][y+2].bgdColor = WHITE;
+		this->screen[x+i][y+2].txtColor = WHITE;
+	}
+	this->screen[x+1][y+3].bgdColor - 1;
+	this->screen[x+14][y+3].bgdColor - 1;
+	for (int i = 2; i < 14; i++)
+	{
+		this->screen[x + i][y + 3].bgdColor = WHITE;
+	}
+}
 
 void CGRAPHIC::DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y) {
 	vector<wstring> frame = FLOPPY_DISC;
