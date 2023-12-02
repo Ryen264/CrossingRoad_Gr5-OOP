@@ -66,7 +66,6 @@ void CDINOSAUR::setColor(int color) {
 		block[6][4].bgdColor = colorArr[0];
 		for (int i = 7; i <= 9; i++)
 		{
-			block[i][4].txtColor = colorArr[0];
 			block[i][4].bgdColor = colorArr[1];
 		}
 	}
