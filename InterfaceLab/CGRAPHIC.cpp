@@ -145,3 +145,23 @@ void CGRAPHIC::drawClipBoard(int first_x, int first_y, int width, int height) {
 	for (int i = 0; i < 5; i++)
 		screen[first_x + width - (3 + i)][first_y + height - 1] = { L' ', BLACK, DARK_BLUE };
 }
+void CGRAPHIC::drawTag(int first_x, int first_y, int tagColor) {
+	for (int i = 0; i < 40; i++)
+		for (int j = 0; j < 5; j++)
+			screen[first_x + i][first_y + j] = { TAGS[j][i], BLACK, WHITE };
+	for (int i = 0; i < 40; i++)
+		screen[first_x + i][first_y].bgdColor = -1;
+	screen[first_x][first_y + 1].bgdColor = -1;
+	screen[first_x + 1][first_y + 3].bgdColor = -1;
+	screen[first_x + 2][first_y + 3].bgdColor = -1;
+	screen[first_x][first_y + 4].bgdColor = -1;
+	screen[first_x + 1][first_y + 4].bgdColor = -1;
+	screen[first_x + 2][first_y + 4].bgdColor = -1;
+	screen[first_x + 3][first_y + 4].bgdColor = -1;
+	screen[first_x + 4][first_y + 4].bgdColor = -1;
+	for (int i = 1; i < 5; i++)
+		screen[first_x + 7][first_y + i].bgdColor = tagColor;
+	for (int i = 33; i < 39; i++)
+		for (int j = 1; j < 5; j++)
+			screen[first_x + i][first_y + j].bgdColor = tagColor;
+}

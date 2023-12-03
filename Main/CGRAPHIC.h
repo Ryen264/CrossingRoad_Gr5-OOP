@@ -63,6 +63,7 @@ public:
 	void drawCheck(int first_x, int first_y, int txtColor = DARK_GREEN, int bgdColor = -1);
 	void drawCell(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1, bool isPass = true);
 	void drawClipBoard(int first_x, int first_y, int width, int height);
+	void drawTag(int first_x, int first_y, int tagColor);
 
 	void DrawDrawer(int first_x, int first_y);
 	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);
@@ -353,6 +354,17 @@ const vector<wstring> FLOPPY_DISC = {
 		L"██                                                  ██",
 		L"██████████████████████████████████████████████████████"
 };
+
+const vector<wstring> TAGS = {
+L"     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
+L" ▄▄█▀▀                                 █",
+L"█▀  ▄█                                 █",
+L"▀█▄▄ ▀                                 █",
+L"   ▀▀█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█"
+};
+
+
+
 const vector<wstring>DINOSAUR_PICTURE = {
 L"       ▄▄▀▀▀▄▄       ",
 L"▄▄▄▄▄▀▀▄▄▄▄▄▄▄▀▀▄▄▄▄▄",

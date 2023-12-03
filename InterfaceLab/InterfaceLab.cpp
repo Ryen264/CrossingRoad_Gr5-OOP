@@ -18,6 +18,7 @@ int main() {
 	//draw object
 	//ObjLayer.drawClipBoard(0,0,46,20);
 	testobject.DrawBlock(ObjLayer);
+	//ObjLayer.drawTag(0, 0, RED);
 	ObjLayer.display();
 	_getch();
 	return 0;

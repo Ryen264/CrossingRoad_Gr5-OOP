@@ -1,10 +1,10 @@
-#pragma once
+﻿#pragma once
 #include <Windows.h>
 #include <iostream>
 #include <vector>
 using namespace std;
-const int SCREEN_HEIGHT = 50;
-const int SCREEN_WIDTH = 100;
+const int SCREEN_HEIGHT = 51;
+const int SCREEN_WIDTH = 208;
 const int BLOCK_HEIGHT = 6;
 const int BLOCK_WIDTH = 16;
 
@@ -26,10 +26,20 @@ const THEME THEME_LAND = { {
 	RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0), RGB(0, 0, 0)},
 	15, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0 };
 
+const THEME MAIN_MENU_THEME = { {
+	RGB(212, 240, 149), RGB(87, 41, 23), RGB(156, 90, 60), RGB(117, 63, 40), RGB(201, 136, 87), RGB(180, 180, 180), RGB(0, 0, 0), RGB(255, 255, 255),
+	RGB(34, 177, 76), RGB(52, 235, 103), RGB(160, 224, 250), RGB(178, 153, 196), RGB(112, 86, 130), RGB(15, 191, 191), RGB(252, 176, 52), RGB(222, 121, 27)},
+	15, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0 };
+
+
 extern int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
 SADDLE_BROWN, DARK_RED, RED, ORANGE,
 BLUE, DARK_BLUE, LIGHT_CYAN, LIGHT_GRAY,
 SAND, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN;
+
+//int CREAMY_AVOCADO, DARK_BROWN, LIGHT_BROWN, BROWN,
+//LIGHTER_BROWN, LIGHT_GRAY, BLACK, WHITE, DARK_GREEN,
+//LIGHT_GREEN, SKY_BLUE, LAVENDER, PURPLE, TEAL, TANGERINE, DARK_ORANGE;
 
 void SetupTheme(THEME theme = THEME_BASIC);
 
@@ -47,4 +57,13 @@ public:
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
 	void drawClipBoard(int first_x, int first_y, int width, int height);
+	void drawMainMenu();
+	void drawTag(int first_x, int first_y, int tagColor);
+};
+const vector<wstring> TAGS = {
+L"     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
+L" ▄▄█▀▀                                 █",
+L"█▀  ▄█                                 █",
+L"▀█▄▄ ▀                                 █",
+L"   ▀▀█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█"
 };
