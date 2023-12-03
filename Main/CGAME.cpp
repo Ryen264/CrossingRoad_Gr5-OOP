@@ -53,7 +53,7 @@ void CGAME::Configure()
 	srand(time(0));
 	SetupTheme();
 	BgdLayer.clear(BLACK, WHITE);
-	ObjLayer.clear(BLACK, -1);
+	ObjLayer.clear(-1, -1);
 }
 
 void CGAME::start() {
@@ -254,36 +254,110 @@ void CGAME::changeFileName(int index) {
 	}
 }
 
+//int CGAME::Menu() {
+//	system("cls");
+//	this->drawMenu();
+//	int key = toupper(_getch());
+//	switch (key) {
+//	case '1': {
+//		this->NewGame();
+//		break;
+//	}
+//	case '2': {
+//		this->LoadGame();
+//		break;
+//	}
+//	case '3': {
+//		this->Setting();
+//		break;
+//	}
+//	case '4': {
+//		this->Help();
+//		break;
+//	}
+//	case '5': {
+//		this->About();
+//		break;
+//	}
+//	case '6':
+//		return QUIT_CODE;
+//	}
+//	return 0;
+//}
+
 int CGAME::Menu() {
 	system("cls");
-	this->drawMenu();
-	int key = toupper(_getch());
-	switch (key) {
-	case '1': {
-		this->NewGame();
-		break;
-	}
-	case '2': {
-		this->LoadGame();
-		break;
-	}
-	case '3': {
-		this->Setting();
-		break;
-	}
-	case '4': {
-		this->Help();
-		break;
-	}
-	case '5': {
-		this->About();
-		break;
-	}
-	case '6':
-		return QUIT_CODE;
+	const int fromX = (SCREEN_WIDTH - 40) / 2, fromY = (SCREEN_HEIGHT - 27) / 2,
+		toX = fromX + 40 - 1, toY = fromY + 27 - 1;
+
+	const int xdrawerStart = 7 + fromX, ydrawerStart = fromY;
+	const int NEW_GAME = ydrawerStart;
+	const int LOAD_GAME = ydrawerStart + 4;
+	const int SETTING = ydrawerStart + 4 * 2;
+	const int HELP = ydrawerStart + 4 * 3;
+	const int ABOUT = ydrawerStart + 4 * 4;
+	const int QUIT = ydrawerStart + 4 * 5;
+	//NewGame - LoadGame - Setting - Help - About - Quit
+	vector<int> colorArr = { LIGHT_GREEN, BLUE, LIGHT_GRAY, BRIGHT_YELLOW, SAND, RED };
+	int xOption = xdrawerStart, yOption = ydrawerStart, iCur = 0, curColor = colorArr[iCur];
+
+	//draw menu
+	BgdLayer.DrawDrawer(fromX, fromY + 3);
+
+	//draw current step
+	ObjLayer.DrawSmallDrawer(xOption, yOption, curColor);
+	displayScreen(fromX, fromY, toX, toY);
+	while (1) {
+		int temp = toupper(_getch());
+
+		//erase the last step
+		ObjLayer.erasePixel(xOption, yOption, xOption + 32 - 1, yOption + 7 - 1);
+		if (isEnterButton(temp)) {
+			//draw choice
+			ObjLayer.DrawSmallDrawer(xOption, yOption, DARK_GREEN);
+			if (iCur != 0) ObjLayer.screen[xOption + 14][yOption].bgdColor = LIGHT_BROWN;
+			displayScreen(fromX, fromY, toX, toY);
+			
+			Sleep(500);
+			switch (yOption) {
+			case NEW_GAME:
+				this->NewGame();
+				break;
+			case LOAD_GAME:
+				this->LoadGame();
+				break;
+			case SETTING:
+				this->Setting();
+				break;
+			case HELP:
+				this->Help();
+				break;
+			case ABOUT:
+				this->About();
+				break;
+			case QUIT:
+				return QUIT_CODE;
+			}
+		}
+		else {
+			if (isUpButton(temp) && iCur > 0) {
+				iCur--;
+				yOption -= 4;
+			}
+			if (isDownButton(temp) && iCur < 5) {
+				iCur++;
+				yOption += 4;
+			}
+			//update new step
+			curColor = colorArr[iCur];
+		}
+		ObjLayer.DrawSmallDrawer(xOption, yOption, curColor);
+		if (iCur != 0) ObjLayer.screen[xOption + 14][yOption].bgdColor = LIGHT_BROWN;
+		displayScreen(fromX, fromY, toX, toY);
 	}
 	return 0;
 }
+
 void CGAME::NewGame() {
 	cPlayer->set(BOARD_WIDTH / 2, UP_LANE, true, 0);
 	resetData();
@@ -365,7 +439,7 @@ void CGAME::About() {
 int CGAME::Pause(HANDLE t) {
 	SuspendThread(t);
 	const int fromX = (SCREEN_WIDTH - 53) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
-		toX = fromX + 53, toY = fromY + 30;
+		toX = fromX + 53 - 1, toY = fromY + 30 - 1;
 
 	const int SETTING_OPTION = 7 + fromX;
 	const int RESUME_OPTION = 23 + fromX;
@@ -381,6 +455,7 @@ int CGAME::Pause(HANDLE t) {
 	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
 	//draw menu
 	tmpBgdLayer.DrawPauseMenu(fromX, fromY);
+	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 
 	//draw character name
 	tmpObjLayer.drawString(cPlayer->getNameCharacter(), 24 + fromX, 4 + fromY, cPlayer->getColorCharacter(), SAND);
@@ -390,6 +465,7 @@ int CGAME::Pause(HANDLE t) {
 	//draw current cell
 	tmpObjLayer.drawCell(xOption, yOption, LIGHT_GREEN);
 
+	//displayScreen(tmpObjLayer, tmpBgdLayer);
 	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	while (1) {
 		int temp = toupper(_getch());
@@ -477,11 +553,11 @@ int CGAME::Pause(HANDLE t) {
 		}
 		else {
 			//draw choice
-			if (xOption != CHARACTER_OPTION) tmpObjLayer.drawCell(xOption, yOption, RED);
-			else tmpObjLayer.drawCharacterFrame(xOption, yOption, RED);
+			if (xOption != CHARACTER_OPTION) tmpObjLayer.drawCheck(xOption, yOption);
+			else tmpObjLayer.drawCharacterFrame(xOption, yOption, DARK_GREEN);
 			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 
-			Sleep(5);
+			Sleep(500);
 			switch (xOption) {
 			case CHARACTER_OPTION:
 				ChooseCharacter();
@@ -492,21 +568,15 @@ int CGAME::Pause(HANDLE t) {
 				characterSample.setColor(cPlayer->getColorCharacter());
 				tmpObjLayer.erasePixel(xOption, yOption, xOption + 17, yOption + 8);
 				characterSample.DrawBlock(tmpObjLayer);
-				//reset choice
-				tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
 				break;
 			case SETTING_OPTION:
 				//setting
-				//reset choice
-				tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
 				break;
 			case RESUME_OPTION:
 				resumeThread(t);
 				return 0;
 			case HELP_OPTION:
 				//help
-				//reset choice
-				tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
 				break;
 			case SAVE_OPTION:
 				savename = SaveGame();
@@ -518,6 +588,8 @@ int CGAME::Pause(HANDLE t) {
 				isSaved = false;
 				return BACK_TO_MENU_CODE;
 			}
+			//reset choice
+			tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
 			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 		}
 	}
@@ -525,7 +597,7 @@ int CGAME::Pause(HANDLE t) {
 }
 void CGAME::ChooseCharacter() {
 	const int fromX = (SCREEN_WIDTH - 53) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
-		toX = fromX + 53, toY = fromY + 30;
+		toX = fromX + 53 - 1, toY = fromY + 30 - 1;
 
 	vector<vector<int>> colorArr = { {RED, BLUE, DARK_GREEN}, {BRIGHT_YELLOW, ORANGE, SADDLE_BROWN}, {DARK_GRAY, DARK_RED, DARK_BLUE} };
 
@@ -591,7 +663,7 @@ void CGAME::ChooseCharacter() {
 		}
 		else {
 			//draw choice
-			tmpObjLayer.drawCell(xOption, yOption, RED);
+			tmpObjLayer.drawCheck(xOption, yOption);
 			//set new character color
 			cPlayer->setColorCharacter(curColor);
 			//draw new name
@@ -600,7 +672,7 @@ void CGAME::ChooseCharacter() {
 			tmpObjLayer.drawString(curName, 24 + fromX, 4 + fromY, curColor, SAND);
 
 			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
-			Sleep(5);
+			Sleep(500);
 			return;
 		}
 	}
@@ -812,6 +884,7 @@ void CGAME::SubThreadNewGame() {
                 startMap();
 				this->level++;
             }
+			Sleep(100);
         }
     }
 }
