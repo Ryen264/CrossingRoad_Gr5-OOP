@@ -58,31 +58,32 @@ CGRAPHIC::~CGRAPHIC() {
 	this->screen = NULL;
 }
 
-void CGRAPHIC::displayPixel(int x, int y) {
-	if (x < 0) x = 0;
-	if (x > WIDTH - 1) x = WIDTH - 1;
-	if (y < 0) y = 0;
-	if (y > HEIGHT - 1) y = HEIGHT - 1;
-
-	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-	DWORD dwBytesWritten = 0;
-	COORD cPos = { x, y };
-	wchar_t pBuffer = screen[x][y].buffer;
-	WORD pColor = screen[x][y].bgdColor * 16 + screen[x][y].txtColor;
-
-	WriteConsoleOutputCharacter(hStdout, &pBuffer, 1, cPos, &dwBytesWritten);
-	WriteConsoleOutputAttribute(hStdout, &pColor, 1, cPos, &dwBytesWritten);
-}
-void CGRAPHIC::display(int fromX, int fromY, int toX, int toY) {
+void CGRAPHIC::display(HANDLE& hStdout, DWORD& dwBytesWritten, int fromX, int fromY, int toX, int toY) {
 	if (fromX < 0 || fromX > WIDTH - 1) fromX = 0;
 	if (fromY < 0 || fromY > HEIGHT - 1) fromY = 0;
 	if (toX < 0 || toX > WIDTH - 1) toX = WIDTH - 1;
 	if (toY < 0 || toY > HEIGHT - 1) toY = HEIGHT - 1;
-
-	for (int y = fromY; y <= toY; y++)
-		for (int x = fromX; x <= toX; x++)
-			if (screen[x][y].txtColor >= 0) displayPixel(x, y);
+	int width = toX - fromX + 1;
+	COORD cPos{};
+	wchar_t* pBuffer = new wchar_t[width];
+	WORD* pColor = new WORD[width];
+	for (int y = fromY; y <= toY; y++) {
+		cPos.X = fromX; cPos.Y = y;
+		for (int x = fromX; x <= toX; x++) {
+			if (screen[x][y].txtColor >= 0) {
+				pBuffer[x] = screen[x][y].buffer;
+				pColor[x] = screen[x][y].bgdColor * 16 + screen[x][y].txtColor;
+			}
+		}
+		WriteConsoleOutputCharacter(hStdout, pBuffer, width, cPos, &dwBytesWritten);
+		WriteConsoleOutputAttribute(hStdout, pColor, width, cPos, &dwBytesWritten);
+	}
+	if (pBuffer != NULL) delete pBuffer;
+	pBuffer = NULL;
+	if (pColor != NULL) delete pColor;
+	pColor = NULL;
 }
+
 void CGRAPHIC::clear(int txtColor, int bgdColor) {
 	for (int x = 0; x < SCREEN_WIDTH; x++)
 		for (int y = 0; y < SCREEN_HEIGHT; y++)
