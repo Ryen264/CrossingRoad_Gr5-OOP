@@ -3,8 +3,8 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 	this->x = x; this->y = y; this->isRight = isRight;
 	vector<wstring> frame =  FRAME_RIGHT;
 	
-	WIDTH = 63;
-	HEIGHT = 19;
+	WIDTH = 28;
+	HEIGHT = 27;
 
 	this->block = new PIXEL * [WIDTH];
 	for (int i = 0; i <WIDTH; i++)
@@ -22,7 +22,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 
 	if (isRight) {
 		//Perry Talk
-		for (int i = 3; i < 38; i++)
+		/*for (int i = 3; i < 38; i++)
 		{
 			block[i][0].bgdColor = WHITE;
 		}
@@ -162,7 +162,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		{
 			block[i][18].txtColor = BRIGHT_YELLOW;
 			block[i][18].bgdColor = -1;
-		}
+		}*/
 		//CLOUD 2
 		/*block[2][0].bgdColor = -1;
 		block[3][0].bgdColor = -1;
@@ -447,7 +447,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 		block[6][7].bgdColor = DARK_GREEN;
 		block[7][7].bgdColor = DARK_GREEN;*/	
 		//DRAWER
-		/*for (int j = 1; j < 26; j++)
+		for (int j = 1; j < 26; j++)
 		{
 			for (int i = 1; i < 8; i++)
 			{
@@ -653,7 +653,7 @@ COBJECT::COBJECT(int x, int y, int isRight) {
 				block[i][j].bgdColor = LIGHT_BROWN;
 				block[i][j].txtColor = SADDLE_BROWN;
 			}
-		}*/
+		}
 		//SMALL DRAWER
 		/*block[16][0].bgdColor = BRIGHT_YELLOW;
 		block[17][0].bgdColor = BRIGHT_YELLOW;
