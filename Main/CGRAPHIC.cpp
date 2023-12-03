@@ -898,3 +898,9 @@ void CGRAPHIC::drawTag(int first_x, int first_y, int tagColor) {
 		for (int j = 1; j < 5; j++)
 			screen[first_x + i][first_y + j].bgdColor = tagColor;
 }
+
+void CGRAPHIC::drawInfiniteSymbol(int first_x, int first_y) {
+	for (int i = 0; i < 13; i++)
+		for (int j = 0; i < 3; j++)
+			screen[first_x + i][first_y + j] = { infinite[j][i], BLACK, -1 };
+}

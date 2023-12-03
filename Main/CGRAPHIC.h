@@ -64,6 +64,7 @@ public:
 	void drawCell(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1, bool isPass = true);
 	void drawClipBoard(int first_x, int first_y, int width, int height);
 	void drawTag(int first_x, int first_y, int tagColor);
+	void drawInfiniteSymbol(int first_x, int first_y);
 
 	void DrawDrawer(int first_x, int first_y);
 	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);
@@ -363,7 +364,11 @@ L"▀█▄▄ ▀                                 █",
 L"   ▀▀█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█"
 };
 
-
+const vector<wstring> infinite = {
+	L"▄█▀▀█▄ ▄█▀▀█▄",
+	L"█    ▄█▀    █",
+	L"▀█▄▄█▀ ▀█▄▄█▀"
+};
 
 const vector<wstring>DINOSAUR_PICTURE = {
 L"       ▄▄▀▀▀▄▄       ",
