@@ -883,7 +883,7 @@ void CGAME::displayScreen(int fromX, int fromY, int toX, int toY) {
 			if (objPixel.txtColor < 0 && objPixel.bgdColor < 0) objPixel = bgdPixel;
 			else if (objPixel.bgdColor < 0) objPixel.bgdColor = bgdPixel.bgdColor;
 		}
-	ObjLayer.display(fromX, fromY, toX, toY);
+	ObjLayer.display(hStdout, dwBytesWritten, fromX, fromY, toX, toY);
 }
 void CGAME::displayScreen(CGRAPHIC& ObjLayer, const CGRAPHIC& BgdLayer, int fromX, int fromY, int toX, int toY) {
 	if (toX < 0 || toX > SCREEN_WIDTH - 1) toX = SCREEN_WIDTH - 1;
@@ -894,7 +894,7 @@ void CGAME::displayScreen(CGRAPHIC& ObjLayer, const CGRAPHIC& BgdLayer, int from
 			if (objPixel.txtColor < 0 && objPixel.bgdColor < 0) objPixel = bgdPixel;
 			else if (objPixel.bgdColor < 0) objPixel.bgdColor = bgdPixel.bgdColor;
 		}
-	ObjLayer.display(fromX, fromY, toX, toY);
+	ObjLayer.display(hStdout, dwBytesWritten, fromX, fromY, toX, toY);
 }
 
 bool isUpButton(int button) {

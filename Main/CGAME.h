@@ -32,6 +32,9 @@ class CGAME {
 
     //Screen layers
     CGRAPHIC ObjLayer, BgdLayer;
+
+    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD dwBytesWritten = 0;
 public:
     CGAME();
     ~CGAME();

@@ -47,8 +47,8 @@ public:
 	CGRAPHIC(const CGRAPHIC& second);
 	CGRAPHIC(PIXEL pixel);
 	~CGRAPHIC();
-	void displayPixel(int x = 0, int y = 0);
-	void display(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
+	void display(HANDLE& hStdout, DWORD& dwBytesWritten, int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
+
 	void clear(int txtColor, int bgdColor);
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor, bool isPass = true);
