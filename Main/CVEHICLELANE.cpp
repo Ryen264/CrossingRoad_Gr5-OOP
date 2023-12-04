@@ -176,16 +176,22 @@ void CVEHICLELANE::Move() {
         else {
             //Push with traffic light on
             //push after
-            if (lightPos < BOARD_WIDTH - 2 && lightPos > 0) {
-                if (lane[lightPos] != NULL && lane[lightPos]->getID() == BUS_HEAD_ID) {
-                    if (isMoveRight) lane.insert(lane.begin() + lightPos - 1, NULL);
-                    else lane.insert(lane.begin() + lightPos + 2, NULL);
+            pop_backObject();
+            if (lane[lightPos] != NULL && lane[lightPos]->getID() == BUS_HEAD_ID) {
+                if (isMoveRight) {
+                    if (lightPos > 0) lane.insert(lane.begin() + lightPos - 1, NULL);
+                    else push_frontObject(BUS_TAIL_ID);
                 }
                 else {
-                    if (isMoveRight) lane.insert(lane.begin() + lightPos, NULL);
-                    else lane.insert(lane.begin() + lightPos + 1, NULL);
+                    if (lightPos < BOARD_WIDTH - 2) lane.insert(lane.begin() + lightPos + 2, NULL);
+                    else if (lightPos == BOARD_WIDTH - 2) lane.push_back(NULL);
+                    else push_frontObject(BUS_TAIL_ID);
                 }
-                pop_backObject();
+            }
+            else {
+                if (isMoveRight) lane.insert(lane.begin() + lightPos, NULL);
+                else if (lightPos < BOARD_WIDTH - 1) lane.insert(lane.begin() + lightPos + 1, NULL);
+                else lane.push_back(NULL);
             }
             //push before
             if (isMoveRight) {

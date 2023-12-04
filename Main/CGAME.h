@@ -21,7 +21,7 @@ class CGAME {
     deque<CLANE*> aLanes;
     deque<string> fileNameList;
     bool isSaved = false;
-    string savename;
+    string savedName;
     bool isNextTree = false;
 
     int level = 1, numberOfLane = 0;
@@ -47,9 +47,9 @@ public:
     void saveData(string fileName);
     void loadData(string fileName);
 
-    string inputUserTxt();
+    string inputUserTxt(CGRAPHIC& ObjLayer, CGRAPHIC& BgdLayer, int fromX, int fromY, int maxSize, int txtColor, int bgdColor, bool(*checkFunction)(char) = NULL, deque<string> strArr = {});
+
     int inputUserNumber();
-    bool checkFileName(string fileName);
     void saveFileNameList();
     void loadFileNameList();
     void deleteFileName(int);
@@ -58,7 +58,7 @@ public:
     int Menu();
     void NewGame();
     void LoadGame();
-    string SaveGame();
+    void SaveGame();
     void Setting();
     void Help();
     void About();
@@ -99,13 +99,21 @@ public:
 const int QUIT_CODE = -1000;
 const int BACK_TO_MENU_CODE = -1001;
 
-const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, TRAINLANE_ID, RIVERLANE_ID};
+const vector<int> LANE_ID_LIST = { VEHICLELANE_ID};
+//const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, TRAINLANE_ID, RIVERLANE_ID };
 
 bool isUpButton(int button);
 bool isDownButton(int button);
 bool isRightButton(int button);
 bool isLeftButton(int button);
 bool isEnterButton(int button);
+bool isDeleteButton(int button);
+bool isBackspaceButton(int button);
+
+bool isNumber(char ch);
+bool isLetter(char ch);
+bool isNumberOrLetter(char ch);
+bool isExist(string str, deque<string> strArr);
 
 int getiMatrix(int val, vector<vector<int>>& matrix);
 int getjMatrix(int val, vector<vector<int>>& matrix);

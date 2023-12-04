@@ -68,6 +68,10 @@ public:
 	void drawCell(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1, bool isPass = true);
 	void drawButton(int first_x, int first_y, int color, int txtColor = BLACK, int bgdColor = -1, bool isPass = true);
 	void drawClipBoard(int first_x, int first_y, int width, int height);
+	void drawTag(int first_x, int first_y, int tagColor);
+	void drawInfiniteSymbol(int first_x, int first_y);
+	void drawRegtangle(int first_x, int first_y, int width, int height, int bgdColor);
+
 	void DrawTextBoard(string contentName, int colorName, vector<string> contentBody, int first_x, int first_y, int width, int height, int txtColor, int bgdColor);
 	
 
@@ -83,7 +87,8 @@ public:
 
 	void DrawPauseMenu(int first_x, int first_y);
 	void DrawChooseCharacterMenu(int first_x, int first_y);
-	void DrawPerryTalk(int first_x, int first_y);
+	void DrawPerryTalk(string message, int first_x, int first_y, int txtColor, int bgdColor);
+	void DrawTextBoard(string contentName, int colorName, vector<string> contentBody, int first_x, int first_y, int width, int height, int txtColor, int bgdColor);
 
 };
 const vector<wstring> COLON = {
@@ -353,38 +358,51 @@ const vector<wstring> SmallDrawer = {
 };
 
 const vector<wstring> FLOPPY_DISC = {
-	    //012345678901234567890123456789012345678901234567890123
-		L"██████████████████████████████████████████████████    ",//0
-		L"██                                                ██  ",//1
-		L"██                              █████               ██",//2
-		L"██                              █████               ██",//3
-		L"██                              █████               ██",//4
-		L"██                              █████               ██",//5
-		L"██                              █████               ██",//6
-		L"██                              █████               ██",//7
-		L"██                              █████               ██",//8
-		L"██                              █████               ██",//9
-		L"██                                                  ██",//10
-		L"██                                                  ██",//11
-		L"██                                                  ██",//12
-		L"██                                                  ██",//13
-		L"██                                                  ██",//14
-		L"██                                                  ██",//15
-		L"██                                                  ██",//16
-		L"██                                                  ██",//17
-		L"██                                                  ██",//18
-		L"██                                                  ██",//19
-		L"██                                                  ██",//20
-		L"██                                                  ██",//21
-		L"██                                                  ██",//22
-		L"██                          ████       ████         ██",//23
-		L"██                        ██    ██   ██    ██       ██",//24
-		L"██                        ██    ██   ██    ██       ██",//25
-		L"██                          ████       ████         ██",//26
-		L"██                                                  ██",//27
-		L"██                                                  ██",//28
-		L"██████████████████████████████████████████████████████" //29
+		L"██████████████████████████████████████████████████    ",
+		L"██                                                ██  ",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                              █████               ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██        ██████████████████████████████████        ██",
+		L"██        ██████████████████████████████████        ██",
+		L"██        ██████████████████████████████████        ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██                          ████       ████         ██",
+		L"██                        ██    ██   ██    ██       ██",
+		L"██                        ██    ██   ██    ██       ██",
+		L"██                          ████       ████         ██",
+		L"██                                                  ██",
+		L"██                                                  ██",
+		L"██████████████████████████████████████████████████████"
 };
+
+const vector<wstring> TAGS = {
+L"     ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
+L" ▄▄█▀▀                                 █",
+L"█▀  ▄█                                 █",
+L"▀█▄▄ ▀                                 █",
+L"   ▀▀█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█"
+};
+
+const vector<wstring> infinite = {
+	L"▄█▀▀█▄ ▄█▀▀█▄",
+	L"█    ▄█▀    █",
+	L"▀█▄▄█▀ ▀█▄▄█▀"
+};
+
 const vector<wstring>DINOSAUR_PICTURE = {
 L"       ▄▄▀▀▀▄▄       ",
 L"▄▄▄▄▄▀▀▄▄▄▄▄▄▄▀▀▄▄▄▄▄",
@@ -440,23 +458,24 @@ L"█             █",
 L" ▀▄▄▄▄▄▄▄▄▄▄▄▀ ",
 };
 const vector<wstring>PERRY_TALK = {
-L" ▄█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▄                       ",
-L"█▀                                     ▀█                      ",
-L"█                                       █                      ",
-L"█                                       █                      ",
-L"█                                       █                      ",
-L"█                                       █                      ",
-L"█                                       █                      ",
-L"█                                       █                      ",
-L"▀█▄                                   ▄█▀                      ",
-L"  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█   █▀▀▀▀                        ",
-L"                               ▀▄  █                           ",
-L"                                ▀▄  █                          ",
-L"                                  ▀▄▄█                         ",
-L"                                         ▀▄                    ",
-L"                                       ▄▄▀▄▄▄▄▄▄▄▄▄▄▄▄         ",
-L"                                      ██▄█████████████ ▄▄▄▀▀▀▀▄",
-L"                                     ▄▄▄██▄███████████▀▄▀█▀▄█▄▀",
-L"                                      ▀▀▀▄█▀██▀▀██▀▀██▀▀▀▀     ",
-L"                                         ▀▀ ▀▀ ▀▀▀ ▀▀▀         "
+//012345678901234567890123456789012345678901234567890123456789012
+L" ▄█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█▄                       ",//0
+L"█▀                                     ▀█                      ",//1
+L"█                                       █                      ",//2
+L"█                                       █                      ",//3
+L"█                                       █                      ",//4
+L"█                                       █                      ",//5
+L"█                                       █                      ",//6
+L"█                                       █                      ",//7
+L"▀█▄                                   ▄█▀                      ",//8
+L"  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█   █▀▀▀▀                        ",//9
+L"                               ▀▄  █                           ",//10
+L"                                ▀▄  █                          ",//11
+L"                                  ▀▄▄█                         ",//12
+L"                                         ▀▄                    ",//13
+L"                                       ▄▄▀▄▄▄▄▄▄▄▄▄▄▄▄         ",//14
+L"                                      ██▄█████████████ ▄▄▄▀▀▀▀▄",//15
+L"                                     ▄▄▄██▄███████████▀▄▀█▀▄█▄▀",//16
+L"                                      ▀▀▀▄█▀██▀▀██▀▀██▀▀▀▀     ",//17
+L"                                         ▀▀ ▀▀ ▀▀▀ ▀▀▀         " //18
 };
