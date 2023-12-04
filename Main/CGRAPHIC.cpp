@@ -193,11 +193,11 @@ void CGRAPHIC::drawClipBoard(int first_x, int first_y, int width, int height) {
 	}
 	screen[first_x][first_y] = { L'▄' , BLACK, -1 };
 	screen[first_x + width][first_y] = { L'▄' , BLACK, -1 };
-	screen[(int)((first_x + width) * 0.32)][first_y].buffer = L'█';
-	screen[(int)((first_x + width) * 0.68)][first_y].buffer = L'█';
-	screen[(int)((first_x + width) * 0.32)][first_y + 1].buffer = L'█';
-	screen[(int)((first_x + width) * 0.68)][first_y + 1].buffer = L'█';
-	for (int i = (int)((first_x + width) * 0.32); i < (int)((first_x + width) * 0.68); i++) {
+	screen[(int)(first_x + width * 0.32)][first_y].buffer = L'█';
+	screen[(int)(first_x + width * 0.68)][first_y].buffer = L'█';
+	screen[(int)(first_x + width * 0.32)][first_y + 1].buffer = L'█';
+	screen[(int)(first_x + width * 0.68)][first_y + 1].buffer = L'█';
+	for (int i = (int)(first_x + width * 0.32); i < (int)(first_x + width * 0.68); i++) {
 		screen[i][first_y].bgdColor = LIGHT_GRAY;
 		screen[i][first_y + 1].bgdColor = LIGHT_GRAY;
 	}
@@ -296,7 +296,7 @@ void CGRAPHIC::DrawSmallDrawer(int first_x, int first_y, int drawerColor)
 
 	this->screen[x + 16][y].bgdColor = drawerColor;
 	this->screen[x + 17][y].bgdColor = drawerColor;
-	for (int i = 17; i <= 24; i++)
+	for (int i = 18; i <= 25; i++)
 		this->screen[x + i][y].bgdColor = WHITE;
 	this->screen[x + 26][y].bgdColor = drawerColor;
 	this->screen[x + 27][y].bgdColor = drawerColor;
@@ -1012,5 +1012,9 @@ void CGRAPHIC::drawInfiniteSymbol(int first_x, int first_y) {
 void CGRAPHIC::DrawMainMenu() {
 	for (int i = 0; i < WIDTH; i++)
 		for (int j = 0; j < HEIGHT; j++)
-			screen[i][j] = { MAIN_MENU_FRAME[j][i], BROWN, CREAMY_AVOCADO };
+			screen[i][j] = { MAIN_MENU_FRAME[j][i], BLACK, WHITE };
+	for (int i = 0; i < WIDTH; i++)
+		for (int j = 0; j < 17; j++) {
+			screen[i][j].bgdColor = LIGHT_BROWN;
+		}
 }
