@@ -86,7 +86,6 @@ public:
     void intro();
     void outtro();
 
-    void drawMenu();
     void drawPlayAgain();
     void drawSaveGame();
     void drawLoadGame();

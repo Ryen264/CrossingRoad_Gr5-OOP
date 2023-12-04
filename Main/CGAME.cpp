@@ -254,37 +254,6 @@ void CGAME::changeFileName(int index) {
 	}
 }
 
-//int CGAME::Menu() {
-//	system("cls");
-//	this->drawMenu();
-//	int key = toupper(_getch());
-//	switch (key) {
-//	case '1': {
-//		this->NewGame();
-//		break;
-//	}
-//	case '2': {
-//		this->LoadGame();
-//		break;
-//	}
-//	case '3': {
-//		this->Setting();
-//		break;
-//	}
-//	case '4': {
-//		this->Help();
-//		break;
-//	}
-//	case '5': {
-//		this->About();
-//		break;
-//	}
-//	case '6':
-//		return QUIT_CODE;
-//	}
-//	return 0;
-//}
-
 int CGAME::Menu() {
 	system("cls");
 	const int fromX = (SCREEN_WIDTH - 40) / 2, fromY = (SCREEN_HEIGHT - 27) / 2,
@@ -404,36 +373,226 @@ void CGAME::LoadGame() {
 	}
 }
 string CGAME::SaveGame() {
-	drawSaveGame();
-	string fileName;
-	if (!isSaved) {
-		do {
-			fileName = inputUserTxt();
-		} while (!checkFileName(fileName));
+	const int fromX = (SCREEN_WIDTH - 54) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
+		toX = fromX + 54 - 1, toY = fromY + 30 - 1;
 
-		if (fileNameList.size() > 10) {
-			fileNameList.pop_back();
+	const int INPUT_OPTION = 14 + fromX;
+	const int OK_OPTION = 26 + fromX;
+	const int BACK_OPTION = 37 + fromX;
+	const int yFirstLine = 13 + fromY, ySecondLine = 23 + fromY;
+	const int MAX_INPUT_SIZE = 6;
+
+	int xOption = INPUT_OPTION, yOption = yFirstLine;
+	string fileName{};
+	int curSize = (int)fileName.size();
+
+	//setup tmpLayers
+	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
+	//draw menu
+	tmpBgdLayer.DrawSaveScreen(fromX, fromY);
+	tmpBgdLayer.screen[fromX + 50][fromY] = BgdLayer.screen[fromX + 50][fromY];
+	tmpBgdLayer.screen[fromX + 51][fromY] = BgdLayer.screen[fromX + 51][fromY];
+	tmpBgdLayer.screen[fromX + 52][fromY] = BgdLayer.screen[fromX + 52][fromY];
+	tmpBgdLayer.screen[fromX + 53][fromY] = BgdLayer.screen[fromX + 53][fromY];
+	tmpBgdLayer.screen[fromX + 52][fromY + 1] = BgdLayer.screen[fromX + 52][fromY + 1];
+	tmpBgdLayer.screen[fromX + 53][fromY + 1] = BgdLayer.screen[fromX + 53][fromY + 1];
+
+	//draw current pos
+	switch (xOption) {
+	case INPUT_OPTION:
+		if (curSize < MAX_INPUT_SIZE) tmpObjLayer.DrawInputPos(xOption + curSize * 4, yOption, LIGHT_GREEN);
+		break;
+	case OK_OPTION:
+		tmpObjLayer.drawButton(xOption, yOption, DARK_GREEN, LIGHT_GREEN);
+		break;
+	case BACK_OPTION:
+		tmpObjLayer.drawButton(xOption, yOption, DARK_RED, LIGHT_GREEN);
+		break;
+	}
+	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	while (1) {
+		int temp = toupper(_getch());
+
+		//erase the last step
+		switch (xOption) {
+		case INPUT_OPTION:
+			if (curSize < MAX_INPUT_SIZE) tmpObjLayer.erasePixel(xOption + curSize * 4, yOption, xOption + curSize * 4 + 3, yOption + 3);
+			break;
+		case OK_OPTION: case BACK_OPTION:
+			tmpObjLayer.erasePixel(xOption, yOption, DARK_GREEN, LIGHT_GREEN);
+			break;
 		}
-		fileNameList.push_front(fileName);
-		saveFileNameList();
-		saveData(fileName);
+
+		if (!isEnterButton(temp)) {
+			if (isUpButton(temp)) {
+				switch (xOption) {
+				case OK_OPTION: case BACK_OPTION:
+					xOption = INPUT_OPTION;
+					yOption = yFirstLine;
+					break;
+				}
+			}
+			if (isDownButton(temp)) {
+				switch (xOption) {
+				case INPUT_OPTION:
+					xOption = OK_OPTION;
+					yOption = ySecondLine;
+					break;
+				}
+				if (isRightButton(temp) || isLeftButton(temp)) {
+					switch (xOption) {
+					case OK_OPTION:
+						xOption = BACK_OPTION;
+						break;
+					case BACK_OPTION:
+						xOption = OK_OPTION;
+						break;
+					}
+				}
+
+				//draw new step
+				switch (xOption) {
+				case INPUT_OPTION:
+					if (curSize < MAX_INPUT_SIZE) tmpObjLayer.DrawInputPos(xOption + curSize * 4, yOption, LIGHT_GREEN);
+					break;
+				case OK_OPTION:
+					tmpObjLayer.drawButton(xOption, yOption, DARK_GREEN, LIGHT_GREEN);
+					break;
+				case BACK_OPTION:
+					tmpObjLayer.drawButton(xOption, yOption, DARK_RED, LIGHT_GREEN);
+					break;
+				}
+				displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+			}
+			else {
+				//draw choice
+				switch (xOption) {
+				case INPUT_OPTION:
+					if (curSize < MAX_INPUT_SIZE) tmpObjLayer.DrawInputPos(xOption + curSize * 4, yOption, WHITE);
+					break;
+				case OK_OPTION:
+					tmpObjLayer.drawButton(xOption, yOption, DARK_GREEN, DARK_GREEN);
+					break;
+				case BACK_OPTION:
+					tmpObjLayer.drawButton(xOption, yOption, DARK_RED, DARK_RED);
+					break;
+				}
+				displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+
+				Sleep(500);
+				switch (xOption) {
+				case OK_OPTION:
+
+					break;
+				case BACK_OPTION:
+					return "";
+				case INPUT_OPTION:
+					break;
+				}
+			}
+			switch (xOption) {
+			case INPUT_OPTION:
+				if (curSize < MAX_INPUT_SIZE) tmpObjLayer.DrawInputPos(xOption + curSize * 4, yOption, LIGHT_GREEN);
+				break;
+			case OK_OPTION:
+				tmpObjLayer.drawButton(xOption, yOption, DARK_GREEN, LIGHT_GREEN);
+				break;
+			case BACK_OPTION:
+				tmpObjLayer.drawButton(xOption, yOption, DARK_RED, LIGHT_GREEN);
+				break;
+			}
+			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+		}
+
+		//old
+		if (!isSaved) {
+			do {
+				fileName = inputUserTxt();
+			} while (!checkFileName(fileName));
+
+			if (fileNameList.size() > 10) {
+				fileNameList.pop_back();
+			}
+			fileNameList.push_front(fileName);
+			saveFileNameList();
+			saveData(fileName);
+		}
+		else {
+			fileName = this->savename;
+			ofstream file(fileName, ofstream::trunc);
+			saveData(fileName);
+		}
+		isSaved = true;
+		return fileName;
 	}
-	else {
-		fileName = this->savename;
-		ofstream file(fileName, ofstream::trunc);
-		saveData(fileName);
-	}
-	isSaved = true;
-	return fileName;
 }
 void CGAME::Setting() {
-
 }
 void CGAME::Help() {
+	CGRAPHIC tmpBgdLayer(BgdLayer);
+
+	vector<string> bodycontent = {
+		"- KEYS:                             ",
+		"  + W - UPWARD ARROW              UP",
+		"  + S - DOWN ARROW              DOWN",
+		"  + A - LEFT ARROW              LEFT",
+		"  + D - RIGHT ARROW            RIGHT",
+		"  + ENTER - SPACE               MARK",
+		"  + P							PAUSE",
+		"- RULE:                             ",
+		"  TRY TO SURVICE AND COLLECT EGGS!!!"
+	};
+
+	int maxWidth = 0;
+	for (const string& line : bodycontent) {
+		if (line.length() > maxWidth) {
+			maxWidth = line.length();
+		}
+	}
+	int width = maxWidth+18; 
+	int height = bodycontent.size()*2+10; 
+	
+	const int fromX = (SCREEN_WIDTH - width) / 2, fromY = (SCREEN_HEIGHT - height) / 2,
+		toX = fromX + width - 1, toY = fromY + height - 1;
+	
+	tmpBgdLayer.DrawTextBoard("HELP", BRIGHT_YELLOW, bodycontent, fromX, fromY, width, height, BLACK, SAND);
+	
+	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	_getch();
 
 }
-void CGAME::About() {
 
+void CGAME::About() {
+	CGRAPHIC tmpBgdLayer(BgdLayer);
+
+	vector<string> bodycontent = {
+		"              <<TEACHER>>           ",
+		"            Truong Toan Thinh       ",
+		"									 ",			
+		"           <<GROUP'S MEMBER>>      ",
+		"      22127029 - Le Nguyen Gia Bao  ",
+		"      22127445 - Nguyen Lam Nha Uyen",
+		"      22127385 - Nguyen Quoc Thang  ",
+		"      22127301 - Nguyen Gia Nguyen  ",
+	};
+
+	int maxWidth = 0;
+	for (const string& line : bodycontent) {
+		if (line.length() > maxWidth) {
+			maxWidth = line.length();
+		}
+	}
+	int width = maxWidth + 18;
+	int height = bodycontent.size() + 20;
+
+	const int fromX = (SCREEN_WIDTH - width) / 2, fromY = (SCREEN_HEIGHT - height) / 2,
+		toX = fromX + width - 1, toY = fromY + height - 1;
+
+	tmpBgdLayer.DrawTextBoard("ABOUT", DARK_RED, bodycontent, fromX, fromY, width, height, BLACK, SAND);
+
+
+	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	_getch();
 }
 
 int CGAME::Pause(HANDLE t) {
@@ -465,7 +624,6 @@ int CGAME::Pause(HANDLE t) {
 	//draw current cell
 	tmpObjLayer.drawCell(xOption, yOption, LIGHT_GREEN);
 
-	//displayScreen(tmpObjLayer, tmpBgdLayer);
 	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	while (1) {
 		int temp = toupper(_getch());
@@ -909,16 +1067,6 @@ void CGAME::outtro() {
 	cout << "End game" << endl;
 }
 
-void CGAME::drawMenu() {
-	cout << "CROSSING ROAD" << endl;
-	cout << "1: New game" << endl;
-	cout << "2: Load game" << endl;
-	cout << "3: Setting" << endl;
-	cout << "4: Help" << endl;
-	cout << "5: About" << endl;
-	cout << "6: Quit" << endl;
-	cout << "Enter: ";
-}
 void CGAME::drawPlayAgain() {
 	cout << "Play again (Y/N)?" << endl;
 }

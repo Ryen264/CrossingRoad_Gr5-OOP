@@ -54,7 +54,11 @@ public:
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor, bool isPass = true);
 	void erasePixel(int fromX, int fromY, int toX, int toY);
 
-	void DrawLetter(char ch, int first_x, int first_y, int txtColor, int bgdColor);
+	void DrawLetter(char ch, int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
+	void DrawInputPos(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
+	void DrawMINUS(int first_x, int first_y, int txtColor, int bgdColor);
+	void DrawPLUS(int first_x, int first_y, int txtColor, int bgdColor);
+	void DrawEXCLAMATION_MARK(int first_x, int first_y, int txtColor, int bgdColor);
 	void drawString(string str, int x, int y, int txtColor, int bgdColor, int num = -1);
 	void drawTime(clock_t second, int first_x, int first_y, int txtColor, int bgdColor);
 
@@ -62,7 +66,10 @@ public:
 	void drawCharacterFrame(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
 	void drawCheck(int first_x, int first_y, int txtColor = DARK_GREEN, int bgdColor = -1);
 	void drawCell(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1, bool isPass = true);
+	void drawButton(int first_x, int first_y, int color, int txtColor = BLACK, int bgdColor = -1, bool isPass = true);
 	void drawClipBoard(int first_x, int first_y, int width, int height);
+	void DrawTextBoard(string contentName, int colorName, vector<string> contentBody, int first_x, int first_y, int width, int height, int txtColor, int bgdColor);
+	
 
 	void DrawDrawer(int first_x, int first_y);
 	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);
@@ -72,7 +79,7 @@ public:
 	void DrawCloud_1(int first_x, int first_y);
 	void DrawCloud_2(int first_x, int first_y);
 
-	void DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y);
+	void DrawSaveScreen(int first_x, int first_y);
 
 	void DrawPauseMenu(int first_x, int first_y);
 	void DrawChooseCharacterMenu(int first_x, int first_y);
@@ -89,11 +96,34 @@ const vector<wstring> CELL = {
 	L"█     █",
 	L"▀▀▀▀▀▀▀"
 };
+const vector<wstring> BUTTON = {
+	L"  ████  ",
+	L"██    ██",
+	L"██    ██",
+	L"  ████  "
+};
 const vector<wstring> CHECK = {
 	L"    ▄▀█",
 	L"█▀▄▀▄▀ ",
 	L" ▀▄▀   "
 };
+const vector<wstring> INPUT_POS = {
+	L"   ",
+	L"   ",
+	L"▀▀▀"};
+const vector<wstring> MINUS ={ 
+	L"   ",
+	L"▀▀▀",
+	L"   " };
+const vector<wstring> PLUS = {
+	L" ▄ ",
+	L"▀█▀",
+	L"   " };
+const vector<wstring> EXCLAMATION_MARK = {
+	L" █ ",
+	L" █ ",
+	L" ▄ " };
+
 const vector<wstring> CHARACTER_FRAME = {
 	L"█               █",
 	L"█               █",
@@ -323,35 +353,37 @@ const vector<wstring> SmallDrawer = {
 };
 
 const vector<wstring> FLOPPY_DISC = {
-		L"██████████████████████████████████████████████████    ",
-		L"██                                                ██  ",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                          ████       ████         ██",
-		L"██                        ██    ██   ██    ██       ██",
-		L"██                        ██    ██   ██    ██       ██",
-		L"██                          ████       ████         ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██████████████████████████████████████████████████████"
+	    //012345678901234567890123456789012345678901234567890123
+		L"██████████████████████████████████████████████████    ",//0
+		L"██                                                ██  ",//1
+		L"██                              █████               ██",//2
+		L"██                              █████               ██",//3
+		L"██                              █████               ██",//4
+		L"██                              █████               ██",//5
+		L"██                              █████               ██",//6
+		L"██                              █████               ██",//7
+		L"██                              █████               ██",//8
+		L"██                              █████               ██",//9
+		L"██                                                  ██",//10
+		L"██                                                  ██",//11
+		L"██                                                  ██",//12
+		L"██                                                  ██",//13
+		L"██                                                  ██",//14
+		L"██                                                  ██",//15
+		L"██                                                  ██",//16
+		L"██                                                  ██",//17
+		L"██                                                  ██",//18
+		L"██                                                  ██",//19
+		L"██                                                  ██",//20
+		L"██                                                  ██",//21
+		L"██                                                  ██",//22
+		L"██                          ████       ████         ██",//23
+		L"██                        ██    ██   ██    ██       ██",//24
+		L"██                        ██    ██   ██    ██       ██",//25
+		L"██                          ████       ████         ██",//26
+		L"██                                                  ██",//27
+		L"██                                                  ██",//28
+		L"██████████████████████████████████████████████████████" //29
 };
 const vector<wstring>DINOSAUR_PICTURE = {
 L"       ▄▄▀▀▀▄▄       ",
