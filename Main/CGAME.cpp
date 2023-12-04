@@ -557,26 +557,75 @@ void CGAME::SaveGame() {
 	}
 }
 void CGAME::Setting() {
-
 }
 void CGAME::Help() {
-	const int fromX = (SCREEN_WIDTH - 54) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
-		toX = fromX + 54 - 1, toY = fromY + 30 - 1;
-
 	CGRAPHIC tmpBgdLayer(BgdLayer);
 
-	vector<string> bodycontent = { "LLLLLLLLLLLLLLLLLLLLLLLLLLL",
-									"LLLLLLLLLLLLLLLLLLLLLLLLLLL",
-									"LLLLLLLLLLLLLLLLLLLLLLLLLLL",
-									"LLLLLLLLLLLLLLLLLLLLLLLLLLL",
-									"LLLLLLLLLLLLLLLLLLLLLLLLLLL" };
+	vector<string> bodycontent = {
+		"- KEYS:                             ",
+		"  + W - UPWARD ARROW              UP",
+		"  + S - DOWN ARROW              DOWN",
+		"  + A - LEFT ARROW              LEFT",
+		"  + D - RIGHT ARROW            RIGHT",
+		"  + ENTER - SPACE               MARK",
+		"  + P							PAUSE",
+		"- RULE:                             ",
+		"  TRY TO SURVICE AND COLLECT EGGS!!!"
+	};
+
+	int maxWidth = 0;
+	for (const string& line : bodycontent) {
+		if (line.length() > maxWidth) {
+			maxWidth = line.length();
+		}
+	}
+	int width = maxWidth+18; 
+	int height = bodycontent.size()*2+10; 
+	
+	const int fromX = (SCREEN_WIDTH - width) / 2, fromY = (SCREEN_HEIGHT - height) / 2,
+		toX = fromX + width - 1, toY = fromY + height - 1;
+	
+	tmpBgdLayer.DrawTextBoard("HELP", BRIGHT_YELLOW, bodycontent, fromX, fromY, width, height, BLACK, SAND);
+	
+	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	_getch();
 
 	tmpBgdLayer.DrawTextBoard("HELP", DARK_RED, bodycontent, fromX, fromY, 53, 29, BLACK, WHITE);
 	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	_getch();
 }
-void CGAME::About() {
 
+void CGAME::About() {
+	CGRAPHIC tmpBgdLayer(BgdLayer);
+
+	vector<string> bodycontent = {
+		"              <<TEACHER>>           ",
+		"            Truong Toan Thinh       ",
+		"									 ",			
+		"           <<GROUP'S MEMBER>>      ",
+		"      22127029 - Le Nguyen Gia Bao  ",
+		"      22127445 - Nguyen Lam Nha Uyen",
+		"      22127385 - Nguyen Quoc Thang  ",
+		"      22127301 - Nguyen Gia Nguyen  ",
+	};
+
+	int maxWidth = 0;
+	for (const string& line : bodycontent) {
+		if (line.length() > maxWidth) {
+			maxWidth = line.length();
+		}
+	}
+	int width = maxWidth + 18;
+	int height = bodycontent.size() + 20;
+
+	const int fromX = (SCREEN_WIDTH - width) / 2, fromY = (SCREEN_HEIGHT - height) / 2,
+		toX = fromX + width - 1, toY = fromY + height - 1;
+
+	tmpBgdLayer.DrawTextBoard("ABOUT", DARK_RED, bodycontent, fromX, fromY, width, height, BLACK, SAND);
+
+
+	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	_getch();
 }
 
 int CGAME::Pause(HANDLE t) {

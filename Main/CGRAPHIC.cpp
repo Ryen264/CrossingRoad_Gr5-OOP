@@ -112,8 +112,29 @@ void CGRAPHIC::erasePixel(int fromX, int fromY, int toX, int toY) {
 }
 
 void CGRAPHIC::DrawLetter(char ch, int first_x, int first_y, int txtColor, int bgdColor) {
-	if (ch != ' ') DrawObject(LETTER[toupper(ch) - 'A'], first_x, first_y, txtColor, bgdColor, false);
-	else for (int i = 0; i < 3; i++) screen[first_x][first_y + i] = { L' ', txtColor, bgdColor };
+	DrawObject(LETTER[ch - 'A'], first_x, first_y, txtColor, bgdColor);
+	/*for (int i = 0; i < 8; i++)
+		screen[first_x + i][first_y + 3].bgdColor = -1;*/
+}
+void CGRAPHIC::DrawInputPos(int first_x, int first_y, int txtColor, int bgdColor) {
+	DrawObject(INPUT_POS, first_x, first_y, txtColor, bgdColor);
+	for (int i = 0; i < 8; i++)
+		screen[first_x + i][first_y + 3].bgdColor = -1;
+}
+void CGRAPHIC::DrawMINUS(int first_x, int first_y, int txtColor, int bgdColor) {
+	DrawObject(MINUS, first_x, first_y, txtColor, bgdColor);
+	for (int i = 0; i < 8; i++)
+		screen[first_x + i][first_y + 3].bgdColor = -1;
+}
+void CGRAPHIC::DrawPLUS(int first_x, int first_y, int txtColor, int bgdColor) {
+	DrawObject(PLUS, first_x, first_y, txtColor, bgdColor);
+	for (int i = 0; i < 8; i++)
+		screen[first_x + i][first_y + 3].bgdColor = -1;
+}
+void CGRAPHIC::DrawEXCLAMATION_MARK(int first_x, int first_y, int txtColor, int bgdColor) {
+	DrawObject(EXCLAMATION_MARK, first_x, first_y, txtColor, bgdColor);
+	for (int i = 0; i < 8; i++)
+		screen[first_x + i][first_y + 3].bgdColor = -1;
 }
 void CGRAPHIC::DrawInputPos(int first_x, int first_y, int txtColor, int bgdColor) {
 	DrawObject(INPUT_POS, first_x, first_y, txtColor, bgdColor);
@@ -232,6 +253,19 @@ void CGRAPHIC::drawRegtangle(int first_x, int first_y, int width, int height, in
 			screen[first_x + i][first_y + j] = { L' ', -1, bgdColor };
 }
 
+void CGRAPHIC::DrawTextBoard(string contentName, int colorName, vector<string> contentBody, int first_x, int first_y, int width, int height, int txtColor, int bgdColor) {
+	
+	drawClipBoard(first_x, first_y, width, height);
+	drawString(contentName, first_x+18, first_y+3 , colorName, bgdColor, contentName.length());
+
+	int body_x = first_x + 7, body_y = first_y +7; // Bat dau tu hang 7
+	for (const string& line : contentBody) {
+		for (int i = 0; i < (int)line.length(); i++)
+			screen[body_x + i][body_y] = { (wchar_t)line[i], txtColor, bgdColor };
+		body_y += 2;
+	}
+
+}
 
 void CGRAPHIC::DrawDrawer(int first_x, int first_y)
 {

@@ -52,6 +52,9 @@ public:
 
 	void DrawLetter(char ch, int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
 	void DrawInputPos(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
+	void DrawMINUS(int first_x, int first_y, int txtColor, int bgdColor);
+	void DrawPLUS(int first_x, int first_y, int txtColor, int bgdColor);
+	void DrawEXCLAMATION_MARK(int first_x, int first_y, int txtColor, int bgdColor);
 	void drawString(string str, int x, int y, int txtColor, int bgdColor, int num = -1);
 	void drawTime(clock_t second, int first_x, int first_y, int txtColor, int bgdColor);
 
@@ -64,6 +67,9 @@ public:
 	void drawTag(int first_x, int first_y, int tagColor);
 	void drawInfiniteSymbol(int first_x, int first_y);
 	void drawRegtangle(int first_x, int first_y, int width, int height, int bgdColor);
+
+	void DrawTextBoard(string contentName, int colorName, vector<string> contentBody, int first_x, int first_y, int width, int height, int txtColor, int bgdColor);
+	
 
 	void DrawDrawer(int first_x, int first_y);
 	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);
@@ -106,8 +112,20 @@ const vector<wstring> CHECK = {
 const vector<wstring> INPUT_POS = {
 	L"   ",
 	L"   ",
-	L"▀▀▀"
-};
+	L"▀▀▀"};
+const vector<wstring> MINUS ={ 
+	L"   ",
+	L"▀▀▀",
+	L"   " };
+const vector<wstring> PLUS = {
+	L" ▄ ",
+	L"▀█▀",
+	L"   " };
+const vector<wstring> EXCLAMATION_MARK = {
+	L" █ ",
+	L" █ ",
+	L" ▄ " };
+
 const vector<wstring> CHARACTER_FRAME = {
 	L"█               █",
 	L"█               █",
