@@ -17,8 +17,8 @@ int main() {
 	COBJECT testobject;
 	//draw object
 	//ObjLayer.drawClipBoard(0,0,46,20);
-	testobject.DrawBlock(ObjLayer);
-	//ObjLayer.drawTag(0, 0, RED);
+	//testobject.DrawBlock(ObjLayer);
+	ObjLayer.DrawSaveScreen(FLOPPY_DISC, 0, 0);
 	ObjLayer.display();
 	_getch();
 	return 0;
