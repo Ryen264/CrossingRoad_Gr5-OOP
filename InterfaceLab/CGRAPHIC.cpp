@@ -2,7 +2,7 @@
 
 int BLACK, SKY_BLUE, WHITE, DARK_GREEN,
 SADDLE_BROWN, DARK_RED, RED, ORANGE,
-BLUE, DARK_BLUE, LIGHT_CYAN, LIGHT_GRAY,
+BLUE, DARK_BLUE, DARK_GRAY, LIGHT_GRAY,
 SAND, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN,
 CREAMY_AVOCADO, DARK_BROWN, BROWN, LIGHTER_BROWN,
 LAVENDER, PURPLE, TEAL, TANGERINE, DARK_ORANGE;
@@ -20,7 +20,7 @@ void SetupTheme(THEME theme) {
 	//setup color ids
 	BLACK = theme.BLACK; SKY_BLUE = theme.SKY_BLUE; WHITE = theme.WHITE; DARK_GREEN = theme.DARK_GREEN;
 	SADDLE_BROWN = theme.SADDLE_BROWN; DARK_RED = theme.DARK_RED; RED = theme.RED; ORANGE = theme.ORANGE;
-	BLUE = theme.BLUE; DARK_BLUE = theme.DARK_BLUE; LIGHT_CYAN = theme.LIGHT_CYAN; LIGHT_GRAY = theme.LIGHT_GRAY;
+	BLUE = theme.BLUE; DARK_BLUE = theme.DARK_BLUE; DARK_GRAY = theme.DARK_GRAY; LIGHT_GRAY = theme.LIGHT_GRAY;
 	SAND = theme.SAND; BRIGHT_YELLOW = theme.BRIGHT_YELLOW; LIGHT_GREEN = theme.LIGHT_GREEN; LIGHT_BROWN = theme.LIGHT_BROWN;
 	CREAMY_AVOCADO = theme.CREAMY_AVOCADO; DARK_BROWN = theme.DARK_BROWN; BROWN = theme.BROWN; LIGHTER_BROWN = theme.LIGHTER_BROWN;
 	LAVENDER = theme.LAVENDER; PURPLE = theme.PURPLE; TEAL = theme.TEAL; TANGERINE = theme.TANGERINE; DARK_ORANGE = theme.DARK_ORANGE;
@@ -199,4 +199,12 @@ void CGRAPHIC::DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int firs
 		screen[first_x + 28 + i][first_y + 24].bgdColor = LIGHT_GRAY;
 		screen[first_x + 39 + i][first_y + 24].bgdColor = LIGHT_GRAY;
 	}
+}
+void CGRAPHIC::DrawDrawer(int first_x, int first_y)
+{
+
+	for (int i = 0; i < 26; i++)
+		for (int j = 0; j < 24; j++)
+			this->screen[first_x + i][j + first_y] = { Drawer[j][i], LIGHTER_BROWN, BROWN };
+
 }
