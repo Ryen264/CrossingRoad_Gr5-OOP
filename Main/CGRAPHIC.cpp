@@ -1058,14 +1058,105 @@ void CGRAPHIC::DrawMainMenu() {
 	for (int i = 0; i < WIDTH; i++)
 		screen[i][40].bgdColor = LIGHTER_BROWN;
 	for (int i = 47; i <= 200; i++)
-		for (int j = 2; j <= 36; j++)
+		for (int j = 2; j <= 26; j++)
 			screen[i][j].bgdColor = 10;
+	for (int i = 47; i <= 200; i++)
+		for (int j = 27; j <= 36; j++) 
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	for (int i = 47; i <= 66; i++)
+		for (int j = 19; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	screen[47][19].bgdColor = 10;
+	screen[48][19].bgdColor = 10;
+	screen[49][19].bgdColor = 10;
+	screen[50][19].bgdColor = 10;
+	screen[51][19].bgdColor = 10;
+	screen[47][20].bgdColor = 10;
+	screen[48][20].bgdColor = 10;
+	screen[49][20].bgdColor = 10;
+	screen[47][21].bgdColor = 10;
+	screen[48][21].bgdColor = 10;
+	screen[49][21].bgdColor = 10;
+	screen[56][19].bgdColor = 10;
+	screen[57][19].bgdColor = 10;
+	screen[58][19].bgdColor = 10;
+	screen[59][19].bgdColor = 10;
+	screen[60][24].bgdColor = 10;
+	screen[61][24].bgdColor = 10;
+	for (int i = 60; i <= 66; i++)
+		for (int j = 19; j <= 23; j++)
+			screen[i][j].bgdColor = 10;
+	for (int i = 89; i <= 92; i++)
+		for (int j = 24; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	for (int i = 93; i <= 96; i++)
+		for (int j = 21; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	for (int i = 96; i <= 97; i++)
+		for (int j = 18; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	for (int i = 98; i <= 114; i++)
+		for (int j = 13; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	for (int i = 115; i <= 117; i++)
+		for (int j = 16; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	for (int i = 118; i <= 126; i++)
+		for (int j = 14; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	for (int j = 18; j <= 36; j++)
+		screen[127][j].bgdColor = LIGHT_GRAY;
+	for (int i = 128; i <= 150; i++)
+		for (int j = 16; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	screen[137][16].bgdColor = 10;
+	screen[137][17].bgdColor = 10;
+	screen[137][18].bgdColor = 10;
+	screen[137][19].bgdColor = 10;
+	screen[137][20].bgdColor = 10;
+	for (int i = 140; i <= 148; i++)
+		screen[i][15].bgdColor = 10;
+	for (int i = 151; i <= 157; i++)
+		for (int j = 24; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	screen[151][24].bgdColor = 10;
+	screen[156][24].bgdColor = 10;
+	screen[157][24].bgdColor = 10;
+	for (int i = 152; i <= 155; i++)
+		screen[i][24].bgdColor = LIGHT_GRAY;
+	for (int i = 158; i <= 167; i++)
+		for (int j = 19; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	for (int i = 168; i <= 171; i++)
+		for (int j = 23; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	for (int i = 172; i <= 174; i++)
+		for (int j = 27; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	screen[175][27].bgdColor = 10;
+	screen[175][28].bgdColor = 10;
+	for (int i = 176; i <= 185; i++)
+		for (int j = 20; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	for (int i = 186; i <= 190; i++)
+		for (int j = 23; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	for (int i = 191; i <= 194; i++)
+		for (int j = 22; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+	for (int i = 195; i <= 196; i++)
+		for (int j = 20; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
+
+	for (int i = 197;i <= 200;i++)
+		for (int j = 17; j <= 36; j++)
+			screen[i][j].bgdColor = LIGHT_GRAY;
 }
 
 void CGRAPHIC::DrawDoofCorp(int first_x, int first_y) {
 	for (int i = 0; i < 22; i++)
 		for (int j = 0; j < 21; j++)
-			screen[first_x + i][first_y + j] = {DOOF_CORP[j][i], PURPLE, 10};
+			screen[first_x + i][first_y + j] = {DOOF_CORP[j][i], PURPLE, -1};
 	for (int i = 2; i <= 16; i++)
 		for (int j = 4; j <= 6; j++)
 			screen[first_x + i][first_y + j].bgdColor = LIGHT_GREEN;
@@ -1076,20 +1167,87 @@ void CGRAPHIC::DrawDoofCorp(int first_x, int first_y) {
 	screen[first_x + 17][first_y + 2].txtColor = LAVENDER;
 	screen[first_x + 2][first_y + 1].txtColor = LAVENDER;
 	screen[first_x + 16][first_y + 1].txtColor = LAVENDER;
-	screen[first_x + 2][first_y + 1].bgdColor = 10;
-	screen[first_x + 16][first_y + 1].bgdColor = 10;
-	screen[first_x + 2][first_y + 0].bgdColor = 10;
-	screen[first_x + 16][first_y + 0].bgdColor = 10;
-	screen[first_x + 3][first_y + 0].bgdColor = 10;
-	screen[first_x + 15][first_y + 0].bgdColor = 10;
+	screen[first_x + 2][first_y + 1].bgdColor = -1;
+	screen[first_x + 16][first_y + 1].bgdColor = -1;
+	screen[first_x + 2][first_y + 0].bgdColor = -1;
+	screen[first_x + 16][first_y + 0].bgdColor = -1;
+	screen[first_x + 3][first_y + 0].bgdColor = -1;
+	screen[first_x + 15][first_y + 0].bgdColor = -1;
 
 	screen[first_x + 4][first_y + 0].txtColor = LAVENDER;
 	screen[first_x + 5][first_y + 0].txtColor = LAVENDER;
 	screen[first_x + 13][first_y + 0].txtColor = LAVENDER;
 	screen[first_x + 14][first_y + 0].txtColor = LAVENDER;
 
-	screen[first_x + 4][first_y +  0].bgdColor = 10;
-	screen[first_x + 5][first_y + 0].bgdColor = 10;
-	screen[first_x + 13][first_y + 0].bgdColor = 10;
-	screen[first_x + 14][first_y + 0].bgdColor = 10;
+	screen[first_x + 4][first_y +  0].bgdColor = -1;
+	screen[first_x + 5][first_y + 0].bgdColor = -1;
+	screen[first_x + 13][first_y + 0].bgdColor = -1;
+	screen[first_x + 14][first_y + 0].bgdColor = -1;
+}
+
+void CGRAPHIC::DrawHeader(int first_x, int first_y) {
+	for (int i = 0; i < 56; i++)
+		for (int j = 0; j < 10; j++)
+			screen[first_x + i][first_y + j] = { HEADER[j][i], DARK_GREEN, -1 };
+	for (int i = 1; i < 55; i++)
+		for (int j = 1; j <= 2; j++)
+			screen[first_x + i ][first_y + j].bgdColor = PURPLE;
+	for (int i = 9; i <= 46; i++)
+		for (int j = 7; j <= 8; j++)
+			screen[first_x + i][first_y + j].bgdColor = PURPLE;
+	for (int i = 0; i < 7; i++)
+		for (int j = 0; j < 5; j++) {
+			screen[first_x + 2 + i][first_y + j].txtColor = BLACK;
+			screen[first_x + 2 + i][first_y + j].bgdColor = LIGHT_GREEN;
+			screen[first_x + 11 + i][first_y + j].txtColor = BLACK;
+			screen[first_x + 11 + i][first_y + j].bgdColor = LIGHT_GREEN;
+			screen[first_x + 20 + i][first_y + j].txtColor = BLACK;
+			screen[first_x + 20 + i][first_y + j].bgdColor = LIGHT_GREEN;
+			screen[first_x + 29 + i][first_y + j].txtColor = BLACK;
+			screen[first_x + 29 + i][first_y + j].bgdColor = LIGHT_GREEN;
+			screen[first_x + 38 + i][first_y + j].txtColor = BLACK;
+			screen[first_x + 38 + i][first_y + j].bgdColor = LIGHT_GREEN;
+			screen[first_x + 47 + i][first_y + j].txtColor = BLACK;
+			screen[first_x + 47 + i][first_y + j].bgdColor = LIGHT_GREEN;
+			screen[first_x + 11 + i][first_y + j + 5].txtColor = BLACK;
+			screen[first_x + 11 + i][first_y + j + 5].bgdColor = LIGHT_GREEN;
+			screen[first_x + 20 + i][first_y + j + 5].txtColor = BLACK;
+			screen[first_x + 20 + i][first_y + j + 5].bgdColor = LIGHT_GREEN;
+			screen[first_x + 29 + i][first_y + j + 5].txtColor = BLACK;
+			screen[first_x + 29 + i][first_y + j + 5].bgdColor = LIGHT_GREEN;
+			screen[first_x + 38 + i][first_y + j + 5].txtColor = BLACK;
+			screen[first_x + 38 + i][first_y + j + 5].bgdColor = LIGHT_GREEN;
+		}
+	for (int i = 2; i <= 53; i++)
+		for (int j = 4; j <= 5; j++)
+			screen[first_x + i][first_y + j].bgdColor = -1;
+	screen[first_x + 2][first_y + 0].bgdColor = -1;
+	screen[first_x + 8][first_y + 0].bgdColor = -1;
+	screen[first_x + 11][first_y + 0].bgdColor = -1;
+	screen[first_x + 17][first_y + 0].bgdColor = -1;
+	screen[first_x + 20][first_y + 0].bgdColor = -1;
+	screen[first_x + 26][first_y + 0].bgdColor = -1;
+	screen[first_x + 29][first_y + 0].bgdColor = -1;
+	screen[first_x + 35][first_y + 0].bgdColor = -1;
+	screen[first_x + 38][first_y + 0].bgdColor = -1;
+	screen[first_x + 44][first_y + 0].bgdColor = -1;
+	screen[first_x + 47][first_y + 0].bgdColor = -1;
+	screen[first_x + 53][first_y + 0].bgdColor = -1;
+	screen[first_x + 47][first_y + 2].bgdColor = PURPLE;
+	screen[first_x + 47][first_y + 2].txtColor = BLACK;
+	screen[first_x + 53][first_y + 2].bgdColor = PURPLE;
+	screen[first_x + 53][first_y + 2].txtColor = BLACK;
+	screen[first_x + 47][first_y + 3].bgdColor = -1;
+	screen[first_x + 47][first_y + 3].txtColor = DARK_GREEN;
+	screen[first_x + 53][first_y + 3].bgdColor = -1;
+	screen[first_x + 53][first_y + 3].txtColor = DARK_GREEN;
+	screen[first_x + 11][first_y + 9].bgdColor = -1;
+	screen[first_x + 17][first_y + 9].bgdColor = -1;
+	screen[first_x + 20][first_y + 9].bgdColor = -1;
+	screen[first_x + 26][first_y + 9].bgdColor = -1;
+	screen[first_x + 29][first_y + 9].bgdColor = -1;
+	screen[first_x + 35][first_y + 9].bgdColor = -1;
+	screen[first_x + 38][first_y + 9].bgdColor = -1;
+	screen[first_x + 44][first_y + 9].bgdColor = -1;
+	screen[first_x + 32][first_y + 9].bgdColor = -1;
 }

@@ -103,7 +103,7 @@ public:
 	void DrawPauseMenu(int first_x, int first_y);
 	void DrawChooseCharacterMenu(int first_x, int first_y);
 	void DrawPerryTalk(string message, int first_x, int first_y, int txtColor, int bgdColor);
-
+	void DrawHeader(int first_x, int first_y);
 };
 const vector<wstring> COLON = {
 	L"█",
@@ -605,4 +605,18 @@ L"                                                                              
 L"                                                                                                                                                                                                                ",//48
 L"                                                                                                                                                                                                                ",//49
 L"                                                                                                                                                                                                                ",//50
+};
+
+const vector<wstring> HEADER = {
+	//01234567890123456789012345678901234567890123456789012345
+	L"  ▄▀▀▀▀▀▄  ▄▀▀▀▀▀▄  ▄▀▀▀▀▀▄  ▄▀▀▀▀▀▄  ▄▀▀▀▀▀▄  ▄▀▀█▀▀▄  ",//0
+	L"█▀█     █▀▀█  ▄  █▀▀█     █▀▀█   ▄▄█▀▀█   ▄▄█▀▀█  ▀  █▀█",//1
+	L"█ █  ▀▀▀▄  █    ▄█  █  ▀  █  █▄▄   █  █▄▄   █  ▀▄   ▄▀ █",//2
+	L"▀▀█     █▀▀█  █  █▀▀█     █▀▀█     █▀▀█     █▀▀▀█   █▀▀▀",//3
+	L"   ▀▀▀▀▀    ▀▀ ▀▀    ▀▀▀▀▀    ▀▀▀▀▀    ▀▀▀▀▀     ▀▀▀    ",//4
+	L"            ▄▄▄▄▄    ▄▄▄▄▄    ▄▄▄▄▄   ▄▄▄▄▄▄            ",//5
+	L"        ▄▄▄█     █▄▄█     █▄▄█     █▄▄█     █▄▄▄        ",//6
+	L"        █  █  ▀  █  █  ▄  █  █  ▀  █  █  ▄  █  █        ",//7
+	L"        █▄▄█  ▄ ▀█▄▄█     █▄▄█  ▄  █▄▄█     █▄▄█        ",//8
+	L"           ▀▄▄█▄▄▀  ▀▄▄▄▄▄▀  ▀▄▄▀▄▄▀  █▄▄▄▄▄▀           "//9
 };

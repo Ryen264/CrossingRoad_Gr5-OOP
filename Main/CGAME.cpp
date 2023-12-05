@@ -302,7 +302,8 @@ int CGAME::Menu() {
 
 	//draw menu
 	tmpBgdLayer.DrawMainMenu();
-	tmpBgdLayer.DrawDoofCorp(176, 16);
+	tmpObjLayer.DrawDoofCorp(176, 16);
+	tmpObjLayer.DrawHeader(98, 3);
 	tmpBgdLayer.DrawDrawer(fromX, fromY + 3);
 
 	//draw current step
