@@ -189,8 +189,8 @@ void CGRAPHIC::drawButton(int first_x, int first_y, int color, int txtColor, int
 void CGRAPHIC::drawClipBoard(int first_x, int first_y, int width, int height) {
 	//top
 	for (int i = first_x + 1; i < first_x + width; i++) {
-		screen[i][first_y] = { L'▀' , BLACK, DARK_BLUE };
-		screen[i][first_y + 1] = { L'▄' , BLACK, DARK_BLUE };
+		screen[i][first_y] = { L'▀' , BLACK, DARK_BROWN };
+		screen[i][first_y + 1] = { L'▄' , BLACK, DARK_BROWN };
 	}
 	screen[first_x][first_y] = { L'▄' , BLACK, -1 };
 	screen[first_x + width][first_y] = { L'▄' , BLACK, -1 };
@@ -204,48 +204,48 @@ void CGRAPHIC::drawClipBoard(int first_x, int first_y, int width, int height) {
 	}
 	//bottom
 	for (int i = first_x + 1; i < first_x + width; i++) {
-		screen[i][first_y + height - 1] = { L'▀' , BLACK, DARK_BLUE };
-		screen[i][first_y + height] = { L'▄' , BLACK, DARK_BLUE };
+		screen[i][first_y + height - 1] = { L'▀' , BLACK, DARK_BROWN };
+		screen[i][first_y + height] = { L'▄' , BLACK, DARK_BROWN };
 	}
 	screen[first_x][first_y + height] = { L'▀' , BLACK, -1 };
 	screen[first_x + width][first_y + height] = { L'▀' , BLACK, -1 };
 	//mid
 	for (int i = first_x + 4; i <= first_x + width - 4; i++)
 		for (int j = first_y + 2; j <= first_y + height - 2; j++)
-			screen[i][j] = { L' ',SAND, SAND };
+			screen[i][j] = { L' ',WHITE, WHITE };
 	for (int i = first_y + 1; i < first_y + height; i++) {
-		screen[first_x][i] = { L'█',BLACK, DARK_BLUE };
-		screen[first_x + 1][i] = { L' ', DARK_BLUE, DARK_BLUE };
-		screen[first_x + 2][i] = { L' ', DARK_BLUE, DARK_BLUE };
-		screen[first_x + 3][i] = { L'█',BLACK, DARK_BLUE };
-		screen[first_x + width][i] = { L'█',BLACK, DARK_BLUE };
-		screen[first_x + width - 3][i] = { L'█',BLACK, DARK_BLUE };
-		screen[first_x + width - 1][i] = { L' ', DARK_BLUE, DARK_BLUE };
-		screen[first_x + width - 2][i] = { L' ', DARK_BLUE, DARK_BLUE };
+		screen[first_x][i] = { L'█',BLACK, DARK_BROWN };
+		screen[first_x + 1][i] = { L' ', DARK_BROWN, DARK_BROWN };
+		screen[first_x + 2][i] = { L' ', DARK_BROWN, DARK_BROWN };
+		screen[first_x + 3][i] = { L'█',BLACK, DARK_BROWN };
+		screen[first_x + width][i] = { L'█',BLACK, DARK_BROWN };
+		screen[first_x + width - 3][i] = { L'█',BLACK, DARK_BROWN };
+		screen[first_x + width - 1][i] = { L' ', DARK_BROWN, DARK_BROWN };
+		screen[first_x + width - 2][i] = { L' ', DARK_BROWN, DARK_BROWN };
 	}
 	screen[first_x + 3][first_y + 1].buffer = L'▄';
 	screen[first_x + width - 3][first_y + 1].buffer = L'▄';
 	screen[first_x + 3][first_y + height - 1].buffer = L'▀';
 	screen[first_x + width - 3][first_y + height - 1].buffer = L'▀';
 	for (int i = 0; i < 5; i++)
-		screen[first_x + width - (4 + i)][first_y + height - 4] = { L'▄', BLACK, SAND };
+		screen[first_x + width - (4 + i)][first_y + height - 4] = { L'▄', BLACK, WHITE };
 
-	screen[first_x + width - 3][first_y + height - 3] = { L' ', BLACK, DARK_BLUE };
-	screen[first_x + width - 4][first_y + height - 3] = { L'▀', BLACK, DARK_BLUE };
-	screen[first_x + width - 5][first_y + height - 3] = { L'▄', BLACK, SAND };
-	screen[first_x + width - 6][first_y + height - 3] = { L' ', BLACK, SAND };
-	screen[first_x + width - 7][first_y + height - 3] = { L' ', BLACK, SAND };
-	screen[first_x + width - 8][first_y + height - 3] = { L'█', BLACK, SAND };
+	screen[first_x + width - 3][first_y + height - 3] = { L' ', BLACK, DARK_BROWN };
+	screen[first_x + width - 4][first_y + height - 3] = { L'▀', BLACK, DARK_BROWN };
+	screen[first_x + width - 5][first_y + height - 3] = { L'▄', BLACK, WHITE };
+	screen[first_x + width - 6][first_y + height - 3] = { L' ', BLACK, WHITE };
+	screen[first_x + width - 7][first_y + height - 3] = { L' ', BLACK, WHITE };
+	screen[first_x + width - 8][first_y + height - 3] = { L'█', BLACK, WHITE };
 
-	screen[first_x + width - 3][first_y + height - 2] = { L' ', BLACK, DARK_BLUE };
-	screen[first_x + width - 4][first_y + height - 2] = { L' ', BLACK, DARK_BLUE };
-	screen[first_x + width - 5][first_y + height - 2] = { L' ', BLACK, DARK_BLUE };
-	screen[first_x + width - 6][first_y + height - 2] = { L'▀', BLACK, DARK_BLUE };
-	screen[first_x + width - 7][first_y + height - 2] = { L'▄', BLACK, SAND };
-	screen[first_x + width - 8][first_y + height - 2] = { L'█', BLACK, SAND };
+	screen[first_x + width - 3][first_y + height - 2] = { L' ', BLACK, DARK_BROWN };
+	screen[first_x + width - 4][first_y + height - 2] = { L' ', BLACK, DARK_BROWN };
+	screen[first_x + width - 5][first_y + height - 2] = { L' ', BLACK, DARK_BROWN };
+	screen[first_x + width - 6][first_y + height - 2] = { L'▀', BLACK, DARK_BROWN };
+	screen[first_x + width - 7][first_y + height - 2] = { L'▄', BLACK, WHITE };
+	screen[first_x + width - 8][first_y + height - 2] = { L'█', BLACK, WHITE };
 
 	for (int i = 0; i < 5; i++)
-		screen[first_x + width - (3 + i)][first_y + height - 1] = { L' ', BLACK, DARK_BLUE };
+		screen[first_x + width - (3 + i)][first_y + height - 1] = { L' ', BLACK, DARK_BROWN };
 }
 void CGRAPHIC::drawRegtangle(int first_x, int first_y, int width, int height, int bgdColor) {
 	for (int i = 0; i < width; i++)

@@ -323,7 +323,11 @@ int CGAME::Menu() {
 			Sleep(500);
 			switch (yOption) {
 			case NEW_GAME:
+					SetupTheme();
 				this->NewGame();
+				SetupTheme(MAIN_MENU_THEME);
+				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case LOAD_GAME:
 				this->LoadGame();
@@ -333,9 +337,13 @@ int CGAME::Menu() {
 				break;
 			case HELP:
 				this->Help();
+				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case ABOUT:
 				this->About();
+				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case QUIT:
 				return QUIT_CODE;
@@ -354,7 +362,6 @@ int CGAME::Menu() {
 			curColor = colorArr[iCur];
 			curMessage = messageArr[iCur];
 		}
-
 		tmpObjLayer.DrawSmallDrawer(xOption , yOption, curColor);
 		tmpObjLayer.DrawPerryTalk(curMessage, xfromTalk, yfromTalk, curColor, WHITE);
 		if (iCur != 0) tmpObjLayer.screen[xOption + 14][yOption].bgdColor = LIGHT_BROWN;
@@ -682,12 +689,8 @@ void CGAME::Help() {
 	const int fromX = (SCREEN_WIDTH - width) / 2, fromY = (SCREEN_HEIGHT - height) / 2,
 		toX = fromX + width - 1, toY = fromY + height - 1;
 	
-	tmpBgdLayer.DrawTextBoard("HELP", BRIGHT_YELLOW, bodycontent, fromX, fromY, width, height, BLACK, SAND);
-	
-	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
-	_getch();
 
-	tmpBgdLayer.DrawTextBoard("HELP", DARK_RED, bodycontent, fromX, fromY, 53, 29, BLACK, WHITE);
+	tmpBgdLayer.DrawTextBoard("HELP", CREAMY_AVOCADO, bodycontent, fromX, fromY, 53, 29, BLACK, WHITE);
 	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	_getch();
 }
@@ -718,7 +721,7 @@ void CGAME::About() {
 	const int fromX = (SCREEN_WIDTH - width) / 2, fromY = (SCREEN_HEIGHT - height) / 2,
 		toX = fromX + width - 1, toY = fromY + height - 1;
 
-	tmpBgdLayer.DrawTextBoard("ABOUT", DARK_RED, bodycontent, fromX, fromY, width, height, BLACK, SAND);
+	tmpBgdLayer.DrawTextBoard("ABOUT", LAVENDER, bodycontent, fromX, fromY, width, height, BLACK, WHITE);
 
 
 	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
