@@ -80,9 +80,6 @@ void CPLAYER::set(int xBoard, int yBoard, bool live, bool right, int score) {
 bool CPLAYER::setIsRight() {
     return this->isRight;
 }
-void CPLAYER::setFinish(bool finish) {
-    this->finish = finish;
-}
 void CPLAYER::setAlive(bool alive) {
     this->alive = alive;
 }
@@ -202,9 +199,6 @@ void CPLAYER::decreaseScore(int point) {
     this->score -= point;
 }
 
-bool CPLAYER::isFinish() const {
-    return this->finish;
-}
 bool CPLAYER::isDead() const{
     return !this->alive;
 }

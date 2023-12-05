@@ -86,23 +86,54 @@ x   x   x     x x
   x     x   x x   y
 */
 
-void push(deque<int>& arr, bool isRight, int lightPos) {
-    if (arr[lightPos] != 0 && arr[lightPos] == 3) {
-        if (isRight) arr.insert(arr.begin() + lightPos - 1, 0);
-        else arr.insert(arr.begin() + lightPos + 2, 0);
+void push(deque<int>& lane, bool isMoveRight, int lightPos) {
+    //push after
+    if (lane[lightPos] != NULL && lane[lightPos] == 3) {
+        if (isMoveRight) {
+            if (lightPos > 0) lane.insert(lane.begin() + lightPos - 1, 0);
+            else lane.push_front(4);
+        }
+        else {
+            if (lightPos < 10 - 2) lane.insert(lane.begin() + lightPos + 2, 0);
+            else if (lightPos == 10 - 2) lane.push_back(0);
+            else lane.push_back(4);
+        }
     }
     else {
-        if (isRight) arr.insert(arr.begin() + lightPos, 0);
-        else arr.insert(arr.begin() + lightPos + 1, 0);
+        if (isMoveRight) lane.insert(lane.begin() + lightPos, 0);
+        else {
+            if (lightPos < 10 - 1) lane.insert(lane.begin() + lightPos + 1, 0);
+            else lane.push_back(0);
+        }
     }
-    if (isRight) arr.pop_back();
-    else arr.pop_front();
+    if (isMoveRight) lane.pop_back();
+    else lane.pop_front();
+    //push before
+    if (isMoveRight) {
+        int id = lightPos - 1;
+        for (; id >= 0 && lane[id] != 0; id--);
+        if (id >= 0) {
+            lane.erase(lane.begin() + id);
+            if (isMoveRight) lane.push_front(8);
+            else lane.push_back(8);
+        }
+    }
+    else {
+        int id = lightPos + 1;
+        for (; id < 10 && lane[id] != 0; id++);
+        if (id < 10) {
+            lane.erase(lane.begin() + id);
+            if (isMoveRight) lane.push_front(8);
+            else lane.push_back(8);
+        }
+    }
 }
 
 int main() {
     srand(0);
-    deque<int> arr1 = { 1, 0, 2, 4, 3, 0, 0, 0, 9, 0 };
-    deque<int> arr2 = { 0, 9, 0, 1 ,3, 4, 0, 2, 0, 1 };
+    //                              v
+    deque<int> arr1 = { 1, 0, 2, 4, 0, 0, 0, 0, 9, 0 };
+    deque<int> arr2 = { 0, 9, 0, 1 ,0, 4, 0, 2, 0, 1 };
     //deque<int*> brr = initDeque(arr);
 
     bool isRight = true;

@@ -22,10 +22,9 @@ class CGAME {
     deque<string> fileNameList;
     bool isSaved = false;
     string savedName;
-    bool isNextTree = false;
 
-    int level = 1, numberOfLane = 0;
-    int conditionLane = 0, countLane = 0, numberOfConditionLane = 0;
+    int level = 1, countLane = 0, numberOfLane = 0;
+    int conditionLane = 0, countConditionLane = 0, numberOfConditionLane = 0;
 
     //Thread variables
     bool isThreadRunning = true;
@@ -49,7 +48,6 @@ public:
 
     string inputUserTxt(CGRAPHIC& ObjLayer, CGRAPHIC& BgdLayer, int fromX, int fromY, int maxSize, int txtColor, int bgdColor, bool(*checkFunction)(char) = NULL, deque<string> strArr = {});
 
-    int inputUserNumber();
     void saveFileNameList();
     void loadFileNameList();
     void deleteFileName(int);
@@ -99,8 +97,7 @@ public:
 const int QUIT_CODE = -1000;
 const int BACK_TO_MENU_CODE = -1001;
 
-const vector<int> LANE_ID_LIST = { VEHICLELANE_ID};
-//const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, TRAINLANE_ID, RIVERLANE_ID };
+const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, TRAINLANE_ID, RIVERLANE_ID };
 
 bool isUpButton(int button);
 bool isDownButton(int button);

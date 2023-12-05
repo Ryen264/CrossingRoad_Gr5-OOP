@@ -104,9 +104,10 @@ void CGAME::playGame() {
 }
 
 void CGAME::resetData() {
-	if (level == 1) this->numberOfLane = 5;
-	else this->numberOfLane += (1 + (rand() % 3));
-	numberOfLane = 10;
+	if (level == 1) numberOfLane = 5;
+	for (int i = 1; i < level; i++ , numberOfLane += 3) {
+		numberOfLane += (rand() % 3);
+	}
 
 	while (!aLanes.empty()) pop_backLane();
 	aLanes.clear();
@@ -115,7 +116,7 @@ void CGAME::resetData() {
 	push_frontLane(GRASSLANE_SURROUND_ID);
 	push_frontLane(GRASSLANE_AROUND_ID);
 	int numberOfRandomLane = (numberOfLane < BOARD_HEIGHT - 3) ? numberOfLane : BOARD_HEIGHT - 3;
-	for (int i = 0; i < numberOfRandomLane; i++) pushRandomLane();
+	for (int i = 0; i < numberOfRandomLane; i++, countLane++) pushRandomLane();
 	for (int i = 0; i < BOARD_HEIGHT - 3 - numberOfRandomLane; i++) {
 		if (i == 0) push_frontLane(FINISHLANE_ID);
 		else if (i == 1) push_frontLane(GRASSLANE_FULL_ID);
@@ -215,12 +216,6 @@ string CGAME::inputUserTxt(CGRAPHIC& ObjLayer, CGRAPHIC& BgdLayer, int fromX, in
 		else displayScreen(ObjLayer, BgdLayer, fromX, fromY, fromX + maxSize * 3 + maxSize - 1, fromY + 2);
 	}
 	return fileName;
-}
-int CGAME::inputUserNumber() {
-	int n{};
-	cout << "Enter the number: ";
-	cin >> n;
-	return n;
 }
 void CGAME::saveFileNameList() {
 	fstream outFile("file_name_list.txt", fstream::out);
@@ -373,7 +368,7 @@ void CGAME::LoadGame() {
     loadFileNameList();
 	drawLoadGame();
 	while (1) {
-		int choice = inputUserNumber();
+		int choice = 0;
 		if (choice == 11) {
 			return;
 		}
@@ -384,7 +379,7 @@ void CGAME::LoadGame() {
 			cout << "2. Delete name" << endl;
 			cout << "3. Change name" << endl;
 			cout << "4. Back" << endl;
-			int choice1 = inputUserNumber();
+			int choice1 = 0;
 			switch (choice1) {
 			case 1:
 				this->loadData(selectedFileName);
@@ -410,13 +405,13 @@ void CGAME::LoadGame() {
 	}
 }
 void CGAME::SaveGame() {
-	const int fromX = (SCREEN_WIDTH - 54) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
-		toX = fromX + 54 - 1, toY = fromY + 30 - 1;
+	const int fromX = (SCREEN_WIDTH - 54) / 2, fromY = (SCREEN_HEIGHT - 29) / 2,
+		toX = fromX + 54 - 1, toY = fromY + 29 - 1;
 
-	const int INPUT_OPTION = 11 + fromX;
+	const int INPUT_OPTION = 10 + fromX;
 	const int OK_OPTION = 26 + fromX;
 	const int BACK_OPTION = 37 + fromX;
-	const int yFirstLine = 14 + fromY, ySecondLine = 23 + fromY;
+	const int yFirstLine = 13 + fromY, ySecondLine = 22 + fromY;
 	const int MAX_INPUT_SIZE = 8;
 
 	int xOption = INPUT_OPTION, yOption = yFirstLine;
@@ -437,8 +432,8 @@ void CGAME::SaveGame() {
 	//draw current pos
 	switch (xOption) {
 	case INPUT_OPTION:
-		tmpObjLayer.drawRegtangle(xOption, yOption, MAX_INPUT_SIZE * 4, 3, LIGHT_GREEN);
-		tmpObjLayer.drawString(fileName, xOption, yOption, BLACK, -1);
+		//tmpObjLayer.drawRegtangle(xOption, yOption, MAX_INPUT_SIZE * 4, 3, BLACK);
+		tmpObjLayer.drawString(fileName, xOption, yOption, LIGHT_GREEN, BLACK);
 		break;
 	case OK_OPTION:
 		tmpObjLayer.drawButton(xOption, yOption, DARK_GREEN, LIGHT_GREEN);
@@ -491,8 +486,8 @@ void CGAME::SaveGame() {
 				//draw new step
 				switch (xOption) {
 				case INPUT_OPTION:
-					tmpObjLayer.drawRegtangle(xOption, yOption, MAX_INPUT_SIZE * 4, 3, LIGHT_GREEN);
-					tmpObjLayer.drawString(fileName, xOption, yOption, BLACK, -1);
+					//tmpObjLayer.drawRegtangle(xOption, yOption, MAX_INPUT_SIZE * 4, 3, BLACK);
+					tmpObjLayer.drawString(fileName, xOption, yOption, LIGHT_GREEN, BLACK);
 					break;
 				case OK_OPTION:
 					tmpObjLayer.drawButton(xOption, yOption, DARK_GREEN, LIGHT_GREEN);
@@ -507,8 +502,8 @@ void CGAME::SaveGame() {
 				//draw choice
 				switch (xOption) {
 				case INPUT_OPTION:
-					tmpObjLayer.drawRegtangle(xOption, yOption, MAX_INPUT_SIZE * 4, 3, DARK_GREEN);
-					tmpObjLayer.drawString(fileName, xOption, yOption, BLACK, -1);
+					//tmpObjLayer.drawRegtangle(xOption, yOption, MAX_INPUT_SIZE * 4, 3, );
+					tmpObjLayer.drawString(fileName, xOption, yOption, DARK_GREEN, BLACK);
 					break;
 				case OK_OPTION:
 					tmpObjLayer.drawButton(xOption, yOption, DARK_GREEN, DARK_GREEN);
@@ -542,8 +537,8 @@ void CGAME::SaveGame() {
 			}
 			switch (xOption) {
 			case INPUT_OPTION:
-				tmpObjLayer.drawRegtangle(xOption, yOption, xOption + MAX_INPUT_SIZE * 4 - 1, yOption + 2, LIGHT_GREEN);
-				tmpObjLayer.drawString(fileName, xOption, yOption, BLACK, -1);
+				//tmpObjLayer.drawRegtangle(xOption, yOption, xOption + MAX_INPUT_SIZE * 4 - 1, yOption + 2, LIGHT_GREEN);
+				tmpObjLayer.drawString(fileName, xOption, yOption, LIGHT_GREEN, BLACK);
 				break;
 			case OK_OPTION:
 				tmpObjLayer.drawButton(xOption, yOption, DARK_GREEN, LIGHT_GREEN);
@@ -771,7 +766,10 @@ int CGAME::Pause(HANDLE t) {
 				break;
 			case SAVE_OPTION:
 				if (isSaved) saveData(savedName);
-				else SaveGame();
+				else {
+					displayScreen();
+					SaveGame();
+				}
 				resumeThread(t);
 				return 0;
 			case EXIT_OPTION:
@@ -905,7 +903,7 @@ void CGAME::pushRandomLane()
 		push_frontLane(ID);
 		switch (ID) {
 		case VEHICLELANE_ID: case TRAINLANE_ID: {
-			countLane = 1;
+			countConditionLane = 1;
 			numberOfConditionLane = 1 + rand() % 2;
 			if (numberOfConditionLane > 1) conditionLane = ID;
 			else conditionLane = GRASSLANE_ID;
@@ -923,14 +921,14 @@ void CGAME::pushRandomLane()
 		push_frontLane(conditionLane);
 		switch (conditionLane) {
 		case GRASSLANE_ID: {
-			countLane = 0;
+			countConditionLane = 0;
 			numberOfConditionLane = 0;
 			conditionLane = 0;
 			break;
 		}
 		case VEHICLELANE_ID: case TRAINLANE_ID: {
-			countLane++;
-			if (countLane >= numberOfConditionLane) conditionLane = GRASSLANE_ID;
+			countConditionLane++;
+			if (countConditionLane >= numberOfConditionLane) conditionLane = GRASSLANE_ID;
 			break;
 		}
 		default:
@@ -948,7 +946,7 @@ void CGAME::push_frontLane(int ID) {
 	
 	switch (ID) {
 	case VEHICLELANE_ID: {
-		aLanes.push_front(new CVEHICLELANE(0, 0, rand() % 3));
+		aLanes.push_front(new CVEHICLELANE(0, 0, 2 + rand() % 5));
 		break;
 	}
 	case GRASSLANE_ID: {
@@ -956,11 +954,11 @@ void CGAME::push_frontLane(int ID) {
 		break;
 	}
 	case TRAINLANE_ID: {
-		aLanes.push_front(new CTRAINLANE(0, 0, rand() % 2, 10 + rand() % 5));
+		aLanes.push_front(new CTRAINLANE(0, 0, 1 + rand() % 2, 10 + (rand() % 10)));
 		break;
 	}
 	case RIVERLANE_ID: {
-		aLanes.push_front(new CRIVERLANE(0, 0, rand() % 3));
+		aLanes.push_front(new CRIVERLANE(0, 0, 2 + rand() % 5));
 		break;
 	}
 	case FINISHLANE_ID: {
@@ -991,12 +989,12 @@ void CGAME::pop_backLane() {
 	tmp = NULL;
 }
 void CGAME::moveNewLane() {
-	if (numberOfLane > BOARD_HEIGHT - 3) pushRandomLane();
-	else if (numberOfLane == BOARD_HEIGHT - 3) push_frontLane(FINISHLANE_ID);
-	else if (numberOfLane == BOARD_HEIGHT - 4) push_frontLane(GRASSLANE_FULL_ID);
+	if (countLane < numberOfLane) pushRandomLane();
+	else if (countLane == numberOfLane) push_frontLane(FINISHLANE_ID);
+	else if (countLane == numberOfLane + 1) push_frontLane(GRASSLANE_FULL_ID);
 	else push_frontLane(GRASSLANE_ID);
 	pop_backLane();
-	numberOfLane--;
+	countLane++;
 }
 
 void CGAME::SubThreadNewGame() {
@@ -1033,6 +1031,7 @@ void CGAME::SubThreadNewGame() {
                 COBJECT* cur = aLanes[yBoard]->getPos(xBoard);
                 if (cur != NULL) delete cur;
                 cur = NULL;
+
                 aLanes[yBoard]->setPos(xBoard, NULL);
                 cPlayer->setDependObj(NULL);
                 break;
@@ -1042,7 +1041,9 @@ void CGAME::SubThreadNewGame() {
 				aLanes[yBoard]->setPos(xBoard, NULL);
 				if (cur != NULL) delete cur;
 				cur = NULL;
+
                 if (!(nextObj->getID() == TREE_ID)) cPlayer->setPos(xBoard, yBoard - 1);
+				countLane++;
 				cPlayer->setDependObj(NULL);
                 break;
             }
@@ -1065,16 +1066,18 @@ void CGAME::SubThreadNewGame() {
             if (cPlayer->isDead()) {
                 //Hieu ung va cham
 				cout << cPlayer->getScore() << " " << this->level << endl;
+				level = 1;
+				countLane = 0;
                 continue;
             }
             //Xy ly finish
-            if (cPlayer->isFinish() || numberOfLane == -1) {
+            if (countLane == numberOfLane + 6) {
                 cPlayer->increaseScore();
+				level++;
+				countLane = 0;
                 cPlayer->set(BOARD_WIDTH / 2, UP_LANE);
-                cPlayer->setFinish(false);
                 resetData();
                 startMap();
-				this->level++;
             }
 			Sleep(100);
         }
@@ -1091,7 +1094,7 @@ void CGAME::drawMap() {
 	ObjLayer.clear(-1, -1);
 	for (int i = 0; i < BOARD_HEIGHT; i++)
 		this->aLanes[i]->DrawObjects(ObjLayer);
-	cPlayer->drawCharacter(ObjLayer);
+	if (!cPlayer->isDead()) cPlayer->drawCharacter(ObjLayer);
 }
 
 void CGAME::intro() {

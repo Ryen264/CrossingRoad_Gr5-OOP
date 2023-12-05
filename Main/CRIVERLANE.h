@@ -3,7 +3,7 @@
 #include "CPERRY.h"
 #include "CCAPYBARA.h"
 class CRIVERLANE : public CLANE {
-	int delayTime, condition = 0, countObject = 0;
+	int condition = 0, countObject = 0;
 	int numberOfCapybara = 0;
 	const vector <wstring> FRAME =
 	{

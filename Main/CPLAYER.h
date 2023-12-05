@@ -8,7 +8,7 @@ class CPLAYER {
 	int x, y, xBoard, yBoard;
 	bool alive;
 	int score;
-	bool isRight = true; bool finish = false;
+	bool isRight = true;
 	int moving;
 	int colorCharacter;
 	
@@ -35,7 +35,6 @@ public:
     void setPos(int xBoard = 0, int yBoard = 0);
     void setxBoard(int xBoard = 0);
     void setyBoard(int yBoard = 0);
-    void setFinish(bool finish);
     void setAlive(bool alive);
     void setMove(int moving);
     void setDependObj(COBJECT* obj = NULL);
@@ -48,7 +47,6 @@ public:
 	bool moveCharacter();
 	void increaseScore(int point = 1);
 	void decreaseScore(int point = 1);
-	bool isFinish() const;
 	bool isDead() const;
 	bool isMoving() const;
 	void drawCharacter(CGRAPHIC& layer);

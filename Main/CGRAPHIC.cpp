@@ -112,9 +112,8 @@ void CGRAPHIC::erasePixel(int fromX, int fromY, int toX, int toY) {
 }
 
 void CGRAPHIC::DrawLetter(char ch, int first_x, int first_y, int txtColor, int bgdColor) {
-	DrawObject(LETTER[ch - 'A'], first_x, first_y, txtColor, bgdColor);
-	/*for (int i = 0; i < 8; i++)
-		screen[first_x + i][first_y + 3].bgdColor = -1;*/
+	if (ch != ' ') DrawObject(LETTER[toupper(ch) - 'A'], first_x, first_y, txtColor, bgdColor, false);
+	else for (int i = 0; i < 3; i++) screen[first_x][first_y + i] = { L' ', txtColor, bgdColor };
 }
 void CGRAPHIC::DrawInputPos(int first_x, int first_y, int txtColor, int bgdColor) {
 	DrawObject(INPUT_POS, first_x, first_y, txtColor, bgdColor);
@@ -136,11 +135,7 @@ void CGRAPHIC::DrawEXCLAMATION_MARK(int first_x, int first_y, int txtColor, int 
 	for (int i = 0; i < 8; i++)
 		screen[first_x + i][first_y + 3].bgdColor = -1;
 }
-void CGRAPHIC::DrawInputPos(int first_x, int first_y, int txtColor, int bgdColor) {
-	DrawObject(INPUT_POS, first_x, first_y, txtColor, bgdColor);
-	for (int i = 0; i < 8; i++)
-		screen[first_x + i][first_y + 3].bgdColor = -1;
-}
+
 void CGRAPHIC::drawString(string str, int x, int y, int txtColor, int bgdColor, int num) {
 	if (num < 0) num = str.length();
 	for (int i = str.length() - num; i < str.length(); i++, x++)
@@ -643,7 +638,7 @@ void CGRAPHIC::DrawSaveScreen(int first_x, int first_y) {
 
 	//set buffer
 	for (int i = 0; i < 54; i++)
-		for (int j = 0; j < 30; j++)
+		for (int j = 0; j < 29; j++)
 			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, DARK_BLUE };
 
 	//set colors
@@ -660,13 +655,13 @@ void CGRAPHIC::DrawSaveScreen(int first_x, int first_y) {
 	for (int i = 8; i < 46; i++)
 		screen[first_x + i][first_y + 11].bgdColor = WHITE;
 	for (int i = 5; i < 49; i++)
-		for (int j = 12; j < 30; j++)
+		for (int j = 12; j < 29; j++)
 			screen[first_x + i][first_y + j].bgdColor = WHITE;
 	for (int i = 0; i < 4; i++) {
+		screen[first_x + 28 + i][first_y + 23].bgdColor = LIGHT_GRAY;
+		screen[first_x + 39 + i][first_y + 23].bgdColor = LIGHT_GRAY;
 		screen[first_x + 28 + i][first_y + 24].bgdColor = LIGHT_GRAY;
 		screen[first_x + 39 + i][first_y + 24].bgdColor = LIGHT_GRAY;
-		screen[first_x + 28 + i][first_y + 25].bgdColor = LIGHT_GRAY;
-		screen[first_x + 39 + i][first_y + 25].bgdColor = LIGHT_GRAY;
 	}
 }
 
@@ -701,7 +696,9 @@ void CGRAPHIC::DrawSettingScreen(int first_x, int first_y) {
 		screen[first_x + 39 + i][first_y + 25].bgdColor = LIGHT_GRAY;
 	}
 }
+void CGRAPHIC::DrawLoadGame(int first_x, int first_y) {
 
+}
 
 void CGRAPHIC::DrawChooseCharacterMenu(int first_x, int first_y) {
 	//set buffer
@@ -967,7 +964,7 @@ void CGRAPHIC::DrawPauseMenu(int first_x, int first_y) {
 			screen[first_x + i][first_y + j].txtColor = RED;
 }
 
-void CGRAPHIC::drawTag(int first_x, int first_y, int tagColor) {
+void CGRAPHIC::drawTag(int first_x, int first_y, string tagName, int tagColor) {
 	for (int i = 0; i < 40; i++)
 		for (int j = 0; j < 5; j++)
 			screen[first_x + i][first_y + j] = { TAGS[j][i], BLACK, WHITE };
@@ -986,23 +983,16 @@ void CGRAPHIC::drawTag(int first_x, int first_y, int tagColor) {
 	for (int i = 33; i < 39; i++)
 		for (int j = 1; j < 5; j++)
 			screen[first_x + i][first_y + j].bgdColor = tagColor;
+	screen[first_x + 4][first_y + 2].txtColor = tagColor;
+	screen[first_x + 5][first_y + 2].txtColor = tagColor;
+	screen[first_x + 5][first_y + 3].txtColor = tagColor;
+
+	drawString(tagName, first_x + 9, first_y + 1, tagColor, -1);
 }
 
 void CGRAPHIC::drawInfiniteSymbol(int first_x, int first_y) {
 	for (int i = 0; i < 13; i++)
 		for (int j = 0; i < 3; j++)
 			screen[first_x + i][first_y + j] = { infinite[j][i], BLACK, -1 };
-}
-void CGRAPHIC::DrawTextBoard(string contentName, int colorName, vector<string> contentBody, int first_x, int first_y, int width, int height, int txtColor, int bgdColor) {
-
-	drawClipBoard(first_x, first_y, width, height);
-	drawString(contentName, first_x + 5, first_y + 5, colorName, bgdColor, contentName.length());
-
-	int body_x = first_x + 3, body_y = first_y + 4; // Bat dau tu hang 4
-	for (const string& line : contentBody) {
-		for (int i = 0; i < (int)line.length(); i++)
-			screen[body_x + i][body_y] = { (wchar_t)line[i], txtColor, bgdColor };
-		body_y += 2;
-	}
 }
 

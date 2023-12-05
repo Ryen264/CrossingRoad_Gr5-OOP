@@ -77,16 +77,16 @@ void CVEHICLELANE::pushNormally() {
         switch (ID) {
         case CAR_ID: {
             countObject = 1;
-            numberOfCar = 1 + rand() % 3;
-            if (numberOfCar > 1) condition = CAR_ID;
-            else condition = -CAR_ID;
+            numberOfConditionalObject = 1 + rand() % 3;
+            if (numberOfConditionalObject > 1) condition = ID;
+            else condition = -ID;
             break;
         }
         case TRUCK_ID: {
             countObject = 1;
-            numberOfTruck = 1 + rand() % 2;
-            if (numberOfTruck > 1) condition = TRUCK_ID;
-            else condition = -TRUCK_ID;
+            numberOfConditionalObject = 1 + rand() % 2;
+            if (numberOfConditionalObject > 1) condition = ID;
+            else condition = -ID;
             break;
         }
         case BUS_HEAD_ID: {
@@ -97,22 +97,18 @@ void CVEHICLELANE::pushNormally() {
             condition = 0;
         }
     }
+    else if (condition < 0) {
+        int ID = random(OBJECT_ID_LIST - vector<int>{-condition});
+        push_frontObject(ID);
+        condition = (ID == BUS_HEAD_ID) ? BUS_TAIL_ID : 0;
+    }
     else {
         switch (condition) {
-        case CAR_ID: {
-            push_frontObject(CAR_ID);
+        case CAR_ID: case TRUCK_ID: {
+            push_frontObject(condition);
             countObject++;
-            if (countObject >= numberOfCar) {
-                condition = -CAR_ID;
-                countObject = 0;
-            }
-            break;
-        }
-        case TRUCK_ID: {
-            push_frontObject(TRUCK_ID);
-            countObject++;
-            if (countObject >= numberOfTruck) {
-                condition = -TRUCK_ID;
+            if (countObject >= numberOfConditionalObject) {
+                condition = -condition;
                 countObject = 0;
             }
             break;
@@ -122,23 +118,7 @@ void CVEHICLELANE::pushNormally() {
             condition = -BUS_HEAD_ID;
             break;
         }
-        case -CAR_ID: {
-            int ID = random(OBJECT_ID_LIST - vector<int>{CAR_ID});
-            push_frontObject(ID);
-            condition = (ID == BUS_HEAD_ID) ? BUS_TAIL_ID : 0;
-            break;
-        }
-        case -TRUCK_ID: {
-            int ID = random(OBJECT_ID_LIST - vector<int>{TRUCK_ID});
-            push_frontObject(ID);
-            condition = (ID == BUS_HEAD_ID) ? BUS_TAIL_ID : 0;
-            break;
-        }
-        case -BUS_HEAD_ID: {
-            push_frontObject(random(OBJECT_ID_LIST - vector<int>{BUS_HEAD_ID}));
-            condition = 0;
-            break;
-        } default:
+        default:
             condition = 0;
         }
     }
@@ -168,15 +148,15 @@ void CVEHICLELANE::Move() {
     timeCount++;
     if (timeCount >= delayTime) {
         timeCount = 0;
+
         //Random push a car
         if (lightPos < 0 || !isStop) {
-            pop_backObject();
             pushNormally();
+            pop_backObject();
         }
         else {
             //Push with traffic light on
             //push after
-            pop_backObject();
             if (lane[lightPos] != NULL && lane[lightPos]->getID() == BUS_HEAD_ID) {
                 if (isMoveRight) {
                     if (lightPos > 0) lane.insert(lane.begin() + lightPos - 1, NULL);
@@ -190,9 +170,13 @@ void CVEHICLELANE::Move() {
             }
             else {
                 if (isMoveRight) lane.insert(lane.begin() + lightPos, NULL);
-                else if (lightPos < BOARD_WIDTH - 1) lane.insert(lane.begin() + lightPos + 1, NULL);
-                else lane.push_back(NULL);
+                else {
+                    if (lightPos < BOARD_WIDTH - 1) lane.insert(lane.begin() + lightPos + 1, NULL);
+                    else lane.push_back(NULL);
+                }
             }
+            pop_backObject();
+
             //push before
             if (isMoveRight) {
                 int id = lightPos - 1;
@@ -245,4 +229,20 @@ void CVEHICLELANE::DrawObjects(CGRAPHIC& layer) {
         }
     }
     if (lightPos >= 0) ptrafficLight->DrawBlock(layer, true);
+}
+void CVEHICLELANE::DrawLane(CGRAPHIC& layer) {
+    for (int k = 0; k < BOARD_WIDTH; k++) {
+        if (k != lightPos) {
+            for (int i = 0; i < BLOCK_WIDTH; i++)
+                for (int j = 0; j < BLOCK_HEIGHT; j++)
+                    layer.screen[x + i + k * BLOCK_WIDTH][y + j] = block[i][j];
+        }
+        else {
+            for (int i = 0; i < BLOCK_WIDTH; i++)
+                for (int j = 0; j < BLOCK_HEIGHT; j++)
+                    layer.screen[x + i + k * BLOCK_WIDTH][y + j] = { FRAME_MARKING[j][i], WHITE, LIGHT_GRAY };
+            for (int i = 0; i < 16; i++)
+                layer.screen[x + i + k * BLOCK_WIDTH][y].bgdColor = LIGHT_GREEN;
+        }
+    }
 }

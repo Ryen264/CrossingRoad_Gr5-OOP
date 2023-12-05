@@ -7,9 +7,7 @@
 const int TRAFFICLIGHT_DELAY = 20;
 const int TRAFFICLIGHT_WAIT = 20;
 class CVEHICLELANE : public CLANE {
-	int delayTime, condition = 0, countObject = 0;
-	int numberOfCar = 0, numberOfTruck = 0;
-	bool isStop = false;
+	int condition = 0, countObject = 0, numberOfConditionalObject;
 	const vector <wstring> FRAME =
 	{
 L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
@@ -17,7 +15,7 @@ L"                ",
 L"                ",
 L"▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀ ",
 L"                ",
-L"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀"
+L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄"
 	};
 	const vector <wstring> FRAME_MARKING =
 	{
@@ -47,4 +45,5 @@ public:
 	bool getStop() const;
 
 	void DrawObjects(CGRAPHIC& layer);
+	void DrawLane(CGRAPHIC& layer);
 };
