@@ -70,7 +70,6 @@ public:
 	void Text(wstring wsContent, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawObject(vector<wstring> contentsArr, int first_x, int first_y, int txtColor, int bgdColor);
 	void drawClipBoard(int first_x, int first_y, int width, int height);
-	void drawMainMenu();
 	void drawTag(int first_x, int first_y, int tagColor);
 	void DrawDrawer(int first_x, int first_y);
 	void DrawSaveScreen(vector<wstring> FLOPPY_DISC, int first_x, int first_y);

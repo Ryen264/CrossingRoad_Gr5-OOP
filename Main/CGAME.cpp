@@ -292,7 +292,7 @@ int CGAME::Menu() {
 	const int ABOUT = ydrawerStart + 4 * 4;
 	const int QUIT = ydrawerStart + 4 * 5;
 	//NewGame - LoadGame - Setting - Help - About - Quit
-	vector<int> colorArr = { LIGHT_GREEN, BLUE, LIGHT_GRAY, BRIGHT_YELLOW, BROWN, RED };
+	vector<int> colorArr = { LIGHT_GREEN, TEAL, LIGHT_GRAY, CREAMY_AVOCADO, PURPLE, DARK_ORANGE };
 	vector<string> messageArr = { "NEW GAME", "LOAD GAME", "SETTING", "HELP", "ABOUT", "QUIT" };
 	int xOption = xdrawerStart, yOption = ydrawerStart;
 	int iCur = 0, curColor = colorArr[iCur]; string curMessage = messageArr[iCur];
@@ -302,13 +302,14 @@ int CGAME::Menu() {
 
 	//draw menu
 	tmpBgdLayer.DrawMainMenu();
+	tmpBgdLayer.DrawDoofCorp(176, 16);
 	tmpBgdLayer.DrawDrawer(fromX, fromY + 3);
 
 	//draw current step
 	tmpObjLayer.DrawSmallDrawer(xOption, yOption, curColor);
 	tmpObjLayer.DrawPerryTalk(curMessage, xfromTalk, yfromTalk, curColor, WHITE);
-	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
-	displayScreen(tmpObjLayer, tmpBgdLayer, xfromTalk, yfromTalk, xfromTalk + 63 - 1, yfromTalk + 19 - 1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 	while (1) {
 		int temp = toupper(_getch());
 
@@ -318,7 +319,7 @@ int CGAME::Menu() {
 		if (isEnterButton(temp)) {
 			//draw choice
 			tmpObjLayer.DrawSmallDrawer(xOption , yOption, DARK_GREEN);
-			tmpObjLayer.DrawPerryTalk(curMessage, xfromTalk, yfromTalk, curColor, -1);
+			tmpObjLayer.DrawPerryTalk(curMessage, xfromTalk, yfromTalk, curColor, WHITE);
 			if (iCur != 0) tmpObjLayer.screen[xOption + 14][yOption].bgdColor = LIGHT_BROWN;
 			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 			displayScreen(tmpObjLayer, tmpBgdLayer, xfromTalk, yfromTalk, xfromTalk + 63 - 1, yfromTalk + 19 - 1);

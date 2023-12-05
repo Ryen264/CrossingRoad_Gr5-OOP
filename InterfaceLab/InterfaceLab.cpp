@@ -19,9 +19,7 @@ int main() {
 	//ObjLayer.drawClipBoard(0,0,46,20);
 	//testobject.DrawBlock(ObjLayer);
 	//ObjLayer.DrawSaveScreen(FLOPPY_DISC, 0, 0);
-	BgdLayer.DrawDrawer(0, 3);
-	ObjLayer.DrawSmallDrawer(0, 0, TEAL);
-	ObjLayer.display();
+
 	_getch();
 	return 0;
 }
