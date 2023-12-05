@@ -370,43 +370,140 @@ void CGAME::NewGame() {
 	playGame();
 }
 void CGAME::LoadGame() {
-    loadFileNameList();
-	drawLoadGame();
+	const int fromX = 10, fromY = 3,
+		toX = fromX + 90 - 1, toY = fromY + 30 - 1;
+
+	const int LOAD_YOPTION = fromY;
+	const int RENAME_YOPTION = 5 + fromY;
+	const int DELETE_YOPTION = 10 + fromY;
+	const int CANCEL_YOPTION = 15 + fromY;
+	const int BACK_YOPTION = 20 + fromY;
+
+	const vector<string> optionList = { "LOAD", "RENAME", "DELETE", "CANCEL", "BACK" };
+	const int MAX_FILE_IN_TAB = 5;
+	loadFileNameList();
+	//test
+	fileNameList = { "Aaaa", "Bbbbbb", "Cccccccc" };
+
+	const int XOPTION = 52 + fromX;
+	const int XCHOOSE = fromX + 11, YCHOOSE_FIRST = fromY + 6;
+
+	bool isRight = false;
+	int xOption = XCHOOSE, yOption = YCHOOSE_FIRST;
+	int idFile = 0, idOption = 0, numberOfFile = ((int)fileNameList.size() < MAX_FILE_IN_TAB) ? (int)fileNameList.size() : MAX_FILE_IN_TAB;
+
+	//setup tmpLayers
+	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
+	//draw menu
+	tmpBgdLayer.DrawLoadGame(fromX, fromY, fileNameList);
+
+	//draw current step
+	if (!isRight) {
+		tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, LIGHT_GREEN, SAND);
+		tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], LIGHT_GREEN, SAND);
+	}
+	else tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], LIGHT_GREEN);
+
+	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	while (1) {
-		int choice = 0;
-		if (choice == 11) {
-			return;
-		}
-		else if (choice >= 1 && choice <= fileNameList.size()) {
-			string selectedFileName = fileNameList[choice - 1];
-			// draw options
-			cout << "1. Load game" << endl;
-			cout << "2. Delete name" << endl;
-			cout << "3. Change name" << endl;
-			cout << "4. Back" << endl;
-			int choice1 = 0;
-			switch (choice1) {
-			case 1:
-				this->loadData(selectedFileName);
-				this->playGame();
-				break;
-			case 2:
-				this->deleteFileName(choice - 1);
-				break;
-			case 3:
-				this->changeFileName(choice - 1);
-				break;
-			case 4:
-				break;
-			default:
-				cout << "Invalid choice. Please enter a valid number" << endl;
-				break;
+		int temp = toupper(_getch());
+
+		//erase the last step
+		if (!isRight) tmpObjLayer.erasePixel(xOption, yOption, xOption + 12, yOption);
+		else tmpObjLayer.erasePixel(xOption, yOption, xOption + 40 - 1, yOption + 5 - 1);
+
+		if (!isEnterButton(temp)) {
+			if (!isRight) {
+				if (isUpButton(temp)) {
+					if (idFile > 0) {
+						idFile--;
+						yOption -= 2;
+					}
+				}
+				if (isDownButton(temp)) {
+					if (idFile < numberOfFile - 1) {
+						idFile++;
+						yOption += 2;
+					}
+				}
+				if (isRightButton(temp) || isLeftButton(temp)) {
+					isRight = true;
+					idOption = 0;
+					xOption = XOPTION;
+					yOption = LOAD_YOPTION;
+				}
 			}
-			break;
+			else {
+				if (isUpButton(temp)) {
+					if (idOption > 0) {
+						idOption--;
+						yOption -= 5;
+					}
+				}
+				if (isDownButton(temp)) {
+					if (idOption < 5 - 1) {
+						idOption++;
+						yOption += 5;
+					}
+				}
+				if (isRightButton(temp) || isLeftButton(temp)) {
+					isRight = false;
+					xOption = XCHOOSE;
+					yOption = YCHOOSE_FIRST + idFile * 2;
+				}
+			}
+			//draw new step
 		}
 		else {
-			cout << "Invalid choice. Please enter a valid number" << endl;
+			//draw choice
+			if (!isRight) {
+				tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, DARK_GREEN, SAND);
+				tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], DARK_GREEN, SAND);
+			}
+			else tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], DARK_GREEN);
+			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+
+			Sleep(500);
+			if (!isRight) {
+				isRight = true;
+				idOption = 0;
+				xOption = XOPTION;
+				yOption = LOAD_YOPTION;
+			}
+			else {
+				switch (yOption) {
+				case LOAD_YOPTION:
+					loadData(fileNameList[idFile]);
+					playGame();
+					return;
+				case RENAME_YOPTION:
+					changeFileName(idFile);
+					//update bgdLayer
+					break;
+				case DELETE_YOPTION:
+					deleteFileName(idFile);
+					if (idFile > 0) idFile--;
+					//update number of file
+					//update bgdLayer
+					break;
+				case CANCEL_YOPTION:
+					tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], BLACK);
+					isRight = false;
+					xOption = XCHOOSE;
+					yOption = YCHOOSE_FIRST + idFile * 2;
+					break;
+				case BACK_YOPTION:
+					return;
+				}
+			}
+			//reset choice
 		}
+		if (!isRight) {
+			tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, LIGHT_GREEN, SAND);
+			tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], LIGHT_GREEN, SAND);
+		}
+		else tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], LIGHT_GREEN);
+		displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	}
 }
 void CGAME::SaveGame() {
@@ -647,7 +744,6 @@ int CGAME::Pause(HANDLE t) {
 	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
 	//draw menu
 	tmpBgdLayer.DrawPauseMenu(fromX, fromY);
-	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 
 	//draw character name
 	tmpObjLayer.drawString(cPlayer->getNameCharacter(), 24 + fromX, 4 + fromY, cPlayer->getColorCharacter(), SAND);
@@ -893,9 +989,6 @@ void CGAME::resumeThread(HANDLE t) {
 		ResumeThread(t);
 }
 
-bool CGAME::isInjured() const {
-    return this->aLanes[this->cPlayer->getYBoard()]->checkPos(this->cPlayer->getXBoard());
-}
 void CGAME::updateYLane() {
 	for (int i = 0; i < (int)aLanes.size(); i++)
 		if (aLanes[i] != NULL) aLanes[i]->setyBoard(i);
@@ -1036,20 +1129,27 @@ void CGAME::SubThreadNewGame() {
                 COBJECT* cur = aLanes[yBoard]->getPos(xBoard);
                 if (cur != NULL) delete cur;
                 cur = NULL;
-
                 aLanes[yBoard]->setPos(xBoard, NULL);
                 cPlayer->setDependObj(NULL);
+
+				cPlayer->increaseScore(1);
                 break;
             }
             case PERRY_ID: {
 				COBJECT* cur = aLanes[yBoard]->getPos(xBoard);
-				aLanes[yBoard]->setPos(xBoard, NULL);
 				if (cur != NULL) delete cur;
 				cur = NULL;
-
-                if (!(nextObj->getID() == TREE_ID)) cPlayer->setPos(xBoard, yBoard - 1);
-				countLane++;
+				aLanes[yBoard]->setPos(xBoard, NULL);
 				cPlayer->setDependObj(NULL);
+
+				if (!(nextObj->getID() == TREE_ID)) {
+					cPlayer->setPos(xBoard, yBoard - 1);
+					if (cPlayer->getYBoard() == UP_LANE)
+					{
+						moveNewLane();
+						startMap();
+					}
+				}
                 break;
             }
             }
@@ -1077,7 +1177,7 @@ void CGAME::SubThreadNewGame() {
             }
             //Xy ly finish
             if (countLane == numberOfLane + 6) {
-                cPlayer->increaseScore();
+                cPlayer->increaseScore(5);
 				level++;
 				countLane = 0;
                 cPlayer->set(BOARD_WIDTH / 2, UP_LANE);
@@ -1108,34 +1208,10 @@ void CGAME::intro() {
 void CGAME::outtro() {
 	cout << "End game" << endl;
 }
-
 void CGAME::drawPlayAgain() {
 	cout << "Play again (Y/N)?" << endl;
 }
-void CGAME::drawSaveGame()
-{
-}
-void CGAME::drawLoadGame()
-{
-	cout << "===== Load Game =====" << endl;
-	if (fileNameList.empty()) {
-		cout << "No saved games available." << endl;
-	}
-	else {
-		for (int i = 0; i < fileNameList.size(); i++) {
-			cout << i + 1 << ". " << fileNameList[i] << endl;
-		}
-	}
-	cout << "11. Back to Main Menu" << endl;
-	cout << "========================" << endl;
-	cout << "Enter the number of the game: ";
-}
-void CGAME::drawInputUserTxt()
-{
-}
-void CGAME::drawInputUserNumber()
-{
-}
+
 
 void CGAME::displayScreen(int fromX, int fromY, int toX, int toY) {
 	if (toX < 0 || toX > SCREEN_WIDTH - 1) toX = SCREEN_WIDTH - 1;
@@ -1161,22 +1237,22 @@ void CGAME::displayScreen(CGRAPHIC& ObjLayer, const CGRAPHIC& BgdLayer, int from
 }
 
 bool isUpButton(int button) {
-	return button == 'W' || button == 38;
+	return button == 'W' || button == 72;
 }
 bool isDownButton(int button) {
-	return button == 'S' || button == 40;
+	return button == 'S' || button == 80;
 }
 bool isRightButton(int button) {
-	return button == 'D' || button == 39;
+	return button == 'D' || button == 77;
 }
 bool isLeftButton(int button) {
-	return button == 'A' || button == 37;
+	return button == 'A' || button == 75;
 }
 bool isEnterButton(int button) {
 	return button == 13 || button == 32;
 }
 bool isDeleteButton(int button) {
-	return button == 224;
+	return button == 83;
 }
 bool isBackspaceButton(int button) {
 	return button == 8;

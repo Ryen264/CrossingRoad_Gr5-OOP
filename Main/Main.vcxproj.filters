@@ -24,9 +24,6 @@
     <ClCompile Include="CLANE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CVEHICLELANE.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CGAME.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,16 +75,10 @@
     <ClCompile Include="CTREE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CTREE_1_BLOCK_1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CTREE_1_BLOCK_2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CTREE_2_BLOCK.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CUFO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CVEHICLELANE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -96,9 +87,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CCAR.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CVEHICLELANE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CGAME.h">
@@ -152,16 +140,10 @@
     <ClInclude Include="CTREE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CTREE_1_BLOCK_1.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CTREE_1_BLOCK_2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CTREE_2_BLOCK.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CUFO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CVEHICLELANE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

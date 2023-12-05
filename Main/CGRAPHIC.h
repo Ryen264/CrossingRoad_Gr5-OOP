@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <iostream>
 #include <vector>
+#include <deque>
 using namespace std;
 const int SCREEN_WIDTH = 208;
 const int SCREEN_HEIGHT = 51;
@@ -94,16 +95,20 @@ public:
 	void DrawCloud_2(int first_x, int first_y);
 	void DrawDoofCorp(int first_x, int first_y);
 
-
+	//void DrawFileInfo(int first_x, int first_y, int id, string fileName, int level, int score, string characterName, int txtColor, int bgdColor);
 	void DrawSaveScreen(int first_x, int first_y);
 	void DrawSettingScreen(int first_x, int first_y);
 
 	void DrawMainMenu();
-	void DrawLoadGame(int first_x, int first_y);
+	void DrawLoadGame(int first_x, int first_y, deque<string> nameList);
 	void DrawPauseMenu(int first_x, int first_y);
 	void DrawChooseCharacterMenu(int first_x, int first_y);
 	void DrawPerryTalk(string message, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawHeader(int first_x, int first_y);
+
+	void DrawChar1pixel(int first_x, int first_y, char ch, int txtColor, int bgdColor);
+	void DrawString1pixel(int first_x, int first_y, string str, int txtColor, int bgdColor);
+	void DrawNumber1pixel(int first_x, int first_y, int num, int txtColor, int bgdColor);
 };
 const vector<wstring> COLON = {
 	L"█",

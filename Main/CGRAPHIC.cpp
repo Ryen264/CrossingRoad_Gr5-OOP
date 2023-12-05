@@ -264,7 +264,6 @@ void CGRAPHIC::DrawTextBoard(string contentName, int colorName, vector<string> c
 			screen[body_x + i][body_y] = { (wchar_t)line[i], txtColor, bgdColor };
 		body_y += 2;
 	}
-
 }
 
 void CGRAPHIC::DrawDrawer(int first_x, int first_y)
@@ -659,6 +658,16 @@ void CGRAPHIC::DrawCloud_2(int first_x, int first_y)
 	}
 }
 
+//void CGRAPHIC::DrawFileInfo(int first_x, int first_y, int id, string fileName, int level, int score, string characterName, int txtColor, int bgdColor) {
+//	//01  45678901  45  89  234567
+//	//00  namename  00  00  YELLOW
+//	//if infi: level = 0
+//	DrawNumber1pixel(first_x, first_y, id, txtColor, bgdColor);
+//	DrawString1pixel(first_x + 4, first_y, fileName, txtColor, bgdColor);
+//	DrawNumber1pixel(first_x + 14, first_y, level, txtColor, bgdColor);
+//	DrawNumber1pixel(first_x + 18, first_y, score, txtColor, bgdColor);
+//	DrawString1pixel(first_x + 22, first_y, characterName, txtColor, bgdColor);
+//}
 void CGRAPHIC::DrawSaveScreen(int first_x, int first_y) {
 	vector<wstring> frame = FLOPPY_DISC;
 
@@ -690,7 +699,6 @@ void CGRAPHIC::DrawSaveScreen(int first_x, int first_y) {
 		screen[first_x + 39 + i][first_y + 24].bgdColor = LIGHT_GRAY;
 	}
 }
-
 void CGRAPHIC::DrawSettingScreen(int first_x, int first_y) {
 	vector<wstring> frame = FLOPPY_DISC_2;
 
@@ -722,8 +730,18 @@ void CGRAPHIC::DrawSettingScreen(int first_x, int first_y) {
 		screen[first_x + 39 + i][first_y + 25].bgdColor = LIGHT_GRAY;
 	}
 }
-void CGRAPHIC::DrawLoadGame(int first_x, int first_y) {
+void CGRAPHIC::DrawLoadGame(int first_x, int first_y, deque<string> nameList) {
+	drawClipBoard(first_x, first_y, 50, 30);
+	for (int i = 0; i < (int)nameList.size(); i++) {
+		DrawNumber1pixel(first_x + 11, first_y + 6 + i * 2, i + 1, BLACK, SAND);
+		DrawString1pixel(first_x + 15, first_y + 6 + i * 2, nameList[i], BLACK, SAND);
+	}
 
+	drawTag(first_x + 52, first_y, "LOAD", BLACK);
+	drawTag(first_x + 52, first_y + 5, "RENAME", BLACK);
+	drawTag(first_x + 52, first_y + 10, "DELETE", BLACK);
+	drawTag(first_x + 52, first_y + 15, "CANCEL", BLACK);
+	drawTag(first_x + 52, first_y + 20, "BACK", BLACK);
 }
 
 void CGRAPHIC::DrawChooseCharacterMenu(int first_x, int first_y) {
@@ -1046,15 +1064,13 @@ void CGRAPHIC::drawTag(int first_x, int first_y, string tagName, int tagColor) {
 	screen[first_x + 5][first_y + 2].txtColor = tagColor;
 	screen[first_x + 5][first_y + 3].txtColor = tagColor;
 
-	drawString(tagName, first_x + 9, first_y + 1, tagColor, -1);
+	drawString(tagName, first_x + 8, first_y + 1, tagColor, -1);
 }
-
 void CGRAPHIC::drawInfiniteSymbol(int first_x, int first_y) {
 	for (int i = 0; i < 13; i++)
 		for (int j = 0; i < 3; j++)
 			screen[first_x + i][first_y + j] = { infinite[j][i], BLACK, -1 };
 }
-
 void CGRAPHIC::DrawMainMenu() {
 	for (int i = 0; i < WIDTH; i++)
 		for (int j = 0; j < HEIGHT; j++)
@@ -1160,7 +1176,6 @@ void CGRAPHIC::DrawMainMenu() {
 		for (int j = 17; j <= 36; j++)
 			screen[i][j].bgdColor = LIGHT_GRAY;
 }
-
 void CGRAPHIC::DrawDoofCorp(int first_x, int first_y) {
 	for (int i = 0; i < 22; i++)
 		for (int j = 0; j < 21; j++)
@@ -1192,7 +1207,6 @@ void CGRAPHIC::DrawDoofCorp(int first_x, int first_y) {
 	screen[first_x + 13][first_y + 0].bgdColor = -1;
 	screen[first_x + 14][first_y + 0].bgdColor = -1;
 }
-
 void CGRAPHIC::DrawHeader(int first_x, int first_y) {
 	for (int i = 0; i < 56; i++)
 		for (int j = 0; j < 10; j++)
@@ -1258,4 +1272,19 @@ void CGRAPHIC::DrawHeader(int first_x, int first_y) {
 	screen[first_x + 38][first_y + 9].bgdColor = -1;
 	screen[first_x + 44][first_y + 9].bgdColor = -1;
 	screen[first_x + 32][first_y + 9].bgdColor = -1;
+}
+
+void CGRAPHIC::DrawChar1pixel(int first_x, int first_y, char ch, int txtColor, int bgdColor) {
+	screen[first_x][first_y] = { (wchar_t)ch, txtColor, bgdColor };
+}
+void CGRAPHIC::DrawString1pixel(int first_x, int first_y, string str, int txtColor, int bgdColor) {
+	for (int i = 0; i < (int)str.size(); i++)
+		DrawChar1pixel(first_x + i, first_y, str[i], txtColor, bgdColor);
+}
+void CGRAPHIC::DrawNumber1pixel(int first_x, int first_y, int num, int txtColor, int bgdColor) {
+	vector<int> arrNum{};
+	for (; num != 0; num /= 10)
+		arrNum.push_back(num % 10);
+	for (int i = (int)arrNum.size() - 1; i >=0; i--)
+		DrawChar1pixel(first_x + i, first_y, char(arrNum[i] + '0'), txtColor, bgdColor);
 }

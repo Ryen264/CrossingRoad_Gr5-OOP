@@ -29,7 +29,7 @@ int CPLAYER::getYBoard() const {
     return this->yBoard;
 }
 int CPLAYER::getScore() const {
-    return this->score;
+    return score;
 }
 bool CPLAYER::getIsRight() const {
     return this->isRight;
@@ -124,31 +124,20 @@ void CPLAYER::setColorCharacter(int color) {
 }
 int CPLAYER::updateDepend() {
 	if (dependObj == NULL) return 0;
-	switch (dependObj->getID()) {
+    int ID = dependObj->getID();
+	switch (ID) {
 	case CAPYBARA_ID: {
 		this->x = dependObj->getX();
 		this->xBoard = this->x / BLOCK_WIDTH;
 		this->y = dependObj->getY();
 		this->yBoard = (this->y - START_BOARD_HEIGHT) / BLOCK_HEIGHT;
-        this->alive = true;
-		return CAPYBARA_ID;
+        break;
 	}
-	case PERRY_ID: {
-        this->alive = true;
-		return PERRY_ID;
-	}
-	case EGG_ID: {
-        this->alive = true;
-		this->increaseScore(10);
-		return EGG_ID;
-	}
-	case CAR_ID: case TRUCK_ID: case TRAIN_HEAD_ID: case TRAIN_BODY_ID: {
+	case CAR_ID: case TRUCK_ID: case TRAIN_HEAD_ID: case TRAIN_BODY_ID:
 		this->alive = false;
-		return CAR_ID;
+        break;
 	}
-	}
-	if (this->x == 0 || this->x == BOARD_WIDTH - 1) this->alive = false;
-	return CAR_ID;
+	return ID;
 }
 bool CPLAYER::moveCharacter() {
 
@@ -171,7 +160,7 @@ bool CPLAYER::moveCharacter() {
             this->xBoard++;
         }
         if (xBoard == BOARD_WIDTH) {
-            setxBoard(BOARD_WIDTH);
+            setxBoard(BOARD_WIDTH - 1);
             this->alive = false;
             return false;
         }
@@ -194,9 +183,11 @@ bool CPLAYER::moveCharacter() {
 
 void CPLAYER::increaseScore(int point) {
     this->score += point;
+    if (score > 99) score = 99;
 }
 void CPLAYER::decreaseScore(int point) {
     this->score -= point;
+    if (score < 0) score = 0;
 }
 
 bool CPLAYER::isDead() const{

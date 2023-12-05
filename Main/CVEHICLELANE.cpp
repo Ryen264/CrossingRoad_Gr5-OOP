@@ -1,4 +1,5 @@
-﻿#include "CVEHICLELANE.h"
+#include "CVEHICLELANE.h"
+#include <conio.h>
 CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) : CLANE(x, y) {
     for (int i = 0; i < BOARD_WIDTH; i++)
         this->lane.push_front(NULL);
@@ -119,6 +120,7 @@ void CVEHICLELANE::pushNormally() {
             break;
         }
         default:
+            push_frontObject(CAR_ID);
             condition = 0;
         }
     }
@@ -194,7 +196,7 @@ void CVEHICLELANE::Move() {
                     pushNormally();
                 }
             }
-        }   
+        }
     }
 }
 
@@ -220,15 +222,9 @@ bool CVEHICLELANE::getStop() const
 }
 
 void CVEHICLELANE::DrawObjects(CGRAPHIC& layer) {
-    for (int k = 0; k < BOARD_WIDTH; k++) {
+    for (int k = 0; k < BOARD_WIDTH; k++)
         if (lane[k] != NULL) lane[k]->DrawBlock(layer);
-        else {
-            for (int i = 0; i < BLOCK_WIDTH; i++)
-                for (int j = 0; j < BLOCK_HEIGHT; j++)
-                    layer.screen[x + i + k * BLOCK_WIDTH][y + j] = { L' ', -1, -1 };
-        }
-    }
-    if (lightPos >= 0) ptrafficLight->DrawBlock(layer, true);
+    if (ptrafficLight != NULL) ptrafficLight->DrawBlock(layer, true);
 }
 void CVEHICLELANE::DrawLane(CGRAPHIC& layer) {
     for (int k = 0; k < BOARD_WIDTH; k++) {

@@ -16,6 +16,7 @@
 #include <fstream>
 #include <string>
 using namespace std;
+
 class CGAME {
     CPLAYER* cPlayer;
     deque<CLANE*> aLanes;
@@ -69,7 +70,6 @@ public:
     void exitThread(thread* t);
     void resumeThread(HANDLE t);
 
-    bool isInjured() const;
     void updateYLane();
     void pushRandomLane();
     void push_frontLane(int ID);
@@ -83,12 +83,7 @@ public:
 
     void intro();
     void outtro();
-
     void drawPlayAgain();
-    void drawSaveGame();
-    void drawLoadGame();
-	void drawInputUserTxt();
-    void drawInputUserNumber();
 
     void displayScreen(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
     void displayScreen(CGRAPHIC& ObjLayer, const CGRAPHIC& BgdLayer, int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
