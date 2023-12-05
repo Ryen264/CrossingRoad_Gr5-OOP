@@ -323,14 +323,14 @@ int CGAME::Menu() {
 			Sleep(500);
 			switch (yOption) {
 			case NEW_GAME:
-					SetupTheme();
-				this->NewGame();
+				SetupTheme();
+				NewGame();
 				SetupTheme(MAIN_MENU_THEME);
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case LOAD_GAME:
 				this->LoadGame();
+				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case SETTING:
 				this->Setting();
@@ -338,11 +338,9 @@ int CGAME::Menu() {
 			case HELP:
 				this->Help();
 				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case ABOUT:
 				this->About();
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case QUIT:
