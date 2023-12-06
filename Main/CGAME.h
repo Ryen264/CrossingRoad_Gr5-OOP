@@ -8,6 +8,7 @@
 #include "CFINISHLANE.h"
 
 #include <iostream>
+#include<sstream>
 #include <conio.h>
 #include <time.h>
 #include <deque>
@@ -29,6 +30,14 @@ class CGAME {
 
     //Thread variables
     bool isThreadRunning = true;
+
+    // Time
+    clock_t startTime = 0, endTime = 0, curTime = 0;
+    bool isPaused = false;
+
+    // Sound
+    int bgdSoundLevel = 0;
+    int effectSoundLevel = 0;
 
     //Screen layers
     CGRAPHIC ObjLayer, BgdLayer;
@@ -77,6 +86,11 @@ public:
     void moveNewLane();
 
     void SubThreadNewGame();
+
+    // Time
+    void updateTime();
+    string getTime(clock_t curTime);
+    clock_t setTime(string& time);
 
     void startMap();
     void drawMap();

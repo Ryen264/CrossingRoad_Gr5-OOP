@@ -186,6 +186,7 @@ void CGRAPHIC::drawButton(int first_x, int first_y, int color, int txtColor, int
 		for (int j = 1; j <= 2; j++)
 			screen[first_x + i][first_y + j].bgdColor = color;
 }
+
 void CGRAPHIC::drawClipBoard(int first_x, int first_y, int width, int height) {
 	//top
 	for (int i = first_x + 1; i < first_x + width; i++) {
@@ -247,10 +248,11 @@ void CGRAPHIC::drawClipBoard(int first_x, int first_y, int width, int height) {
 	for (int i = 0; i < 5; i++)
 		screen[first_x + width - (3 + i)][first_y + height - 1] = { L' ', BLACK, DARK_BROWN };
 }
-void CGRAPHIC::drawRegtangle(int first_x, int first_y, int width, int height, int bgdColor) {
+void CGRAPHIC::drawRegtangle(int first_x, int first_y, int width, int height, int color, bool isFill) {
 	for (int i = 0; i < width; i++)
 		for (int j = 0; j < height; j++)
-			screen[first_x + i][first_y + j] = { L' ', -1, bgdColor };
+			if (!isFill) screen[first_x + i][first_y + j] = { L' ', -1, color };
+			else screen[first_x + i][first_y + j] = { L'█', color, color };
 }
 
 void CGRAPHIC::DrawTextBoard(string contentName, int colorName, vector<string> contentBody, int first_x, int first_y, int width, int height, int txtColor, int bgdColor) {
@@ -729,6 +731,39 @@ void CGRAPHIC::DrawSettingScreen(int first_x, int first_y) {
 		screen[first_x + 28 + i][first_y + 25].bgdColor = LIGHT_GRAY;
 		screen[first_x + 39 + i][first_y + 25].bgdColor = LIGHT_GRAY;
 	}
+}
+void CGRAPHIC::DrawSettingScreen(int first_x, int first_y) {
+	vector<wstring> frame = FLOPPY_DISC_2;
+
+	//set buffer
+	for (int i = 0; i < 54; i++)
+		for (int j = 0; j < 29; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, DARK_BLUE };
+
+	//set colors
+	screen[first_x + 50][first_y + 0].bgdColor = screen[first_x + 50][first_y + 0].txtColor = -1;
+	screen[first_x + 51][first_y + 0].bgdColor = screen[first_x + 51][first_y + 0].txtColor = -1;
+	screen[first_x + 52][first_y + 0].bgdColor = screen[first_x + 52][first_y + 0].txtColor = -1;
+	screen[first_x + 53][first_y + 0].bgdColor = screen[first_x + 53][first_y + 0].txtColor = -1;
+	screen[first_x + 52][first_y + 1].bgdColor = screen[first_x + 52][first_y + 1].txtColor = -1;
+	screen[first_x + 53][first_y + 1].bgdColor = screen[first_x + 53][first_y + 1].txtColor = -1;
+
+	for (int i = 12; i < 41; i++)
+		for (int j = 1; j < 10; j++)
+			screen[first_x + i][first_y + j].bgdColor = LIGHT_GRAY;
+	for (int i = 8; i < 46; i++)
+		screen[first_x + i][first_y + 11].bgdColor = WHITE;
+	for (int i = 5; i < 49; i++)
+		for (int j = 12; j < 30; j++)
+			screen[first_x + i][first_y + j].bgdColor = WHITE;
+	for (int i = 0; i < 4; i++) {
+		screen[first_x + 28 + i][first_y + 24].bgdColor = LIGHT_GRAY;
+		screen[first_x + 39 + i][first_y + 24].bgdColor = LIGHT_GRAY;
+		screen[first_x + 28 + i][first_y + 25].bgdColor = LIGHT_GRAY;
+		screen[first_x + 39 + i][first_y + 25].bgdColor = LIGHT_GRAY;
+	}
+	Text(L"BACKGROUND", 10 + first_x, 13 + first_y, BLACK, SAND);
+	Text(L"EFFECT", 10 + first_x, 17 + first_y, BLACK, SAND);
 }
 void CGRAPHIC::DrawLoadGame(int first_x, int first_y, deque<string> nameList) {
 	drawClipBoard(first_x, first_y, 50, 30);
