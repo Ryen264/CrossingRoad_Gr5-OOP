@@ -13,6 +13,8 @@ CGAME::~CGAME() {
 		pointer = NULL;
 	}
 	ShowCur(true);
+	ShowScrollbar(true);
+	system("mode 1000, 500");
 }
 void CGAME::Configure()
 {
