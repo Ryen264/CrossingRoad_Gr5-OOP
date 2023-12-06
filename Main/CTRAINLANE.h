@@ -2,8 +2,7 @@
 #include "CLANE.h"
 #include "CTRAIN.h"
 class CTRAINLANE : public CLANE {
-	int delayTime, numberOfTrain, countTrain = 0;
-	bool isStop = true;
+	int numberOfTrain, countTrain = 0;
     const vector <wstring> FRAME = {
 L"████████████████",
 L"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",

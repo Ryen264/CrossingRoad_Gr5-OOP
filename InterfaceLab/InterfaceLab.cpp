@@ -3,7 +3,7 @@
 #include "COBJECT.h"
 #include <conio.h>
 int main() {
-	SetupTheme();
+	SetupTheme(MAIN_MENU_THEME);
 	CGRAPHIC BgdLayer;
 	BgdLayer.clear(BLACK, WHITE);
 	BgdLayer.display();
@@ -18,8 +18,8 @@ int main() {
 	//draw object
 	//ObjLayer.drawClipBoard(0,0,46,20);
 	//testobject.DrawBlock(ObjLayer);
-	ObjLayer.DrawSaveScreen(FLOPPY_DISC, 0, 0);
-	ObjLayer.display();
+	//ObjLayer.DrawSaveScreen(FLOPPY_DISC, 0, 0);
+
 	_getch();
 	return 0;
 }

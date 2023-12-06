@@ -144,10 +144,10 @@
     <ClCompile Include="CTREE.cpp" />
     <ClCompile Include="CTRUCK.cpp" />
     <ClCompile Include="CUFO.cpp" />
-    <ClCompile Include="CVEHICLELANE.cpp" />
     <ClCompile Include="CGAME.cpp" />
     <ClCompile Include="CLANE.cpp" />
     <ClCompile Include="CPLAYER.cpp" />
+    <ClCompile Include="CVEHICLELANE.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -168,10 +168,10 @@
     <ClInclude Include="CTREE.h" />
     <ClInclude Include="CTRUCK.h" />
     <ClInclude Include="CUFO.h" />
-    <ClInclude Include="CVEHICLELANE.h" />
     <ClInclude Include="CGAME.h" />
     <ClInclude Include="CLANE.h" />
     <ClInclude Include="CPLAYER.h" />
+    <ClInclude Include="CVEHICLELANE.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
