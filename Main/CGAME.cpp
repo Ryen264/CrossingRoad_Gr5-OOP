@@ -346,8 +346,9 @@ int CGAME::Menu() {
 				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case LOAD_GAME:
-
+				SetupTheme(THEME_BASIC, hStdout);
 				this->LoadGame();
+				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case SETTING:
 				this->Setting();
@@ -414,7 +415,10 @@ void CGAME::LoadGame() {
 	int idFile = 0, idOption = 0, numberOfFile = ((int)fileNameList.size() < MAX_FILE_IN_TAB) ? (int)fileNameList.size() : MAX_FILE_IN_TAB;
 
 	//setup tmpLayers
+	CGRAPHIC tmpback;
+	tmpback.clear(WHITE, WHITE);
 	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
+	tmpBgdLayer.clear(WHITE, WHITE);
 	//draw menu
 	tmpBgdLayer.DrawLoadGame(fromX, fromY, fileNameList);
 
@@ -425,7 +429,8 @@ void CGAME::LoadGame() {
 	}
 	else tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], LIGHT_GREEN);
 
-	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	displayScreen(tmpBgdLayer, tmpback, 0, 0, -1, -1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 	while (1) {
 		int temp = toupper(_getch());
 
