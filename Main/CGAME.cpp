@@ -70,6 +70,15 @@ void CGAME::playGame() {
 	isThreadRunning = true;
 	thread threadNewGame(&CGAME::SubThreadNewGame, this);
 	while (1) {
+		if (level == 10) {
+			SuspendThread(threadNewGame.native_handle());
+			drawWiningScreen();
+			if (_getch()) {
+				resumeThread(threadNewGame.native_handle());
+				exitThread(&threadNewGame);
+				return;
+			}
+		}
 		if (!cPlayer->isDead()) {
 			int temp = toupper(_getch());
 			switch (temp) {
@@ -1333,9 +1342,9 @@ void CGAME::moveNewLane() {
 }
 
 void CGAME::SubThreadNewGame() {
-	while (isThreadRunning) {
+	while (isThreadRunning ) {
 		if (!cPlayer->isDead()) {
-		
+			
 			//Lane move
 			for (int i = 0; i < BOARD_HEIGHT; i++) aLanes[i]->Move();
 
@@ -1838,8 +1847,10 @@ void CGAME::drawWiningScreen(int COLOR) {
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0,-1, -1);
 	TmpObjLayer.drawString("SCORE", UFO_x + 1, UFO_y + 8, BLACK, SKY_BLUE);
 	TmpObjLayer.DrawObject(COLON, UFO_x + 22, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpObjLayer.DrawNumber(cPlayer->getScore(), UFO_x + 26, UFO_y + 8, BLACK, SKY_BLUE);
 	TmpObjLayer.drawString("TIME", UFO_x + 5, UFO_y + 13, BLACK, SKY_BLUE);
 	TmpObjLayer.DrawObject(COLON, UFO_x + 22, UFO_y + 13, BLACK, SKY_BLUE);
+	TmpObjLayer.drawTime(curTime, UFO_x + 26, UFO_y + 13, BLACK, SKY_BLUE);
 	Sleep(300);
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
 	TmpObjLayer.drawString("PRESS ANY KEY TO RETURN", 60, UFO_y + 30, BLACK, LIGHT_GREEN);
