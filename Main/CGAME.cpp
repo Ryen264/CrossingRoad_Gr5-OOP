@@ -132,7 +132,7 @@ void CGAME::saveData(string fileName) {
 		file << this->level << " " << this->numberOfLane << " " << this->conditionLane << " " << this->countLane << " " << this->numberOfConditionLane << endl;
 		// <xBoard>(x) <yBoard>(y) (alive = 1) <score> <isRight> (finish = false) (moving = 0) <colorCharacter> (depend: get from lane[yBoard][xBoard]) (pCharacterR/L = new CDINOSAUR(x, y, true/left, colorCharacter) //Thông tin người chơi
 		file << cPlayer->getXBoard() << " " << cPlayer->getYBoard() << " " << cPlayer->getIsAlive() << " " << cPlayer->getScore() << " " << cPlayer->getIsRight()
-			<< " " << cPlayer->isFinish() << " " << 0 << " " << cPlayer->getColorCharacter() << endl;
+			<< " " << 0 << " " << cPlayer->getColorCharacter() << endl;
 		
 		// (lane: push with ID) <isMoveRight> <timeCount> <isStop> <delayTime> (x, y: update) <ID> (block: new with ID) [<object ID>/0]
 			//VEHICLE: ... <condition> <countObject> <numberOfCar*> <numberOfTruck*> <lightPos> <timeLight> (pTrafficLight = new with lightPos > 0) [<object ID>/0]
@@ -317,14 +317,15 @@ int CGAME::Menu() {
 
 	//draw menu
 	tmpBgdLayer.DrawMainMenu();
+	tmpObjLayer.DrawBigDinoSaur(126, 17);
 	tmpObjLayer.DrawDoofCorp(176, 16);
 	tmpObjLayer.DrawHeader(98, 3);
+	tmpObjLayer.DrawDinasourPicture(6, 2);
 	tmpBgdLayer.DrawDrawer(fromX, fromY + 3);
 
 	//draw current step
 	tmpObjLayer.DrawSmallDrawer(xOption, yOption, curColor);
 	tmpObjLayer.DrawPerryTalk(curMessage, xfromTalk, yfromTalk, curColor, WHITE);
-	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 	while (1) {
 		int temp = toupper(_getch());
@@ -346,26 +347,23 @@ int CGAME::Menu() {
 				SetupTheme();
 				NewGame();
 				SetupTheme(MAIN_MENU_THEME);
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case LOAD_GAME:
 				this->LoadGame();
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case SETTING:
 				this->Setting();
 				break;
 			case HELP:
 				this->Help();
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case ABOUT:
 				this->About();
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case QUIT:
 				return QUIT_CODE;
 			}
+			displayScreen(tmpObjLayer, tmpBgdLayer);
 		}
 		else {
 			if (isUpButton(temp) && iCur > 0) {
@@ -708,14 +706,6 @@ void CGAME::Setting() {
 	//draw the last sound levels
 	tmpObjLayer.drawRegtangle(XSOUND, BACKGROUND_YSOUND, (curBgdSound / 25) * 8.75, 3, LIGHT_GRAY,true);
 	tmpObjLayer.drawRegtangle(XSOUND, EFFECT_YSOUND, (curEffectSound / 25) * 8.75, 3, LIGHT_GRAY,true);
-	//if (xOption == XSOUND) {
-	//	//draw the last sound levels
-	//	if (yOption == BACKGROUND_YSOUND) tmpObjLayer.drawRegtangle(XSOUND, BACKGROUND_YSOUND, (curBgdSound / 25) * 8.75, 3, LIGHT_GREEN,true);
-	//	else tmpObjLayer.drawRegtangle(XSOUND, EFFECT_YSOUND, (curEffectSound / 25) * 8.75, 3, LIGHT_BROWN,true);
-	//}
-	//else {
-	//	tmpObjLayer.drawButton(xOption, yOption, WHITE,BLACK);
-	//}
 
 	// draw current pos
 	if (xOption == XSOUND) {
@@ -732,23 +722,10 @@ void CGAME::Setting() {
 		int temp = toupper(_getch());
 
 		// erase the last step
-		if (xOption == XSOUND) { 
-			//if (yOption == BACKGROUND_YSOUND) {
-			//	tmpObjLayer.drawRegtangle(XSOUND, BACKGROUND_YSOUND, (curBgdSound / 25) * 8.75, 3, LIGHT_GRAY, true);
-			//}
-			//else { 
-			//	tmpObjLayer.drawRegtangle(XSOUND, EFFECT_YSOUND, (curEffectSound / 25) * 8.75, 3, LIGHT_GRAY, true); 
-			//}
+		if (xOption == XSOUND)
 			tmpObjLayer.erasePixel(xOption, yOption, xOption + 35 - 1, yOption + 3 - 1);
-		}
-		else {
+		else
 			tmpObjLayer.erasePixel(xOption, yOption, xOption + 8 - 1, yOption + 4 - 1);
-			//if (yOption == OK_XOPTION) {
-			//	tmpObjLayer.drawRegtangle(XSOUND,EFFECT_YSOUND, (curEffectSound / 25) * 8.75, 3, LIGHT_GRAY, true);
-			//	tmpObjLayer.drawButton(xOption, yOption, WHITE, BLACK);
-			//}
-			//tmpObjLayer.drawButton(xOption, yOption, WHITE, BLACK);
-		}
 
 		if (!isEnterButton(temp)) {
 			if (isUpButton(temp)) {
@@ -1174,7 +1151,21 @@ void CGAME::exitThread(thread* t) {
 	t->join();
 }
 void CGAME::resumeThread(HANDLE t) {
-	//drawResumeGame(); //count down
+	//cout down
+	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
+	displayScreen(tmpObjLayer, tmpBgdLayer);
+	int x = (SCREEN_WIDTH - 3) / 2, y = (SCREEN_HEIGHT - 3) / 2;
+	tmpObjLayer.DrawNumber(3, x, y, RED, -1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	Sleep(1000);
+	tmpObjLayer.clear(-1, -1);
+	tmpObjLayer.DrawNumber(2, x, y, BRIGHT_YELLOW, -1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	Sleep(1000);
+	tmpObjLayer.clear(-1, -1);
+	tmpObjLayer.DrawNumber(1, x, y, LIGHT_GREEN, -1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	Sleep(1000);
 	if (t != NULL)
 		ResumeThread(t);
 }
