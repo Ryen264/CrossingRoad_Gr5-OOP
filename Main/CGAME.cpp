@@ -87,7 +87,6 @@ void CGAME::playGame() {
 			}
 		}
 		else {
-			drawLosingScreen(cPlayer->getColorCharacter());
 			_getch();
 			if (isReset()) {
 				resetData();
@@ -96,6 +95,9 @@ void CGAME::playGame() {
 				cPlayer->set(BOARD_WIDTH / 2, UP_LANE, true, 0);
 			}
 			else {
+				drawLosingScreen(cPlayer->getColorCharacter());
+				Sleep(1000);
+				_getch();
 				exitThread(&threadNewGame);
 				return;
 			}
@@ -1413,8 +1415,6 @@ void CGAME::SubThreadNewGame() {
 			displayScreen(0, START_BOARD_HEIGHT, -1, -1);
 
 			if (cPlayer->isDead()) {
-				//Hieu ung va cham
-				cout << cPlayer->getScore() << " " << this->level << endl;
 				level = 1;
 				countLane = 0;
 				continue;
@@ -1497,19 +1497,21 @@ void CGAME::outtro() {
 	cout << "END GAME..." << endl;
 }
 void CGAME::drawCountDown() {
+	//cout down
 	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
 	displayScreen(tmpObjLayer, tmpBgdLayer);
-	int x = (SCREEN_WIDTH - 3) / 2, y = (SCREEN_HEIGHT - 3) / 2;
-	tmpObjLayer.DrawNumber(3, x, y, RED, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+
+	int x = (SCREEN_WIDTH - 35) / 2, y = (SCREEN_HEIGHT - 17) / 2;
+	tmpObjLayer.DrawBigNumber(3, x, y, RED, WHITE);
+	displayScreen(tmpObjLayer, BgdLayer, 0, 0, -1, -1);
 	Sleep(1000);
 	tmpObjLayer.clear(-1, -1);
-	tmpObjLayer.DrawNumber(2, x, y, BRIGHT_YELLOW, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	tmpObjLayer.DrawBigNumber(2, x, y, BRIGHT_YELLOW, WHITE);
+	displayScreen(tmpObjLayer, BgdLayer, 0, 0, -1, -1);
 	Sleep(1000);
 	tmpObjLayer.clear(-1, -1);
-	tmpObjLayer.DrawNumber(1, x, y, LIGHT_GREEN, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	tmpObjLayer.DrawBigNumber(1, x, y, LIGHT_GREEN, WHITE);
+	displayScreen(tmpObjLayer, BgdLayer, 0, 0, -1, -1);
 	Sleep(1000);
 }
 void CGAME::drawPlayAgain() {
@@ -1691,8 +1693,12 @@ void CGAME::drawLosingScreen(int COLOR) {
 	TmpBgdLayer.DrawMissonFailed(54,2,DARK_RED,SKY_BLUE);
 	TmpBgdLayer.drawString("SCORE", UFO_x , UFO_y + 10, BLACK, SKY_BLUE);
 	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 10, BLACK, SKY_BLUE);
+	TmpBgdLayer.DrawNumber(cPlayer->getScore(), UFO_x + 25, UFO_y + 10, BLACK, SKY_BLUE);
 	TmpBgdLayer.drawString("LEVEL", UFO_x , UFO_y + 15, BLACK, SKY_BLUE);
 	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 15, BLACK, SKY_BLUE);
+	TmpBgdLayer.DrawNumber(level, UFO_x + 25, UFO_y + 15, BLACK, SKY_BLUE);
+
+
 	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1,-1);
 	Sleep(500);
 	TmpBgdLayer.drawString("PLAY AGAIN", 34, 40, BLACK, LIGHT_GREEN);

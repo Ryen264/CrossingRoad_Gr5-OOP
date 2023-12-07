@@ -1391,7 +1391,6 @@ void CGRAPHIC::DrawEgg(int first_x , int first_y ) {
 	screen[first_x + 5][first_y + 2].txtColor = BLACK;
 	screen[first_x + 5][first_y + 2].bgdColor = LIGHT_GRAY;
 }
-}
 
 void CGRAPHIC::DrawMissonFailed(int first_x, int first_y, int txtColor, int BgdColor) {
 	DrawObject(MISSION_FAILED, first_x, first_y, txtColor, BgdColor);
