@@ -95,16 +95,22 @@ public:
     void updateTime();
     string getTime(clock_t curTime);
     clock_t setTime(string& time);
+    // task bar
+    void updateScore();
+    void updateLevel();
 
     void startMap();
     void drawMap();
+    void drawTaskBar();
+    
+    
 
     void intro();
     void outtro();
     void drawCountDown();
     void drawPlayAgain();
     void drawWiningScreen(int COLOR = DARK_GREEN);
-    void drawLosingScreen(int COLOR = DARK_GREEN);
+    bool drawLosingScreen(int COLOR = DARK_GREEN);
 
     void displayScreen(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
     void displayScreen(CGRAPHIC& ObjLayer, const CGRAPHIC& BgdLayer, int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);

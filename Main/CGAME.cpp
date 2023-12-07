@@ -87,8 +87,6 @@ void CGAME::playGame() {
 			}
 		}
 		else {
-			drawLosingScreen(cPlayer->getColorCharacter());
-			_getch();
 			if (isReset()) {
 				resetData();
 				startMap();
@@ -1134,6 +1132,7 @@ int CGAME::Pause(HANDLE t) {
 			case RESUME_OPTION:
 				drawCountDown();
 				resumeThread(t);
+				curTime += endTime - startTime;
 				return 0;
 			case HELP_OPTION:
 				Help();
@@ -1239,12 +1238,7 @@ void CGAME::ChooseCharacter() {
 }
 
 bool CGAME::isReset() {
-	do {
-		this->drawPlayAgain();
-		int temp = toupper(_getch());
-		if (temp == 'Y') return true;
-		else if (temp == 'N') return false;
-	} while (1);
+	return drawLosingScreen(cPlayer->getColorCharacter());
 }
 
 void CGAME::exitThread(thread* t) {
@@ -1410,6 +1404,7 @@ void CGAME::moveNewLane() {
 void CGAME::SubThreadNewGame() {
 	while (isThreadRunning) {
 		if (!cPlayer->isDead()) {
+		
 			//Lane move
 			for (int i = 0; i < BOARD_HEIGHT; i++) aLanes[i]->Move();
 
@@ -1443,7 +1438,6 @@ void CGAME::SubThreadNewGame() {
 				cur = NULL;
 				aLanes[yBoard]->setPos(xBoard, NULL);
 				cPlayer->setDependObj(NULL);
-
 				cPlayer->increaseScore(1);
 				break;
 			}
@@ -1476,13 +1470,11 @@ void CGAME::SubThreadNewGame() {
 				//Update depend obj 
 				cPlayer->setDependObj(nextObj);
 			}
-
+			drawTaskBar();
 			drawMap();
-			displayScreen();
+			displayScreen(0, START_BOARD_HEIGHT, -1, -1);
 
 			if (cPlayer->isDead()) {
-				//Hieu ung va cham
-				cout << cPlayer->getScore() << " " << this->level << endl;
 				level = 1;
 				countLane = 0;
 				continue;
@@ -1507,8 +1499,9 @@ void CGAME::updateTime() {
 	if (endTime - startTime > 0) {
 		curTime += (endTime - startTime);
 		startTime = endTime;
-		ObjLayer.drawTime(curTime, SCREEN_WIDTH - 17, 0, BLACK, -1);
-		//ObjLayer.display(0, 0, SCREEN_WIDTH, 2);
+		ObjLayer.drawString("TIME", SCREEN_WIDTH - 44, 0, BLACK, LIGHT_GRAY);
+		ObjLayer.DrawObject(COLON, SCREEN_WIDTH - 27, 0,BLACK, LIGHT_GRAY);
+		ObjLayer.drawTime(curTime, SCREEN_WIDTH- 22, 0, BLACK, LIGHT_GRAY);
 	}
 }
 string CGAME::getTime(clock_t curTime) {
@@ -1522,10 +1515,21 @@ clock_t CGAME::setTime(string& time) {
 	iss >> result;
 	return result;
 }
+// task bar
+void CGAME::updateScore() {
+	ObjLayer.DrawEgg(114, 0);
+	ObjLayer.DrawNumber(cPlayer->getScore()+1, 127, 0, BLACK, LIGHT_GRAY);
+}
+
+void CGAME::updateLevel() {
+	ObjLayer.drawString("LEVEL", 74, 0, BLACK, LIGHT_GRAY);
+	ObjLayer.DrawObject(COLON, 95, 0, BLACK, LIGHT_GRAY);
+	ObjLayer.DrawNumber(this->level, 100, 0, BLACK, LIGHT_GRAY);
+}
 
 //Drawing functions
 void CGAME::startMap() {
-	BgdLayer.clear(BLACK, WHITE);
+	BgdLayer.clear(BLACK, LIGHT_GRAY);
 	for (int i = 0; i < BOARD_HEIGHT; i++)
 		aLanes[i]->DrawLane(BgdLayer);
 }
@@ -1535,7 +1539,17 @@ void CGAME::drawMap() {
 		this->aLanes[i]->DrawObjects(ObjLayer);
 	if (!cPlayer->isDead()) cPlayer->drawCharacter(ObjLayer);
 }
+void CGAME::drawTaskBar() {
+	// draw pause
+	ObjLayer.drawString("P", 3, 0, BLACK, LIGHT_GRAY);
+	ObjLayer.DrawObject(COLON,8, 0, BLACK, LIGHT_GRAY);
+	ObjLayer.drawString("PAUSE", 12, 0, BLACK, LIGHT_GRAY);
 
+	updateLevel();
+	updateTime();
+	updateScore();
+	displayScreen(0, 0, SCREEN_WIDTH, 2);
+}
 void CGAME::intro() {
 	cout << "LET'S START IT!" << endl;
 }
@@ -1543,19 +1557,21 @@ void CGAME::outtro() {
 	cout << "END GAME..." << endl;
 }
 void CGAME::drawCountDown() {
+	//cout down
 	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
 	displayScreen(tmpObjLayer, tmpBgdLayer);
-	int x = (SCREEN_WIDTH - 3) / 2, y = (SCREEN_HEIGHT - 3) / 2;
-	tmpObjLayer.DrawNumber(3, x, y, RED, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+
+	int x = (SCREEN_WIDTH - 35) / 2, y = (SCREEN_HEIGHT - 17) / 2;
+	tmpObjLayer.DrawBigNumber(3, x, y, RED, WHITE);
+	displayScreen(tmpObjLayer, BgdLayer, 0, 0, -1, -1);
 	Sleep(1000);
 	tmpObjLayer.clear(-1, -1);
-	tmpObjLayer.DrawNumber(2, x, y, BRIGHT_YELLOW, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	tmpObjLayer.DrawBigNumber(2, x, y, BRIGHT_YELLOW, WHITE);
+	displayScreen(tmpObjLayer, BgdLayer, 0, 0, -1, -1);
 	Sleep(1000);
 	tmpObjLayer.clear(-1, -1);
-	tmpObjLayer.DrawNumber(1, x, y, LIGHT_GREEN, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	tmpObjLayer.DrawBigNumber(1, x, y, LIGHT_GREEN, WHITE);
+	displayScreen(tmpObjLayer, BgdLayer, 0, 0, -1, -1);
 	Sleep(1000);
 }
 void CGAME::drawPlayAgain() {
@@ -1655,7 +1671,8 @@ void ShowScrollbar(BOOL Show)
 }
 
 
-void CGAME::drawLosingScreen(int COLOR) {
+bool CGAME::drawLosingScreen(int COLOR) {
+	// draw
 	CGRAPHIC Tmpback;
 	Tmpback.clear(SKY_BLUE, SKY_BLUE);
 	for (int i = 0; i < 208; i++) {
@@ -1737,14 +1754,77 @@ void CGAME::drawLosingScreen(int COLOR) {
 	TmpBgdLayer.DrawMissonFailed(54,2,DARK_RED,SKY_BLUE);
 	TmpBgdLayer.drawString("SCORE", UFO_x , UFO_y + 10, BLACK, SKY_BLUE);
 	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 10, BLACK, SKY_BLUE);
+	TmpBgdLayer.DrawNumber(cPlayer->getScore(), UFO_x + 25, UFO_y + 10, BLACK, SKY_BLUE);
 	TmpBgdLayer.drawString("LEVEL", UFO_x , UFO_y + 15, BLACK, SKY_BLUE);
 	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 15, BLACK, SKY_BLUE);
+	TmpBgdLayer.DrawNumber(level, UFO_x + 25, UFO_y + 15, BLACK, SKY_BLUE);
+
+
 	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1,-1);
 	Sleep(500);
 	TmpBgdLayer.drawString("PLAY AGAIN", 34, 40, BLACK, LIGHT_GREEN);
 	TmpBgdLayer.drawString("EXIT TO MENU", 134, 40, BLACK, LIGHT_GREEN);
 	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
 
+
+	// option
+	const int fromX = 34, fromY = 40,
+		toX = fromX + 11 * 4 + 7, toY = fromY + 4;
+
+	const int PLAY_AGAIN = fromX;
+	const int EXIT_TO_MENU = fromX + 100;
+
+	int xOption = PLAY_AGAIN, yOption = fromY;
+
+	// draw current choice
+	if (xOption == PLAY_AGAIN) {
+		TmpObjLayer.drawString("PLAY AGAIN", PLAY_AGAIN, fromY, BLUE, LIGHT_GREEN);
+		TmpObjLayer.drawString("EXIT TO MENU", EXIT_TO_MENU, fromY, BLACK, LIGHT_GREEN);
+	}
+	else {
+		TmpObjLayer.drawString("EXIT TO MENU", xOption, 40, BLUE, LIGHT_GREEN);
+		TmpObjLayer.drawString("PLAY AGAIN", 34, 40, BLACK, LIGHT_GREEN);
+	}
+	displayScreen(TmpObjLayer, TmpBgdLayer, 0 , 40, SCREEN_WIDTH - 1,42);
+
+	while (1) {
+		// erase the last step
+		if (xOption == PLAY_AGAIN)TmpObjLayer.erasePixel(34, 40, 34 + 60 , 42);
+		else TmpObjLayer.erasePixel(134, 40, 134 + 60, 42);
+
+		int temp = toupper(_getch());
+		if (xOption == PLAY_AGAIN) {
+			if (!isEnterButton(temp)) {
+				if (isUpButton(temp) == true || isDownButton(temp) == true || isLeftButton(temp) == true || isRightButton(temp) == true) {
+					xOption = EXIT_TO_MENU;
+					
+					TmpObjLayer.drawString("PLAY AGAIN", 34, 40, BLACK, LIGHT_GREEN);
+					displayScreen(TmpObjLayer, TmpBgdLayer, 34, 40, 34+60, 42);
+					TmpObjLayer.drawString("EXIT TO MENU", 134, 40, BLUE, LIGHT_GREEN);
+					displayScreen(TmpObjLayer, TmpBgdLayer, 134, 40, 134+60, 42);
+				}
+			}
+			else {
+				return true;
+			}
+		}
+		else {
+			if (!isEnterButton(temp)) {
+				if (isUpButton(temp) == true || isDownButton(temp) == true || isLeftButton(temp) == true || isRightButton(temp) == true) {
+					xOption = PLAY_AGAIN;
+					TmpObjLayer.drawString("PLAY AGAIN", 34, 40, BLUE, LIGHT_GREEN);
+					displayScreen(TmpObjLayer, TmpBgdLayer, 34, 40, 34+60, 42);
+					TmpObjLayer.drawString("EXIT TO MENU", 134, 40, BLACK, LIGHT_GREEN);
+					displayScreen(TmpObjLayer, TmpBgdLayer, 134, 40, 134+60, 42);
+
+				}
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	
 }
 
 void CGAME::drawWiningScreen(int COLOR) {
