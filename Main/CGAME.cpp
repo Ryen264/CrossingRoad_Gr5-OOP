@@ -45,15 +45,10 @@ void CGAME::Configure()
 
 	MoveWindow(hWnd, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, TRUE);
 
-	string sysStr = "mode " + to_string(SCREEN_WIDTH) + ", " + to_string(SCREEN_HEIGHT );
-	char* sysMode = new char[sysStr.size() + 1];
-	for (int i = 0; i < (int)sysStr.size(); i++) sysMode[i] = sysStr[i];
-	sysMode[sysStr.size()] = '\0';
-	system(sysMode);
-	system("color 20");
+	system("mode 208, 51");
 	//
 	srand(time(0));
-	SetupTheme();
+	SetupTheme(THEME_BASIC, hStdout);
 	BgdLayer.clear(BLACK, WHITE);
 	ObjLayer.clear(-1, -1);
 }
@@ -294,7 +289,7 @@ void CGAME::changeFileName(int index) {
 
 int CGAME::Menu() {
 	system("cls");
-	SetupTheme(MAIN_MENU_THEME);
+	SetupTheme(MAIN_MENU_THEME, hStdout);
 	const int fromX = 5, fromY = 18,
 		toX = fromX + 40 - 1, toY = fromY + 27 - 1;
 	const int xfromTalk = 105, yfromTalk = 38 - 10, xfromMessage = xfromTalk + 4, yfromMessage = yfromTalk + 3;
@@ -322,6 +317,7 @@ int CGAME::Menu() {
 	tmpObjLayer.DrawDoofCorp(176, 16);
 	tmpObjLayer.DrawHeader(98, 3);
 	tmpObjLayer.DrawDinasourPicture(6, 2);
+	tmpObjLayer.DrawHat(190, 44);
 	tmpBgdLayer.DrawDrawer(fromX, fromY + 3);
 
 	//draw current step
@@ -345,9 +341,9 @@ int CGAME::Menu() {
 			Sleep(500);
 			switch (yOption) {
 			case NEW_GAME:
-				SetupTheme();
+				SetupTheme(THEME_BASIC, hStdout);
 				NewGame();
-				SetupTheme(MAIN_MENU_THEME);
+				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case LOAD_GAME:
 				this->LoadGame();

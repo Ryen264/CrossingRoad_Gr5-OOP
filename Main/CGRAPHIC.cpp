@@ -7,8 +7,7 @@ SAND, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN,
 CREAMY_AVOCADO, DARK_BROWN, BROWN, LIGHTER_BROWN,
 LAVENDER, PURPLE, TEAL, TANGERINE, DARK_ORANGE;
 
-void SetupTheme(THEME theme) {
-	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+void SetupTheme(THEME theme, HANDLE& hStdout) {
 	CONSOLE_SCREEN_BUFFER_INFOEX csbiex{};
 	csbiex.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
 	GetConsoleScreenBufferInfoEx(hStdout, &csbiex);
@@ -25,6 +24,7 @@ void SetupTheme(THEME theme) {
 	CREAMY_AVOCADO = theme.CREAMY_AVOCADO; DARK_BROWN = theme.DARK_BROWN; BROWN = theme.BROWN; LIGHTER_BROWN = theme.LIGHTER_BROWN;
 	LAVENDER = theme.LAVENDER; PURPLE = theme.PURPLE; TEAL = theme.TEAL; TANGERINE = theme.TANGERINE; DARK_ORANGE = theme.DARK_ORANGE;
 	SetConsoleScreenBufferInfoEx(hStdout, &csbiex);
+	system("mode 208, 51");
 }
 
 CGRAPHIC::CGRAPHIC() {
@@ -547,51 +547,51 @@ void CGRAPHIC::DrawHat(int first_x, int first_y)
 	//set buffer
 	for (int i = 0; i < 16; i++)
 		for (int j = 0; j < 5; j++)
-			this->screen[first_x + i][first_y + j] = { frame[j][i], SADDLE_BROWN, -1 };
+			this->screen[first_x + i][first_y + j] = { frame[j][i], DARK_BROWN, -1 };
 	//set color
 	int x = first_x;
 	int y = first_y;
-	this->screen[x+6][y].txtColor = SADDLE_BROWN;
+	this->screen[x+6][y].txtColor = DARK_BROWN;
 	this->screen[x+6][y].bgdColor = -1;
-	this->screen[x+7][y].txtColor = SADDLE_BROWN;
-	this->screen[x+8][y].txtColor = SADDLE_BROWN;
-	this->screen[x+9][y].txtColor = SADDLE_BROWN;
+	this->screen[x+7][y].txtColor = DARK_BROWN;
+	this->screen[x+8][y].txtColor = DARK_BROWN;
+	this->screen[x+9][y].txtColor = DARK_BROWN;
 	this->screen[x+9][y].bgdColor = -1;
 
 	this->screen[x+4][y+1].txtColor = BLACK;
 	this->screen[x+4][y+1].bgdColor = -1;
-	this->screen[x+5][y+1].txtColor = SADDLE_BROWN;
+	this->screen[x+5][y+1].txtColor = DARK_BROWN;
 	this->screen[x+5][y+1].bgdColor = BLACK;
-	this->screen[x+6][y+1].txtColor = SADDLE_BROWN;
+	this->screen[x+6][y+1].txtColor = DARK_BROWN;
 	this->screen[x+6][y+1].bgdColor = BLACK;
-	this->screen[x+7][y+1].txtColor = SADDLE_BROWN;
+	this->screen[x+7][y+1].txtColor = DARK_BROWN;
 	this->screen[x+7][y+1].bgdColor = BLACK;
-	this->screen[x+8][y+1].txtColor = SADDLE_BROWN;
+	this->screen[x+8][y+1].txtColor = DARK_BROWN;
 	this->screen[x+8][y+1].bgdColor = BLACK;
 	for (int i = 9; i < 12; i++)
 	{
-		this->screen[x+i][y+1].txtColor = SADDLE_BROWN;
+		this->screen[x+i][y+1].txtColor = DARK_BROWN;
 	}
-	this->screen[x][y+2].txtColor = SADDLE_BROWN;
-	this->screen[x+1][y+2].txtColor = SADDLE_BROWN;
-	this->screen[x+2][y+2].txtColor = SADDLE_BROWN;
+	this->screen[x][y+2].txtColor = DARK_BROWN;
+	this->screen[x+1][y+2].txtColor = DARK_BROWN;
+	this->screen[x+2][y+2].txtColor = DARK_BROWN;
 	this->screen[x+2][y+2].bgdColor = -1;
-	this->screen[x+3][y+2].txtColor = SADDLE_BROWN;
+	this->screen[x+3][y+2].txtColor = DARK_BROWN;
 	this->screen[x+3][y+2].bgdColor = -1;
 	this->screen[x+4][y+2].txtColor = BLACK;
-	this->screen[x+4][y+2].bgdColor = SADDLE_BROWN;
+	this->screen[x+4][y+2].bgdColor = DARK_BROWN;
 	this->screen[x+5][y+2].txtColor = BLACK;
-	this->screen[x+5][y+2].bgdColor = SADDLE_BROWN;
+	this->screen[x+5][y+2].bgdColor = DARK_BROWN;
 
 	for (int i = 6; i < 11; i++)
 	{
 		this->screen[x+i][y+2].txtColor = BLACK;
 	}
 	this->screen[x+11][y+2].txtColor = BLACK;
-	this->screen[x+11][y+2].bgdColor = SADDLE_BROWN;
+	this->screen[x+11][y+2].bgdColor = DARK_BROWN;
 	for (int i = 1; i <= 14; i++)
 	{
-		this->screen[x+i][y+3].txtColor = SADDLE_BROWN;
+		this->screen[x+i][y+3].txtColor = DARK_BROWN;
 		this->screen[x+i][y+3].bgdColor = -1;
 	}
 }
