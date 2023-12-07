@@ -334,6 +334,7 @@ int CGAME::Menu() {
 				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case LOAD_GAME:
+
 				this->LoadGame();
 				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
