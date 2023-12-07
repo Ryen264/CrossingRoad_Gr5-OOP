@@ -78,6 +78,7 @@ void CGAME::playGame() {
 				break;
 			}
 			case 'P': {
+				PlaySound(TEXT("ui_pause.wav"), NULL, SND_SYNC);
 				if (Pause(threadNewGame.native_handle()) == BACK_TO_MENU_CODE) {
 					exitThread(&threadNewGame);
 					return;
@@ -484,6 +485,7 @@ void CGAME::renameFile(int index, const CGRAPHIC& BgdLayer) {
 }
 
 int CGAME::Menu() {
+	PlaySound(TEXT("ycg_logo.wav"), NULL, SND_ASYNC);
 	system("cls");
 	SetupTheme(MAIN_MENU_THEME, hStdout);
 	const int fromX = 5, fromY = 18,
@@ -521,6 +523,7 @@ int CGAME::Menu() {
 	tmpObjLayer.DrawPerryTalk(curMessage, xfromTalk, yfromTalk, curColor, WHITE);
 	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 	while (1) {
+		PlaySound(TEXT("menu_file_cursor_move.wav"), NULL, SND_ASYNC);
 		int temp = toupper(_getch());
 
 		//erase the last step
@@ -533,29 +536,36 @@ int CGAME::Menu() {
 			if (iCur != 0) tmpObjLayer.screen[xOption + 14][yOption].bgdColor = LIGHT_BROWN;
 			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 			displayScreen(tmpObjLayer, tmpBgdLayer, xfromTalk, yfromTalk, xfromTalk + 63 - 1, yfromTalk + 19 - 1);
-
 			Sleep(500);
 			switch (yOption) {
 			case NEW_GAME:
+				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
 				SetupTheme(THEME_BASIC, hStdout);
 				NewGame();
 				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case LOAD_GAME:
+				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
 				SetupTheme(THEME_BASIC, hStdout);
 				this->LoadGame();
 				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case SETTING:
+				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
+				SetupTheme(THEME_BASIC, hStdout);
 				this->Setting();
+				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case HELP:
+				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
 				this->Help();
 				break;
 			case ABOUT:
+				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
 				this->About();
 				break;
 			case QUIT:
+				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
 				return QUIT_CODE;
 			}
 			displayScreen(tmpObjLayer, tmpBgdLayer);
@@ -767,7 +777,8 @@ void CGAME::Setting() {
 
 	// setup tmpLayers
 	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ',-1,-1 });
-
+	tmpBgdLayer.clear(WHITE, WHITE);
+	displayScreen(0, 0, -1, -1);
 	// draw menu
 	tmpBgdLayer.DrawSettingScreen(fromX, fromY);
 	tmpBgdLayer.screen[fromX + 50][fromY] = BgdLayer.screen[fromX + 50][fromY];
@@ -1669,6 +1680,7 @@ void CGAME::drawLosingScreen(int COLOR) {
 }
 
 void CGAME::drawWiningScreen(int COLOR) {
+	PlaySound(TEXT("joustus_mysterycard_new.wav"), NULL, SND_ASYNC);
 	CGRAPHIC Tmpback;
 	Tmpback.clear(SKY_BLUE, SKY_BLUE);
 	for (int i = 0; i < 208; i++) {
@@ -1717,19 +1729,19 @@ void CGAME::drawWiningScreen(int COLOR) {
 	TmpObjLayer.DrawHat(Fedora_x, Fedora_y, SADDLE_BROWN);
 	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
-	Sleep(500);
+	Sleep(300);
 	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
 	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
 	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y-2, Fedora_x + 15, Fedora_y + 5);
-	Sleep(500);
+	Sleep(300);
 	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
 	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
 	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y-2, Fedora_x + 15, Fedora_y + 5);
-	Sleep(500);
+	Sleep(300);
 	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
 	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
 	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y-2, Fedora_x + 15, Fedora_y + 5);
-	Sleep(500);
+	Sleep(300);
 	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
 	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
 	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y-2, Fedora_x + 15, Fedora_y + 5);
@@ -1749,9 +1761,9 @@ void CGAME::drawWiningScreen(int COLOR) {
 	TmpObjLayer.DrawObject(COLON, UFO_x + 22, UFO_y + 8, BLACK, SKY_BLUE);
 	TmpObjLayer.drawString("TIME", UFO_x + 5, UFO_y + 13, BLACK, SKY_BLUE);
 	TmpObjLayer.DrawObject(COLON, UFO_x + 22, UFO_y + 13, BLACK, SKY_BLUE);
-	Sleep(500);
+	Sleep(300);
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
 	TmpObjLayer.drawString("PRESS ANY KEY TO RETURN", 60, UFO_y + 30, BLACK, LIGHT_GREEN);
-	Sleep(500);
+	Sleep(300);
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
 }
