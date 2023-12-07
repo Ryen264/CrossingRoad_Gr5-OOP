@@ -244,8 +244,8 @@ void CGAME::loadData(string fileName) {
 }
 
 string CGAME::inputUserTxt(const CGRAPHIC& BgdLayer) {
-	const int fromX = (SCREEN_WIDTH - 54) / 2, fromY = (SCREEN_HEIGHT - 29) / 2,
-		toX = fromX + 54 - 1, toY = fromY + 29 - 1;
+	const int fromX = (SCREEN_WIDTH - 54) / 2, fromY = (SCREEN_HEIGHT - 29) / 2 - 1,
+		toX = fromX + 53, toY = fromY + 28;
 
 	const int INPUT_OPTION = 10 + fromX;
 	const int OK_OPTION = 26 + fromX;
@@ -263,6 +263,7 @@ string CGAME::inputUserTxt(const CGRAPHIC& BgdLayer) {
 	tmpBgdLayer.screen[fromX + 51][fromY] = BgdLayer.screen[fromX + 51][fromY];
 	tmpBgdLayer.screen[fromX + 52][fromY] = BgdLayer.screen[fromX + 52][fromY];
 	tmpBgdLayer.screen[fromX + 53][fromY] = BgdLayer.screen[fromX + 53][fromY];
+
 	tmpBgdLayer.screen[fromX + 52][fromY + 1] = BgdLayer.screen[fromX + 52][fromY + 1];
 	tmpBgdLayer.screen[fromX + 53][fromY + 1] = BgdLayer.screen[fromX + 53][fromY + 1];
 
@@ -751,7 +752,7 @@ void CGAME::SaveGame(const CGRAPHIC& BgdLayer) {
 }
 void CGAME::Setting() {
 	const int fromX = (SCREEN_WIDTH - 53) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
-		toX = fromX + 53 - 1, toY = fromY + 30 - 1;
+		toX = fromX + 53, toY = fromY + 28;
 
 	const int BACKGROUND_YSOUND = 13 + fromY;
 	const int EFFECT_YSOUND = 17 + fromY;
@@ -923,11 +924,11 @@ void CGAME::Help() {
 	int height = bodycontent.size()*2+10; 
 	
 	const int fromX = (SCREEN_WIDTH - width) / 2, fromY = (SCREEN_HEIGHT - height) / 2,
-		toX = fromX + width - 1, toY = fromY + height - 1;
+		toX = fromX + width - 1, toY = fromY + height + 1;
 	
 
 	tmpBgdLayer.DrawTextBoard("HELP", CREAMY_AVOCADO, bodycontent, fromX, fromY, 53, 29, BLACK, WHITE, DARK_BROWN, WHITE);
-	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY+2);
+	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	_getch();
 }
 void CGAME::About() {
@@ -937,7 +938,7 @@ void CGAME::About() {
 		"              <<TEACHER>>           ",
 		"            Truong Toan Thinh       ",
 		"									 ",			
-		"           <<GROUP'S MEMBER>>      ",
+		"           <<GROUP'S MEMBER>>       ",
 		"      22127029 - Le Nguyen Gia Bao  ",
 		"      22127445 - Nguyen Lam Nha Uyen",
 		"      22127385 - Nguyen Quoc Thang  ",
@@ -959,7 +960,7 @@ void CGAME::About() {
 	tmpBgdLayer.DrawTextBoard("ABOUT", LAVENDER, bodycontent, fromX, fromY, width, height, BLACK, WHITE, DARK_BROWN,WHITE);
 
 
-	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX + 1, toY +1);
+	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	_getch();
 }
 int CGAME::Pause(HANDLE t) {
