@@ -417,7 +417,7 @@ void CGRAPHIC::DrawBigDinoSaur(int first_x, int first_y)
 	vector<wstring>frame = BIG_DINASOUR;
 	//set buffer
 	for (int i = 0; i < 43; i++)
-		for (int j = 0; j < 21; j++)
+		for (int j = 0; j < 20; j++)
 			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, -1 };
 	//set color
 	int x = first_x;
@@ -699,37 +699,6 @@ void CGRAPHIC::DrawSaveScreen(int first_x, int first_y) {
 		screen[first_x + 39 + i][first_y + 23].bgdColor = LIGHT_GRAY;
 		screen[first_x + 28 + i][first_y + 24].bgdColor = LIGHT_GRAY;
 		screen[first_x + 39 + i][first_y + 24].bgdColor = LIGHT_GRAY;
-	}
-}
-void CGRAPHIC::DrawSettingScreen(int first_x, int first_y) {
-	vector<wstring> frame = FLOPPY_DISC_2;
-
-	//set buffer
-	for (int i = 0; i < 54; i++)
-		for (int j = 0; j < 30; j++)
-			this->screen[first_x + i][first_y + j] = { frame[j][i], BLACK, DARK_BLUE };
-
-	//set colors
-	screen[first_x + 50][first_y + 0].bgdColor = screen[first_x + 50][first_y + 0].txtColor = -1;
-	screen[first_x + 51][first_y + 0].bgdColor = screen[first_x + 51][first_y + 0].txtColor = -1;
-	screen[first_x + 52][first_y + 0].bgdColor = screen[first_x + 52][first_y + 0].txtColor = -1;
-	screen[first_x + 53][first_y + 0].bgdColor = screen[first_x + 53][first_y + 0].txtColor = -1;
-	screen[first_x + 52][first_y + 1].bgdColor = screen[first_x + 52][first_y + 1].txtColor = -1;
-	screen[first_x + 53][first_y + 1].bgdColor = screen[first_x + 53][first_y + 1].txtColor = -1;
-
-	for (int i = 12; i < 41; i++)
-		for (int j = 1; j < 10; j++)
-			screen[first_x + i][first_y + j].bgdColor = LIGHT_GRAY;
-	for (int i = 8; i < 46; i++)
-		screen[first_x + i][first_y + 11].bgdColor = WHITE;
-	for (int i = 5; i < 49; i++)
-		for (int j = 12; j < 30; j++)
-			screen[first_x + i][first_y + j].bgdColor = WHITE;
-	for (int i = 0; i < 4; i++) {
-		screen[first_x + 28 + i][first_y + 24].bgdColor = LIGHT_GRAY;
-		screen[first_x + 39 + i][first_y + 24].bgdColor = LIGHT_GRAY;
-		screen[first_x + 28 + i][first_y + 25].bgdColor = LIGHT_GRAY;
-		screen[first_x + 39 + i][first_y + 25].bgdColor = LIGHT_GRAY;
 	}
 }
 void CGRAPHIC::DrawSettingScreen(int first_x, int first_y) {

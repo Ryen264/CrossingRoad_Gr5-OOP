@@ -130,7 +130,7 @@ void CGAME::saveData(string fileName) {
 		file << this->level << " " << this->numberOfLane << " " << this->conditionLane << " " << this->countLane << " " << this->numberOfConditionLane << endl;
 		// <xBoard>(x) <yBoard>(y) (alive = 1) <score> <isRight> (finish = false) (moving = 0) <colorCharacter> (depend: get from lane[yBoard][xBoard]) (pCharacterR/L = new CDINOSAUR(x, y, true/left, colorCharacter) //Thông tin người chơi
 		file << cPlayer->getXBoard() << " " << cPlayer->getYBoard() << " " << cPlayer->getIsAlive() << " " << cPlayer->getScore() << " " << cPlayer->getIsRight()
-			<< " " << cPlayer->isFinish() << " " << 0 << " " << cPlayer->getColorCharacter() << endl;
+			 << " " << 0 << " " << cPlayer->getColorCharacter() << endl;
 		
 		// (lane: push with ID) <isMoveRight> <timeCount> <isStop> <delayTime> (x, y: update) <ID> (block: new with ID) [<object ID>/0]
 			//VEHICLE: ... <condition> <countObject> <numberOfCar*> <numberOfTruck*> <lightPos> <timeLight> (pTrafficLight = new with lightPos > 0) [<object ID>/0]
@@ -295,7 +295,7 @@ int CGAME::Menu() {
 	SetupTheme(MAIN_MENU_THEME);
 	const int fromX = 5, fromY = 18,
 		toX = fromX + 40 - 1, toY = fromY + 27 - 1;
-	const int xfromTalk = (160 - 41) / 2, yfromTalk = 38 - 10, xfromMessage = xfromTalk + 4, yfromMessage = yfromTalk + 3;
+	const int xfromTalk = 105, yfromTalk = 38 - 10, xfromMessage = xfromTalk + 4, yfromMessage = yfromTalk + 3;
 
 	const int xdrawerStart = 7 + fromX, ydrawerStart = fromY;
 	const int NEW_GAME = ydrawerStart;
@@ -315,6 +315,8 @@ int CGAME::Menu() {
 
 	//draw menu
 	tmpBgdLayer.DrawMainMenu();
+	tmpObjLayer.DrawBigDinoSaur(53, 17);
+	tmpObjLayer.DrawDinasourPicture(10, 2);
 	tmpObjLayer.DrawDoofCorp(176, 16);
 	tmpObjLayer.DrawHeader(98, 3);
 	tmpBgdLayer.DrawDrawer(fromX, fromY + 3);
@@ -344,26 +346,23 @@ int CGAME::Menu() {
 				SetupTheme();
 				NewGame();
 				SetupTheme(MAIN_MENU_THEME);
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case LOAD_GAME:
 				this->LoadGame();
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case SETTING:
 				this->Setting();
 				break;
 			case HELP:
 				this->Help();
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case ABOUT:
 				this->About();
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case QUIT:
 				return QUIT_CODE;
 			}
+			displayScreen(tmpObjLayer, tmpBgdLayer);
 		}
 		else {
 			if (isUpButton(temp) && iCur > 0) {
