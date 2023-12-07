@@ -28,6 +28,7 @@ public:
 
 	virtual void setColor(int color);
 
+	void DrawObject(CGRAPHIC& layer, int width, int height);
 	void DrawBlock(CGRAPHIC& layer, bool isPass = false);
 
 };

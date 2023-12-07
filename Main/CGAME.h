@@ -6,6 +6,8 @@
 #include "CTRAINLANE.h"
 #include "CRIVERLANE.h"
 #include "CFINISHLANE.h"
+#include "CUFO.h"
+#include "CDINOSAUR.h"
 
 #include <iostream>
 #include <sstream>
@@ -98,6 +100,8 @@ public:
     void outtro();
     void drawCountDown();
     void drawPlayAgain();
+    void drawWiningScreen(int COLOR = DARK_GREEN);
+    void drawLosingScreen(int COLOR = DARK_GREEN);
 
     void displayScreen(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
     void displayScreen(CGRAPHIC& ObjLayer, const CGRAPHIC& BgdLayer, int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
