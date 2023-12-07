@@ -99,7 +99,7 @@ void CGAME::playGame() {
 			if (isReset()) {
 				cPlayer->setScore(0);
 				level = 1;
-				startTime = 0, endTime = 0, curTime = 0;
+				startTime = clock(), endTime = 0, curTime = 0;
 				resetData();
 				startMap();
 				cPlayer->setMoving(0);
@@ -603,10 +603,10 @@ void CGAME::NewGame() {
 	displayScreen();
 	Help();
 	displayScreen();
+	cPlayer->setScore(0);
 	cPlayer->set(BOARD_WIDTH / 2, UP_LANE, true, 0);
 	isSaved = false;
-	cPlayer->setScore(0);
-	level = 1;
+	this->level = 1;
 	startTime = clock(), endTime = 0, curTime = 0;
 	resetData();
 	playGame();
