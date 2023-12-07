@@ -1743,8 +1743,6 @@ bool CGAME::drawLosingScreen(int COLOR) {
 			if (!isEnterButton(temp)) {
 				if (isUpButton(temp) == true || isDownButton(temp) == true || isLeftButton(temp) == true || isRightButton(temp) == true) {
 					xOption = PLAY_AGAIN;
-					/*TmpObjLayer.drawString("PLAY AGAIN", xOption, yOption, DARK_BLUE, LIGHT_GREEN);
-					TmpObjLayer.drawString("EXIT TO MENU", xOption+100, yOption, BLACK, LIGHT_GREEN);*/
 					TmpObjLayer.drawString("PLAY AGAIN", 34, 40, BLUE, LIGHT_GREEN);
 					displayScreen(TmpObjLayer, TmpBgdLayer, 34, 40, 34+60, 42);
 					TmpObjLayer.drawString("EXIT TO MENU", 134, 40, BLACK, LIGHT_GREEN);
