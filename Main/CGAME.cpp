@@ -440,8 +440,8 @@ void CGAME::NewGame() {
 	playGame();
 }
 void CGAME::LoadGame() {
-	const int fromX = 10, fromY = 3,
-		toX = fromX + 90 - 1, toY = fromY + 30 - 1;
+	const int fromX = 50, fromY = 10,
+		toX = fromX + 90 + 40 - 1, toY = fromY + 30 + 7 - 1;
 
 	const int LOAD_YOPTION = fromY;
 	const int RENAME_YOPTION = 5 + fromY;
@@ -906,7 +906,7 @@ void CGAME::Help() {
 	
 
 	tmpBgdLayer.DrawTextBoard("HELP", CREAMY_AVOCADO, bodycontent, fromX, fromY, 53, 29, BLACK, WHITE, DARK_BROWN, WHITE);
-	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY+2);
 	_getch();
 }
 
@@ -939,7 +939,7 @@ void CGAME::About() {
 	tmpBgdLayer.DrawTextBoard("ABOUT", LAVENDER, bodycontent, fromX, fromY, width, height, BLACK, WHITE, DARK_BROWN,WHITE);
 
 
-	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX + 1, toY +1);
 	_getch();
 }
 
