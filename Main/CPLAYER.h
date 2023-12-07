@@ -11,7 +11,7 @@ class CPLAYER {
 	bool isRight = true;
 	int moving;
 	int colorCharacter;
-	
+
 	COBJECT* dependObj;
 	COBJECT* pCharacterR = NULL, * pCharacterL = NULL;
 public:
@@ -20,28 +20,29 @@ public:
 
 	int getX() const;
 	int getY() const;
-    int getXBoard() const;
-    int getYBoard() const;
-	int getScore() const;
-	bool getIsRight() const;
-	bool getIsAlive() const;
-    COBJECT* getDependObj() const;
-    int getMoving() const;
+	int getXBoard() const;
+	int getYBoard() const;
 	int getColorCharacter() const;
 	string getNameCharacter() const;
+	bool getIsRight() const;
+	bool getAlive() const;
+	int getScore() const;
+	int getMoving() const;
+	COBJECT* getDependObj() const;
 
-    void set(int xBoard = 0, int yBoard = 0, bool alive = true, bool right = true, int score = -1);
-    bool setIsRight();
-    void setPos(int xBoard = 0, int yBoard = 0);
-    void setxBoard(int xBoard = 0);
-    void setyBoard(int yBoard = 0);
-    void setAlive(bool alive);
-    void setMove(int moving);
-    void setDependObj(COBJECT* obj = NULL);
-	void setColorCharacter(int color);
+	void set(int xBoard = 0, int yBoard = 0, bool alive = true, bool right = true, int score = -1);
+	void setPos(int xBoard = 0, int yBoard = 0);
+	void setXBoard(int xBoard = 0);
+	void setYBoard(int yBoard = 0);
+	void setColorCharacter(int colorCharacter);
+	void setIsRight(bool isRight);
+	void setAlive(bool alive);
+	void setScore(int score);
+	void setMoving(int moving);
+	void setDependObj(COBJECT* dependObj = NULL);
 
-    //is deleting depend obj
-    int updateDepend();
+	//is deleting depend obj
+	int updateDepend();
 
 	//return: is push new lane
 	bool moveCharacter();

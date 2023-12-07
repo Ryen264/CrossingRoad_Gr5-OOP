@@ -14,4 +14,3 @@ class CFINISHLANE : public CLANE {
 public:
 	CFINISHLANE(int x = 0, int y = 0);
 };
-

@@ -10,7 +10,7 @@ CDINOSAUR::CDINOSAUR(int x, int y, bool isRight, int color) : COBJECT(x, y) {
 			else
 				this->block[i][j] = { frame[j][i], -1, -1 };
 
-	
+
 	this->color = color;
 	this->setColor(color);
 }
@@ -38,7 +38,7 @@ void CDINOSAUR::setColor(int color) {
 			block[i][0].bgdColor = colorArr[0];
 
 		}
-		block[5][1].txtColor=block[5][1].bgdColor = colorArr[0];
+		block[5][1].txtColor = block[5][1].bgdColor = colorArr[0];
 		block[6][1].txtColor = BLACK;
 		block[7][1].txtColor = BLACK;
 		for (int i = 8; i <= 13; i++)
@@ -54,7 +54,7 @@ void CDINOSAUR::setColor(int color) {
 		block[6][3].txtColor = block[6][3].bgdColor = colorArr[0];
 		for (int i = 7; i <= 9; i++)
 		{
-			block[i][3].txtColor =colorArr[0];
+			block[i][3].txtColor = colorArr[0];
 			block[i][3].bgdColor = colorArr[1];
 		}
 		for (int i = 10; i <= 13; i++)
@@ -74,7 +74,7 @@ void CDINOSAUR::setColor(int color) {
 		block[2][3].bgdColor = -1;
 		block[12][0].bgdColor = -1;
 		for (int i = 3; i <= 11; i++) {
-		     block[i][0].bgdColor = colorArr[0];
+			block[i][0].bgdColor = colorArr[0];
 		}
 		for (int i = 3; i <= 11; i++) {
 			block[i][1].txtColor = block[i][1].bgdColor = colorArr[0];

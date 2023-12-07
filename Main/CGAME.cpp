@@ -74,7 +74,7 @@ void CGAME::playGame() {
 			int temp = toupper(_getch());
 			switch (temp) {
 			case 'W': case 'S': case 'A': case 'D': {
-				cPlayer->setMove(temp);
+				cPlayer->setMoving(temp);
 				break;
 			}
 			case 'P': {
@@ -89,7 +89,7 @@ void CGAME::playGame() {
 			if (isReset()) {
 				resetData();
 				startMap();
-				cPlayer->setMove(0);
+				cPlayer->setMoving(0);
 				cPlayer->set(BOARD_WIDTH / 2, UP_LANE, true, 0);
 			}
 			else {
@@ -125,71 +125,119 @@ void CGAME::saveData(string fileName) {
 	if (file.is_open()) {
 		//CGAME: cPlayer: new, aLanes: new, fileNamelist: load, isSave = true, savedName = file name, <level>, <numberOfLane>, <conditionLane>, <countLane>, <numberOfConditionLane>, isThreadRunning = true, ObjLayer, bgdLayer: draw
 		file << this->level << " " << this->numberOfLane << " " << this->conditionLane << " " << this->countLane << " " << this->numberOfConditionLane << endl;
-		// <xBoard>(x) <yBoard>(y) (alive = 1) <score> <isRight> (finish = false) (moving = 0) <colorCharacter> (depend: get from lane[yBoard][xBoard]) (pCharacterR/L = new CDINOSAUR(x, y, true/left, colorCharacter) //Thông tin người chơi
-		file << cPlayer->getXBoard() << " " << cPlayer->getYBoard() << " " << cPlayer->getIsAlive() << " " << cPlayer->getScore() << " " << cPlayer->getIsRight()
-			 << " " << 0 << " " << cPlayer->getColorCharacter() << endl;
-		
-		// (lane: push with ID) <isMoveRight> <timeCount> <isStop> <delayTime> (x, y: update) <ID> (block: new with ID) [<object ID>/0]
-			//VEHICLE: ... <condition> <countObject> <numberOfCar*> <numberOfTruck*> <lightPos> <timeLight> (pTrafficLight = new with lightPos > 0) [<object ID>/0]
-			//TRAIN: ... <numberOfTrain*> <countTrain> [<object ID>/0]
-			//RIVER: ... <condition> <countObj> <numberOfCapybara*> [<object>/0]
-			//GRASS: ... [<object>/0]
-			//FINISH: ...
-			//
-			//TREE: isDouble*
-
+		file << endl;
+		//CPLAYER: <xBoard>(x) <yBoard>(y) (alive = 1) <score> <isRight> (moving = 0) <colorCharacter> (depend: get from lane[yBoard][xBoard]) (pCharacterR/L = new CDINOSAUR(x, y, true/left, colorCharacter)
+		file << cPlayer->getXBoard() << " " << cPlayer->getYBoard() << " " << cPlayer->getScore() << " " << cPlayer->getIsRight() << " " << cPlayer->getColorCharacter() << endl;
+		file << endl;
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
-			file << aLanes[i]->getID() << " " 
-				 << aLanes[i]->getIsMoveRight()  << " " 
-				 << aLanes[i]->getTimeCount() << " " 
-				 << aLanes[i]->getDelayTime() << " ";
-			switch (aLanes[i]->getID()) {
-			case VEHICLELANE_ID:
-{}
-				
-			}
+			//CLANE: <isMoveRight> <ID> (lane: push with ID) (block: new with ID) [<object ID>/0]
+				//VEHICLE:	...	<timeCount> <delayTime> (x, y: update)	<isStop>	<condition> <countObject>	<numberOfConditionObj>	<lightPos>	<timeLight> (pTrafficLight = new with lightPos > 0) [<object ID>/0]
+				//TRAIN:		<timeCount> <delayTime> (x, y: update)	0			0			<countObject>	<numberOfConditionObj>	-1			0			[<object ID>/0]
+				//RIVER:		<timeCount> <delayTime> (x, y: update)	0			<condition> <countObject>	<numberOfConditionObj>	-1			0			[<object>/0]
+				//GRASS:		0			0							0			0			0				0						-1			0			[<object>/0]
+				//FINISH:		0			0							0			0			0				0						-1			0			[<object>/0]
+			file << aLanes[i]->getIsMoveRight() << " " << aLanes[i]->getID() << " ";
+			file << aLanes[i]->getTimeCount() << " " << aLanes[i]->getDelayTime() << " " << aLanes[i]->getIsStop() << " " << aLanes[i]->getCondition() << " " << aLanes[i]->getCountObject() << " " << aLanes[i]->getNumberOfConditionObj() << " " << aLanes[i]->getLightPos() << " " << aLanes[i]->getTimeLight() << endl;
+			file << endl;
 			for (int j = 0; j < BOARD_WIDTH; j++) {
-				file << aLanes[i]->PosID(j) << " ";
+				//COBJECT: <ID> (object: push with ID)
+					//CAR	...		isRight		0
+					//TRUCK			isRight		0
+					//BUS			isRight		isHead
+					//CAPY			isRight		0
+					//EGG			0			0
+					//PERRY			isRight		0
+					//TRAIN			isRight		isHead
+					//TREE			0			0
+					//NULL	0		0			0
+				COBJECT* obj = aLanes[i]->getPos(j);
+				if (obj == NULL) file << 0 << " " << 0 << " " << 0 << endl;
+				else {
+					file << obj->getID() << " ";
+					file << obj->getIsRight() << " " << obj->getIsHead() << endl;
+				}
 			}
 			file << endl;
 		}
-		file << endl;
 		file.close();
-	}
-	else {
-		cout << "Can't open file." << endl;
 	}
 }
 void CGAME::loadData(string fileName) {
 	ifstream file(fileName, ios::in);
 	if (file.is_open()) {
-		int x, y, score;
-		bool isRight,isAlive;//player
-		// Doc thong tin nguoi choi
-		file >> x >> y >> score >>isAlive >>isRight;
-		cPlayer->set(x, y, isAlive,isRight, score);
-		file >> level;
+		//CGAME: <level>, <numberOfLane>, <conditionLane>, <countLane>, <numberOfConditionLane>
+		int level{}, numberOfLane{}, conditionLane{}, countLane{}, numberOfConditionLane{};
+		file >> level >> numberOfLane >> conditionLane >> countLane >> numberOfConditionLane;
+		file.ignore(1);
+
+		//CGAME: aLanes: new, isSave = true, savedName = file name, <level>, <numberOfLane>, <conditionLane>, <countLane>, <numberOfConditionLane>, isThreadRunning = true, ObjLayer, bgdLayer: draw
+		isSaved = true; savedName = fileName; isThreadRunning = true;
+		this->level = level; this->numberOfLane = numberOfLane; this->conditionLane = conditionLane; this->countLane = countLane; this->numberOfConditionLane = numberOfConditionLane;
+
+		//CPLAYER: <xBoard> <yBoard> <score> <isRight> <colorCharacter>
+		int xBoard{}, yBoard{}, score{}; bool isRightCharacter{}; int colorCharacter{};
+		file >> xBoard >> yBoard >> score >> isRightCharacter >> colorCharacter;
+		file.ignore(1);
+
+		//CPLAYER: <xBoard> <yBoard> <score> <isRight> <colorCharacter> (depend: get from lane[yBoard][xBoard])
+		cPlayer = new CPLAYER(xBoard, yBoard, colorCharacter);
+		cPlayer->setScore(score);
+		cPlayer->setIsRight(isRightCharacter);
+
+		//clear the last aLanes
+		while (!aLanes.empty()) {
+			CLANE* cur = aLanes.back();
+			aLanes.pop_back();
+			if (cur != NULL) delete cur;
+			cur = NULL;
+		}
+		aLanes.clear();
+
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
-			bool direction;
-			int laneID;
-			int timeCount, delayTime;
-			file >> laneID >> direction >> timeCount >> delayTime;
-			
+			//CLANE: <isMoveRight> <ID>
+			//...	<timeCount> <delayTime> <isStop> <condition> <countObject> <numberOfConditionObj> <lightPos> <timeLight>
+			bool isMoveRight{}; int laneID{};
+			int timeCount{}, delayTime{}; bool isStop{}; int condition{}, countObject{}, numberOfConditionObj{}, lightPos{}, timeLight{};
+			file >> isMoveRight >> laneID;
+			file >> timeCount >> delayTime >> isStop >> condition >> countObject >> numberOfConditionObj >> lightPos >> timeLight;
+			file.ignore(1);
+
+			//CLANE: <isMoveRight> <ID>
+				//...	<timeCount> <delayTime>	<isStop> <condition> <countObject>	<numberOfConditionObj>	<lightPos>	<timeLight>
 			push_frontLane(laneID);
-			aLanes.front()->setIsMoveRight(direction);
-			aLanes.front()->setTimeCount(timeCount);
-			// Doc trang thai tung o
-			for (int j = 0; j < BOARD_WIDTH; j++) {
-				int posID;
-				file >> posID;
-				aLanes[i]->pop_backObject();
-				aLanes[i]->push_frontObject(posID);
+			CLANE* lane = aLanes.front();
+			lane->setIsMoveRight(isMoveRight); lane->setTimeCount(timeCount); lane->setDelayTime(delayTime); lane->setIsStop(isStop);
+			lane->setCondition(condition); lane->setCountObject(countObject); lane->setNumberOfConditionObj(numberOfConditionObj); lane->setLightPos(lightPos); lane->setTimeLight(timeLight);
+
+			//clear the last aLanes
+			while (!lane->emptyObject()) {
+				COBJECT* cur = lane->backObject();
+				lane->pop_backObject();
+				if (cur != NULL) delete cur;
+				cur = NULL;
 			}
+			lane->clearObject();
+
+			for (int j = 0; j < BOARD_WIDTH; j++) {
+				//COBJECT: <ID>
+				//...	<isRight> <isHead>
+				int objID{};
+				bool isRight{}, isHead{};
+				file >> objID;
+				file >> isRight >> isHead;
+
+				//COBJECT: <ID> (object: push with ID)
+				//...	<isRight>	<isRight>
+				lane->push_frontObject(objID);
+				COBJECT* front = lane->frontObject();
+				front->setIsRight(isRight); front->setIsHead(isHead);
+			}
+			file.ignore(1);
 		}
 		file.close();
-	}
-	else {
-		cout << "Can't open file." << endl;
+		cPlayer->setDependObj(aLanes[yBoard]->getPos(xBoard));
+		startMap();
+		drawMap();
 	}
 }
 
@@ -233,9 +281,8 @@ string CGAME::inputUserTxt(CGRAPHIC& ObjLayer, CGRAPHIC& BgdLayer, int fromX, in
 	return fileName;
 }
 void CGAME::saveFileNameList() {
-	fstream outFile("file_name_list.txt", fstream::out);
-	if (outFile.fail())
-		return;
+	fstream outFile("file_name_list.txt", fstream::trunc);
+	if (outFile.fail()) return;
 	int size = (int)fileNameList.size();
 	outFile << size << endl;
 	for (int i = 0; i < size; i++)
@@ -244,12 +291,11 @@ void CGAME::saveFileNameList() {
 }
 void CGAME::loadFileNameList() {
 	fstream inFile("file_name_list.txt", fstream::in);
-	if (inFile.fail())
-		return;
+	if (inFile.fail()) return;
 	fileNameList.clear();
 	int size{};
 	inFile >> size;
-	string fileName;
+	string fileName{};
 	for (int i = 0; i < size; i++) {
 		inFile >> fileName;
 		fileNameList.push_front(fileName);
@@ -316,7 +362,7 @@ int CGAME::Menu() {
 	tmpObjLayer.DrawDinasourPicture(10, 2);
 	tmpObjLayer.DrawDoofCorp(176, 16);
 	tmpObjLayer.DrawHeader(98, 3);
-	tmpObjLayer.DrawDinasourPicture(6, 2);
+	tmpObjLayer.DrawDinasourPicture(10, 2);
 	tmpObjLayer.DrawHat(190, 44);
 	tmpBgdLayer.DrawDrawer(fromX, fromY + 3);
 
@@ -1280,53 +1326,53 @@ void CGAME::moveNewLane() {
 }
 
 void CGAME::SubThreadNewGame() {
-    while (isThreadRunning) {
-        if (!cPlayer->isDead()) {
-            //Lane move
-            for (int i = 0; i < BOARD_HEIGHT; i++) aLanes[i]->Move();
+	while (isThreadRunning) {
+		if (!cPlayer->isDead()) {
+			//Lane move
+			for (int i = 0; i < BOARD_HEIGHT; i++) aLanes[i]->Move();
 
-            int xBoard = cPlayer->getXBoard(), yBoard = cPlayer->getYBoard();
-            int xBoardNext{}, yBoardNext{};
-            switch (cPlayer->getMoving()) {
-            case UP:
-                xBoardNext = xBoard; yBoardNext = yBoard - 1;
-                break;
-            case DOWN:
-                xBoardNext = xBoard; yBoardNext = yBoard + 1;
-                break;
-            case LEFT:
-                xBoardNext = xBoard - 1; yBoardNext = yBoard;
-                break;
-            case RIGHT:
-                xBoardNext = xBoard + 1; yBoardNext = yBoard;
-                break;
-            default:
-                xBoardNext = xBoard; yBoardNext = yBoard;
-            }
-            COBJECT* nextObj = aLanes[yBoardNext]->getPos(xBoardNext);
-			
+			int xBoard = cPlayer->getXBoard(), yBoard = cPlayer->getYBoard();
+			int xBoardNext{}, yBoardNext{};
+			switch (cPlayer->getMoving()) {
+			case UP:
+				xBoardNext = xBoard; yBoardNext = yBoard - 1;
+				break;
+			case DOWN:
+				xBoardNext = xBoard; yBoardNext = yBoard + 1;
+				break;
+			case LEFT:
+				xBoardNext = xBoard - 1; yBoardNext = yBoard;
+				break;
+			case RIGHT:
+				xBoardNext = xBoard + 1; yBoardNext = yBoard;
+				break;
+			default:
+				xBoardNext = xBoard; yBoardNext = yBoard;
+			}
+			COBJECT* nextObj = aLanes[yBoardNext]->getPos(xBoardNext);
+
 			aLanes[yBoard]->injuredPlayer(*cPlayer);
-            
-			//Update player's pos with depend obj and delete depend obj if the func returns true
-            switch (cPlayer->updateDepend()) {
-            case EGG_ID: {
-                COBJECT* cur = aLanes[yBoard]->getPos(xBoard);
-                if (cur != NULL) delete cur;
-                cur = NULL;
-                aLanes[yBoard]->setPos(xBoard, NULL);
-                cPlayer->setDependObj(NULL);
 
-				cPlayer->increaseScore(1);
-                break;
-            }
-            case PERRY_ID: {
+			//Update player's pos with depend obj and delete depend obj if the func returns true
+			switch (cPlayer->updateDepend()) {
+			case EGG_ID: {
 				COBJECT* cur = aLanes[yBoard]->getPos(xBoard);
 				if (cur != NULL) delete cur;
 				cur = NULL;
 				aLanes[yBoard]->setPos(xBoard, NULL);
 				cPlayer->setDependObj(NULL);
 
-				if (!(nextObj->getID() == TREE_ID)) {
+				cPlayer->increaseScore(1);
+				break;
+			}
+			case PERRY_ID: {
+				COBJECT* cur = aLanes[yBoard]->getPos(xBoard);
+				if (cur != NULL) delete cur;
+				cur = NULL;
+				aLanes[yBoard]->setPos(xBoard, NULL);
+				cPlayer->setDependObj(NULL);
+
+				if (!(nextObj->getID() == TREE_DOUBLE_ID || nextObj->getID() == TREE_SINGLE_ID)) {
 					cPlayer->setPos(xBoard, yBoard - 1);
 					if (cPlayer->getYBoard() == UP_LANE)
 					{
@@ -1334,43 +1380,43 @@ void CGAME::SubThreadNewGame() {
 						startMap();
 					}
 				}
-                break;
-            }
-            }
+				break;
+			}
+			}
 
-			if (cPlayer->isMoving() && !(nextObj->getID() == TREE_ID)) {
+			if (cPlayer->isMoving() && !(nextObj->getID() == TREE_DOUBLE_ID || nextObj->getID() == TREE_SINGLE_ID)) {
 				if (cPlayer->moveCharacter()) {
 					moveNewLane();
 					startMap();
 				};
 				//Reset moving
-				cPlayer->setMove(0);
+				cPlayer->setMoving(0);
 				//Update depend obj 
 				cPlayer->setDependObj(nextObj);
 			}
-			
-            drawMap();
-            displayScreen();
 
-            if (cPlayer->isDead()) {
-                //Hieu ung va cham
+			drawMap();
+			displayScreen();
+
+			if (cPlayer->isDead()) {
+				//Hieu ung va cham
 				cout << cPlayer->getScore() << " " << this->level << endl;
 				level = 1;
 				countLane = 0;
-                continue;
-            }
-            //Xy ly finish
-            if (countLane == numberOfLane + 6) {
-                cPlayer->increaseScore(5);
+				continue;
+			}
+			//Xy ly finish
+			if (countLane == numberOfLane + 6) {
+				cPlayer->increaseScore(5);
 				level++;
 				countLane = 0;
-                cPlayer->set(BOARD_WIDTH / 2, UP_LANE);
-                resetData();
-                startMap();
-            }
+				cPlayer->set(BOARD_WIDTH / 2, UP_LANE);
+				resetData();
+				startMap();
+			}
 			Sleep(100);
-        }
-    }
+		}
+	}
 }
 
 // Time

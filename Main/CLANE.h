@@ -6,40 +6,50 @@
 using namespace std;
 class CLANE {
 protected:
-	deque<COBJECT*> lane;
-	bool isMoveRight = true; //chiều di chuyển
-	int timeCount = 0;
-	bool isStop = false;
-	int delayTime;
+	bool isMoveRight = true;
+	int ID = 0;
 
-	int x, y, ID;
+	deque<COBJECT*> lane;
+	int x, y;
 	PIXEL** block = NULL;
 public:
 	CLANE(int x = 0, int y = 0);
 	virtual ~CLANE();
-	virtual void injuredPlayer(CPLAYER& player);
-	virtual void changeDirection();
-    virtual bool checkPos(int pos);
 	virtual void Move();
-	virtual bool isMove() const;
 	virtual void push_frontObject(int ID);
 	void pop_backObject();
+	COBJECT* frontObject() const;
+	COBJECT* backObject() const;
+	bool emptyObject() const;
+	void clearObject();
 
-
-	int PosID(int pos) const;
-	virtual bool getIsMoveRight();
-	virtual int getTimeCount();
-	virtual int getDelayTime();
-	int getID() const;
-	COBJECT* getPos(int i) const;
-
-	virtual void setIsMoveRight(bool);
-	virtual void setTimeCount(int);
-	virtual void setDelayTime(int);
 	void setPos(int i, COBJECT* val);
 	virtual void setyBoard(int yBoard);
 	void updatePosObj();
 
+	virtual void injuredPlayer(CPLAYER& player);
+	COBJECT* getPos(int i) const;
+
+	int getID() const;
+	bool getIsMoveRight() const;
+	virtual int getCondition() const;
+	virtual int getCountObject() const;
+	virtual int getNumberOfConditionObj() const;
+	virtual int getLightPos() const;
+	virtual int getTimeLight() const;
+	virtual bool getIsStop() const;
+	virtual int getTimeCount() const;
+	virtual int getDelayTime() const;
+
+	void setIsMoveRight(bool isMoveRight);
+	virtual void setCondition(int condition);
+	virtual void setCountObject(int countObject);
+	virtual void setNumberOfConditionObj(int numberOfConditionObj);
+	virtual void setLightPos(int lightPos);
+	virtual void setTimeLight(int timeLight);
+	virtual void setIsStop(bool isStop);
+	virtual void setTimeCount(int timeCount);
+	virtual void setDelayTime(int delayTime);
 
 	virtual void DrawLane(CGRAPHIC& layer);
 	virtual void DrawObjects(CGRAPHIC& layer);

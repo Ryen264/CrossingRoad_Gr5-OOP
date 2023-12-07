@@ -40,5 +40,10 @@ L"                "
 	};
 public:
 	CBUS(int x = 0, int y = 0, bool isRight = true, bool isHead = true);
+	bool getIsRight() const;
+	bool getIsHead() const;
+
+	void setIsRight(bool isRight);
+	void setIsHead(bool isHead);
 };
 

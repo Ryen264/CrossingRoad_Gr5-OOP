@@ -7,7 +7,12 @@
 const int TRAFFICLIGHT_DELAY = 20;
 const int TRAFFICLIGHT_WAIT = 20;
 class CVEHICLELANE : public CLANE {
-	int condition = 0, countObject = 0, numberOfConditionalObject;
+	int timeCount = 0, delayTime = 0;
+	bool isStop = false;
+	int condition = 0, countObject = 0, numberOfConditionObj = 0;
+	int lightPos, timeLight = 0;
+	CTRAFFICLIGHT* ptrafficLight = NULL;
+
 	const vector <wstring> FRAME =
 	{
 L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
@@ -27,10 +32,6 @@ L"        ▄▄▄     ",
 L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
 	};
 	const vector<int> OBJECT_ID_LIST = { CAR_ID, TRUCK_ID, BUS_HEAD_ID, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-	//trafic light
-	int lightPos, timeLight = 0;
-	CTRAFFICLIGHT* ptrafficLight = NULL;
 public:
 	CVEHICLELANE(int x = 0, int y = 0, int delayTime = 0);
 	~CVEHICLELANE();
@@ -41,9 +42,26 @@ public:
 
 	void setyBoard(int yBoard);
 	void updateYObj();
-	void setStop(bool isStop);
-	bool getStop() const;
+
+	int getCondition() const;
+	int getCountObject() const;
+	int getNumberOfConditionObj() const;
+	int getLightPos() const;
+	int getTimeLight() const;
+	bool getIsStop() const;
+	int getTimeCount() const;
+	int getDelayTime() const;
+
+	void setCondition(int condition);
+	void setCountObject(int countObject);
+	void setNumberOfConditionObj(int numberOfConditionObj);
+	void setLightPos(int lightPos);
+	void setTimeLight(int timeLight);
+	void setIsStop(bool isStop);
+	void setTimeCount(int timeCount);
+	void setDelayTime(int delayTime);
 
 	void DrawObjects(CGRAPHIC& layer);
 	void DrawLane(CGRAPHIC& layer);
 };
+static bool checkinList(int val, vector<int> list);
