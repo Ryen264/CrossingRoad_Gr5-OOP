@@ -87,7 +87,6 @@ void CGAME::playGame() {
 			}
 		}
 		else {
-			_getch();
 			if (isReset()) {
 				resetData();
 				startMap();
@@ -95,9 +94,6 @@ void CGAME::playGame() {
 				cPlayer->set(BOARD_WIDTH / 2, UP_LANE, true, 0);
 			}
 			else {
-				drawLosingScreen(cPlayer->getColorCharacter());
-				Sleep(1000);
-				_getch();
 				exitThread(&threadNewGame);
 				return;
 			}
@@ -1218,12 +1214,7 @@ void CGAME::ChooseCharacter() {
 }
 
 bool CGAME::isReset() {
-	do {
-		this->drawPlayAgain();
-		int temp = toupper(_getch());
-		if (temp == 'Y') return true;
-		else if (temp == 'N') return false;
-	} while (1);
+	return drawLosingScreen(cPlayer->getColorCharacter());
 }
 
 void CGAME::exitThread(thread* t) {
@@ -1611,7 +1602,8 @@ void ShowScrollbar(BOOL Show)
 }
 
 
-void CGAME::drawLosingScreen(int COLOR) {
+bool CGAME::drawLosingScreen(int COLOR) {
+	// draw
 	CGRAPHIC Tmpback;
 	Tmpback.clear(SKY_BLUE, SKY_BLUE);
 	for (int i = 0; i < 208; i++) {
@@ -1705,6 +1697,67 @@ void CGAME::drawLosingScreen(int COLOR) {
 	TmpBgdLayer.drawString("EXIT TO MENU", 134, 40, BLACK, LIGHT_GREEN);
 	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
 
+
+	// option
+	const int fromX = 34, fromY = 40,
+		toX = fromX + 11 * 4 + 7, toY = fromY + 4;
+
+	const int PLAY_AGAIN = fromX;
+	const int EXIT_TO_MENU = fromX + 100;
+
+	int xOption = PLAY_AGAIN, yOption = fromY;
+
+	// draw current choice
+	if (xOption == PLAY_AGAIN) {
+		TmpObjLayer.drawString("PLAY AGAIN", PLAY_AGAIN, fromY, BLUE, LIGHT_GREEN);
+		TmpObjLayer.drawString("EXIT TO MENU", EXIT_TO_MENU, fromY, BLACK, LIGHT_GREEN);
+	}
+	else {
+		TmpObjLayer.drawString("EXIT TO MENU", xOption, 40, BLUE, LIGHT_GREEN);
+		TmpObjLayer.drawString("PLAY AGAIN", 34, 40, BLACK, LIGHT_GREEN);
+	}
+	displayScreen(TmpObjLayer, TmpBgdLayer, 0 , 40, SCREEN_WIDTH - 1,42);
+
+	while (1) {
+		// erase the last step
+		if (xOption == PLAY_AGAIN)TmpObjLayer.erasePixel(34, 40, 34 + 60 , 42);
+		else TmpObjLayer.erasePixel(134, 40, 134 + 60, 42);
+
+		int temp = toupper(_getch());
+		if (xOption == PLAY_AGAIN) {
+			if (!isEnterButton(temp)) {
+				if (isUpButton(temp) == true || isDownButton(temp) == true || isLeftButton(temp) == true || isRightButton(temp) == true) {
+					xOption = EXIT_TO_MENU;
+					
+					TmpObjLayer.drawString("PLAY AGAIN", 34, 40, BLACK, LIGHT_GREEN);
+					displayScreen(TmpObjLayer, TmpBgdLayer, 34, 40, 34+60, 42);
+					TmpObjLayer.drawString("EXIT TO MENU", 134, 40, BLUE, LIGHT_GREEN);
+					displayScreen(TmpObjLayer, TmpBgdLayer, 134, 40, 134+60, 42);
+				}
+			}
+			else {
+				return true;
+			}
+		}
+		else {
+			if (!isEnterButton(temp)) {
+				if (isUpButton(temp) == true || isDownButton(temp) == true || isLeftButton(temp) == true || isRightButton(temp) == true) {
+					xOption = PLAY_AGAIN;
+					/*TmpObjLayer.drawString("PLAY AGAIN", xOption, yOption, DARK_BLUE, LIGHT_GREEN);
+					TmpObjLayer.drawString("EXIT TO MENU", xOption+100, yOption, BLACK, LIGHT_GREEN);*/
+					TmpObjLayer.drawString("PLAY AGAIN", 34, 40, BLUE, LIGHT_GREEN);
+					displayScreen(TmpObjLayer, TmpBgdLayer, 34, 40, 34+60, 42);
+					TmpObjLayer.drawString("EXIT TO MENU", 134, 40, BLACK, LIGHT_GREEN);
+					displayScreen(TmpObjLayer, TmpBgdLayer, 134, 40, 134+60, 42);
+
+				}
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	
 }
 
 void CGAME::drawWiningScreen(int COLOR) {
