@@ -16,6 +16,7 @@ public:
 	void setY(int y);
     int getX() const;
     int getY() const;
+	void DrawObject(CGRAPHIC& layer, int width, int height);
 	void DrawBlock(CGRAPHIC& layer, bool isPass = false);
 
 	virtual void setColor(int color);

@@ -35,6 +35,12 @@ void COBJECT::setY(int y) {
 	this->y = y;
 }
 
+void COBJECT::DrawObject(CGRAPHIC& layer, int width, int height) {
+	for (int i = 0; i < width; i++)
+		for (int j = 0; j < height; j++)
+			layer.screen[i + x][j + y] = block[i][j];
+}
+
 void COBJECT::DrawBlock(CGRAPHIC& layer, bool isPass) {
 	if (!isPass) {
 		for (int i = 0; i < BLOCK_WIDTH; i++)

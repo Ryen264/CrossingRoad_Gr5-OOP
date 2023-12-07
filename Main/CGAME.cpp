@@ -13,6 +13,8 @@ CGAME::~CGAME() {
 		pointer = NULL;
 	}
 	ShowCur(true);
+	ShowScrollbar(true);
+	system("mode 1000, 50");
 }
 void CGAME::Configure()
 {
@@ -274,6 +276,9 @@ void CGAME::changeFileName(int index) {
 
 int CGAME::Menu() {
 	system("cls");
+	SetupTheme();
+	drawWiningScreen();
+	_getch();
 	SetupTheme(MAIN_MENU_THEME);
 	const int fromX = 5, fromY = 18,
 		toX = fromX + 40 - 1, toY = fromY + 27 - 1;
@@ -1305,3 +1310,14 @@ void ShowScrollbar(BOOL Show)
 	ShowScrollBar(hWnd, SB_BOTH, Show);
 }
 
+
+void CGAME::drawWiningScreen(int COLOR) {
+	CGRAPHIC TmpBgdLayer(BgdLayer), TmpObjLayer({L' ', -1, -1});
+	TmpBgdLayer.clear(WHITE, WHITE);
+	int UFO_x = 81, UFO_y = 2;
+	CUFO UFO(UFO_x, UFO_y);
+	UFO.DrawObject(TmpObjLayer, 47, 28);
+	CDINOSAUR DINO(UFO_x + 15, UFO_y + 20, COLOR);
+	DINO.DrawBlock(TmpObjLayer);
+	displayScreen(TmpObjLayer,TmpBgdLayer,0, 0, -1, -1);
+}
