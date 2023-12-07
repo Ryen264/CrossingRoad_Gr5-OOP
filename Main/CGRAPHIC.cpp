@@ -201,11 +201,11 @@ void CGRAPHIC::drawButton(int first_x, int first_y, int color, int txtColor, int
 			screen[first_x + i][first_y + j].bgdColor = color;
 }
 
-void CGRAPHIC::drawClipBoard(int first_x, int first_y, int width, int height) {
+void CGRAPHIC::drawClipBoard(int first_x, int first_y, int width, int height, int back, int paper) {
 	//top
 	for (int i = first_x + 1; i < first_x + width; i++) {
-		screen[i][first_y] = { L'▀' , BLACK, DARK_BROWN };
-		screen[i][first_y + 1] = { L'▄' , BLACK, DARK_BROWN };
+		screen[i][first_y] = { L'▀' , BLACK, back };
+		screen[i][first_y + 1] = { L'▄' , BLACK, back };
 	}
 	screen[first_x][first_y] = { L'▄' , BLACK, -1 };
 	screen[first_x + width][first_y] = { L'▄' , BLACK, -1 };
@@ -219,48 +219,48 @@ void CGRAPHIC::drawClipBoard(int first_x, int first_y, int width, int height) {
 	}
 	//bottom
 	for (int i = first_x + 1; i < first_x + width; i++) {
-		screen[i][first_y + height - 1] = { L'▀' , BLACK, DARK_BROWN };
-		screen[i][first_y + height] = { L'▄' , BLACK, DARK_BROWN };
+		screen[i][first_y + height - 1] = { L'▀' , BLACK, back };
+		screen[i][first_y + height] = { L'▄' , BLACK, back };
 	}
 	screen[first_x][first_y + height] = { L'▀' , BLACK, -1 };
 	screen[first_x + width][first_y + height] = { L'▀' , BLACK, -1 };
 	//mid
 	for (int i = first_x + 4; i <= first_x + width - 4; i++)
 		for (int j = first_y + 2; j <= first_y + height - 2; j++)
-			screen[i][j] = { L' ',WHITE, WHITE };
+			screen[i][j] = { L' ',paper, paper };
 	for (int i = first_y + 1; i < first_y + height; i++) {
-		screen[first_x][i] = { L'█',BLACK, DARK_BROWN };
-		screen[first_x + 1][i] = { L' ', DARK_BROWN, DARK_BROWN };
-		screen[first_x + 2][i] = { L' ', DARK_BROWN, DARK_BROWN };
-		screen[first_x + 3][i] = { L'█',BLACK, DARK_BROWN };
-		screen[first_x + width][i] = { L'█',BLACK, DARK_BROWN };
-		screen[first_x + width - 3][i] = { L'█',BLACK, DARK_BROWN };
-		screen[first_x + width - 1][i] = { L' ', DARK_BROWN, DARK_BROWN };
-		screen[first_x + width - 2][i] = { L' ', DARK_BROWN, DARK_BROWN };
+		screen[first_x][i] = { L'█',BLACK, back };
+		screen[first_x + 1][i] = { L' ', back, back };
+		screen[first_x + 2][i] = { L' ', back, back };
+		screen[first_x + 3][i] = { L'█',BLACK, back };
+		screen[first_x + width][i] = { L'█',BLACK, back };
+		screen[first_x + width - 3][i] = { L'█',BLACK, back };
+		screen[first_x + width - 1][i] = { L' ', back, back };
+		screen[first_x + width - 2][i] = { L' ', back, back };
 	}
 	screen[first_x + 3][first_y + 1].buffer = L'▄';
 	screen[first_x + width - 3][first_y + 1].buffer = L'▄';
 	screen[first_x + 3][first_y + height - 1].buffer = L'▀';
 	screen[first_x + width - 3][first_y + height - 1].buffer = L'▀';
 	for (int i = 0; i < 5; i++)
-		screen[first_x + width - (4 + i)][first_y + height - 4] = { L'▄', BLACK, WHITE };
+		screen[first_x + width - (4 + i)][first_y + height - 4] = { L'▄', BLACK, paper };
 
-	screen[first_x + width - 3][first_y + height - 3] = { L' ', BLACK, DARK_BROWN };
-	screen[first_x + width - 4][first_y + height - 3] = { L'▀', BLACK, DARK_BROWN };
-	screen[first_x + width - 5][first_y + height - 3] = { L'▄', BLACK, WHITE };
-	screen[first_x + width - 6][first_y + height - 3] = { L' ', BLACK, WHITE };
-	screen[first_x + width - 7][first_y + height - 3] = { L' ', BLACK, WHITE };
-	screen[first_x + width - 8][first_y + height - 3] = { L'█', BLACK, WHITE };
+	screen[first_x + width - 3][first_y + height - 3] = { L' ', BLACK, back };
+	screen[first_x + width - 4][first_y + height - 3] = { L'▀', BLACK, back };
+	screen[first_x + width - 5][first_y + height - 3] = { L'▄', BLACK, paper };
+	screen[first_x + width - 6][first_y + height - 3] = { L' ', BLACK, paper };
+	screen[first_x + width - 7][first_y + height - 3] = { L' ', BLACK, paper };
+	screen[first_x + width - 8][first_y + height - 3] = { L'█', BLACK, paper };
 
-	screen[first_x + width - 3][first_y + height - 2] = { L' ', BLACK, DARK_BROWN };
-	screen[first_x + width - 4][first_y + height - 2] = { L' ', BLACK, DARK_BROWN };
-	screen[first_x + width - 5][first_y + height - 2] = { L' ', BLACK, DARK_BROWN };
-	screen[first_x + width - 6][first_y + height - 2] = { L'▀', BLACK, DARK_BROWN };
-	screen[first_x + width - 7][first_y + height - 2] = { L'▄', BLACK, WHITE };
-	screen[first_x + width - 8][first_y + height - 2] = { L'█', BLACK, WHITE };
+	screen[first_x + width - 3][first_y + height - 2] = { L' ', BLACK, back };
+	screen[first_x + width - 4][first_y + height - 2] = { L' ', BLACK, back };
+	screen[first_x + width - 5][first_y + height - 2] = { L' ', BLACK, back };
+	screen[first_x + width - 6][first_y + height - 2] = { L'▀', BLACK, back };
+	screen[first_x + width - 7][first_y + height - 2] = { L'▄', BLACK, paper };
+	screen[first_x + width - 8][first_y + height - 2] = { L'█', BLACK, paper };
 
 	for (int i = 0; i < 5; i++)
-		screen[first_x + width - (3 + i)][first_y + height - 1] = { L' ', BLACK, DARK_BROWN };
+		screen[first_x + width - (3 + i)][first_y + height - 1] = { L' ', BLACK, back };
 }
 void CGRAPHIC::drawRegtangle(int first_x, int first_y, int width, int height, int color, bool isFill) {
 	for (int i = 0; i < width; i++)
@@ -269,9 +269,9 @@ void CGRAPHIC::drawRegtangle(int first_x, int first_y, int width, int height, in
 			else screen[first_x + i][first_y + j] = { L'█', color, color };
 }
 
-void CGRAPHIC::DrawTextBoard(string contentName, int colorName, vector<string> contentBody, int first_x, int first_y, int width, int height, int txtColor, int bgdColor) {
+void CGRAPHIC::DrawTextBoard(string contentName, int colorName, vector<string> contentBody, int first_x, int first_y, int width, int height, int txtColor, int bgdColor, int back, int paper) {
 	
-	drawClipBoard(first_x, first_y, width, height);
+	drawClipBoard(first_x, first_y, width, height, back, paper);
 	drawString(contentName, first_x+18, first_y+3 , colorName, bgdColor, contentName.length());
 
 	int body_x = first_x + 7, body_y = first_y +7; // Bat dau tu hang 7
@@ -601,57 +601,57 @@ void CGRAPHIC::DrawBigDinoSaur(int first_x, int first_y)
 	this->screen[x+21][y+19].bgdColor = DARK_GREEN;
 
 }
-void CGRAPHIC::DrawHat(int first_x, int first_y)
+void CGRAPHIC::DrawHat(int first_x, int first_y, int Color)
 {
 	vector<wstring>frame = HAT;
 	//set buffer
 	for (int i = 0; i < 16; i++)
-		for (int j = 0; j < 5; j++)
-			this->screen[first_x + i][first_y + j] = { frame[j][i], DARK_BROWN, -1 };
+		for (int j = 0; j < 4; j++)
+			this->screen[first_x + i][first_y + j] = { frame[j][i], Color, -1 };
 	//set color
 	int x = first_x;
 	int y = first_y;
-	this->screen[x+6][y].txtColor = DARK_BROWN;
+	this->screen[x+6][y].txtColor = Color;
 	this->screen[x+6][y].bgdColor = -1;
-	this->screen[x+7][y].txtColor = DARK_BROWN;
-	this->screen[x+8][y].txtColor = DARK_BROWN;
-	this->screen[x+9][y].txtColor = DARK_BROWN;
+	this->screen[x+7][y].txtColor = Color;
+	this->screen[x+8][y].txtColor = Color;
+	this->screen[x+9][y].txtColor = Color;
 	this->screen[x+9][y].bgdColor = -1;
 
 	this->screen[x+4][y+1].txtColor = BLACK;
 	this->screen[x+4][y+1].bgdColor = -1;
-	this->screen[x+5][y+1].txtColor = DARK_BROWN;
+	this->screen[x+5][y+1].txtColor = Color;
 	this->screen[x+5][y+1].bgdColor = BLACK;
-	this->screen[x+6][y+1].txtColor = DARK_BROWN;
+	this->screen[x+6][y+1].txtColor = Color;
 	this->screen[x+6][y+1].bgdColor = BLACK;
-	this->screen[x+7][y+1].txtColor = DARK_BROWN;
+	this->screen[x+7][y+1].txtColor = Color;
 	this->screen[x+7][y+1].bgdColor = BLACK;
-	this->screen[x+8][y+1].txtColor = DARK_BROWN;
+	this->screen[x+8][y+1].txtColor = Color;
 	this->screen[x+8][y+1].bgdColor = BLACK;
 	for (int i = 9; i < 12; i++)
 	{
-		this->screen[x+i][y+1].txtColor = DARK_BROWN;
+		this->screen[x+i][y+1].txtColor = Color;
 	}
-	this->screen[x][y+2].txtColor = DARK_BROWN;
-	this->screen[x+1][y+2].txtColor = DARK_BROWN;
-	this->screen[x+2][y+2].txtColor = DARK_BROWN;
+	this->screen[x][y+2].txtColor = Color;
+	this->screen[x+1][y+2].txtColor = Color;
+	this->screen[x+2][y+2].txtColor = Color;
 	this->screen[x+2][y+2].bgdColor = -1;
-	this->screen[x+3][y+2].txtColor = DARK_BROWN;
+	this->screen[x+3][y+2].txtColor = Color;
 	this->screen[x+3][y+2].bgdColor = -1;
 	this->screen[x+4][y+2].txtColor = BLACK;
-	this->screen[x+4][y+2].bgdColor = DARK_BROWN;
+	this->screen[x+4][y+2].bgdColor = Color;
 	this->screen[x+5][y+2].txtColor = BLACK;
-	this->screen[x+5][y+2].bgdColor = DARK_BROWN;
+	this->screen[x+5][y+2].bgdColor = Color;
 
 	for (int i = 6; i < 11; i++)
 	{
 		this->screen[x+i][y+2].txtColor = BLACK;
 	}
 	this->screen[x+11][y+2].txtColor = BLACK;
-	this->screen[x+11][y+2].bgdColor = DARK_BROWN;
+	this->screen[x+11][y+2].bgdColor = Color;
 	for (int i = 1; i <= 14; i++)
 	{
-		this->screen[x+i][y+3].txtColor = DARK_BROWN;
+		this->screen[x+i][y+3].txtColor = Color;
 		this->screen[x+i][y+3].bgdColor = -1;
 	}
 }
@@ -800,7 +800,7 @@ void CGRAPHIC::DrawSettingScreen(int first_x, int first_y) {
 	Text(L"EFFECT", 10 + first_x, 17 + first_y, BLACK, SAND);
 }
 void CGRAPHIC::DrawLoadGame(int first_x, int first_y, deque<string> nameList) {
-	drawClipBoard(first_x, first_y, 50, 30);
+	drawClipBoard(first_x, first_y, 50, 30,DARK_BLUE,SAND);
 	for (int i = 0; i < (int)nameList.size(); i++) {
 		DrawNumber1pixel(first_x + 11, first_y + 6 + i * 2, i + 1, BLACK, SAND);
 		DrawString1pixel(first_x + 15, first_y + 6 + i * 2, nameList[i], BLACK, SAND);
@@ -1124,14 +1124,14 @@ void CGRAPHIC::drawTag(int first_x, int first_y, string tagName, int tagColor) {
 	screen[first_x + 2][first_y + 4].bgdColor = -1;
 	screen[first_x + 3][first_y + 4].bgdColor = -1;
 	screen[first_x + 4][first_y + 4].bgdColor = -1;
-	for (int i = 1; i < 5; i++)
+	for (int i = 0; i < 4; i++)
 		screen[first_x + 7][first_y + i].bgdColor = tagColor;
 	for (int i = 33; i < 39; i++)
-		for (int j = 1; j < 5; j++)
+		for (int j = 0; j < 4; j++)
 			screen[first_x + i][first_y + j].bgdColor = tagColor;
 	screen[first_x + 4][first_y + 2].txtColor = tagColor;
+	screen[first_x + 5][first_y + 1].txtColor = tagColor;
 	screen[first_x + 5][first_y + 2].txtColor = tagColor;
-	screen[first_x + 5][first_y + 3].txtColor = tagColor;
 
 	drawString(tagName, first_x + 8, first_y + 1, tagColor, -1);
 }
@@ -1390,4 +1390,12 @@ void CGRAPHIC::DrawEgg(int first_x , int first_y ) {
 	screen[first_x + 4][first_y + 2].bgdColor = WHITE;
 	screen[first_x + 5][first_y + 2].txtColor = BLACK;
 	screen[first_x + 5][first_y + 2].bgdColor = LIGHT_GRAY;
+}
+}
+
+void CGRAPHIC::DrawMissonFailed(int first_x, int first_y, int txtColor, int BgdColor) {
+	DrawObject(MISSION_FAILED, first_x, first_y, txtColor, BgdColor);
+}
+void CGRAPHIC::DrawMissonMissonCompleted(int first_x, int first_y, int txtColor, int BgdColor) {
+	DrawObject(MISSION_COMPLETED, first_x, first_y, txtColor, BgdColor);
 }

@@ -75,10 +75,10 @@
     <ClCompile Include="CTREE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CUFO.cpp">
+    <ClCompile Include="CVEHICLELANE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CVEHICLELANE.cpp">
+    <ClCompile Include="CUFO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,10 +140,10 @@
     <ClInclude Include="CTREE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CUFO.h">
+    <ClInclude Include="CVEHICLELANE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CVEHICLELANE.h">
+    <ClInclude Include="CUFO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

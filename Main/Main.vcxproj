@@ -108,6 +108,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,10 +144,10 @@
     <ClCompile Include="CTRAINLANE.cpp" />
     <ClCompile Include="CTREE.cpp" />
     <ClCompile Include="CTRUCK.cpp" />
-    <ClCompile Include="CUFO.cpp" />
     <ClCompile Include="CGAME.cpp" />
     <ClCompile Include="CLANE.cpp" />
     <ClCompile Include="CPLAYER.cpp" />
+    <ClCompile Include="CUFO.cpp" />
     <ClCompile Include="CVEHICLELANE.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
@@ -167,10 +168,10 @@
     <ClInclude Include="CTRAINLANE.h" />
     <ClInclude Include="CTREE.h" />
     <ClInclude Include="CTRUCK.h" />
-    <ClInclude Include="CUFO.h" />
     <ClInclude Include="CGAME.h" />
     <ClInclude Include="CLANE.h" />
     <ClInclude Include="CPLAYER.h" />
+    <ClInclude Include="CUFO.h" />
     <ClInclude Include="CVEHICLELANE.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
