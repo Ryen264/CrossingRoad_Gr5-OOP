@@ -604,6 +604,7 @@ void CGAME::NewGame() {
 	ObjLayer.clear(WHITE, WHITE);
 	displayScreen(ObjLayer, BgdLayer);
 	ChooseCharacter(BgdLayer);
+	cPlayer->setScore(0);
 	cPlayer->set(BOARD_WIDTH / 2, UP_LANE, true, 0);
 	isSaved = false;
 	this->level = 1;
@@ -1673,6 +1674,7 @@ bool CGAME::drawLosingScreen(int COLOR) {
 	TmpBgdLayer.DrawMissonFailed(54, 2, DARK_RED, SKY_BLUE);
 	TmpBgdLayer.drawString("SCORE", UFO_x, UFO_y + 10, BLACK, SKY_BLUE);
 	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 10, BLACK, SKY_BLUE);
+	if (cPlayer->getScore() == 0) cPlayer->setScore(1);
 	TmpBgdLayer.DrawNumber(cPlayer->getScore(), UFO_x + 25, UFO_y + 10, BLACK, SKY_BLUE);
 	TmpBgdLayer.drawString("LEVEL", UFO_x, UFO_y + 15, BLACK, SKY_BLUE);
 	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 15, BLACK, SKY_BLUE);
