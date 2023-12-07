@@ -9,6 +9,7 @@
 #include "CUFO.h"
 #include "CDINOSAUR.h"
 
+#include <windows.h>
 #include <iostream>
 #include<sstream>
 #include <conio.h>
