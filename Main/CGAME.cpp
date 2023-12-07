@@ -622,6 +622,7 @@ void CGAME::NewGame() {
 	ObjLayer.clear(WHITE, WHITE);
 	displayScreen(ObjLayer, BgdLayer);
 	ChooseCharacter(BgdLayer);
+	cPlayer->setScore(0);
 	cPlayer->set(BOARD_WIDTH / 2, UP_LANE, true, 0);
 	isSaved = false;
 	this->level = 1;
