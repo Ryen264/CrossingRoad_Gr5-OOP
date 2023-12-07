@@ -485,6 +485,7 @@ void CGAME::renameFile(int index, const CGRAPHIC& BgdLayer) {
 
 int CGAME::Menu() {
 	PlaySound(TEXT("ycg_logo.wav"), NULL, SND_ASYNC);
+	playBackgroundSound(MENU_THEME);
 	system("cls");
 	SetupTheme(MAIN_MENU_THEME, hStdout);
 	const int fromX = 5, fromY = 18,
@@ -522,7 +523,7 @@ int CGAME::Menu() {
 	tmpObjLayer.DrawPerryTalk(curMessage, xfromTalk, yfromTalk, curColor, WHITE);
 	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 	while (1) {
-		PlaySound(TEXT("menu_file_cursor_move.wav"), NULL, SND_ASYNC);
+		playEffectSound(MENU_MOVE);
 		int temp = toupper(_getch());
 
 		//erase the last step
@@ -538,33 +539,33 @@ int CGAME::Menu() {
 			Sleep(500);
 			switch (yOption) {
 			case NEW_GAME:
-				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
+				playEffectSound(MENU_ENTER);
 				SetupTheme(THEME_BASIC, hStdout);
 				NewGame();
 				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case LOAD_GAME:
-				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
+				playEffectSound(MENU_ENTER);
 				SetupTheme(THEME_BASIC, hStdout);
 				this->LoadGame();
 				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case SETTING:
-				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
+				playEffectSound(MENU_ENTER);
 				SetupTheme(THEME_BASIC, hStdout);
 				this->Setting();
 				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case HELP:
-				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
+				playEffectSound(MENU_ENTER);
 				this->Help();
 				break;
 			case ABOUT:
-				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
+				playEffectSound(MENU_ENTER);
 				this->About();
 				break;
 			case QUIT:
-				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
+				playEffectSound(MENU_ENTER);
 				return QUIT_CODE;
 			}
 			displayScreen(tmpObjLayer, tmpBgdLayer);
@@ -1765,4 +1766,35 @@ void CGAME::drawWiningScreen(int COLOR) {
 	TmpObjLayer.drawString("PRESS ANY KEY TO RETURN", 60, UFO_y + 30, BLACK, LIGHT_GREEN);
 	Sleep(300);
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
+}
+
+void CGAME::playEffectSound(string soundName) {
+	mciSendString(L"close wav", NULL, 0, NULL);
+	if (soundName != OFF_SOUND) {
+		string fileName = "open " + soundName + int_to_string(effectSoundLevel) + ".wav" + " type mpegvideo alias wav";
+		wstring wfileName(fileName.begin(), fileName.end());
+		LPCWSTR swfileName = wfileName.c_str();
+		mciSendString(swfileName, NULL, 0, NULL);
+
+		mciSendString(L"play wav", NULL, 0, NULL);
+	}
+}
+void CGAME::playBackgroundSound(string soundName) {
+	if (soundName == OFF_SOUND) PlaySound(NULL, NULL, 0);
+	else {
+		string fileName = soundName + int_to_string(bgdSoundLevel) + ".wav";
+		wstring wfileName(fileName.begin(), fileName.end());
+		LPCWSTR swfileName = wfileName.c_str();
+		PlaySound(swfileName, NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+	}
+}
+
+string int_to_string(int num) {
+	vector<int> arrNum{};
+	for (; num != 0; num /= 10)
+		arrNum.push_back(num % 10);
+	string res{};
+	for (int i = 0; i < (int)arrNum.size(); i++)
+		res.push_back(arrNum[(int)arrNum.size() - 1 - i] + '0');
+	return res;
 }
