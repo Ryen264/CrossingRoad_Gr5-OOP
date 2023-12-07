@@ -128,7 +128,7 @@ void CGRAPHIC::DrawNumber(int num, int first_x, int first_y, int txtColor, int b
 		DrawObject(NUMBER[arrNum[(int)arrNum.size() - 1 - i]], first_x + i * 4, first_y, txtColor, bgdColor, false);
 }
 void CGRAPHIC::DrawBigNumber(int num, int first_x, int first_y, int txtColor, int bgdColor) {
-	DrawObject(BIG_NUMBER[num-1], first_x, first_y, BLACK, WHITE);
+	DrawObject(BIG_NUMBER[num-1], first_x, first_y, txtColor, bgdColor);
 }
 void CGRAPHIC::DrawInputPos(int first_x, int first_y, int txtColor, int bgdColor) {
 	DrawObject(INPUT_POS, first_x, first_y, txtColor, bgdColor);

@@ -115,6 +115,8 @@ public:
 
     void playEffectSound(string soundName);
     void playBackgroundSound(string soundName);
+
+    void takeArest(bool& isSkip, int wait = 500);
 };
 //Return codes
 const int QUIT_CODE = -1000;
@@ -122,7 +124,7 @@ const int BACK_TO_MENU_CODE = -1001;
 
 const int MAX_INPUT_SIZE = 8;
 const int MAX_NUMBER_OF_SAVED_FILE = 10;
-const int MAX_LEVEL = 10;
+const int MAX_LEVEL = 3;
 
 const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, TRAINLANE_ID, RIVERLANE_ID };
 

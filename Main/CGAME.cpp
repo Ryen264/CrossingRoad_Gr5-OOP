@@ -15,6 +15,7 @@ CGAME::~CGAME() {
 	ShowCur(true);
 	ShowScrollbar(true);
 	system("mode 1000, 500");
+	system("color 67");
 }
 void CGAME::Configure()
 {
@@ -46,6 +47,7 @@ void CGAME::Configure()
 	MoveWindow(hWnd, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, TRUE);
 
 	system("mode 208, 51");
+	system("color 20");
 	//
 	srand(time(0));
 	SetupTheme(THEME_BASIC, hStdout);
@@ -59,10 +61,10 @@ void CGAME::start() {
 	this->intro();
 	_getch();
 	while (this->Menu() != QUIT_CODE);
+	system("cls");
+	system("color 67");
 	this->outtro();
 	_getch();
-	system("cls");
-	//resetConsole(); - anti-Configure 
 }
 void CGAME::playGame() {
 	system("cls");
@@ -70,7 +72,7 @@ void CGAME::playGame() {
 	isThreadRunning = true;
 	thread threadNewGame(&CGAME::SubThreadNewGame, this);
 	while (1) {
-		if (level == 3) {
+		if (level == MAX_LEVEL) {
 			SuspendThread(threadNewGame.native_handle());
 			drawWiningScreen();
 			if (_getch()) {
@@ -518,14 +520,30 @@ int CGAME::Menu() {
 
 	//draw menu
 	tmpBgdLayer.DrawMainMenu();
-	tmpObjLayer.DrawBigDinoSaur(53, 17);
-	tmpObjLayer.DrawDinasourPicture(10, 2);
 	tmpObjLayer.DrawDoofCorp(176, 16);
-	tmpObjLayer.DrawHeader(98, 3);
-	tmpObjLayer.DrawDinasourPicture(10, 2);
-	tmpObjLayer.DrawHat(190, 44, DARK_BROWN);
-	tmpBgdLayer.DrawDrawer(fromX, fromY + 3);
+	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 
+	bool isSkip = false;
+	takeArest(isSkip);
+
+	tmpObjLayer.DrawDinasourPicture(10, 2);
+	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+
+	takeArest(isSkip);
+
+	tmpObjLayer.DrawHeader(98, 3);
+	tmpObjLayer.DrawHat(190, 44, DARK_BROWN);
+	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+
+	takeArest(isSkip);
+
+	tmpObjLayer.DrawBigDinoSaur(53, 17);
+	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+
+	takeArest(isSkip);
+
+	tmpBgdLayer.DrawDrawer(fromX, fromY + 3);
+	tmpObjLayer.DrawDrawer(fromX, fromY + 3);
 	//draw current step
 	tmpObjLayer.DrawSmallDrawer(xOption, yOption, curColor);
 	tmpObjLayer.DrawPerryTalk(curMessage, xfromTalk, yfromTalk, curColor, WHITE);
@@ -1419,7 +1437,6 @@ void CGAME::moveNewLane() {
 void CGAME::SubThreadNewGame() {
 	while (isThreadRunning) {
 		if (!cPlayer->isDead()) {
-		
 			//Lane move
 			for (int i = 0; i < BOARD_HEIGHT; i++) aLanes[i]->Move();
 
@@ -1464,12 +1481,12 @@ void CGAME::SubThreadNewGame() {
 				cPlayer->setDependObj(NULL);
 
 				if (!(nextObj->getID() == TREE_DOUBLE_ID || nextObj->getID() == TREE_SINGLE_ID)) {
-					cPlayer->setPos(xBoard, yBoard - 1);
 					if (cPlayer->getYBoard() == UP_LANE)
 					{
 						moveNewLane();
 						startMap();
 					}
+					else cPlayer->setPos(xBoard, yBoard - 1);
 				}
 				break;
 			}
@@ -1503,6 +1520,8 @@ void CGAME::SubThreadNewGame() {
 				resetData();
 				startMap();
 			}
+			//Win
+			if (level == MAX_LEVEL) continue;
 			Sleep(100);
 		}
 	}
@@ -1535,7 +1554,6 @@ void CGAME::updateScore() {
 	ObjLayer.DrawEgg(114, 0);
 	ObjLayer.DrawNumber(cPlayer->getScore()+1, 127, 0, BLACK, LIGHT_GRAY);
 }
-
 void CGAME::updateLevel() {
 	ObjLayer.drawString("LEVEL", 74, 0, BLACK, LIGHT_GRAY);
 	ObjLayer.DrawObject(COLON, 95, 0, BLACK, LIGHT_GRAY);
@@ -1577,17 +1595,23 @@ void CGAME::drawCountDown() {
 	displayScreen(tmpObjLayer, tmpBgdLayer);
 
 	int x = (SCREEN_WIDTH - 35) / 2, y = (SCREEN_HEIGHT - 17) / 2;
-	tmpObjLayer.DrawBigNumber(3, x, y, RED, WHITE);
+	tmpObjLayer.DrawBigNumber(3, x, y, DARK_RED, WHITE);
 	displayScreen(tmpObjLayer, BgdLayer, 0, 0, -1, -1);
-	Sleep(1000);
+
+	bool isSkip = false;
+	takeArest(isSkip, 1000);
+
 	tmpObjLayer.clear(-1, -1);
 	tmpObjLayer.DrawBigNumber(2, x, y, BRIGHT_YELLOW, WHITE);
 	displayScreen(tmpObjLayer, BgdLayer, 0, 0, -1, -1);
-	Sleep(1000);
+
+	takeArest(isSkip, 1000);
+
 	tmpObjLayer.clear(-1, -1);
-	tmpObjLayer.DrawBigNumber(1, x, y, LIGHT_GREEN, WHITE);
+	tmpObjLayer.DrawBigNumber(1, x, y, DARK_GREEN, WHITE);
 	displayScreen(tmpObjLayer, BgdLayer, 0, 0, -1, -1);
-	Sleep(1000);
+
+	takeArest(isSkip, 1000);
 }
 
 bool CGAME::drawLosingScreen(int COLOR) {
@@ -1630,28 +1654,38 @@ bool CGAME::drawLosingScreen(int COLOR) {
 	}
 	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
-	Sleep(500);
+
+	bool isSkip = false;
+	takeArest(isSkip);
 
 	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
 	DINO.setY(Dino_y -= 3);
 	DINO.DrawBlock(TmpObjLayer);
 	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 9);
-	Sleep(500);
+
+	takeArest(isSkip);
+
 	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
 	DINO.setY(Dino_y -= 3);
 	DINO.DrawBlock(TmpObjLayer);
 	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 9);
-	Sleep(500);
+
+	takeArest(isSkip);
+
 	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
 	DINO.setY(Dino_y -= 3);
 	DINO.DrawBlock(TmpObjLayer);
 	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 9);
-	Sleep(500);
+
+	takeArest(isSkip);
+
 	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
 	DINO.setY(Dino_y -= 3);
 	DINO.DrawBlock(TmpObjLayer);
 	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 9);
-	Sleep(500);
+
+	takeArest(isSkip);
+
 	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
 	DINO.setY(Dino_y -= 1);
 	DINO.DrawBlock(TmpObjLayer);
@@ -1669,22 +1703,22 @@ bool CGAME::drawLosingScreen(int COLOR) {
 	displayScreen(TmpObjLayer, TmpBgdLayer, UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
 	displayScreen(TmpBgdLayer, Tmpback, UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
 
-	Sleep(500);
+	takeArest(isSkip);
+
 	TmpBgdLayer.DrawMissonFailed(54, 2, DARK_RED, SKY_BLUE);
-	TmpBgdLayer.drawString("SCORE", UFO_x, UFO_y + 10, BLACK, SKY_BLUE);
-	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 10, BLACK, SKY_BLUE);
-	TmpBgdLayer.DrawNumber(cPlayer->getScore(), UFO_x + 25, UFO_y + 10, BLACK, SKY_BLUE);
-	TmpBgdLayer.drawString("LEVEL", UFO_x, UFO_y + 15, BLACK, SKY_BLUE);
-	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 15, BLACK, SKY_BLUE);
-	TmpBgdLayer.DrawNumber(level, UFO_x + 25, UFO_y + 15, BLACK, SKY_BLUE);
-
-
-	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
-	Sleep(500);
-	TmpBgdLayer.drawString("PLAY AGAIN", 34, 40, BLACK, LIGHT_GREEN);
-	TmpBgdLayer.drawString("EXIT TO MENU", 134, 40, BLACK, LIGHT_GREEN);
+	TmpBgdLayer.drawString("SCORE", UFO_x, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpBgdLayer.DrawNumber(cPlayer->getScore(), UFO_x + 25, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpBgdLayer.drawString("LEVEL", UFO_x, UFO_y + 13, BLACK, SKY_BLUE);
+	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 13, BLACK, SKY_BLUE);
+	TmpBgdLayer.DrawNumber(level, UFO_x + 25, UFO_y + 13, BLACK, SKY_BLUE);
 	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
 
+	takeArest(isSkip);
+
+	TmpBgdLayer.drawString("PLAY AGAIN", 34, 40, LIGHT_GRAY, LIGHT_GREEN);
+	TmpBgdLayer.drawString("EXIT TO MENU", 134, 40, LIGHT_GRAY, LIGHT_GREEN);
+	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
 
 	// option
 	const int fromX = 34, fromY = 40,
@@ -1697,12 +1731,12 @@ bool CGAME::drawLosingScreen(int COLOR) {
 
 	// draw current choice
 	if (xOption == PLAY_AGAIN) {
-		TmpObjLayer.drawString("PLAY AGAIN", PLAY_AGAIN, fromY, BLUE, LIGHT_GREEN);
-		TmpObjLayer.drawString("EXIT TO MENU", EXIT_TO_MENU, fromY, BLACK, LIGHT_GREEN);
+		TmpObjLayer.drawString("PLAY AGAIN", PLAY_AGAIN, fromY, DARK_GREEN, LIGHT_GREEN);
+		TmpObjLayer.drawString("EXIT TO MENU", EXIT_TO_MENU, fromY, LIGHT_GRAY, LIGHT_GREEN);
 	}
 	else {
-		TmpObjLayer.drawString("EXIT TO MENU", xOption, 40, BLUE, LIGHT_GREEN);
-		TmpObjLayer.drawString("PLAY AGAIN", 34, 40, BLACK, LIGHT_GREEN);
+		TmpObjLayer.drawString("EXIT TO MENU", xOption, 40, DARK_RED, LIGHT_GREEN);
+		TmpObjLayer.drawString("PLAY AGAIN", 34, 40, LIGHT_GRAY, LIGHT_GREEN);
 	}
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 40, SCREEN_WIDTH - 1, 42);
 
@@ -1717,9 +1751,9 @@ bool CGAME::drawLosingScreen(int COLOR) {
 				if (isUpButton(temp) == true || isDownButton(temp) == true || isLeftButton(temp) == true || isRightButton(temp) == true) {
 					xOption = EXIT_TO_MENU;
 
-					TmpObjLayer.drawString("PLAY AGAIN", 34, 40, BLACK, LIGHT_GREEN);
+					TmpObjLayer.drawString("PLAY AGAIN", 34, 40, LIGHT_GRAY, LIGHT_GREEN);
 					displayScreen(TmpObjLayer, TmpBgdLayer, 34, 40, 34 + 60, 42);
-					TmpObjLayer.drawString("EXIT TO MENU", 134, 40, BLUE, LIGHT_GREEN);
+					TmpObjLayer.drawString("EXIT TO MENU", 134, 40, DARK_RED, LIGHT_GREEN);
 					displayScreen(TmpObjLayer, TmpBgdLayer, 134, 40, 134 + 60, 42);
 				}
 			}
@@ -1731,9 +1765,9 @@ bool CGAME::drawLosingScreen(int COLOR) {
 			if (!isEnterButton(temp)) {
 				if (isUpButton(temp) == true || isDownButton(temp) == true || isLeftButton(temp) == true || isRightButton(temp) == true) {
 					xOption = PLAY_AGAIN;
-					TmpObjLayer.drawString("PLAY AGAIN", 34, 40, BLUE, LIGHT_GREEN);
+					TmpObjLayer.drawString("PLAY AGAIN", 34, 40, DARK_GREEN, LIGHT_GREEN);
 					displayScreen(TmpObjLayer, TmpBgdLayer, 34, 40, 34 + 60, 42);
-					TmpObjLayer.drawString("EXIT TO MENU", 134, 40, BLACK, LIGHT_GREEN);
+					TmpObjLayer.drawString("EXIT TO MENU", 134, 40, LIGHT_GRAY, LIGHT_GREEN);
 					displayScreen(TmpObjLayer, TmpBgdLayer, 134, 40, 134 + 60, 42);
 
 				}
@@ -1795,19 +1829,28 @@ void CGAME::drawWiningScreen(int COLOR) {
 	TmpObjLayer.DrawHat(Fedora_x, Fedora_y, SADDLE_BROWN);
 	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
-	Sleep(300);
+
+	bool isSkip = false;
+	takeArest(isSkip, 300);
+
 	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
 	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
 	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y - 2, Fedora_x + 15, Fedora_y + 5);
-	Sleep(300);
+
+	takeArest(isSkip, 300);
+
 	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
 	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
 	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y - 2, Fedora_x + 15, Fedora_y + 5);
-	Sleep(300);
+
+	takeArest(isSkip, 300);
+
 	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
 	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
 	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y - 2, Fedora_x + 15, Fedora_y + 5);
-	Sleep(300);
+
+	takeArest(isSkip, 300);
+
 	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
 	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
 	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y - 2, Fedora_x + 15, Fedora_y + 5);
@@ -1823,19 +1866,22 @@ void CGAME::drawWiningScreen(int COLOR) {
 	TmpObjLayer.DrawMissonMissonCompleted(40, 2, DARK_GREEN, SKY_BLUE);
 	displayScreen(TmpBgdLayer, Tmpback, UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
-	TmpObjLayer.drawString("SCORE", UFO_x + 1, UFO_y + 8, BLACK, SKY_BLUE);
-	TmpObjLayer.DrawObject(COLON, UFO_x + 22, UFO_y + 8, BLACK, SKY_BLUE);
-	TmpObjLayer.DrawNumber(cPlayer->getScore(), UFO_x + 26, UFO_y + 8, BLACK, SKY_BLUE);
-	TmpObjLayer.drawString("TIME", UFO_x + 5, UFO_y + 13, BLACK, SKY_BLUE);
-	TmpObjLayer.DrawObject(COLON, UFO_x + 22, UFO_y + 13, BLACK, SKY_BLUE);
-	TmpObjLayer.drawTime(curTime, UFO_x + 26, UFO_y + 13, BLACK, SKY_BLUE);
-	Sleep(300);
+	TmpObjLayer.drawString("SCORE", UFO_x, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpObjLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpObjLayer.DrawNumber(cPlayer->getScore(), UFO_x + 25, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpObjLayer.drawString("TIME", UFO_x, UFO_y + 13, BLACK, SKY_BLUE);
+	TmpObjLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 13, BLACK, SKY_BLUE);
+	TmpObjLayer.drawTime(curTime, UFO_x + 25, UFO_y + 13, BLACK, SKY_BLUE);
+
+	takeArest(isSkip, 300);
+
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
-	TmpObjLayer.drawString("PRESS ANY KEY TO RETURN", 60, UFO_y + 30, BLACK, LIGHT_GREEN);
-	Sleep(300);
+	TmpObjLayer.drawString("PRESS ANY KEY TO RETURN", 60, UFO_y + 30, DARK_GREEN, LIGHT_GREEN);
+
+	takeArest(isSkip, 300);
+
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
 }
-
 
 void CGAME::displayScreen(int fromX, int fromY, int toX, int toY) {
 	if (toX < 0 || toX > SCREEN_WIDTH - 1) toX = SCREEN_WIDTH - 1;
@@ -1879,6 +1925,13 @@ void CGAME::playBackgroundSound(string soundName) {
 		LPCWSTR swfileName = wfileName.c_str();
 		PlaySound(swfileName, NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 	}
+}
+void CGAME::takeArest(bool& isSkip, int wait) {
+	if (!isSkip) {
+		isSkip = _kbhit();
+		if (isSkip) _getch();
+	}
+	if (!isSkip) Sleep(500);
 }
 
 bool isUpButton(int button) {
