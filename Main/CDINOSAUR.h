@@ -2,6 +2,7 @@
 #include "COBJECT.h"
 class CDINOSAUR : public COBJECT {
 	bool isRight;
+
 	int color;
 	const vector<wstring> FRAME_RIGHT =
 	{

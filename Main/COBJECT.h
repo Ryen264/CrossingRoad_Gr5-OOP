@@ -5,20 +5,31 @@ const int BOARD_HEIGHT = 8;
 
 class COBJECT {
 protected:
-	int x, y, ID;
+	int ID;
+
+	int x, y;
 	PIXEL** block;
 public:
 	COBJECT(int x = 0, int y = 0);
 	virtual ~COBJECT();
-	int getID() const;
+	int getX() const;
+	int getY() const;
+
 	void setPos(int x, int y);
 	void setX(int x);
 	void setY(int y);
-    int getX() const;
-    int getY() const;
-	void DrawBlock(CGRAPHIC& layer, bool isPass = false);
+
+	int getID() const;
+	virtual bool getIsRight() const;
+	virtual bool getIsHead() const;
+
+	virtual void setIsRight(bool isRight);
+	virtual void setIsHead(bool isHead);
 
 	virtual void setColor(int color);
+
+	void DrawBlock(CGRAPHIC& layer, bool isPass = false);
+
 };
 //Object IDs
 const int CAR_ID = 30001;
@@ -33,7 +44,8 @@ const int BUS_TAIL_ID = 31007;
 
 const int TRAFFICLIGHT_ID = 40001;
 const int EGG_ID = 40002;
-const int TREE_ID = 40003;
+const int TREE_DOUBLE_ID = 40003;
+const int TREE_SINGLE_ID = 41003;
 const int UFO_ID = 40004;
 
 int random(vector<int> arr);

@@ -22,4 +22,8 @@ L"                "
 	};
 public:
 	CTRUCK(int x = 0, int y = 0, bool isRight = true);
+	bool getIsRight() const;
+
+	void setIsRight(bool isRight);
+
 };

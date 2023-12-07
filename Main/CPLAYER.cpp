@@ -16,32 +16,18 @@ CPLAYER::~CPLAYER() {
     if (pCharacterL != NULL) delete pCharacterL;
     pCharacterR = pCharacterL = NULL;
 }
+
 int CPLAYER::getX() const {
-    return this->x;
+    return x;
 }
 int CPLAYER::getY() const {
-    return this->y;
+    return y;
 }
 int CPLAYER::getXBoard() const {
-    return this->xBoard;
+    return xBoard;
 }
 int CPLAYER::getYBoard() const {
-    return this->yBoard;
-}
-int CPLAYER::getScore() const {
-    return score;
-}
-bool CPLAYER::getIsRight() const {
-    return this->isRight;
-}
-bool CPLAYER::getIsAlive() const {
-    return this->alive;
-}
-COBJECT* CPLAYER::getDependObj() const {
-    return dependObj;
-}
-int CPLAYER::getMoving() const {
-    return this->moving;
+    return yBoard;
 }
 int CPLAYER::getColorCharacter() const {
     return colorCharacter;
@@ -57,6 +43,21 @@ string CPLAYER::getNameCharacter() const {
     else if (colorCharacter == DARK_RED) return "DRED";
     else if (colorCharacter == DARK_BLUE) return "DBLUE";
     else return "GREEN";
+}
+bool CPLAYER::getIsRight() const {
+    return isRight;
+}
+bool CPLAYER::getAlive() const {
+    return alive;
+}
+int CPLAYER::getScore() const {
+    return score;
+}
+int CPLAYER::getMoving() const {
+    return moving;
+}
+COBJECT* CPLAYER::getDependObj() const {
+    return dependObj;
 }
 
 void CPLAYER::set(int xBoard, int yBoard, bool live, bool right, int score) {
@@ -77,15 +78,6 @@ void CPLAYER::set(int xBoard, int yBoard, bool live, bool right, int score) {
     if (score >= 0)
         this->score = score;
 }
-bool CPLAYER::setIsRight() {
-    return this->isRight;
-}
-void CPLAYER::setAlive(bool alive) {
-    this->alive = alive;
-}
-void CPLAYER::setMove(int moving) {
-    this->moving = moving;
-}
 void CPLAYER::setPos(int xBoard, int yBoard) {
     if (xBoard >= BOARD_WIDTH) xBoard = BOARD_WIDTH - 1;
     if (xBoard >= 0)
@@ -101,43 +93,57 @@ void CPLAYER::setPos(int xBoard, int yBoard) {
         this->yBoard = yBoard;
     }
 }
-void CPLAYER::setDependObj(COBJECT* obj) {
-    dependObj = obj;
-}
-void CPLAYER::setxBoard(int xboard) {
+void CPLAYER::setXBoard(int xboard) {
     if (xBoard >= BOARD_WIDTH) xBoard = BOARD_WIDTH - 1;
     if (xBoard >= 0) {
         this->x = xBoard * BLOCK_WIDTH;
         this->xBoard = xBoard;
     }
 }
-void CPLAYER::setyBoard(int yboard) {
+void CPLAYER::setYBoard(int yboard) {
     if (yBoard >= BOARD_HEIGHT) yBoard = BOARD_HEIGHT - 1;
     if (yBoard >= 0) {
         this->y = yBoard * BLOCK_HEIGHT + START_BOARD_HEIGHT;
         this->yBoard = yBoard;
     }
 }
-void CPLAYER::setColorCharacter(int color) {
-    this->colorCharacter = color;
-    pCharacterR->setColor(color); pCharacterL->setColor(color);
+void CPLAYER::setColorCharacter(int colorCharacter) {
+    this->colorCharacter = colorCharacter;
+    pCharacterR->setColor(colorCharacter); pCharacterL->setColor(colorCharacter);
 }
+void CPLAYER::setIsRight(bool isRight) {
+    this->isRight = isRight;
+}
+void CPLAYER::setAlive(bool alive) {
+    this->alive = alive;
+}
+void CPLAYER::setScore(int score) {
+    if (score < 0) score = 0;
+    this->score = score;
+}
+void CPLAYER::setMoving(int moving) {
+    this->moving = moving;
+}
+void CPLAYER::setDependObj(COBJECT* dependObj) {
+    this->dependObj = dependObj;
+}
+
 int CPLAYER::updateDepend() {
-	if (dependObj == NULL) return 0;
+    if (dependObj == NULL) return 0;
     int ID = dependObj->getID();
-	switch (ID) {
-	case CAPYBARA_ID: {
-		this->x = dependObj->getX();
-		this->xBoard = this->x / BLOCK_WIDTH;
-		this->y = dependObj->getY();
-		this->yBoard = (this->y - START_BOARD_HEIGHT) / BLOCK_HEIGHT;
+    switch (ID) {
+    case CAPYBARA_ID: {
+        this->x = dependObj->getX();
+        this->xBoard = this->x / BLOCK_WIDTH;
+        this->y = dependObj->getY();
+        this->yBoard = (this->y - START_BOARD_HEIGHT) / BLOCK_HEIGHT;
         break;
-	}
-	case CAR_ID: case TRUCK_ID: case TRAIN_HEAD_ID: case TRAIN_BODY_ID:
-		this->alive = false;
+    }
+    case CAR_ID: case TRUCK_ID: case TRAIN_HEAD_ID: case TRAIN_BODY_ID:
+        this->alive = false;
         break;
-	}
-	return ID;
+    }
+    return ID;
 }
 bool CPLAYER::moveCharacter() {
 
@@ -160,7 +166,7 @@ bool CPLAYER::moveCharacter() {
             this->xBoard++;
         }
         if (xBoard == BOARD_WIDTH) {
-            setxBoard(BOARD_WIDTH - 1);
+            setXBoard(BOARD_WIDTH - 1);
             this->alive = false;
             return false;
         }
@@ -172,7 +178,7 @@ bool CPLAYER::moveCharacter() {
             this->xBoard--;
         }
         if (xBoard == -1) {
-            setxBoard(0);
+            setXBoard(0);
             this->alive = false;
             return false;
         }
@@ -190,7 +196,7 @@ void CPLAYER::decreaseScore(int point) {
     if (score < 0) score = 0;
 }
 
-bool CPLAYER::isDead() const{
+bool CPLAYER::isDead() const {
     return !this->alive;
 }
 bool CPLAYER::isMoving() const {

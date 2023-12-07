@@ -20,22 +20,8 @@ CLANE::~CLANE() {
         delete[] this->block[i];
     delete[] this->block;
 }
-void CLANE::injuredPlayer(CPLAYER& player) {
-    int i = player.getXBoard();
-    if (lane[i] == NULL) return;
-    player.setAlive(false);
-}
-void CLANE::changeDirection() {
-	this->isMoveRight = !this->isMoveRight;
-}
-bool CLANE::checkPos(int pos) {
-    return this->lane[pos] != NULL;
-}
+
 void CLANE::Move() {}
-bool CLANE::isMove() const
-{
-    return !this->isStop;
-}
 void CLANE::push_frontObject(int ID) {}
 void CLANE::pop_backObject() {
     if (isMoveRight) {
@@ -49,38 +35,25 @@ void CLANE::pop_backObject() {
         this->lane.pop_front();
     }
 }
-
-int CLANE::PosID(int pos) const {
-    if (pos < 0 || pos >= BOARD_WIDTH - 1) return 0;
-    return (lane[pos] != NULL) ? lane[pos]->getID() : 0;
+COBJECT* CLANE::frontObject() const
+{
+    if (isMoveRight) return this->lane.front();
+    return this->lane.back();
 }
-bool CLANE::getIsMoveRight() {
-    return this->isMoveRight;
+COBJECT* CLANE::backObject() const
+{
+    if (isMoveRight) return this->lane.back();
+    return this->lane.front();
 }
-int CLANE::getTimeCount() {
-    return this->timeCount;
+bool CLANE::emptyObject() const
+{
+    return this->lane.empty();
 }
-int CLANE::getDelayTime() {
-    return this->delayTime;
-}
-int CLANE::getID() const {
-    return this->ID;
-}
-COBJECT* CLANE::getPos(int i) const {
-    if (i < 0) i = 0;
-    if (i >= (int)lane.size()) i = (int)lane.size() - 1;
-    return lane[i];
+void CLANE::clearObject()
+{
+    this->lane.clear();
 }
 
-void CLANE::setIsMoveRight(bool right) {
-    this->isMoveRight = right;
-}
-void CLANE::setTimeCount(int time) {
-    this->timeCount = time;
-}
-void CLANE::setDelayTime(int time) {
-    this->delayTime = time;
-}
 void CLANE::setPos(int i, COBJECT* val) {
     if (i < 0) i = 0;
     if (i >= (int)lane.size()) i = (int)lane.size() - 1;
@@ -97,6 +70,65 @@ void CLANE::updatePosObj() {
         if (lane[i] != NULL) lane[i]->setPos(i * BLOCK_WIDTH, this->y);
 }
 
+void CLANE::injuredPlayer(CPLAYER& player) {
+    int i = player.getXBoard();
+    if (lane[i] == NULL) return;
+    player.setAlive(false);
+}
+COBJECT* CLANE::getPos(int i) const {
+    if (i < 0 || i >(int)lane.size() - 1) return NULL;
+    return lane[i];
+}
+
+int CLANE::getID() const {
+    return ID;
+}
+bool CLANE::getIsMoveRight() const {
+    return isMoveRight;
+}
+int CLANE::getCondition() const
+{
+    return 0;
+}
+int CLANE::getCountObject() const
+{
+    return 0;
+}
+int CLANE::getNumberOfConditionObj() const
+{
+    return 0;
+}
+int CLANE::getLightPos() const
+{
+    return -1;
+}
+int CLANE::getTimeLight() const
+{
+    return 0;
+}
+bool CLANE::getIsStop() const
+{
+    return false;
+}
+int CLANE::getTimeCount() const {
+    return 0;
+}
+int CLANE::getDelayTime() const {
+    return 0;
+}
+
+void CLANE::setIsMoveRight(bool isMoveRight) {
+    this->isMoveRight = isMoveRight;
+}
+void CLANE::setCondition(int condition) {}
+void CLANE::setCountObject(int countObject) {}
+void CLANE::setNumberOfConditionObj(int numberOfConditionObj) {}
+void CLANE::setLightPos(int lightPos) {}
+void CLANE::setTimeLight(int timeLight) {}
+void CLANE::setIsStop(bool isStop) {}
+void CLANE::setTimeCount(int timeCount) {}
+void CLANE::setDelayTime(int delayTime) {}
+
 void CLANE::DrawLane(CGRAPHIC& layer) {
     for (int k = 0; k < BOARD_WIDTH; k++) {
         for (int i = 0; i < BLOCK_WIDTH; i++)
@@ -108,6 +140,7 @@ void CLANE::DrawObjects(CGRAPHIC& layer) {
     for (int k = 0; k < BOARD_WIDTH; k++)
         if (lane[k] != NULL) lane[k]->DrawBlock(layer);
 }
+
 vector<int> operator-(const vector<int> first, const vector<int> second) {
     vector<int> res{};
     for (int i = 0; i < (int)first.size(); i++) {

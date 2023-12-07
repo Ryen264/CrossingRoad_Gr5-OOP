@@ -1,5 +1,4 @@
 #include "CVEHICLELANE.h"
-#include <conio.h>
 CVEHICLELANE::CVEHICLELANE(int x, int y, int delayTime) : CLANE(x, y) {
     for (int i = 0; i < BOARD_WIDTH; i++)
         this->lane.push_front(NULL);
@@ -78,16 +77,16 @@ void CVEHICLELANE::pushNormally() {
         switch (ID) {
         case CAR_ID: {
             countObject = 1;
-            numberOfConditionalObject = 1 + rand() % 3;
-            if (numberOfConditionalObject > 1) condition = ID;
-            else condition = -ID;
+            numberOfConditionObj = 1 + rand() % 3;
+            if (numberOfConditionObj > 1) condition = CAR_ID;
+            else condition = -CAR_ID;
             break;
         }
         case TRUCK_ID: {
             countObject = 1;
-            numberOfConditionalObject = 1 + rand() % 2;
-            if (numberOfConditionalObject > 1) condition = ID;
-            else condition = -ID;
+            numberOfConditionObj = 1 + rand() % 2;
+            if (numberOfConditionObj > 1) condition = TRUCK_ID;
+            else condition = -TRUCK_ID;
             break;
         }
         case BUS_HEAD_ID: {
@@ -108,7 +107,7 @@ void CVEHICLELANE::pushNormally() {
         case CAR_ID: case TRUCK_ID: {
             push_frontObject(condition);
             countObject++;
-            if (countObject >= numberOfConditionalObject) {
+            if (countObject >= numberOfConditionObj) {
                 condition = -condition;
                 countObject = 0;
             }
@@ -120,8 +119,9 @@ void CVEHICLELANE::pushNormally() {
             break;
         }
         default:
-            push_frontObject(CAR_ID);
-            condition = 0;
+            int ID = random(OBJECT_ID_LIST);
+            push_frontObject(ID);
+            condition = (ID == BUS_HEAD_ID) ? BUS_TAIL_ID : 0;
         }
     }
 
@@ -150,11 +150,10 @@ void CVEHICLELANE::Move() {
     timeCount++;
     if (timeCount >= delayTime) {
         timeCount = 0;
-
         //Random push a car
         if (lightPos < 0 || !isStop) {
-            pushNormally();
             pop_backObject();
+            pushNormally();
         }
         else {
             //Push with traffic light on
@@ -212,13 +211,77 @@ void CVEHICLELANE::updateYObj() {
         if (lane[i] != NULL) lane[i]->setY(this->y);
     if (lightPos >= 0) ptrafficLight->setY(this->y);
 }
-void CVEHICLELANE::setStop(bool isStop)
+
+int CVEHICLELANE::getCondition() const {
+    return condition;
+}
+int CVEHICLELANE::getCountObject() const {
+    return countObject;
+}
+int CVEHICLELANE::getNumberOfConditionObj() const {
+    return numberOfConditionObj;
+}
+int CVEHICLELANE::getLightPos() const
+{
+    return lightPos;
+}
+int CVEHICLELANE::getTimeLight() const
+{
+    return timeLight;
+}
+bool CVEHICLELANE::getIsStop() const
+{
+    return this->isStop;
+}
+int CVEHICLELANE::getTimeCount() const
+{
+    return timeCount;
+}
+int CVEHICLELANE::getDelayTime() const
+{
+    return delayTime;
+}
+
+void CVEHICLELANE::setCondition(int condition)
+{
+    if (!checkinList(condition, { 0, -CAR_ID, -TRUCK_ID, -BUS_HEAD_ID, CAR_ID, TRUCK_ID, BUS_TAIL_ID, BUS_HEAD_ID })) condition = 0;
+    this->condition = condition;
+}
+void CVEHICLELANE::setCountObject(int countObject)
+{
+    if (countObject < 0) countObject = 0;
+    this->countObject = countObject;
+}
+void CVEHICLELANE::setNumberOfConditionObj(int numberOfConditionObj)
+{
+    if (numberOfConditionObj < 0) numberOfConditionObj = 0;
+    this->numberOfConditionObj = numberOfConditionObj;
+}
+void CVEHICLELANE::setLightPos(int lightPos)
+{
+    this->lightPos = lightPos;
+    if (ptrafficLight != NULL) delete ptrafficLight;
+    ptrafficLight = NULL;
+    if (lightPos >= 0) ptrafficLight = new CTRAFFICLIGHT(lightPos * BLOCK_WIDTH, this->y);
+}
+void CVEHICLELANE::setTimeLight(int timeLight)
+{
+    if (timeLight < 0) timeLight = 0;
+    this->timeLight = timeLight;
+}
+void CVEHICLELANE::setIsStop(bool isStop)
 {
     this->isStop = isStop;
 }
-bool CVEHICLELANE::getStop() const
+void CVEHICLELANE::setTimeCount(int timeCount)
 {
-    return this->isStop;
+    if (timeCount < 0) timeCount = 0;
+    this->timeCount = timeCount;
+}
+void CVEHICLELANE::setDelayTime(int delayTime)
+{
+    if (delayTime < 0) delayTime = 0;
+    this->delayTime = delayTime;
 }
 
 void CVEHICLELANE::DrawObjects(CGRAPHIC& layer) {
@@ -242,3 +305,10 @@ void CVEHICLELANE::DrawLane(CGRAPHIC& layer) {
         }
     }
 }
+
+bool checkinList(int val, vector<int> list) {
+    for (int& mem : list)
+        if (val == mem) return true;
+    return false;
+}
+

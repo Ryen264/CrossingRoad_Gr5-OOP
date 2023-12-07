@@ -1,6 +1,6 @@
 #include "CTREE.h"
 CTREE::CTREE(int x, int y, bool isDouble) : COBJECT(x, y) {
-	this->isDouble = isDouble; this->ID = TREE_ID;
+	this->ID = (isDouble) ? TREE_DOUBLE_ID : TREE_SINGLE_ID;
 	vector<wstring> frame = (isDouble) ? FRAME_DOUBLE : FRAME_SINGLE;
 
 	//set buffer
@@ -73,7 +73,7 @@ CTREE::CTREE(int x, int y, bool isDouble) : COBJECT(x, y) {
 		block[12][4].bgdColor = SADDLE_BROWN;
 
 		block[11][5].bgdColor = SADDLE_BROWN;
-		
+
 	}
 	else {
 		for (int i = 6; i <= 10; i++) {
