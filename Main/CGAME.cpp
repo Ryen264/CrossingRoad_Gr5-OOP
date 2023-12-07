@@ -14,7 +14,7 @@ CGAME::~CGAME() {
 	}
 	ShowCur(true);
 	ShowScrollbar(true);
-	system("mode 1000, 50");
+	system("mode 1000, 500");
 }
 void CGAME::Configure()
 {
@@ -45,15 +45,10 @@ void CGAME::Configure()
 
 	MoveWindow(hWnd, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, TRUE);
 
-	string sysStr = "mode " + to_string(SCREEN_WIDTH) + ", " + to_string(SCREEN_HEIGHT );
-	char* sysMode = new char[sysStr.size() + 1];
-	for (int i = 0; i < (int)sysStr.size(); i++) sysMode[i] = sysStr[i];
-	sysMode[sysStr.size()] = '\0';
-	system(sysMode);
-	system("color 20");
+	system("mode 208, 51");
 	//
 	srand(time(0));
-	SetupTheme();
+	SetupTheme(THEME_BASIC, hStdout);
 	BgdLayer.clear(BLACK, WHITE);
 	ObjLayer.clear(-1, -1);
 }
@@ -127,14 +122,32 @@ void CGAME::resetData() {
 }
 void CGAME::saveData(string fileName) {
 	ofstream file(fileName, ios::trunc);
-
 	if (file.is_open()) {
-		// <x> <y> <score> <isRight> //Thông tin người chơi
-		file << cPlayer->getX() << " " << cPlayer->getY() << " " << cPlayer->getScore() << " " <<cPlayer->getIsAlive() <<" "<<cPlayer->getIsRight() << endl;
-		file << this->level << endl;
-		// <type lane ID> <isMoveRight> <timeCount> <isStop> <delayTime> [<object ID>/0]
+		//CGAME: cPlayer: new, aLanes: new, fileNamelist: load, isSave = true, savedName = file name, <level>, <numberOfLane>, <conditionLane>, <countLane>, <numberOfConditionLane>, isThreadRunning = true, ObjLayer, bgdLayer: draw
+		file << this->level << " " << this->numberOfLane << " " << this->conditionLane << " " << this->countLane << " " << this->numberOfConditionLane << endl;
+		// <xBoard>(x) <yBoard>(y) (alive = 1) <score> <isRight> (finish = false) (moving = 0) <colorCharacter> (depend: get from lane[yBoard][xBoard]) (pCharacterR/L = new CDINOSAUR(x, y, true/left, colorCharacter) //Thông tin người chơi
+		file << cPlayer->getXBoard() << " " << cPlayer->getYBoard() << " " << cPlayer->getIsAlive() << " " << cPlayer->getScore() << " " << cPlayer->getIsRight()
+			 << " " << 0 << " " << cPlayer->getColorCharacter() << endl;
+		
+		// (lane: push with ID) <isMoveRight> <timeCount> <isStop> <delayTime> (x, y: update) <ID> (block: new with ID) [<object ID>/0]
+			//VEHICLE: ... <condition> <countObject> <numberOfCar*> <numberOfTruck*> <lightPos> <timeLight> (pTrafficLight = new with lightPos > 0) [<object ID>/0]
+			//TRAIN: ... <numberOfTrain*> <countTrain> [<object ID>/0]
+			//RIVER: ... <condition> <countObj> <numberOfCapybara*> [<object>/0]
+			//GRASS: ... [<object>/0]
+			//FINISH: ...
+			//
+			//TREE: isDouble*
+
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
-			file << aLanes[i]->getID() << " " << aLanes[i]->getIsMoveRight() << " " << aLanes[i]->getTimeCount() << " " << aLanes[i]->getDelayTime() << " ";
+			file << aLanes[i]->getID() << " " 
+				 << aLanes[i]->getIsMoveRight()  << " " 
+				 << aLanes[i]->getTimeCount() << " " 
+				 << aLanes[i]->getDelayTime() << " ";
+			switch (aLanes[i]->getID()) {
+			case VEHICLELANE_ID:
+{}
+				
+			}
 			for (int j = 0; j < BOARD_WIDTH; j++) {
 				file << aLanes[i]->PosID(j) << " ";
 			}
@@ -276,13 +289,10 @@ void CGAME::changeFileName(int index) {
 
 int CGAME::Menu() {
 	system("cls");
-	SetupTheme();
-	drawWiningScreen();
-	_getch();
-	SetupTheme(MAIN_MENU_THEME);
+	SetupTheme(MAIN_MENU_THEME, hStdout);
 	const int fromX = 5, fromY = 18,
 		toX = fromX + 40 - 1, toY = fromY + 27 - 1;
-	const int xfromTalk = (160 - 41) / 2, yfromTalk = 38 - 10, xfromMessage = xfromTalk + 4, yfromMessage = yfromTalk + 3;
+	const int xfromTalk = 105, yfromTalk = 38 - 10, xfromMessage = xfromTalk + 4, yfromMessage = yfromTalk + 3;
 
 	const int xdrawerStart = 7 + fromX, ydrawerStart = fromY;
 	const int NEW_GAME = ydrawerStart;
@@ -302,14 +312,17 @@ int CGAME::Menu() {
 
 	//draw menu
 	tmpBgdLayer.DrawMainMenu();
+	tmpObjLayer.DrawBigDinoSaur(53, 17);
+	tmpObjLayer.DrawDinasourPicture(10, 2);
 	tmpObjLayer.DrawDoofCorp(176, 16);
 	tmpObjLayer.DrawHeader(98, 3);
+	tmpObjLayer.DrawDinasourPicture(6, 2);
+	tmpObjLayer.DrawHat(190, 44);
 	tmpBgdLayer.DrawDrawer(fromX, fromY + 3);
 
 	//draw current step
 	tmpObjLayer.DrawSmallDrawer(xOption, yOption, curColor);
 	tmpObjLayer.DrawPerryTalk(curMessage, xfromTalk, yfromTalk, curColor, WHITE);
-	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 	while (1) {
 		int temp = toupper(_getch());
@@ -328,30 +341,27 @@ int CGAME::Menu() {
 			Sleep(500);
 			switch (yOption) {
 			case NEW_GAME:
-				SetupTheme();
+				SetupTheme(THEME_BASIC, hStdout);
 				NewGame();
-				SetupTheme(MAIN_MENU_THEME);
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case LOAD_GAME:
 
 				this->LoadGame();
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case SETTING:
 				this->Setting();
 				break;
 			case HELP:
 				this->Help();
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case ABOUT:
 				this->About();
-				displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 				break;
 			case QUIT:
 				return QUIT_CODE;
 			}
+			displayScreen(tmpObjLayer, tmpBgdLayer);
 		}
 		else {
 			if (isUpButton(temp) && iCur > 0) {
@@ -552,7 +562,7 @@ void CGAME::SaveGame() {
 		tmpObjLayer.drawButton(xOption, yOption, DARK_GREEN, LIGHT_GREEN);
 		break;
 	case BACK_OPTION:
-		tmpObjLayer.drawButton(xOption, yOption, DARK_RED, LIGHT_GREEN);
+		tmpObjLayer.drawButton(xOption, yOption, DARK_RED, RED);
 		break;
 	}
 	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
@@ -665,7 +675,155 @@ void CGAME::SaveGame() {
 	}
 }
 void CGAME::Setting() {
+	const int fromX = (SCREEN_WIDTH - 53) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
+		toX = fromX + 53 - 1, toY = fromY + 30 - 1;
+
+	const int BACKGROUND_YSOUND = 13 + fromY;
+	const int EFFECT_YSOUND = 17 + fromY;
+	const int OK_XOPTION = 26 + fromX;
+	const int BACK_XOPTION = 37 + fromX;
+
+	const int XSOUND = 10 + fromX;
+	const int YOPTION = 22 + fromY;
+
+	int xOption = XSOUND, yOption = BACKGROUND_YSOUND;
+	int curBgdSound = bgdSoundLevel, curEffectSound = effectSoundLevel;
+
+	// setup tmpLayers
+	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ',-1,-1 });
+
+	// draw menu
+	tmpBgdLayer.DrawSettingScreen(fromX, fromY);
+	tmpBgdLayer.screen[fromX + 50][fromY] = BgdLayer.screen[fromX + 50][fromY];
+	tmpBgdLayer.screen[fromX + 51][fromY] = BgdLayer.screen[fromX + 51][fromY];
+	tmpBgdLayer.screen[fromX + 52][fromY] = BgdLayer.screen[fromX + 52][fromY];
+	tmpBgdLayer.screen[fromX + 53][fromY] = BgdLayer.screen[fromX + 53][fromY];
+	tmpBgdLayer.screen[fromX + 52][fromY + 1] = BgdLayer.screen[fromX + 52][fromY + 1];
+	tmpBgdLayer.screen[fromX + 53][fromY + 1] = BgdLayer.screen[fromX + 53][fromY + 1];
+
+	//draw the last sound levels
+	tmpObjLayer.drawRegtangle(XSOUND, BACKGROUND_YSOUND, (curBgdSound / 25) * 8.75, 3, LIGHT_GRAY,true);
+	tmpObjLayer.drawRegtangle(XSOUND, EFFECT_YSOUND, (curEffectSound / 25) * 8.75, 3, LIGHT_GRAY,true);
+
+	// draw current pos
+	if (xOption == XSOUND) {
+		if (yOption == BACKGROUND_YSOUND) tmpObjLayer.drawRegtangle(xOption, yOption, (curBgdSound / 25) * 8.75, 3, LIGHT_GREEN, true);
+		else tmpObjLayer.drawRegtangle(xOption, yOption, (curEffectSound / 25) * 8.75, 3, LIGHT_BROWN , true);
+	}
+	else {
+		if (xOption == OK_XOPTION) tmpObjLayer.drawButton(xOption, yOption, DARK_GREEN, LIGHT_GREEN);
+		else tmpObjLayer.drawButton(xOption, yOption, DARK_RED, RED);
+	}
+
+	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	while (1) {
+		int temp = toupper(_getch());
+
+		// erase the last step
+		if (xOption == XSOUND)
+			tmpObjLayer.erasePixel(xOption, yOption, xOption + 35 - 1, yOption + 3 - 1);
+		else
+			tmpObjLayer.erasePixel(xOption, yOption, xOption + 8 - 1, yOption + 4 - 1);
+
+		if (!isEnterButton(temp)) {
+			if (isUpButton(temp)) {
+				if (xOption == XSOUND) {
+					if (yOption == EFFECT_YSOUND) yOption = BACKGROUND_YSOUND;
+				}
+				else {
+					xOption = XSOUND;
+					yOption = EFFECT_YSOUND;
+				}
+			}
+			if (isDownButton(temp)) {
+				if (xOption == XSOUND) {
+					if (yOption == BACKGROUND_YSOUND) yOption = EFFECT_YSOUND;
+					else {
+						xOption = OK_XOPTION;
+						yOption = YOPTION;
+					}
+				}
+			}
+			if (isRightButton(temp)) {
+				if (xOption == XSOUND) {
+					if (yOption == BACKGROUND_YSOUND)
+					{
+						if (curBgdSound < 100) curBgdSound += 25;
+					}
+					else if (curEffectSound < 100) curEffectSound += 25;
+				}
+				else {
+					if (xOption == OK_XOPTION) xOption = BACK_XOPTION;
+					else xOption = OK_XOPTION;
+				}
+			}
+			if (isLeftButton(temp)) {
+				if (xOption == XSOUND) {
+					if (yOption == BACKGROUND_YSOUND)
+					{
+						if (curBgdSound > 0) curBgdSound -= 25;
+					}
+					else if (curEffectSound > 0) curEffectSound -= 25;
+				}
+				else {
+					if (xOption == OK_XOPTION) xOption = BACK_XOPTION;
+					else xOption = OK_XOPTION;
+				}
+			}
+			// draw new step
+		}
+		else {
+			//draw choice
+			if (xOption == XSOUND) {
+				if (yOption == BACKGROUND_YSOUND) {
+					tmpObjLayer.drawRegtangle(xOption, yOption, (curBgdSound / 25) * 8.75, 3, DARK_GREEN, true);
+				}
+				else tmpObjLayer.drawRegtangle(xOption, yOption, (curEffectSound / 25) * 8.75, 3, DARK_GREEN, true);
+			}
+			else {
+				if (xOption == OK_XOPTION) tmpObjLayer.drawButton(xOption, yOption, DARK_GREEN, DARK_GREEN);
+				else tmpObjLayer.drawButton(xOption, yOption, DARK_RED, DARK_RED);
+			}
+			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+
+			Sleep(500);
+			if (xOption == XSOUND) {
+				
+				if (yOption == BACKGROUND_YSOUND) {
+					yOption = EFFECT_YSOUND;
+				}
+				else if (yOption == EFFECT_YSOUND) {
+					xOption = OK_XOPTION;
+					yOption = YOPTION;
+				}
+			}
+			else {
+				if (xOption == OK_XOPTION) {
+					bgdSoundLevel = curBgdSound;
+					effectSoundLevel = curEffectSound;
+					//playSound again
+					return;
+				}
+				else return;
+			}
+			//reset the choice
+		}
+		tmpObjLayer.drawRegtangle(XSOUND, BACKGROUND_YSOUND, (curBgdSound / 25) * 8.75, 3, LIGHT_GRAY, true);
+		tmpObjLayer.drawRegtangle(XSOUND, EFFECT_YSOUND, (curEffectSound / 25) * 8.75, 3, LIGHT_GRAY, true);
+		if (xOption == XSOUND) {
+			if (yOption == BACKGROUND_YSOUND) { 
+				tmpObjLayer.drawRegtangle(xOption, yOption, (curBgdSound / 25) * 8.75, 3, LIGHT_GREEN, true);
+			}
+			else tmpObjLayer.drawRegtangle(xOption, yOption, (curEffectSound / 25) * 8.75, 3, LIGHT_GREEN, true);
+		}
+		else {
+			if (xOption == OK_XOPTION) tmpObjLayer.drawButton(xOption, yOption, DARK_GREEN, LIGHT_GREEN);
+			else tmpObjLayer.drawButton(xOption, yOption, DARK_RED, RED);
+		}
+		displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	}
 }
+
 void CGAME::Help() {
 	CGRAPHIC tmpBgdLayer(BgdLayer);
 
@@ -991,7 +1149,21 @@ void CGAME::exitThread(thread* t) {
 	t->join();
 }
 void CGAME::resumeThread(HANDLE t) {
-	//drawResumeGame(); //count down
+	//cout down
+	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
+	displayScreen(tmpObjLayer, tmpBgdLayer);
+	int x = (SCREEN_WIDTH - 3) / 2, y = (SCREEN_HEIGHT - 3) / 2;
+	tmpObjLayer.DrawNumber(3, x, y, RED, -1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	Sleep(1000);
+	tmpObjLayer.clear(-1, -1);
+	tmpObjLayer.DrawNumber(2, x, y, BRIGHT_YELLOW, -1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	Sleep(1000);
+	tmpObjLayer.clear(-1, -1);
+	tmpObjLayer.DrawNumber(1, x, y, LIGHT_GREEN, -1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	Sleep(1000);
 	if (t != NULL)
 		ResumeThread(t);
 }
@@ -1195,6 +1367,30 @@ void CGAME::SubThreadNewGame() {
         }
     }
 }
+
+// Time
+void CGAME::updateTime() {
+	endTime = clock();
+	if (endTime - startTime > 0) {
+		curTime += (endTime - startTime);
+		startTime = endTime;
+		ObjLayer.drawTime(curTime, SCREEN_WIDTH - 17, 0, BLACK, -1);
+		//ObjLayer.display(0, 0, SCREEN_WIDTH, 2);
+	}
+}
+string CGAME::getTime(clock_t curTime) {
+	ostringstream oss;
+	oss << curTime;
+	return oss.str();
+}
+clock_t CGAME::setTime(string& time) {
+	istringstream iss(time);
+	clock_t result;
+	iss >> result;
+	return result;
+}
+
+
 
 //Drawing functions
 void CGAME::startMap() {

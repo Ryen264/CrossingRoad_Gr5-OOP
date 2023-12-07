@@ -44,7 +44,7 @@ SAND, BRIGHT_YELLOW, LIGHT_GREEN, LIGHT_BROWN,
 CREAMY_AVOCADO, DARK_BROWN, BROWN, LIGHTER_BROWN,
 LAVENDER, PURPLE, TEAL, TANGERINE, DARK_ORANGE;
 
-void SetupTheme(THEME theme = THEME_BASIC);
+void SetupTheme(THEME theme, HANDLE& hStdout);
 
 struct PIXEL {
 	wchar_t buffer;
@@ -67,6 +67,7 @@ public:
 	void erasePixel(int fromX, int fromY, int toX, int toY);
 
 	void DrawLetter(char ch, int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
+	void DrawNumber(int num, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawInputPos(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
 	void DrawMINUS(int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawPLUS(int first_x, int first_y, int txtColor, int bgdColor);
@@ -82,13 +83,13 @@ public:
 	void drawClipBoard(int first_x, int first_y, int width, int height);
 	void drawTag(int first_x, int first_y, string tagName, int tagColor);
 	void drawInfiniteSymbol(int first_x, int first_y);
-	void drawRegtangle(int first_x, int first_y, int width, int height, int bgdColor);
+	void drawRegtangle(int first_x, int first_y, int width, int height, int color, bool isFill = false);
 
 	void DrawTextBoard(string contentName, int colorName, vector<string> contentBody, int first_x, int first_y, int width, int height, int txtColor, int bgdColor);
 
 	void DrawDrawer(int first_x, int first_y);
 	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);
-	void DrawDinasourPicture(int first_x, int first_y, int drawerColor = DARK_GREEN, int Belly = LIGHT_GREEN);
+	void DrawDinasourPicture(int first_x, int first_y);
 	void DrawBigDinoSaur(int first_x, int first_y);
 	void DrawHat(int first_x, int first_y);
 	void DrawCloud_1(int first_x, int first_y);
@@ -189,6 +190,98 @@ const vector<vector<wstring>> NUMBER = {
 {	L"█▀█",
 	L"▀▀█",
 	L"  ▀" },
+};
+const vector<vector<wstring>> BIG_NUMBER = {
+{
+L"          ██████████████          ",//1
+L"      ████              ████      ",//2
+L"    ██                      ██    ",//3
+L"  ██            ████          ██  ",//4
+L"  ██          ██████          ██  ",//5
+L"██          ████████            ██",//6
+L"██              ████            ██",//7
+L"██              ████            ██",//8
+L"██              ████            ██",//9
+L"██              ████            ██",//10
+L"██              ████            ██",//11
+L"██              ████            ██",//12
+L"  ██            ████          ██  ",//13
+L"  ██            ████          ██  ",//14
+L"    ██                      ██    ",//15
+L"      ████              ████      ",//16
+L"          ██████████████         "},//17
+
+{
+L"          ██████████████          ",//1
+L"      ████              ████      ",//2
+L"    ██                      ██    ",//3
+L"  ██        ██████████        ██  ",//4
+L"  ██      ██████████████      ██  ",//5
+L"██        ████      ████        ██",//6
+L"██                  ████        ██",//7
+L"██                ██████        ██",//8
+L"██              ██████          ██",//9
+L"██            ██████            ██",//10
+L"██          ██████              ██",//11
+L"██        ██████                ██",//12
+L" █   ███████   █ ",//13
+L" █   ███████   █ ",//14
+L"  █           █  ",//15
+L"   ██       ██   ",//16
+L"     ███████     "},//17
+
+{
+L"     ███████     ",//1
+L"   ██       ██   ",//2
+L"  █           █  ",//3
+L" █    █████    █ ",//4
+L" █   ███████   █ ",//5
+L"█    ██   ██    █",//6
+L"█         ██    █",//7
+L"█      ████     █",//8
+L"█      ████     █",//9
+L"█         ██    █",//10
+L"█         ██    █",//11
+L"█    ██   ██    █",//12
+L" █   ███████   █ ",//13
+L" █    █████    █ ",//14
+L"  █           █  ",//15
+L"   ██       ██   ",//16
+L"     ███████     "},//17
+};
+const vector<vector<wstring>> BIG_NUMBER1 = {
+	//1 O VUONG = 2 CUC
+{
+L"███████",
+L"██   ██",
+L"██   ██",
+L"██   ██",
+L"██   ██",
+L"███████"},
+
+{
+L"  ███  ",
+L" █ ██  ",
+L"█  ██  ",
+L"   ██  ",
+L"   ██  ",
+L"███████"},
+
+{
+L"███████",
+L"     ██",
+L"▄▄▄▄▄██",
+L"██▀▀▀▀▀",
+L"██     ",
+L"███████"},
+
+{
+L"███████",
+L"     ██",
+L"▄▄▄▄▄██",
+L"▀▀▀▀▀██",
+L"     ██",
+L"███████"}
 };
 const vector<vector<wstring>> LETTER = {
  {  L"█▀█",
@@ -406,39 +499,39 @@ const vector<wstring> FLOPPY_DISC = {
 		L"██                          ████       ████         ██",//25
 		L"██                                                  ██",//26
 		L"██                                                  ██",//27
-		L"██████████████████████████████████████████████████████" //28
+		L"██████████████████████████████████████████████████████"//28
 };
 
 const vector<wstring> FLOPPY_DISC_2 = {
-		L"██████████████████████████████████████████████████    ",
-		L"██                                                ██  ",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                              █████               ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██        ██████████████████████████████████        ██",
-		L"██        ██████████████████████████████████        ██",
-		L"██        ██████████████████████████████████        ██",
-		L"██                                                  ██",
-		L"██        ██████████████████████████████████        ██",
-		L"██        ██████████████████████████████████        ██",
-		L"██        ██████████████████████████████████        ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██                          ████       ████         ██",
-		L"██                        ██    ██   ██    ██       ██",
-		L"██                        ██    ██   ██    ██       ██",
-		L"██                          ████       ████         ██",
-		L"██                                                  ██",
-		L"██                                                  ██",
-		L"██████████████████████████████████████████████████████"
+		L"██████████████████████████████████████████████████    ",//0
+		L"██                                                ██  ",//1
+		L"██                              █████               ██",//2
+		L"██                              █████               ██",//3
+		L"██                              █████               ██",//4
+		L"██                              █████               ██",//5
+		L"██                              █████               ██",//6
+		L"██                              █████               ██",//7
+		L"██                              █████               ██",//8
+		L"██                              █████               ██",//9
+		L"██                                                  ██",//10
+		L"██                                                  ██",//11
+		L"██                                                  ██",//12
+		L"██        ██████████████████████████████████        ██",//13
+		L"██        ██████████████████████████████████        ██",//14
+		L"██        ██████████████████████████████████        ██",//15
+		L"██                                                  ██",//16
+		L"██        ██████████████████████████████████        ██",//17
+		L"██        ██████████████████████████████████        ██",//18
+		L"██        ██████████████████████████████████        ██",//19
+		L"██                                                  ██",//20
+		L"██                                                  ██",//21
+		L"██                          ████       ████         ██",//22
+		L"██                        ██    ██   ██    ██       ██",//23
+		L"██                        ██    ██   ██    ██       ██",//24
+		L"██                          ████       ████         ██",//25
+		L"██                                                  ██",//26
+		L"██                                                  ██",//27
+		L"██████████████████████████████████████████████████████"//28
 };
 
 const vector<wstring> TAGS = {
@@ -488,8 +581,7 @@ L"  █                   ████████▀▀          ",
 L"   █                     ▄▄█▀▀            ",
 L"    █▄▄▄▄▄▄    ▄▄▄    ▄▄█▀                ",
 L"          █  ▄▀   ▀▄  █                   ",
-L"          █  █     █  █                   ",
-L"          ▀▀▀▀     ▀▀▀▀                   " };
+L"          █  █     █  █                   "};
 const vector<wstring>HAT = {
 L"      ▄██▄     ",
 L"    ▄▀▀▀████   ",
