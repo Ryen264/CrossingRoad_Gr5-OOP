@@ -19,6 +19,7 @@
 #include <thread>
 #include <fstream>
 #include <string>
+#pragma comment(lib, "Winmm.lib")
 using namespace std;
 
 class CGAME {
@@ -75,7 +76,7 @@ public:
     void About();
 
     int Pause(HANDLE t);
-    void ChooseCharacter();
+    void ChooseCharacter(const CGRAPHIC& BgdLayer);
 
     bool isReset();
 
@@ -103,17 +104,17 @@ public:
     void drawMap();
     void drawTaskBar();
     
-    
-
     void intro();
     void outtro();
     void drawCountDown();
-    void drawPlayAgain();
     void drawWiningScreen(int COLOR = DARK_GREEN);
     bool drawLosingScreen(int COLOR = DARK_GREEN);
 
     void displayScreen(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
     void displayScreen(CGRAPHIC& ObjLayer, const CGRAPHIC& BgdLayer, int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
+
+    void playEffectSound(string soundName);
+    void playBackgroundSound(string soundName);
 };
 //Return codes
 const int QUIT_CODE = -1000;
@@ -124,6 +125,9 @@ const int MAX_NUMBER_OF_SAVED_FILE = 10;
 const int MAX_LEVEL = 10;
 
 const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, TRAINLANE_ID, RIVERLANE_ID };
+
+const string MENU_ENTER = "Menu_Enter_";
+const string OFF_SOUND = "OFF_SOUND";
 
 bool isUpButton(int button);
 bool isDownButton(int button);
@@ -144,3 +148,4 @@ void ShowCur(bool CursorVisibility);
 void DisableResizeWindow();
 void ShowScrollbar(BOOL Show);
 
+string int_to_string(int num);
