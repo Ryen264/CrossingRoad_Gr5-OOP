@@ -11,7 +11,7 @@
 
 #include <windows.h>
 #include <iostream>
-#include<sstream>
+#include <sstream>
 #include <conio.h>
 #include <time.h>
 #include <deque>
@@ -59,17 +59,16 @@ public:
     void saveData(string fileName);
     void loadData(string fileName);
 
-    string inputUserTxt(CGRAPHIC& ObjLayer, CGRAPHIC& BgdLayer, int fromX, int fromY, int maxSize, int txtColor, int bgdColor, bool(*checkFunction)(char) = NULL, deque<string> strArr = {});
-
+    string inputUserTxt(const CGRAPHIC& BgdLayer);
     void saveFileNameList();
     void loadFileNameList();
-    void deleteFileName(int);
-    void changeFileName(int);
+    void deleteFile(int index);
+    void renameFile(int index, const CGRAPHIC& BgdLayer);
 
     int Menu();
     void NewGame();
     void LoadGame();
-    void SaveGame();
+    void SaveGame(const CGRAPHIC& BgdLayer);
     void Setting();
     void Help();
     void About();
@@ -100,6 +99,7 @@ public:
 
     void intro();
     void outtro();
+    void drawCountDown();
     void drawPlayAgain();
     void drawWiningScreen(int COLOR = DARK_GREEN);
     void drawLosingScreen(int COLOR = DARK_GREEN);
@@ -111,6 +111,8 @@ public:
 const int QUIT_CODE = -1000;
 const int BACK_TO_MENU_CODE = -1001;
 
+const int MAX_INPUT_SIZE = 8;
+
 const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, TRAINLANE_ID, RIVERLANE_ID };
 
 bool isUpButton(int button);
@@ -118,13 +120,12 @@ bool isDownButton(int button);
 bool isRightButton(int button);
 bool isLeftButton(int button);
 bool isEnterButton(int button);
-bool isDeleteButton(int button);
 bool isBackspaceButton(int button);
 
 bool isNumber(char ch);
 bool isLetter(char ch);
 bool isNumberOrLetter(char ch);
-bool isExist(string str, deque<string> strArr);
+bool checkinList(string str, deque<string> strArr);
 
 int getiMatrix(int val, vector<vector<int>>& matrix);
 int getjMatrix(int val, vector<vector<int>>& matrix);
