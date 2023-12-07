@@ -784,13 +784,13 @@ void CGRAPHIC::DrawSettingScreen(int first_x, int first_y) {
 		for (int j = 12; j < 30; j++)
 			screen[first_x + i][first_y + j].bgdColor = WHITE;
 	for (int i = 0; i < 4; i++) {
+		screen[first_x + 28 + i][first_y + 23].bgdColor = LIGHT_GRAY;
+		screen[first_x + 39 + i][first_y + 23].bgdColor = LIGHT_GRAY;
 		screen[first_x + 28 + i][first_y + 24].bgdColor = LIGHT_GRAY;
-		screen[first_x + 39 + i][first_y + 24].bgdColor = LIGHT_GRAY;
-		screen[first_x + 28 + i][first_y + 25].bgdColor = LIGHT_GRAY;
-		screen[first_x + 39 + i][first_y + 25].bgdColor = LIGHT_GRAY;
+		screen[first_x + 39 + i][first_y + 2].bgdColor = LIGHT_GRAY;
 	}
-	Text(L"BACKGROUND", 10 + first_x, 13 + first_y, BLACK, SAND);
-	Text(L"EFFECT", 10 + first_x, 17 + first_y, BLACK, SAND);
+	Text(L"BACKGROUND", 10 + first_x, 12 + first_y, BLACK, WHITE);
+	Text(L"EFFECT", 10 + first_x, 16 + first_y, BLACK, WHITE);
 }
 void CGRAPHIC::DrawLoadGame(int first_x, int first_y, deque<string> nameList) {
 	drawClipBoard(first_x, first_y, 50, 30,DARK_BLUE,SAND);

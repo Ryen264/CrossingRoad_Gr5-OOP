@@ -72,6 +72,25 @@ void CGRASSLANE::push_frontObject(int ID) {
     }
     updatePosObj();
 }
+void CGRASSLANE::push_backObject(int ID) {
+    switch (ID) {
+    case EGG_ID: {
+        lane.push_back(new CEGG);
+        break;
+    }
+    case TREE_DOUBLE_ID: {
+        lane.push_back(new CTREE(0, this->y, true));
+        break;
+    }
+    case TREE_SINGLE_ID: {
+        lane.push_back(new CTREE(0, this->y, false));
+        break;
+    }
+    default:
+        lane.push_back(NULL);
+    }
+    updatePosObj();
+}
 void CGRASSLANE::DrawLane(CGRAPHIC& layer) {
     for (int k = 0; k < BOARD_WIDTH; k++)
         if (rand() % 3 == 0) {

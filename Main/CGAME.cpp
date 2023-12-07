@@ -124,7 +124,7 @@ void CGAME::resetData() {
 	}
 }
 void CGAME::saveData(string fileName) {
-	ofstream file(fileName, ios::trunc);
+	ofstream file(fileName + ".bin", ios::trunc | ios::binary);
 	if (file.is_open()) {
 		//CGAME: cPlayer: new, aLanes: new, fileNamelist: load, isSave = true, savedName = file name, <level>, <numberOfLane>, <conditionLane>, <countLane>, <numberOfConditionLane>, isThreadRunning = true, ObjLayer, bgdLayer: draw
 		file << this->level << " " << this->numberOfLane << " " << this->conditionLane << " " << this->countLane << " " << this->numberOfConditionLane << endl;
@@ -166,7 +166,7 @@ void CGAME::saveData(string fileName) {
 	}
 }
 void CGAME::loadData(string fileName) {
-	ifstream file(fileName, ios::in);
+	ifstream file(fileName + ".bin", ios::in | ios::binary);
 	if (file.is_open()) {
 		//CGAME: <level>, <numberOfLane>, <conditionLane>, <countLane>, <numberOfConditionLane>
 		int level{}, numberOfLane{}, conditionLane{}, countLane{}, numberOfConditionLane{};
@@ -207,18 +207,13 @@ void CGAME::loadData(string fileName) {
 
 			//CLANE: <isMoveRight> <ID>
 				//...	<timeCount> <delayTime>	<isStop> <condition> <countObject>	<numberOfConditionObj>	<lightPos>	<timeLight>
-			push_frontLane(laneID);
-			CLANE* lane = aLanes.front();
+			push_backLane(laneID);
+			CLANE* lane = aLanes.back();
 			lane->setIsMoveRight(isMoveRight); lane->setTimeCount(timeCount); lane->setDelayTime(delayTime); lane->setIsStop(isStop);
 			lane->setCondition(condition); lane->setCountObject(countObject); lane->setNumberOfConditionObj(numberOfConditionObj); lane->setLightPos(lightPos); lane->setTimeLight(timeLight);
 
 			//clear the last aLanes
-			while (!lane->emptyObject()) {
-				COBJECT* cur = lane->backObject();
-				lane->pop_backObject();
-				if (cur != NULL) delete cur;
-				cur = NULL;
-			}
+			while (!lane->emptyObject()) lane->pop_backObject();
 			lane->clearObject();
 
 			for (int j = 0; j < BOARD_WIDTH; j++) {
@@ -231,9 +226,11 @@ void CGAME::loadData(string fileName) {
 
 				//COBJECT: <ID> (object: push with ID)
 				//...	<isRight>	<isRight>
-				lane->push_frontObject(objID);
-				COBJECT* front = lane->frontObject();
-				front->setIsRight(isRight); front->setIsHead(isHead);
+				lane->push_backObject(objID);
+				if (objID != 0) {
+					COBJECT* back = lane->backObject();
+					back->setIsRight(isRight); back->setIsHead(isHead);
+				}
 			}
 			file.ignore(1);
 		}
@@ -292,7 +289,7 @@ string CGAME::inputUserTxt(const CGRAPHIC& BgdLayer) {
 				text.pop_back();
 				size--;
 			}
-			if (isNumberOrLetter(ch)&& size < MAX_INPUT_SIZE) {
+			if (isLetter(ch)&& size < MAX_INPUT_SIZE) {
 				text.push_back(ch);
 				size++;
 			}
@@ -427,7 +424,7 @@ string CGAME::inputUserTxt(const CGRAPHIC& BgdLayer) {
 	}
 }
 void CGAME::saveFileNameList() {
-	fstream outFile("file_name_list.txt", fstream::trunc);
+	fstream outFile("file_name_list.bin", fstream::out | fstream::trunc | fstream::binary);
 	if (outFile.fail()) return;
 	int size = (int)fileNameList.size();
 	outFile << size << endl;
@@ -436,7 +433,7 @@ void CGAME::saveFileNameList() {
 	outFile.close();
 }
 void CGAME::loadFileNameList() {
-	fstream inFile("file_name_list.txt", fstream::in);
+	fstream inFile("file_name_list.bin", fstream::in | fstream::binary);
 	if (inFile.fail()) return;
 	fileNameList.clear();
 	int size{};
@@ -455,7 +452,7 @@ void CGAME::deleteFile(int index)
 	char fileName[8 + 4]{};
 	for (int i = 0; i < (int)fileNameList[index].size(); i++)
 		fileName[i] = fileNameList[index][i];
-	strcat_s(fileName, ".txt");
+	strcat_s(fileName, ".bin");
 	remove(fileName);
 
 	fileNameList.erase(fileNameList.begin() + index);
@@ -473,10 +470,10 @@ void CGAME::renameFile(int index, const CGRAPHIC& BgdLayer) {
 	char oldName[8 + 4]{}, newName[8 + 4]{};
 	for (int i = 0; i < (int)fileNameList[index].size(); i++)
 		oldName[i] = fileNameList[index][i];
-	strcat_s(oldName, ".txt");
+	strcat_s(oldName, ".bin");
 	for (int i = 0; i < (int)str.size(); i++)
 		newName[i] = str[i];
-	strcat_s(newName, ".txt");
+	strcat_s(newName, ".bin");
 
 	rename(oldName, newName);
 
@@ -547,18 +544,18 @@ int CGAME::Menu() {
 			case LOAD_GAME:
 				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
 				SetupTheme(THEME_BASIC, hStdout);
-				this->LoadGame();
+				LoadGame();
 				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case SETTING:
 				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
 				SetupTheme(THEME_BASIC, hStdout);
-				this->Setting();
+				Setting();
 				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case HELP:
 				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
-				this->Help();
+				Help();
 				break;
 			case ABOUT:
 				PlaySound(TEXT("enter.wav"), NULL, SND_SYNC);
@@ -592,7 +589,12 @@ int CGAME::Menu() {
 	return 0;
 }
 void CGAME::NewGame() {
+	ChooseCharacter();
+	displayScreen();
+	Help();
+	displayScreen();
 	cPlayer->set(BOARD_WIDTH / 2, UP_LANE, true, 0);
+	isSaved = false;
 	resetData();
 	playGame();
 }
@@ -627,8 +629,10 @@ void CGAME::LoadGame() {
 
 	//draw current step
 	if (!isRight) {
-		tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, LIGHT_GREEN, SAND);
-		tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], LIGHT_GREEN, SAND);
+		if (!fileNameList.empty()) {
+			tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, LIGHT_GREEN, SAND);
+			tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], LIGHT_GREEN, SAND);
+		}
 	}
 	else tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], LIGHT_GREEN);
 
@@ -638,28 +642,32 @@ void CGAME::LoadGame() {
 		int temp = toupper(_getch());
 
 		//erase the last step
-		if (!isRight) tmpObjLayer.erasePixel(xOption, yOption, xOption + 12, yOption);
+		if (!isRight) {
+			if (!fileNameList.empty()) tmpObjLayer.erasePixel(xOption, yOption, xOption + 12, yOption);
+		}
 		else tmpObjLayer.erasePixel(xOption, yOption, xOption + 40 - 1, yOption + 5 - 1);
 
 		if (!isEnterButton(temp)) {
 			if (!isRight) {
-				if (isUpButton(temp)) {
-					if (idFile > 0) {
-						idFile--;
-						yOption -= 2;
+				if (!fileNameList.empty()) {
+					if (isUpButton(temp)) {
+						if (idFile > 0) {
+							idFile--;
+							yOption -= 2;
+						}
 					}
-				}
-				if (isDownButton(temp)) {
-					if (idFile < numberOfFile - 1) {
-						idFile++;
-						yOption += 2;
+					if (isDownButton(temp)) {
+						if (idFile < numberOfFile - 1) {
+							idFile++;
+							yOption += 2;
+						}
 					}
-				}
-				if (isRightButton(temp) || isLeftButton(temp)) {
-					isRight = true;
-					idOption = 0;
-					xOption = XOPTION;
-					yOption = LOAD_YOPTION;
+					if (isRightButton(temp) || isLeftButton(temp)) {
+						isRight = true;
+						idOption = 0;
+						xOption = XOPTION;
+						yOption = LOAD_YOPTION;
+					}
 				}
 			}
 			else {
@@ -686,8 +694,10 @@ void CGAME::LoadGame() {
 		else {
 			//draw choice
 			if (!isRight) {
-				tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, DARK_GREEN, SAND);
-				tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], DARK_GREEN, SAND);
+				if (!fileNameList.empty()) {
+					tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, DARK_GREEN, SAND);
+					tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], DARK_GREEN, SAND);
+				}
 			}
 			else tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], DARK_GREEN);
 			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
@@ -702,24 +712,35 @@ void CGAME::LoadGame() {
 			else {
 				switch (yOption) {
 				case LOAD_YOPTION:
-					loadData(fileNameList[idFile]);
-					playGame();
-					return;
+					if (!fileNameList.empty()) {
+						loadData(fileNameList[idFile]);
+						playGame();
+						return;
+					}
 				case RENAME_YOPTION:
-					renameFile(idFile, tmpBgdLayer);
-					//update bgdLayer
-					//
-					//
-					//
+					if (!fileNameList.empty()) {
+						renameFile(idFile, tmpBgdLayer);
+
+						//update fileNameList and bgd
+						loadFileNameList();
+						tmpObjLayer.erasePixel(XCHOOSE, YCHOOSE_FIRST, XCHOOSE + 10, YCHOOSE_FIRST + 10 * 2);
+						tmpBgdLayer.DrawLoadGame(fromX, fromY, fileNameList);
+						displayScreen(tmpBgdLayer, tmpback, 0, 0, -1, -1);
+						displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+					}
 					break;
 				case DELETE_YOPTION:
-					deleteFile(idFile);
-					if (idFile > 0) idFile--;
-					//update number of file
-					// 
-					// 
-					// 
-					//update bgdLayer
+					if (!fileNameList.empty()) {
+						deleteFile(idFile);
+						if (idFile > 0) idFile--;
+
+						//update fileNameList and bgd
+						loadFileNameList();
+						tmpObjLayer.erasePixel(XCHOOSE, YCHOOSE_FIRST, XCHOOSE + 10, YCHOOSE_FIRST + 10 * 2);
+						tmpBgdLayer.DrawLoadGame(fromX, fromY, fileNameList);
+						displayScreen(tmpBgdLayer, tmpback, 0, 0, -1, -1);
+						displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+					}
 					break;
 				case CANCEL_YOPTION:
 					tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], BLACK);
@@ -734,8 +755,10 @@ void CGAME::LoadGame() {
 			//reset choice
 		}
 		if (!isRight) {
-			tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, LIGHT_GREEN, SAND);
-			tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], LIGHT_GREEN, SAND);
+			if (!fileNameList.empty()) {
+				tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, LIGHT_GREEN, SAND);
+				tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], LIGHT_GREEN, SAND);
+			}
 		}
 		else tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], LIGHT_GREEN);
 		displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
@@ -747,14 +770,14 @@ void CGAME::SaveGame(const CGRAPHIC& BgdLayer) {
 		do {
 			fileName = inputUserTxt(BgdLayer);
 			if (fileName == "") return;
-		} while (fileName.size() > 8 || checkinList(fileName, fileNameList));
+		} while (fileName.size() > MAX_INPUT_SIZE || checkinList(fileName, fileNameList));
 
 		//update save variables
 		isSaved = true;
 		savedName = fileName;
 
 		//update file name list
-		if (fileNameList.size() >= 10) fileNameList.pop_back();
+		if (fileNameList.size() >= MAX_NUMBER_OF_SAVED_FILE) fileNameList.pop_back();
 		fileNameList.push_front(fileName);
 		saveFileNameList();
 	}
@@ -1324,6 +1347,51 @@ void CGAME::push_frontLane(int ID) {
 	}
 	updateYLane();
 }
+void CGAME::push_backLane(int ID) {
+	if (ID == 0) ID = GRASSLANE_ID;
+	int yLane = (int)aLanes.size();
+
+	// delay time cang nho thi push cang nhanh , delaytime ti le ngich vs level
+	// level 1-3 : speed rand() %4 ; level 4-7 : rand() % 3 ; level >=8 : rand() %2
+
+	switch (ID) {
+	case VEHICLELANE_ID: {
+		aLanes.push_back(new CVEHICLELANE(0, yLane, 2 + rand() % 5));
+		break;
+	}
+	case GRASSLANE_ID: {
+		aLanes.push_back(new CGRASSLANE(0, yLane));
+		break;
+	}
+	case TRAINLANE_ID: {
+		aLanes.push_back(new CTRAINLANE(0, yLane, 1 + rand() % 2, 10 + (rand() % 10)));
+		break;
+	}
+	case RIVERLANE_ID: {
+		aLanes.push_back(new CRIVERLANE(0, yLane, 2 + rand() % 5));
+		break;
+	}
+	case FINISHLANE_ID: {
+		aLanes.push_back(new CFINISHLANE(0, yLane));
+		break;
+	}
+	case GRASSLANE_FULL_ID: {
+		aLanes.push_back(new CGRASSLANE(0, yLane, FULL_TREE_TYPELANE));
+		break;
+	}
+	case GRASSLANE_SURROUND_ID: {
+		aLanes.push_back(new CGRASSLANE(0, yLane, SURROUND_TREE_TYPELANE));
+		break;
+	}
+	case GRASSLANE_AROUND_ID: {
+		aLanes.push_back(new CGRASSLANE(0, yLane, AROUND_TREE_TYPELANE));
+		break;
+	}
+	default:
+		aLanes.push_back(new CGRASSLANE(0, yLane));
+	}
+	updateYLane();
+}
 void CGAME::pop_backLane() {
 	CLANE* tmp = aLanes.back();
 	aLanes.pop_back();
@@ -1613,7 +1681,7 @@ void CGAME::drawLosingScreen(int COLOR) {
 	int Dino_x = UFO_x + 15, Dino_y = UFO_y + 20;
 	CUFO UFO(UFO_x, UFO_y);
 	UFO.DrawObject(TmpBgdLayer, 47, 28);
-	CDINOSAUR DINO(Dino_x, Dino_y, COLOR);
+	CDINOSAUR DINO(Dino_x, Dino_y, true,COLOR);
 	DINO.DrawBlock(TmpObjLayer);
 	for (int i = 0; i < 208; i++) {
 		Tmpback.screen[i][34].bgdColor = DARK_GREEN;

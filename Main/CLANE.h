@@ -17,6 +17,7 @@ public:
 	virtual ~CLANE();
 	virtual void Move();
 	virtual void push_frontObject(int ID);
+	virtual void push_backObject(int ID);
 	void pop_backObject();
 	COBJECT* frontObject() const;
 	COBJECT* backObject() const;

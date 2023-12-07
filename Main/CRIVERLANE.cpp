@@ -131,6 +131,22 @@ void CRIVERLANE::push_frontObject(int ID) {
 	}
 	updatePosObj();
 }
+void CRIVERLANE::push_backObject(int ID) {
+	switch (ID) {
+	case PERRY_ID: {
+		lane.push_back(new CPERRY(0, this->y, false));
+		break;
+	}
+	case CAPYBARA_ID: {
+		lane.push_back(new CCAPYBARA(0, this->y, false));
+		break;
+	}
+	default:
+		lane.push_back(NULL);
+	}
+	updatePosObj();
+}
+
 void CRIVERLANE::Move() {
 	timeCount++;
 	if (timeCount >= delayTime) {
