@@ -24,6 +24,7 @@ using namespace std;
 class CGAME {
     CPLAYER* cPlayer;
     deque<CLANE*> aLanes;
+
     deque<string> fileNameList;
     bool isSaved = false;
     string savedName;
@@ -39,8 +40,8 @@ class CGAME {
     bool isPaused = false;
 
     // Sound
-    int bgdSoundLevel = 0;
-    int effectSoundLevel = 0;
+    int bgdSoundLevel = 100;
+    int effectSoundLevel = 100;
 
     //Screen layers
     CGRAPHIC ObjLayer, BgdLayer;
@@ -84,6 +85,7 @@ public:
     void updateYLane();
     void pushRandomLane();
     void push_frontLane(int ID);
+    void push_backLane(int ID);
     void pop_backLane();
     void moveNewLane();
 
@@ -118,6 +120,8 @@ const int QUIT_CODE = -1000;
 const int BACK_TO_MENU_CODE = -1001;
 
 const int MAX_INPUT_SIZE = 8;
+const int MAX_NUMBER_OF_SAVED_FILE = 10;
+const int MAX_LEVEL = 10;
 
 const vector<int> LANE_ID_LIST = { VEHICLELANE_ID, TRAINLANE_ID, RIVERLANE_ID };
 

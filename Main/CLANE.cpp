@@ -23,15 +23,18 @@ CLANE::~CLANE() {
 
 void CLANE::Move() {}
 void CLANE::push_frontObject(int ID) {}
+void CLANE::push_backObject(int ID) {}
 void CLANE::pop_backObject() {
     if (isMoveRight) {
         COBJECT* back = lane.back();
         if (back != NULL) delete back;
+        back = NULL;
         this->lane.pop_back();
     }
     else {
         COBJECT* front = lane.front();
         if (front != NULL) delete front;
+        front = NULL;
         this->lane.pop_front();
     }
 }
@@ -42,8 +45,7 @@ COBJECT* CLANE::frontObject() const
 }
 COBJECT* CLANE::backObject() const
 {
-    if (isMoveRight) return this->lane.back();
-    return this->lane.front();
+    return this->lane.back();
 }
 bool CLANE::emptyObject() const
 {

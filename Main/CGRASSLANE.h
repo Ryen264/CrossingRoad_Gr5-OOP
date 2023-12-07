@@ -22,5 +22,6 @@ public:
 	CGRASSLANE(int x = 0, int y = 0, vector<int> typeLane = {});
 	void injuredPlayer(CPLAYER& player);
 	void push_frontObject(int ID = 0);
+	void push_backObject(int ID = 0);
 	void DrawLane(CGRAPHIC& layer);
 };
