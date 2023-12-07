@@ -348,6 +348,14 @@ void CGRAPHIC::DrawDinasourPicture(int first_x, int first_y)
 	//set color
 	int x = first_x;
 	int y = first_y;
+	for (int i = 0; i < 7; i++)
+	{
+		this->screen[x+i][y].bgdColor = -1;
+	}
+	for (int i = 14; i < 21; i++)
+	{
+		this->screen[x+i][y].bgdColor = -1;
+	}
 	for (int i = 9; i < 12; i++)
 		{
 			this->screen[x+i][y].bgdColor = SADDLE_BROWN;
@@ -413,9 +421,14 @@ void CGRAPHIC::DrawDinasourPicture(int first_x, int first_y)
 		{
 			this->screen[i][7].bgdColor = LIGHT_GREEN;
 		}
+		this->screen[x+4][y+7].bgdColor = WHITE;
 		this->screen[x+5][y+7].bgdColor = DARK_GREEN;
 		this->screen[x+6][y+7].bgdColor = DARK_GREEN;
 		this->screen[x+7][y+7].bgdColor = DARK_GREEN;
+		this->screen[x+15][y+3].bgdColor = WHITE;
+		this->screen[x+15][y+6].bgdColor = WHITE;
+		this->screen[x+6][y+8].bgdColor = WHITE;
+		this->screen[x+10][y+8].bgdColor = WHITE;
 }
 void CGRAPHIC::DrawBigDinoSaur(int first_x, int first_y)
 {
