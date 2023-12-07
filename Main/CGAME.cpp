@@ -67,6 +67,7 @@ void CGAME::start() {
 	_getch();
 }
 void CGAME::playGame() {
+	playBackgroundSound(GAME_THEME);
 	system("cls");
 	startMap();
 	isThreadRunning = true;
@@ -85,6 +86,7 @@ void CGAME::playGame() {
 			int temp = toupper(_getch());
 			switch (temp) {
 			case 'W': case 'S': case 'A': case 'D': {
+				playEffectSound(GAME_MOVE);
 				cPlayer->setMoving(temp);
 				break;
 			}
@@ -1216,6 +1218,7 @@ void CGAME::ChooseCharacter(const CGRAPHIC& BgdLayer) {
 	
 	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	while (1) {
+		playEffectSound(MENU_MOVE);
 		int temp = toupper(_getch());
 
 		//erase the last step

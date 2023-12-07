@@ -122,7 +122,7 @@ void CPLAYER::setScore(int score) {
     this->score = score;
 }
 void CPLAYER::setMoving(int moving) {
-    PlaySound(TEXT("map_move.wav"), NULL, SND_ASYNC);
+    
     this->moving = moving;
 }
 void CPLAYER::setDependObj(COBJECT* dependObj) {
