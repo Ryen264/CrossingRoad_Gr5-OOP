@@ -63,6 +63,12 @@ void COBJECT::DrawBlock(CGRAPHIC& layer, bool isPass) {
 	}
 }
 
+void COBJECT::DrawObject(CGRAPHIC& layer, int width, int height) {
+	for (int i = 0; i < width; i++)
+		for (int j = 0; j < height; j++)
+			 layer.screen[i + x][j + y] = block[i][j];
+}
+
 int random(vector<int> arr) {
 	int size = (int)arr.size();
 	return arr[rand() % size];

@@ -13,7 +13,7 @@ CUFO::CUFO(int x, int y) {
 	for (int i = 0; i < WIDTH; i++)
 		for (int j = 0; j < HEIGHT; j++)
 			if (frame[j][i] != ' ')
-				this->block[i][j] = { frame[j][i], BLACK, WHITE };
+				this->block[i][j] = { frame[j][i], BLACK, -1 };
 			else
 				this->block[i][j] = { frame[j][i], -1, -1 };
 
@@ -21,31 +21,31 @@ CUFO::CUFO(int x, int y) {
 
 	for (int i = 17; i < 29; i++)
 		{
-			block[i][0].bgdColor = SKY_BLUE;
+			block[i][0].bgdColor = BLUE;
 		}
 
 		block[24][0].bgdColor = WHITE;
 		block[25][0].bgdColor = WHITE;
 
 		block[15][1].txtColor = BLACK;
-		block[15][1].bgdColor = SKY_BLUE;
+		block[15][1].bgdColor = BLUE;
 		for (int i = 16; i < 31; i++)
 		{
-			block[i][1].txtColor = SKY_BLUE;
+			block[i][1].txtColor = BLUE;
 		}
 		block[30][1].txtColor = BLACK;
-		block[30][1].bgdColor = SKY_BLUE;
-		block[23][1].bgdColor = SKY_BLUE;
+		block[30][1].bgdColor = BLUE;
+		block[23][1].bgdColor = BLUE;
 		block[23][1].txtColor = WHITE;
 		block[24][1].txtColor = WHITE;
 		block[25][1].txtColor = WHITE;
-		block[26][1].bgdColor = SKY_BLUE;
+		block[26][1].bgdColor = BLUE;
 		block[26][1].txtColor = WHITE;
 		for (int i = 15; i < 31; i++)
 		{
-			block[i][2].txtColor = SKY_BLUE;
+			block[i][2].txtColor = BLUE;
 		}
-		block[28][2].bgdColor = SKY_BLUE;
+		block[28][2].bgdColor = BLUE;
 		block[28][2].txtColor = WHITE;
 		for (int i = 12; i < 34; i++)
 		{

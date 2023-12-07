@@ -80,18 +80,18 @@ public:
 	void drawCheck(int first_x, int first_y, int txtColor = DARK_GREEN, int bgdColor = -1);
 	void drawCell(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1, bool isPass = true);
 	void drawButton(int first_x, int first_y, int color, int txtColor = BLACK, int bgdColor = -1, bool isPass = true);
-	void drawClipBoard(int first_x, int first_y, int width, int height);
+	void drawClipBoard(int first_x, int first_y, int width, int height, int back, int paper);
 	void drawTag(int first_x, int first_y, string tagName, int tagColor);
 	void drawInfiniteSymbol(int first_x, int first_y);
 	void drawRegtangle(int first_x, int first_y, int width, int height, int color, bool isFill = false);
 
-	void DrawTextBoard(string contentName, int colorName, vector<string> contentBody, int first_x, int first_y, int width, int height, int txtColor, int bgdColor);
+	void DrawTextBoard(string contentName, int colorName, vector<string> contentBody, int first_x, int first_y, int width, int height, int txtColor, int bgdColor, int back, int paper);
 
 	void DrawDrawer(int first_x, int first_y);
 	void DrawSmallDrawer(int first_x, int first_y, int drawerColor = BRIGHT_YELLOW);
 	void DrawDinasourPicture(int first_x, int first_y);
 	void DrawBigDinoSaur(int first_x, int first_y);
-	void DrawHat(int first_x, int first_y);
+	void DrawHat(int first_x, int first_y, int Color);
 	void DrawCloud_1(int first_x, int first_y);
 	void DrawCloud_2(int first_x, int first_y);
 	void DrawDoofCorp(int first_x, int first_y);
@@ -107,14 +107,16 @@ public:
 	void DrawPerryTalk(string message, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawHeader(int first_x, int first_y);
 
+	void DrawMissonMissonCompleted(int first_x, int first_y, int txtColor, int BgdColor);
+	void DrawMissonFailed(int first_x, int first_y, int txtColor, int BgdColor);
 	void DrawChar1pixel(int first_x, int first_y, char ch, int txtColor, int bgdColor);
 	void DrawString1pixel(int first_x, int first_y, string str, int txtColor, int bgdColor);
 	void DrawNumber1pixel(int first_x, int first_y, int num, int txtColor, int bgdColor);
 };
 const vector<wstring> COLON = {
-	L"█",
-	L" ",
-	L"█" };
+	L"▄",
+	L"▄"
+};
 const vector<wstring> CELL = {
 	L"█▀▀▀▀▀█",
 	L"█     █",
@@ -587,9 +589,9 @@ const vector<wstring>HAT = {
 L"      ▄██▄     ",
 L"    ▄▀▀▀████   ",
 L"██▄▄▀▀█████▄   ",
-L" ▀▀███████████▄",
-L"     ▀▀▀▀▀▀▀▀  ",
+L" ▀▀███████████▄"
 };
+
 const vector<wstring>FRAME_CLOUD_1 = {
 L"     ▄▀▀▄      ",
 L" ▄▀▀▀    ▀▀▀▀▄ ",
@@ -717,4 +719,22 @@ const vector<wstring> HEADER = {
 	L"        █  █  ▀  █  █  ▄  █  █  ▀  █  █  ▄  █  █        ",//7
 	L"        █▄▄█  ▄ ▀█▄▄█     █▄▄█  ▄  █▄▄█     █▄▄█        ",//8
 	L"           ▀▄▄█▄▄▀  ▀▄▄▄▄▄▀  ▀▄▄▀▄▄▀  █▄▄▄▄▄▀           "//9
+};
+const vector<wstring> MISSION_FAILED = {
+	L"███╗   ███╗██╗███████╗███████╗██╗ ██████╗ ███╗   ██╗    ███████╗ █████╗ ██╗██╗     ███████╗██████╗ ██╗",
+	L"████╗ ████║██║██╔════╝██╔════╝██║██╔═══██╗████╗  ██║    ██╔════╝██╔══██╗██║██║     ██╔════╝██╔══██╗██║",
+	L"██╔████╔██║██║███████╗███████╗██║██║   ██║██╔██╗ ██║    █████╗  ███████║██║██║     █████╗  ██║  ██║██║",
+	L"██║╚██╔╝██║██║╚════██║╚════██║██║██║   ██║██║╚██╗██║    ██╔══╝  ██╔══██║██║██║     ██╔══╝  ██║  ██║╚═╝",
+	L"██║ ╚═╝ ██║██║███████║███████║██║╚██████╔╝██║ ╚████║    ██║     ██║  ██║██║███████╗███████╗██████╔╝██╗",
+	L"╚═╝     ╚═╝╚═╝╚══════╝╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝    ╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═════╝ ╚═╝"
+};
+
+const vector<wstring> MISSION_COMPLETED = {
+L"███╗   ███╗██╗███████╗███████╗██╗ ██████╗ ███╗   ██╗     ██████╗ ██████╗ ███╗   ███╗██████╗ ██╗     ███████╗████████╗███████╗██████╗ ██╗",
+L"████╗ ████║██║██╔════╝██╔════╝██║██╔═══██╗████╗  ██║    ██╔════╝██╔═══██╗████╗ ████║██╔══██╗██║     ██╔════╝╚══██╔══╝██╔════╝██╔══██╗██║",
+L"██╔████╔██║██║███████╗███████╗██║██║   ██║██╔██╗ ██║    ██║     ██║   ██║██╔████╔██║██████╔╝██║     █████╗     ██║   █████╗  ██║  ██║██║",
+L"██║╚██╔╝██║██║╚════██║╚════██║██║██║   ██║██║╚██╗██║    ██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██║     ██╔══╝     ██║   ██╔══╝  ██║  ██║╚═╝",
+L"██║ ╚═╝ ██║██║███████║███████║██║╚██████╔╝██║ ╚████║    ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ███████╗███████╗   ██║   ███████╗██████╔╝██╗",
+L"╚═╝     ╚═╝╚═╝╚══════╝╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝     ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚══════╝╚══════╝   ╚═╝   ╚══════╝╚═════╝ ╚═╝"
+
 };

@@ -3,6 +3,7 @@
 class CUFO : public COBJECT {
 	bool isRight;
 	const vector <wstring> UFO = {
+	//01234567890123456789012345678901234567890123456
 	L"                ▄▀▀▀▀▀▀▀▀▀▀▀▀▄                 ",
 	L"              ▄▀███████▀██▀███▀▄               ",
 	L"              ██████████████▀███               ",
