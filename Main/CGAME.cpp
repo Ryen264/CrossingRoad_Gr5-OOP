@@ -362,7 +362,7 @@ int CGAME::Menu() {
 	tmpObjLayer.DrawDinasourPicture(10, 2);
 	tmpObjLayer.DrawDoofCorp(176, 16);
 	tmpObjLayer.DrawHeader(98, 3);
-	tmpObjLayer.DrawDinasourPicture(6, 2);
+	tmpObjLayer.DrawDinasourPicture(10, 2);
 	tmpObjLayer.DrawHat(190, 44);
 	tmpBgdLayer.DrawDrawer(fromX, fromY + 3);
 
