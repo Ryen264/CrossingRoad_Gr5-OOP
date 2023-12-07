@@ -1067,10 +1067,11 @@ int CGAME::Pause(HANDLE t) {
 				characterSample.DrawBlock(tmpObjLayer);
 				break;
 			case SETTING_OPTION:
-				//setting
+				this->Setting();
 				break;
 			case RESUME_OPTION:
 				resumeThread(t);
+				curTime += endTime - startTime;
 				return 0;
 			case HELP_OPTION:
 				//help
@@ -1196,18 +1197,18 @@ void CGAME::exitThread(thread* t) {
 void CGAME::resumeThread(HANDLE t) {
 	//cout down
 	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
-	displayScreen(tmpObjLayer, tmpBgdLayer);
-	int x = (SCREEN_WIDTH - 3) / 2, y = (SCREEN_HEIGHT - 3) / 2;
-	tmpObjLayer.DrawNumber(3, x, y, RED, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	displayScreen(tmpObjLayer, BgdLayer);
+	int x = (SCREEN_WIDTH - 35) / 2, y = (SCREEN_HEIGHT - 17) / 2;
+	tmpObjLayer.DrawBigNumber(3, x, y, RED, WHITE);
+	displayScreen(tmpObjLayer, BgdLayer, x, y, x + 35 - 1, y + 17 - 1);
 	Sleep(1000);
 	tmpObjLayer.clear(-1, -1);
-	tmpObjLayer.DrawNumber(2, x, y, BRIGHT_YELLOW, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	tmpObjLayer.DrawBigNumber(2, x, y, BRIGHT_YELLOW, WHITE);
+	displayScreen(tmpObjLayer, BgdLayer, x, y, x + 35 - 1, y + 17 - 1);
 	Sleep(1000);
 	tmpObjLayer.clear(-1, -1);
-	tmpObjLayer.DrawNumber(1, x, y, LIGHT_GREEN, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	tmpObjLayer.DrawBigNumber(1, x, y, LIGHT_GREEN, WHITE);
+	displayScreen(tmpObjLayer, BgdLayer, x, y, x + 35- 1, y + 17 - 1);
 	Sleep(1000);
 	if (t != NULL)
 		ResumeThread(t);
@@ -1322,6 +1323,7 @@ void CGAME::moveNewLane() {
 void CGAME::SubThreadNewGame() {
 	while (isThreadRunning) {
 		if (!cPlayer->isDead()) {
+		
 			//Lane move
 			for (int i = 0; i < BOARD_HEIGHT; i++) aLanes[i]->Move();
 
@@ -1355,7 +1357,6 @@ void CGAME::SubThreadNewGame() {
 				cur = NULL;
 				aLanes[yBoard]->setPos(xBoard, NULL);
 				cPlayer->setDependObj(NULL);
-
 				cPlayer->increaseScore(1);
 				break;
 			}
@@ -1388,9 +1389,9 @@ void CGAME::SubThreadNewGame() {
 				//Update depend obj 
 				cPlayer->setDependObj(nextObj);
 			}
-
+			drawTaskBar();
 			drawMap();
-			displayScreen();
+			displayScreen(0, START_BOARD_HEIGHT, -1, -1);
 
 			if (cPlayer->isDead()) {
 				//Hieu ung va cham
@@ -1419,8 +1420,9 @@ void CGAME::updateTime() {
 	if (endTime - startTime > 0) {
 		curTime += (endTime - startTime);
 		startTime = endTime;
-		ObjLayer.drawTime(curTime, SCREEN_WIDTH - 17, 0, BLACK, -1);
-		//ObjLayer.display(0, 0, SCREEN_WIDTH, 2);
+		ObjLayer.drawString("TIME", SCREEN_WIDTH - 44, 0, BLACK, LIGHT_GRAY);
+		ObjLayer.DrawObject(COLON, SCREEN_WIDTH - 27, 0,BLACK, LIGHT_GRAY);
+		ObjLayer.drawTime(curTime, SCREEN_WIDTH- 22, 0, BLACK, LIGHT_GRAY);
 	}
 }
 string CGAME::getTime(clock_t curTime) {
@@ -1434,12 +1436,21 @@ clock_t CGAME::setTime(string& time) {
 	iss >> result;
 	return result;
 }
+// task bar
+void CGAME::updateScore() {
+	ObjLayer.DrawEgg(114, 0);
+	ObjLayer.DrawNumber(cPlayer->getScore()+1, 127, 0, BLACK, LIGHT_GRAY);
+}
 
-
+void CGAME::updateLevel() {
+	ObjLayer.drawString("LEVEL", 74, 0, BLACK, LIGHT_GRAY);
+	ObjLayer.DrawObject(COLON, 95, 0, BLACK, LIGHT_GRAY);
+	ObjLayer.DrawNumber(this->level, 100, 0, BLACK, LIGHT_GRAY);
+}
 
 //Drawing functions
 void CGAME::startMap() {
-	BgdLayer.clear(BLACK, WHITE);
+	BgdLayer.clear(BLACK, LIGHT_GRAY);
 	for (int i = 0; i < BOARD_HEIGHT; i++)
 		aLanes[i]->DrawLane(BgdLayer);
 }
@@ -1449,7 +1460,17 @@ void CGAME::drawMap() {
 		this->aLanes[i]->DrawObjects(ObjLayer);
 	if (!cPlayer->isDead()) cPlayer->drawCharacter(ObjLayer);
 }
+void CGAME::drawTaskBar() {
+	// draw pause
+	ObjLayer.drawString("P", 3, 0, BLACK, LIGHT_GRAY);
+	ObjLayer.DrawObject(COLON,8, 0, BLACK, LIGHT_GRAY);
+	ObjLayer.drawString("PAUSE", 12, 0, BLACK, LIGHT_GRAY);
 
+	updateLevel();
+	updateTime();
+	updateScore();
+	displayScreen(0, 0, SCREEN_WIDTH, 2);
+}
 void CGAME::intro() {
 	cout << "START!!!" << endl;
 }

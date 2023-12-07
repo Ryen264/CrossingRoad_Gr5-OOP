@@ -124,8 +124,11 @@ void CGRAPHIC::DrawNumber(int num, int first_x, int first_y, int txtColor, int b
 	vector<int> arrNum{};
 	for (; num != 0; num /= 10)
 		arrNum.push_back(num % 10);
-	for (int i = (int)arrNum.size() - 1; i >= 0; i--)
-		DrawObject(NUMBER[arrNum[i]], first_x + i * 4, first_y, txtColor, bgdColor, false);
+	for (int i = 0; i < (int)arrNum.size(); i++)
+		DrawObject(NUMBER[arrNum[(int)arrNum.size() - 1 - i]], first_x + i * 4, first_y, txtColor, bgdColor, false);
+}
+void CGRAPHIC::DrawBigNumber(int num, int first_x, int first_y, int txtColor, int bgdColor) {
+	DrawObject(BIG_NUMBER[num-1], first_x, first_y, BLACK, WHITE);
 }
 void CGRAPHIC::DrawInputPos(int first_x, int first_y, int txtColor, int bgdColor) {
 	DrawObject(INPUT_POS, first_x, first_y, txtColor, bgdColor);
@@ -153,9 +156,12 @@ void CGRAPHIC::drawString(string str, int x, int y, int txtColor, int bgdColor, 
 	for (int i = str.length() - num; i < str.length(); i++, x++)
 		DrawLetter(str[i], x + 1 + i * 3, y, txtColor, bgdColor);
 }
-void CGRAPHIC::drawTime(clock_t second, int first_x, int first_y, int txtColor, int bgdColor) {
-	clock_t minute = second / 60;
+void CGRAPHIC::drawTime(clock_t curTime, int first_x, int first_y, int txtColor, int bgdColor) {
+	int second = curTime / CLOCKS_PER_SEC;
+
+	int minute = second / 60;
 	second %= 60;
+
 	int width = 3;
 	int startX = first_x;
 	DrawObject(NUMBER[minute / 10], startX, first_y, txtColor, bgdColor);
@@ -167,6 +173,7 @@ void CGRAPHIC::drawTime(clock_t second, int first_x, int first_y, int txtColor, 
 	DrawObject(NUMBER[second / 10], startX, first_y, txtColor, bgdColor);
 	startX += width + 1;
 	DrawObject(NUMBER[second % 10], startX, first_y, txtColor, bgdColor);
+
 }
 
 void CGRAPHIC::drawCharacterFrame(int first_x, int first_y, int txtColor, int bgdColor) {
@@ -1349,4 +1356,38 @@ void CGRAPHIC::DrawNumber1pixel(int first_x, int first_y, int num, int txtColor,
 		arrNum.push_back(num % 10);
 	for (int i = (int)arrNum.size() - 1; i >=0; i--)
 		DrawChar1pixel(first_x + i, first_y, char(arrNum[i] + '0'), txtColor, bgdColor);
+}
+void CGRAPHIC::DrawEgg(int first_x , int first_y ) {
+	DrawObject(COLON, first_x + 7, first_y, BLACK, LIGHT_GRAY);
+	DrawObject(EGG_FRAME, first_x, first_y, BLACK, WHITE);
+	//set colors
+	screen[first_x + 1][first_y].bgdColor = LIGHT_GRAY;
+	screen[first_x + 1][first_y].txtColor = BLACK;
+	screen[first_x + 1][first_y].bgdColor = LIGHT_GRAY;
+	screen[first_x + 2][first_y].txtColor = BLACK;
+	screen[first_x + 2][first_y].bgdColor = WHITE;
+	screen[first_x + 3][first_y].txtColor = BLACK;
+	screen[first_x + 3][first_y].bgdColor = WHITE;
+	screen[first_x + 4][first_y].txtColor = BLACK;
+	screen[first_x + 4][first_y].bgdColor = LIGHT_GRAY;
+	screen[first_x + 5][first_y].txtColor = LIGHT_GRAY;
+
+	screen[first_x][first_y+1].txtColor = BLACK;
+	for (int i = 1; i < 5; i++)
+	{
+		screen[first_x + i][first_y + 1].txtColor = WHITE;
+	}
+
+	screen[first_x][first_y + 2].txtColor = BLACK;
+	screen[first_x][first_y + 2].bgdColor = LIGHT_GRAY;
+	screen[first_x + 1][first_y + 2].txtColor = BLACK;
+	screen[first_x + 1][first_y + 2].bgdColor = WHITE;
+	screen[first_x + 2][first_y + 2].txtColor = BLACK;
+	screen[first_x + 2][first_y + 2].bgdColor = WHITE;
+	screen[first_x + 3][first_y + 2].txtColor = BLACK;
+	screen[first_x + 3][first_y + 2].bgdColor = WHITE;
+	screen[first_x + 4][first_y + 2].txtColor = BLACK;
+	screen[first_x + 4][first_y + 2].bgdColor = WHITE;
+	screen[first_x + 5][first_y + 2].txtColor = BLACK;
+	screen[first_x + 5][first_y + 2].bgdColor = LIGHT_GRAY;
 }

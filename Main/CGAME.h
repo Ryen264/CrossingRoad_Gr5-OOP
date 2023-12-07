@@ -91,9 +91,15 @@ public:
     void updateTime();
     string getTime(clock_t curTime);
     clock_t setTime(string& time);
+    // task bar
+    void updateScore();
+    void updateLevel();
 
     void startMap();
     void drawMap();
+    void drawTaskBar();
+    
+    
 
     void intro();
     void outtro();

@@ -68,6 +68,7 @@ public:
 
 	void DrawLetter(char ch, int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
 	void DrawNumber(int num, int first_x, int first_y, int txtColor, int bgdColor);
+	void DrawBigNumber(int num, int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawInputPos(int first_x, int first_y, int txtColor = BLACK, int bgdColor = -1);
 	void DrawMINUS(int first_x, int first_y, int txtColor, int bgdColor);
 	void DrawPLUS(int first_x, int first_y, int txtColor, int bgdColor);
@@ -95,6 +96,7 @@ public:
 	void DrawCloud_1(int first_x, int first_y);
 	void DrawCloud_2(int first_x, int first_y);
 	void DrawDoofCorp(int first_x, int first_y);
+	void DrawEgg(int first_x, int first_y);
 
 	//void DrawFileInfo(int first_x, int first_y, int id, string fileName, int level, int score, string characterName, int txtColor, int bgdColor);
 	void DrawSaveScreen(int first_x, int first_y);
@@ -112,9 +114,9 @@ public:
 	void DrawNumber1pixel(int first_x, int first_y, int num, int txtColor, int bgdColor);
 };
 const vector<wstring> COLON = {
-	L"█",
 	L" ",
-	L"█" };
+	L"▀",
+	L"▀" };
 const vector<wstring> CELL = {
 	L"█▀▀▀▀▀█",
 	L"█     █",
@@ -148,7 +150,11 @@ const vector<wstring> EXCLAMATION_MARK = {
 	L" █ ",
 	L" █ ",
 	L" ▄ " };
-
+const vector <wstring> EGG_FRAME = {
+L" ▄▀▀▄ ",
+L"██████",
+L"▀▄▄▄▄▀"
+};
 const vector<wstring> CHARACTER_FRAME = {
 	L"█               █",
 	L"█               █",
@@ -224,30 +230,30 @@ L"██              ██████          ██",//9
 L"██            ██████            ██",//10
 L"██          ██████              ██",//11
 L"██        ██████                ██",//12
-L" █   ███████   █ ",//13
-L" █   ███████   █ ",//14
-L"  █           █  ",//15
-L"   ██       ██   ",//16
-L"     ███████     "},//17
+L"  ██      ██████████████      ██  ",//13
+L"  ██      ██████████████      ██  ",//14
+L"    ██                      ██    ",//15
+L"      ████              ████      ",//16
+L"          ██████████████          "},//17
 
 {
-L"     ███████     ",//1
-L"   ██       ██   ",//2
-L"  █           █  ",//3
-L" █    █████    █ ",//4
-L" █   ███████   █ ",//5
-L"█    ██   ██    █",//6
-L"█         ██    █",//7
-L"█      ████     █",//8
-L"█      ████     █",//9
-L"█         ██    █",//10
-L"█         ██    █",//11
-L"█    ██   ██    █",//12
-L" █   ███████   █ ",//13
-L" █    █████    █ ",//14
-L"  █           █  ",//15
-L"   ██       ██   ",//16
-L"     ███████     "},//17
+L"          ██████████████          ",//1
+L"      ████              ████      ",//2
+L"    ██                      ██    ",//3
+L"  ██        ██████████        ██  ",//4
+L"  ██      ██████████████      ██  ",//5
+L"██        ████      ████        ██",//6
+L"██                  ████        ██",//7
+L"██              ██████          ██",//8
+L"██              ██████          ██",//9
+L"██                  ████        ██",//10
+L"██                  ████        ██",//11
+L"██        ████      ████        ██",//12
+L"  ██      ██████████████      ██  ",//13
+L"  ██        ██████████        ██  ",//14
+L"    ██                      ██    ",//15
+L"      ████              ████      ",//16
+L"          ██████████████          "},//17
 };
 const vector<vector<wstring>> BIG_NUMBER1 = {
 	//1 O VUONG = 2 CUC
@@ -717,3 +723,4 @@ const vector<wstring> HEADER = {
 	L"        █▄▄█  ▄ ▀█▄▄█     █▄▄█  ▄  █▄▄█     █▄▄█        ",//8
 	L"           ▀▄▄█▄▄▀  ▀▄▄▄▄▄▀  ▀▄▄▀▄▄▀  █▄▄▄▄▄▀           "//9
 };
+
