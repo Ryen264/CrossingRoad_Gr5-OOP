@@ -91,7 +91,7 @@ void CGAME::playGame() {
 				break;
 			}
 			case 'P': {
-				PlaySound(TEXT("ui_pause.wav"), NULL, SND_SYNC);
+				playEffectSound(GAME_PAUSE);
 				if (Pause(threadNewGame.native_handle()) == BACK_TO_MENU_CODE) {
 					exitThread(&threadNewGame);
 					return;
@@ -101,6 +101,8 @@ void CGAME::playGame() {
 		}
 		else {
 			if (isReset()) {
+				playBackgroundSound(OFF_SOUND);
+				playBackgroundSound(GAME_THEME);
 				cPlayer->setScore(0);
 				level = 1;
 				startTime = clock(), endTime = 0, curTime = 0;
@@ -110,6 +112,7 @@ void CGAME::playGame() {
 				cPlayer->set(BOARD_WIDTH / 2, UP_LANE, true, 0);
 			}
 			else {
+				playEffectSound(MENU_QUIT);
 				exitThread(&threadNewGame);
 				return;
 			}
@@ -497,7 +500,6 @@ void CGAME::renameFile(int index, const CGRAPHIC& BgdLayer) {
 }
 
 int CGAME::Menu() {
-	PlaySound(TEXT("ycg_logo.wav"), NULL, SND_ASYNC);
 	playBackgroundSound(MENU_THEME);
 	system("cls");
 	SetupTheme(MAIN_MENU_THEME, hStdout);
@@ -571,6 +573,8 @@ int CGAME::Menu() {
 				playEffectSound(MENU_ENTER);
 				SetupTheme(THEME_BASIC, hStdout);
 				NewGame();
+				playBackgroundSound("");
+				playBackgroundSound(MENU_THEME);
 				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case LOAD_GAME:
@@ -584,6 +588,8 @@ int CGAME::Menu() {
 				SetupTheme(THEME_BASIC, hStdout);
 				Setting();
 				SetupTheme(MAIN_MENU_THEME, hStdout);
+				playBackgroundSound("");
+				playBackgroundSound(MENU_THEME);
 				break;
 			case HELP:
 				playEffectSound(MENU_ENTER);
@@ -594,7 +600,7 @@ int CGAME::Menu() {
 				this->About();
 				break;
 			case QUIT:
-				playEffectSound(MENU_ENTER);
+				playEffectSound(MENU_QUIT);
 				return QUIT_CODE;
 			}
 			displayScreen(tmpObjLayer, tmpBgdLayer);
@@ -862,6 +868,7 @@ void CGAME::Setting() {
 
 	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	while (1) {
+		playEffectSound(MENU_MOVE);
 		int temp = toupper(_getch());
 
 		// erase the last step
@@ -919,6 +926,7 @@ void CGAME::Setting() {
 		}
 		else {
 			//draw choice
+			playEffectSound(MENU_ENTER);
 			if (xOption == XSOUND) {
 				if (yOption == BACKGROUND_YSOUND) {
 					tmpObjLayer.drawRegtangle(xOption, yOption, (curBgdSound / 25) * 8.75, 3, DARK_GREEN, true);
@@ -1062,6 +1070,7 @@ int CGAME::Pause(HANDLE t) {
 
 	displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	while (1) {
+		playEffectSound(MENU_MOVE);
 		int temp = toupper(_getch());
 
 		//erase the last step
@@ -1164,22 +1173,29 @@ int CGAME::Pause(HANDLE t) {
 				tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
 				break;
 			case SETTING_OPTION:
+				playEffectSound(MENU_ENTER);
 				Setting();
+				playBackgroundSound("");
+				playBackgroundSound(GAME_THEME);
 				break;
 			case RESUME_OPTION:
+				playEffectSound(MENU_ENTER);
 				drawCountDown();
 				resumeThread(t);
 				curTime += endTime - startTime;
 				return 0;
 			case HELP_OPTION:
+				playEffectSound(MENU_ENTER);
 				Help();
 				break;
 			case SAVE_OPTION:
+				playEffectSound(MENU_ENTER);
 				SaveGame(tmpBgdLayer);
 				drawCountDown();
 				resumeThread(t);
 				return 0;
 			case EXIT_OPTION:
+				playEffectSound(MENU_QUIT);
 				resumeThread(t);
 				savedName = "";
 				isSaved = false;
@@ -1620,6 +1636,8 @@ void CGAME::drawCountDown() {
 }
 
 bool CGAME::drawLosingScreen(int COLOR) {
+	playBackgroundSound(OFF_SOUND);
+	playEffectSound(MENU_LOSING);
 	// draw
 	CGRAPHIC Tmpback;
 	Tmpback.clear(SKY_BLUE, SKY_BLUE);
@@ -1785,7 +1803,8 @@ bool CGAME::drawLosingScreen(int COLOR) {
 
 }
 void CGAME::drawWiningScreen(int COLOR) {
-	PlaySound(TEXT("joustus_mysterycard_new.wav"), NULL, SND_ASYNC);
+	playBackgroundSound(OFF_SOUND);
+	playEffectSound(MENU_WINING);
 	CGRAPHIC Tmpback;
 	Tmpback.clear(SKY_BLUE, SKY_BLUE);
 	for (int i = 0; i < 208; i++) {
