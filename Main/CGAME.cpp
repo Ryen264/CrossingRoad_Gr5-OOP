@@ -868,7 +868,6 @@ void CGAME::Setting() {
 		displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	}
 }
-
 void CGAME::Help() {
 	CGRAPHIC tmpBgdLayer(BgdLayer);
 
@@ -897,11 +896,10 @@ void CGAME::Help() {
 		toX = fromX + width - 1, toY = fromY + height - 1;
 	
 
-	tmpBgdLayer.DrawTextBoard("HELP", CREAMY_AVOCADO, bodycontent, fromX, fromY, 53, 29, BLACK, WHITE);
-	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
+	tmpBgdLayer.DrawTextBoard("HELP", CREAMY_AVOCADO, bodycontent, fromX, fromY, 52, 30, BLACK, WHITE);
+	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX -1, toY +1);
 	_getch();
 }
-
 void CGAME::About() {
 	CGRAPHIC tmpBgdLayer(BgdLayer);
 
@@ -926,7 +924,7 @@ void CGAME::About() {
 	int height = bodycontent.size() + 20;
 
 	const int fromX = (SCREEN_WIDTH - width) / 2, fromY = (SCREEN_HEIGHT - height) / 2,
-		toX = fromX + width - 1, toY = fromY + height - 1;
+		toX = fromX + width, toY = fromY + height;
 
 	tmpBgdLayer.DrawTextBoard("ABOUT", LAVENDER, bodycontent, fromX, fromY, width, height, BLACK, WHITE);
 
@@ -934,7 +932,6 @@ void CGAME::About() {
 	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	_getch();
 }
-
 int CGAME::Pause(HANDLE t) {
 	SuspendThread(t);
 	const int fromX = (SCREEN_WIDTH - 53) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
@@ -1046,7 +1043,6 @@ int CGAME::Pause(HANDLE t) {
 			//draw new step
 			if (xOption != CHARACTER_OPTION) tmpObjLayer.drawCell(xOption, yOption, LIGHT_GREEN);
 			else tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
-			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 		}
 		else {
 			//draw choice
@@ -1065,15 +1061,17 @@ int CGAME::Pause(HANDLE t) {
 				characterSample.setColor(cPlayer->getColorCharacter());
 				tmpObjLayer.erasePixel(xOption, yOption, xOption + 17, yOption + 8);
 				characterSample.DrawBlock(tmpObjLayer);
+				tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
 				break;
 			case SETTING_OPTION:
-				//setting
+				Setting();
 				break;
 			case RESUME_OPTION:
+				drawCountDown();
 				resumeThread(t);
 				return 0;
 			case HELP_OPTION:
-				//help
+				Help();
 				break;
 			case SAVE_OPTION:
 				if (isSaved) saveData(savedName);
@@ -1081,6 +1079,7 @@ int CGAME::Pause(HANDLE t) {
 					displayScreen();
 					SaveGame();
 				}
+				drawCountDown();
 				resumeThread(t);
 				return 0;
 			case EXIT_OPTION:
@@ -1090,9 +1089,8 @@ int CGAME::Pause(HANDLE t) {
 				return BACK_TO_MENU_CODE;
 			}
 			//reset choice
-			tmpObjLayer.drawCharacterFrame(xOption, yOption, LIGHT_GREEN);
-			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 		}
+		displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	}
 	return 0;
 }
@@ -1194,23 +1192,7 @@ void CGAME::exitThread(thread* t) {
 	t->join();
 }
 void CGAME::resumeThread(HANDLE t) {
-	//cout down
-	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
-	displayScreen(tmpObjLayer, tmpBgdLayer);
-	int x = (SCREEN_WIDTH - 3) / 2, y = (SCREEN_HEIGHT - 3) / 2;
-	tmpObjLayer.DrawNumber(3, x, y, RED, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
-	Sleep(1000);
-	tmpObjLayer.clear(-1, -1);
-	tmpObjLayer.DrawNumber(2, x, y, BRIGHT_YELLOW, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
-	Sleep(1000);
-	tmpObjLayer.clear(-1, -1);
-	tmpObjLayer.DrawNumber(1, x, y, LIGHT_GREEN, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
-	Sleep(1000);
-	if (t != NULL)
-		ResumeThread(t);
+	if (t != NULL) ResumeThread(t);
 }
 
 void CGAME::updateYLane() {
@@ -1451,10 +1433,26 @@ void CGAME::drawMap() {
 }
 
 void CGAME::intro() {
-	cout << "START!!!" << endl;
+	cout << "LET'S START IT!" << endl;
 }
 void CGAME::outtro() {
-	cout << "End game" << endl;
+	cout << "END GAME..." << endl;
+}
+void CGAME::drawCountDown() {
+	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
+	displayScreen(tmpObjLayer, tmpBgdLayer);
+	int x = (SCREEN_WIDTH - 3) / 2, y = (SCREEN_HEIGHT - 3) / 2;
+	tmpObjLayer.DrawNumber(3, x, y, RED, -1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	Sleep(1000);
+	tmpObjLayer.clear(-1, -1);
+	tmpObjLayer.DrawNumber(2, x, y, BRIGHT_YELLOW, -1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	Sleep(1000);
+	tmpObjLayer.clear(-1, -1);
+	tmpObjLayer.DrawNumber(1, x, y, LIGHT_GREEN, -1);
+	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
+	Sleep(1000);
 }
 void CGAME::drawPlayAgain() {
 	cout << "Play again (Y/N)?" << endl;

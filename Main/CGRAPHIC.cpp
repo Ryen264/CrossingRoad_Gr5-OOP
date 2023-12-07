@@ -210,13 +210,6 @@ void CGRAPHIC::drawClipBoard(int first_x, int first_y, int width, int height) {
 		screen[i][first_y].bgdColor = LIGHT_GRAY;
 		screen[i][first_y + 1].bgdColor = LIGHT_GRAY;
 	}
-	//bottom
-	for (int i = first_x + 1; i < first_x + width; i++) {
-		screen[i][first_y + height - 1] = { L'▀' , BLACK, DARK_BROWN };
-		screen[i][first_y + height] = { L'▄' , BLACK, DARK_BROWN };
-	}
-	screen[first_x][first_y + height] = { L'▀' , BLACK, -1 };
-	screen[first_x + width][first_y + height] = { L'▀' , BLACK, -1 };
 	//mid
 	for (int i = first_x + 4; i <= first_x + width - 4; i++)
 		for (int j = first_y + 2; j <= first_y + height - 2; j++)
@@ -254,6 +247,13 @@ void CGRAPHIC::drawClipBoard(int first_x, int first_y, int width, int height) {
 
 	for (int i = 0; i < 5; i++)
 		screen[first_x + width - (3 + i)][first_y + height - 1] = { L' ', BLACK, DARK_BROWN };
+	//bottom
+	for (int i = first_x + 1; i < first_x + width; i++) {
+		screen[i][first_y + height - 1] = { L'▀' , BLACK, DARK_BROWN };
+		screen[i][first_y + height] = { L'▄' , BLACK, DARK_BROWN };
+	}
+	screen[first_x][first_y + height] = { L'▀' , BLACK, -1 };
+	screen[first_x + width][first_y + height] = { L'▀' , BLACK, -1 };
 }
 void CGRAPHIC::drawRegtangle(int first_x, int first_y, int width, int height, int color, bool isFill) {
 	for (int i = 0; i < width; i++)

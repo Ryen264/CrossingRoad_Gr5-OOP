@@ -97,6 +97,7 @@ public:
 
     void intro();
     void outtro();
+    void drawCountDown();
     void drawPlayAgain();
 
     void displayScreen(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
