@@ -74,6 +74,22 @@ void CTRAINLANE::push_frontObject(int ID) {
 	}
 	updatePosObj();
 }
+void CTRAINLANE::push_backObject(int ID) {
+	switch (ID) {
+	case TRAIN_HEAD_ID: {
+		lane.push_back(new CTRAIN(0, this->y, false, true));
+		break;
+	}
+	case TRAIN_BODY_ID: {
+		lane.push_back(new CTRAIN(0, this->y, false, false));
+		break;
+	}
+	default:
+		lane.push_back(NULL);
+	}
+	updatePosObj();
+}
+
 void CTRAINLANE::Move()
 {
 	timeCount++;

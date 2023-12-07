@@ -20,6 +20,7 @@
 #include <thread>
 #include <fstream>
 #include <string>
+#pragma comment(lib, "Winmm.lib")
 using namespace std;
 
 #pragma comment(lib, "xaudio2.lib")
@@ -27,6 +28,7 @@ using namespace std;
 class CGAME {
     CPLAYER* cPlayer;
     deque<CLANE*> aLanes;
+
     deque<string> fileNameList;
     bool isSaved = false;
     string savedName;
@@ -77,7 +79,7 @@ public:
     void About();
 
     int Pause(HANDLE t);
-    void ChooseCharacter();
+    void ChooseCharacter(const CGRAPHIC& BgdLayer);
 
     bool isReset();
 
@@ -87,6 +89,7 @@ public:
     void updateYLane();
     void pushRandomLane();
     void push_frontLane(int ID);
+    void push_backLane(int ID);
     void pop_backLane();
     void moveNewLane();
 
@@ -96,22 +99,27 @@ public:
     void updateTime();
     string getTime(clock_t curTime);
     clock_t setTime(string& time);
+    // task bar
+    void updateScore();
+    void updateLevel();
 
     void startMap();
     void drawMap();
-
+    void drawTaskBar();
+    
     void intro();
     void outtro();
     void drawCountDown();
-    void drawPlayAgain();
     void drawWiningScreen(int COLOR = DARK_GREEN);
-    void drawLosingScreen(int COLOR = DARK_GREEN);
+    bool drawLosingScreen(int COLOR = DARK_GREEN);
 
     void displayScreen(int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
     void displayScreen(CGRAPHIC& ObjLayer, const CGRAPHIC& BgdLayer, int fromX = 0, int fromY = 0, int toX = -1, int toY = -1);
 
     void playEffectSound(string soundName);
     void playBackgroundSound(string soundName);
+
+    void takeArest(bool& isSkip, int wait = 500);
 };
 //Return codes
 const int QUIT_CODE = -1000;
@@ -119,10 +127,8 @@ const int BACK_TO_MENU_CODE = -1001;
 
 
 const int MAX_INPUT_SIZE = 8;
-const int MUSIC = 4, SFX = 4;
-//Sounds
-const vector<string> Menu_move_sound =  {"", "Menu_Move_25.wav","Menu_Move_50.wav","Menu_Move_75.wav","Menu_Move_100.wav"};
-const vector<string> Menu_enter_sound = { "", "Menu_Enter_25.wav","Menu_Enter_50.wav","Menu_Enter_75.wav","Menu_Enter_100.wav" };
+const int MAX_NUMBER_OF_SAVED_FILE = 10;
+const int MAX_LEVEL = 3;
 
 //Sounds/Menu
 const string MENU_ENTER = "Menu_Enter/Menu_Enter_";

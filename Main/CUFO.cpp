@@ -1,7 +1,6 @@
 #include "CUFO.h"
 CUFO::CUFO(int x, int y) {
-	this->x = x; this->y = y;;
-	this->ID = UFO_ID;
+	this->x = x; this->y = y;
 	vector<wstring> frame = UFO;
 	int WIDTH = 47;
 	int HEIGHT = 28;

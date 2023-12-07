@@ -15,6 +15,7 @@ CGAME::~CGAME() {
 	ShowCur(true);
 	ShowScrollbar(true);
 	system("mode 1000, 500");
+	system("color 67");
 }
 void CGAME::Configure()
 {
@@ -46,6 +47,7 @@ void CGAME::Configure()
 	MoveWindow(hWnd, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, TRUE);
 
 	system("mode 208, 51");
+	system("color 20");
 	//
 	srand(time(0));
 	SetupTheme(THEME_BASIC, hStdout);
@@ -59,10 +61,10 @@ void CGAME::start() {
 	this->intro();
 	_getch();
 	while (this->Menu() != QUIT_CODE);
+	system("cls");
+	system("color 67");
 	this->outtro();
 	_getch();
-	system("cls");
-	//resetConsole(); - anti-Configure 
 }
 void CGAME::playGame() {
 	system("cls");
@@ -70,6 +72,15 @@ void CGAME::playGame() {
 	isThreadRunning = true;
 	thread threadNewGame(&CGAME::SubThreadNewGame, this);
 	while (1) {
+		if (level == MAX_LEVEL) {
+			SuspendThread(threadNewGame.native_handle());
+			drawWiningScreen();
+			if (_getch()) {
+				resumeThread(threadNewGame.native_handle());
+				exitThread(&threadNewGame);
+				return;
+			}
+		}
 		if (!cPlayer->isDead()) {
 			int temp = toupper(_getch());
 			switch (temp) {
@@ -87,9 +98,10 @@ void CGAME::playGame() {
 			}
 		}
 		else {
-			drawLosingScreen(cPlayer->getColorCharacter());
-			_getch();
 			if (isReset()) {
+				cPlayer->setScore(0);
+				level = 1;
+				startTime = clock(), endTime = 0, curTime = 0;
 				resetData();
 				startMap();
 				cPlayer->setMoving(0);
@@ -124,10 +136,10 @@ void CGAME::resetData() {
 	}
 }
 void CGAME::saveData(string fileName) {
-	ofstream file(fileName, ios::trunc);
+	ofstream file(fileName + ".bin", ios::trunc | ios::binary);
 	if (file.is_open()) {
-		//CGAME: cPlayer: new, aLanes: new, fileNamelist: load, isSave = true, savedName = file name, <level>, <numberOfLane>, <conditionLane>, <countLane>, <numberOfConditionLane>, isThreadRunning = true, ObjLayer, bgdLayer: draw
-		file << this->level << " " << this->numberOfLane << " " << this->conditionLane << " " << this->countLane << " " << this->numberOfConditionLane << endl;
+		//CGAME: cPlayer: new, aLanes: new, fileNamelist: load, isSave = true, savedName = file name, <level>, <numberOfLane>, <conditionLane>, <countLane>, <numberOfConditionLane>, isThreadRunning = true, ObjLayer, bgdLayer: draw, <startTime>, <endTime>, <curTime>
+		file << this->level << " " << this->numberOfLane << " " << this->conditionLane << " " << this->countLane << " " << this->numberOfConditionLane << " " << this->startTime << " " << this->endTime << " " << this->curTime << endl;
 		file << endl;
 		//CPLAYER: <xBoard>(x) <yBoard>(y) (alive = 1) <score> <isRight> (moving = 0) <colorCharacter> (depend: get from lane[yBoard][xBoard]) (pCharacterR/L = new CDINOSAUR(x, y, true/left, colorCharacter)
 		file << cPlayer->getXBoard() << " " << cPlayer->getYBoard() << " " << cPlayer->getScore() << " " << cPlayer->getIsRight() << " " << cPlayer->getColorCharacter() << endl;
@@ -166,16 +178,17 @@ void CGAME::saveData(string fileName) {
 	}
 }
 void CGAME::loadData(string fileName) {
-	ifstream file(fileName, ios::in);
+	ifstream file(fileName + ".bin", ios::in | ios::binary);
 	if (file.is_open()) {
-		//CGAME: <level>, <numberOfLane>, <conditionLane>, <countLane>, <numberOfConditionLane>
-		int level{}, numberOfLane{}, conditionLane{}, countLane{}, numberOfConditionLane{};
-		file >> level >> numberOfLane >> conditionLane >> countLane >> numberOfConditionLane;
+		//CGAME: <level>, <numberOfLane>, <conditionLane>, <countLane>, <numberOfConditionLane>, <startTime>, <endTime>, <curTime>
+		int level{}, numberOfLane{}, conditionLane{}, countLane{}, numberOfConditionLane{}; clock_t startTime{}, endTime{}, curTime{};
+		file >> level >> numberOfLane >> conditionLane >> countLane >> numberOfConditionLane >> startTime >> endTime >> curTime;
 		file.ignore(1);
 
 		//CGAME: aLanes: new, isSave = true, savedName = file name, <level>, <numberOfLane>, <conditionLane>, <countLane>, <numberOfConditionLane>, isThreadRunning = true, ObjLayer, bgdLayer: draw
 		isSaved = true; savedName = fileName; isThreadRunning = true;
 		this->level = level; this->numberOfLane = numberOfLane; this->conditionLane = conditionLane; this->countLane = countLane; this->numberOfConditionLane = numberOfConditionLane;
+		this->startTime = startTime; this->endTime = endTime; this->curTime = curTime;
 
 		//CPLAYER: <xBoard> <yBoard> <score> <isRight> <colorCharacter>
 		int xBoard{}, yBoard{}, score{}; bool isRightCharacter{}; int colorCharacter{};
@@ -207,18 +220,13 @@ void CGAME::loadData(string fileName) {
 
 			//CLANE: <isMoveRight> <ID>
 				//...	<timeCount> <delayTime>	<isStop> <condition> <countObject>	<numberOfConditionObj>	<lightPos>	<timeLight>
-			push_frontLane(laneID);
-			CLANE* lane = aLanes.front();
+			push_backLane(laneID);
+			CLANE* lane = aLanes.back();
 			lane->setIsMoveRight(isMoveRight); lane->setTimeCount(timeCount); lane->setDelayTime(delayTime); lane->setIsStop(isStop);
 			lane->setCondition(condition); lane->setCountObject(countObject); lane->setNumberOfConditionObj(numberOfConditionObj); lane->setLightPos(lightPos); lane->setTimeLight(timeLight);
 
 			//clear the last aLanes
-			while (!lane->emptyObject()) {
-				COBJECT* cur = lane->backObject();
-				lane->pop_backObject();
-				if (cur != NULL) delete cur;
-				cur = NULL;
-			}
+			while (!lane->emptyObject()) lane->pop_backObject();
 			lane->clearObject();
 
 			for (int j = 0; j < BOARD_WIDTH; j++) {
@@ -231,9 +239,11 @@ void CGAME::loadData(string fileName) {
 
 				//COBJECT: <ID> (object: push with ID)
 				//...	<isRight>	<isRight>
-				lane->push_frontObject(objID);
-				COBJECT* front = lane->frontObject();
-				front->setIsRight(isRight); front->setIsHead(isHead);
+				lane->push_backObject(objID);
+				if (objID != 0) {
+					COBJECT* back = lane->backObject();
+					back->setIsRight(isRight); back->setIsHead(isHead);
+				}
 			}
 			file.ignore(1);
 		}
@@ -245,8 +255,8 @@ void CGAME::loadData(string fileName) {
 }
 
 string CGAME::inputUserTxt(const CGRAPHIC& BgdLayer) {
-	const int fromX = (SCREEN_WIDTH - 54) / 2, fromY = (SCREEN_HEIGHT - 29) / 2,
-		toX = fromX + 54 - 1, toY = fromY + 29 - 1;
+	const int fromX = (SCREEN_WIDTH - 54) / 2, fromY = (SCREEN_HEIGHT - 29) / 2 - 1,
+		toX = fromX + 53, toY = fromY + 28;
 
 	const int INPUT_OPTION = 10 + fromX;
 	const int OK_OPTION = 26 + fromX;
@@ -264,6 +274,7 @@ string CGAME::inputUserTxt(const CGRAPHIC& BgdLayer) {
 	tmpBgdLayer.screen[fromX + 51][fromY] = BgdLayer.screen[fromX + 51][fromY];
 	tmpBgdLayer.screen[fromX + 52][fromY] = BgdLayer.screen[fromX + 52][fromY];
 	tmpBgdLayer.screen[fromX + 53][fromY] = BgdLayer.screen[fromX + 53][fromY];
+
 	tmpBgdLayer.screen[fromX + 52][fromY + 1] = BgdLayer.screen[fromX + 52][fromY + 1];
 	tmpBgdLayer.screen[fromX + 53][fromY + 1] = BgdLayer.screen[fromX + 53][fromY + 1];
 
@@ -291,7 +302,7 @@ string CGAME::inputUserTxt(const CGRAPHIC& BgdLayer) {
 				text.pop_back();
 				size--;
 			}
-			if (isNumberOrLetter(ch)&& size < MAX_INPUT_SIZE) {
+			if (isLetter(ch)&& size < MAX_INPUT_SIZE) {
 				text.push_back(ch);
 				size++;
 			}
@@ -426,7 +437,7 @@ string CGAME::inputUserTxt(const CGRAPHIC& BgdLayer) {
 	}
 }
 void CGAME::saveFileNameList() {
-	fstream outFile("file_name_list.txt", fstream::trunc);
+	fstream outFile("file_name_list.bin", fstream::out | fstream::trunc | fstream::binary);
 	if (outFile.fail()) return;
 	int size = (int)fileNameList.size();
 	outFile << size << endl;
@@ -435,7 +446,7 @@ void CGAME::saveFileNameList() {
 	outFile.close();
 }
 void CGAME::loadFileNameList() {
-	fstream inFile("file_name_list.txt", fstream::in);
+	fstream inFile("file_name_list.bin", fstream::in | fstream::binary);
 	if (inFile.fail()) return;
 	fileNameList.clear();
 	int size{};
@@ -454,7 +465,7 @@ void CGAME::deleteFile(int index)
 	char fileName[8 + 4]{};
 	for (int i = 0; i < (int)fileNameList[index].size(); i++)
 		fileName[i] = fileNameList[index][i];
-	strcat_s(fileName, ".txt");
+	strcat_s(fileName, ".bin");
 	remove(fileName);
 
 	fileNameList.erase(fileNameList.begin() + index);
@@ -472,10 +483,10 @@ void CGAME::renameFile(int index, const CGRAPHIC& BgdLayer) {
 	char oldName[8 + 4]{}, newName[8 + 4]{};
 	for (int i = 0; i < (int)fileNameList[index].size(); i++)
 		oldName[i] = fileNameList[index][i];
-	strcat_s(oldName, ".txt");
+	strcat_s(oldName, ".bin");
 	for (int i = 0; i < (int)str.size(); i++)
 		newName[i] = str[i];
-	strcat_s(newName, ".txt");
+	strcat_s(newName, ".bin");
 
 	rename(oldName, newName);
 
@@ -510,14 +521,30 @@ int CGAME::Menu() {
 
 	//draw menu
 	tmpBgdLayer.DrawMainMenu();
-	tmpObjLayer.DrawBigDinoSaur(53, 17);
-	tmpObjLayer.DrawDinasourPicture(10, 2);
 	tmpObjLayer.DrawDoofCorp(176, 16);
-	tmpObjLayer.DrawHeader(98, 3);
-	tmpObjLayer.DrawDinasourPicture(10, 2);
-	tmpObjLayer.DrawHat(190, 44, DARK_BROWN);
-	tmpBgdLayer.DrawDrawer(fromX, fromY + 3);
+	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
 
+	bool isSkip = false;
+	takeArest(isSkip);
+
+	tmpObjLayer.DrawDinasourPicture(10, 2);
+	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+
+	takeArest(isSkip);
+
+	tmpObjLayer.DrawHeader(98, 3);
+	tmpObjLayer.DrawHat(190, 44, DARK_BROWN);
+	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+
+	takeArest(isSkip);
+
+	tmpObjLayer.DrawBigDinoSaur(53, 17);
+	displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+
+	takeArest(isSkip);
+
+	tmpBgdLayer.DrawDrawer(fromX, fromY + 3);
+	tmpObjLayer.DrawDrawer(fromX, fromY + 3);
 	//draw current step
 	tmpObjLayer.DrawSmallDrawer(xOption, yOption, curColor);
 	tmpObjLayer.DrawPerryTalk(curMessage, xfromTalk, yfromTalk, curColor, WHITE);
@@ -547,13 +574,13 @@ int CGAME::Menu() {
 			case LOAD_GAME:
 				playEffectSound(MENU_ENTER);
 				SetupTheme(THEME_BASIC, hStdout);
-				this->LoadGame();
+				LoadGame();
 				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case SETTING:
 				playEffectSound(MENU_ENTER);
 				SetupTheme(THEME_BASIC, hStdout);
-				this->Setting();
+				Setting();
 				SetupTheme(MAIN_MENU_THEME, hStdout);
 				break;
 			case HELP:
@@ -592,7 +619,15 @@ int CGAME::Menu() {
 	return 0;
 }
 void CGAME::NewGame() {
+	BgdLayer.clear(WHITE, WHITE);
+	ObjLayer.clear(WHITE, WHITE);
+	displayScreen(ObjLayer, BgdLayer);
+	ChooseCharacter(BgdLayer);
+	cPlayer->setScore(0);
 	cPlayer->set(BOARD_WIDTH / 2, UP_LANE, true, 0);
+	isSaved = false;
+	this->level = 1;
+	startTime = clock(), endTime = 0, curTime = 0;
 	resetData();
 	playGame();
 }
@@ -627,8 +662,10 @@ void CGAME::LoadGame() {
 
 	//draw current step
 	if (!isRight) {
-		tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, LIGHT_GREEN, SAND);
-		tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], LIGHT_GREEN, SAND);
+		if (!fileNameList.empty()) {
+			tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, LIGHT_GREEN, SAND);
+			tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], LIGHT_GREEN, SAND);
+		}
 	}
 	else tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], LIGHT_GREEN);
 
@@ -638,28 +675,32 @@ void CGAME::LoadGame() {
 		int temp = toupper(_getch());
 
 		//erase the last step
-		if (!isRight) tmpObjLayer.erasePixel(xOption, yOption, xOption + 12, yOption);
+		if (!isRight) {
+			if (!fileNameList.empty()) tmpObjLayer.erasePixel(xOption, yOption, xOption + 12, yOption);
+		}
 		else tmpObjLayer.erasePixel(xOption, yOption, xOption + 40 - 1, yOption + 5 - 1);
 
 		if (!isEnterButton(temp)) {
 			if (!isRight) {
-				if (isUpButton(temp)) {
-					if (idFile > 0) {
-						idFile--;
-						yOption -= 2;
+				if (!fileNameList.empty()) {
+					if (isUpButton(temp)) {
+						if (idFile > 0) {
+							idFile--;
+							yOption -= 2;
+						}
 					}
-				}
-				if (isDownButton(temp)) {
-					if (idFile < numberOfFile - 1) {
-						idFile++;
-						yOption += 2;
+					if (isDownButton(temp)) {
+						if (idFile < numberOfFile - 1) {
+							idFile++;
+							yOption += 2;
+						}
 					}
-				}
-				if (isRightButton(temp) || isLeftButton(temp)) {
-					isRight = true;
-					idOption = 0;
-					xOption = XOPTION;
-					yOption = LOAD_YOPTION;
+					if (isRightButton(temp) || isLeftButton(temp)) {
+						isRight = true;
+						idOption = 0;
+						xOption = XOPTION;
+						yOption = LOAD_YOPTION;
+					}
 				}
 			}
 			else {
@@ -686,8 +727,10 @@ void CGAME::LoadGame() {
 		else {
 			//draw choice
 			if (!isRight) {
-				tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, DARK_GREEN, SAND);
-				tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], DARK_GREEN, SAND);
+				if (!fileNameList.empty()) {
+					tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, DARK_GREEN, SAND);
+					tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], DARK_GREEN, SAND);
+				}
 			}
 			else tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], DARK_GREEN);
 			displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
@@ -702,24 +745,35 @@ void CGAME::LoadGame() {
 			else {
 				switch (yOption) {
 				case LOAD_YOPTION:
-					loadData(fileNameList[idFile]);
-					playGame();
-					return;
+					if (!fileNameList.empty()) {
+						loadData(fileNameList[idFile]);
+						playGame();
+						return;
+					}
 				case RENAME_YOPTION:
-					renameFile(idFile, tmpBgdLayer);
-					//update bgdLayer
-					//
-					//
-					//
+					if (!fileNameList.empty()) {
+						renameFile(idFile, tmpBgdLayer);
+
+						//update fileNameList and bgd
+						loadFileNameList();
+						tmpObjLayer.erasePixel(XCHOOSE, YCHOOSE_FIRST, XCHOOSE + 10, YCHOOSE_FIRST + 10 * 2);
+						tmpBgdLayer.DrawLoadGame(fromX, fromY, fileNameList);
+						displayScreen(tmpBgdLayer, tmpback, 0, 0, -1, -1);
+						displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+					}
 					break;
 				case DELETE_YOPTION:
-					deleteFile(idFile);
-					if (idFile > 0) idFile--;
-					//update number of file
-					// 
-					// 
-					// 
-					//update bgdLayer
+					if (!fileNameList.empty()) {
+						deleteFile(idFile);
+						if (idFile > 0) idFile--;
+
+						//update fileNameList and bgd
+						loadFileNameList();
+						tmpObjLayer.erasePixel(XCHOOSE, YCHOOSE_FIRST, XCHOOSE + 10, YCHOOSE_FIRST + 10 * 2);
+						tmpBgdLayer.DrawLoadGame(fromX, fromY, fileNameList);
+						displayScreen(tmpBgdLayer, tmpback, 0, 0, -1, -1);
+						displayScreen(tmpObjLayer, tmpBgdLayer, 0, 0, -1, -1);
+					}
 					break;
 				case CANCEL_YOPTION:
 					tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], BLACK);
@@ -734,8 +788,10 @@ void CGAME::LoadGame() {
 			//reset choice
 		}
 		if (!isRight) {
-			tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, LIGHT_GREEN, SAND);
-			tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], LIGHT_GREEN, SAND);
+			if (!fileNameList.empty()) {
+				tmpObjLayer.DrawNumber1pixel(xOption, yOption, idFile + 1, LIGHT_GREEN, SAND);
+				tmpObjLayer.DrawString1pixel(xOption + 4, yOption, fileNameList[idFile], LIGHT_GREEN, SAND);
+			}
 		}
 		else tmpObjLayer.drawTag(xOption, yOption, optionList[idOption], LIGHT_GREEN);
 		displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
@@ -747,14 +803,14 @@ void CGAME::SaveGame(const CGRAPHIC& BgdLayer) {
 		do {
 			fileName = inputUserTxt(BgdLayer);
 			if (fileName == "") return;
-		} while (fileName.size() > 8 || checkinList(fileName, fileNameList));
+		} while (fileName.size() > MAX_INPUT_SIZE || checkinList(fileName, fileNameList));
 
 		//update save variables
 		isSaved = true;
 		savedName = fileName;
 
 		//update file name list
-		if (fileNameList.size() >= 10) fileNameList.pop_back();
+		if (fileNameList.size() >= MAX_NUMBER_OF_SAVED_FILE) fileNameList.pop_back();
 		fileNameList.push_front(fileName);
 		saveFileNameList();
 	}
@@ -762,7 +818,7 @@ void CGAME::SaveGame(const CGRAPHIC& BgdLayer) {
 }
 void CGAME::Setting() {
 	const int fromX = (SCREEN_WIDTH - 53) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
-		toX = fromX + 53 - 1, toY = fromY + 30 - 1;
+		toX = fromX + 53, toY = fromY + 28;
 
 	const int BACKGROUND_YSOUND = 13 + fromY;
 	const int EFFECT_YSOUND = 17 + fromY;
@@ -935,11 +991,11 @@ void CGAME::Help() {
 	int height = bodycontent.size()*2+10; 
 	
 	const int fromX = (SCREEN_WIDTH - width) / 2, fromY = (SCREEN_HEIGHT - height) / 2,
-		toX = fromX + width - 1, toY = fromY + height - 1;
+		toX = fromX + width - 1, toY = fromY + height + 1;
 	
 
 	tmpBgdLayer.DrawTextBoard("HELP", CREAMY_AVOCADO, bodycontent, fromX, fromY, 53, 29, BLACK, WHITE, DARK_BROWN, WHITE);
-	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY+2);
+	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	_getch();
 }
 void CGAME::About() {
@@ -949,7 +1005,7 @@ void CGAME::About() {
 		"              <<TEACHER>>           ",
 		"            Truong Toan Thinh       ",
 		"									 ",			
-		"           <<GROUP'S MEMBER>>      ",
+		"           <<GROUP'S MEMBER>>       ",
 		"      22127029 - Le Nguyen Gia Bao  ",
 		"      22127445 - Nguyen Lam Nha Uyen",
 		"      22127385 - Nguyen Quoc Thang  ",
@@ -971,7 +1027,7 @@ void CGAME::About() {
 	tmpBgdLayer.DrawTextBoard("ABOUT", LAVENDER, bodycontent, fromX, fromY, width, height, BLACK, WHITE, DARK_BROWN,WHITE);
 
 
-	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX + 1, toY +1);
+	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	_getch();
 }
 int CGAME::Pause(HANDLE t) {
@@ -1095,7 +1151,7 @@ int CGAME::Pause(HANDLE t) {
 			Sleep(500);
 			switch (xOption) {
 			case CHARACTER_OPTION:
-				ChooseCharacter();
+				ChooseCharacter(tmpBgdLayer);
 				//update new character name
 				tmpObjLayer.erasePixel(24 + fromX, 4 + fromY, 24 + fromX + 23, 4 + fromY + 3);
 				tmpObjLayer.drawString(cPlayer->getNameCharacter(), 24 + fromX, 4 + fromY, cPlayer->getColorCharacter(), SAND);
@@ -1111,6 +1167,7 @@ int CGAME::Pause(HANDLE t) {
 			case RESUME_OPTION:
 				drawCountDown();
 				resumeThread(t);
+				curTime += endTime - startTime;
 				return 0;
 			case HELP_OPTION:
 				Help();
@@ -1132,7 +1189,7 @@ int CGAME::Pause(HANDLE t) {
 	}
 	return 0;
 }
-void CGAME::ChooseCharacter() {
+void CGAME::ChooseCharacter(const CGRAPHIC& BgdLayer) {
 	const int fromX = (SCREEN_WIDTH - 53) / 2, fromY = (SCREEN_HEIGHT - 30) / 2,
 		toX = fromX + 53 - 1, toY = fromY + 30 - 1;
 
@@ -1216,12 +1273,7 @@ void CGAME::ChooseCharacter() {
 }
 
 bool CGAME::isReset() {
-	do {
-		this->drawPlayAgain();
-		int temp = toupper(_getch());
-		if (temp == 'Y') return true;
-		else if (temp == 'N') return false;
-	} while (1);
+	return drawLosingScreen(cPlayer->getColorCharacter());
 }
 
 void CGAME::exitThread(thread* t) {
@@ -1324,6 +1376,51 @@ void CGAME::push_frontLane(int ID) {
 	}
 	updateYLane();
 }
+void CGAME::push_backLane(int ID) {
+	if (ID == 0) ID = GRASSLANE_ID;
+	int yLane = (int)aLanes.size();
+
+	// delay time cang nho thi push cang nhanh , delaytime ti le ngich vs level
+	// level 1-3 : speed rand() %4 ; level 4-7 : rand() % 3 ; level >=8 : rand() %2
+
+	switch (ID) {
+	case VEHICLELANE_ID: {
+		aLanes.push_back(new CVEHICLELANE(0, yLane, 2 + rand() % 5));
+		break;
+	}
+	case GRASSLANE_ID: {
+		aLanes.push_back(new CGRASSLANE(0, yLane));
+		break;
+	}
+	case TRAINLANE_ID: {
+		aLanes.push_back(new CTRAINLANE(0, yLane, 1 + rand() % 2, 10 + (rand() % 10)));
+		break;
+	}
+	case RIVERLANE_ID: {
+		aLanes.push_back(new CRIVERLANE(0, yLane, 2 + rand() % 5));
+		break;
+	}
+	case FINISHLANE_ID: {
+		aLanes.push_back(new CFINISHLANE(0, yLane));
+		break;
+	}
+	case GRASSLANE_FULL_ID: {
+		aLanes.push_back(new CGRASSLANE(0, yLane, FULL_TREE_TYPELANE));
+		break;
+	}
+	case GRASSLANE_SURROUND_ID: {
+		aLanes.push_back(new CGRASSLANE(0, yLane, SURROUND_TREE_TYPELANE));
+		break;
+	}
+	case GRASSLANE_AROUND_ID: {
+		aLanes.push_back(new CGRASSLANE(0, yLane, AROUND_TREE_TYPELANE));
+		break;
+	}
+	default:
+		aLanes.push_back(new CGRASSLANE(0, yLane));
+	}
+	updateYLane();
+}
 void CGAME::pop_backLane() {
 	CLANE* tmp = aLanes.back();
 	aLanes.pop_back();
@@ -1375,7 +1472,6 @@ void CGAME::SubThreadNewGame() {
 				cur = NULL;
 				aLanes[yBoard]->setPos(xBoard, NULL);
 				cPlayer->setDependObj(NULL);
-
 				cPlayer->increaseScore(1);
 				break;
 			}
@@ -1387,12 +1483,12 @@ void CGAME::SubThreadNewGame() {
 				cPlayer->setDependObj(NULL);
 
 				if (!(nextObj->getID() == TREE_DOUBLE_ID || nextObj->getID() == TREE_SINGLE_ID)) {
-					cPlayer->setPos(xBoard, yBoard - 1);
 					if (cPlayer->getYBoard() == UP_LANE)
 					{
 						moveNewLane();
 						startMap();
 					}
+					else cPlayer->setPos(xBoard, yBoard - 1);
 				}
 				break;
 			}
@@ -1408,13 +1504,11 @@ void CGAME::SubThreadNewGame() {
 				//Update depend obj 
 				cPlayer->setDependObj(nextObj);
 			}
-
+			drawTaskBar();
 			drawMap();
-			displayScreen();
+			displayScreen(0, START_BOARD_HEIGHT, -1, -1);
 
 			if (cPlayer->isDead()) {
-				//Hieu ung va cham
-				cout << cPlayer->getScore() << " " << this->level << endl;
 				level = 1;
 				countLane = 0;
 				continue;
@@ -1428,6 +1522,8 @@ void CGAME::SubThreadNewGame() {
 				resetData();
 				startMap();
 			}
+			//Win
+			if (level == MAX_LEVEL) continue;
 			Sleep(100);
 		}
 	}
@@ -1439,8 +1535,9 @@ void CGAME::updateTime() {
 	if (endTime - startTime > 0) {
 		curTime += (endTime - startTime);
 		startTime = endTime;
-		ObjLayer.drawTime(curTime, SCREEN_WIDTH - 17, 0, BLACK, -1);
-		//ObjLayer.display(0, 0, SCREEN_WIDTH, 2);
+		ObjLayer.drawString("TIME", SCREEN_WIDTH - 44, 0, BLACK, LIGHT_GRAY);
+		ObjLayer.DrawObject(COLON, SCREEN_WIDTH - 27, 0,BLACK, LIGHT_GRAY);
+		ObjLayer.drawTime(curTime, SCREEN_WIDTH- 22, 0, BLACK, LIGHT_GRAY);
 	}
 }
 string CGAME::getTime(clock_t curTime) {
@@ -1454,10 +1551,20 @@ clock_t CGAME::setTime(string& time) {
 	iss >> result;
 	return result;
 }
+// task bar
+void CGAME::updateScore() {
+	ObjLayer.DrawEgg(114, 0);
+	ObjLayer.DrawNumber(cPlayer->getScore()+1, 127, 0, BLACK, LIGHT_GRAY);
+}
+void CGAME::updateLevel() {
+	ObjLayer.drawString("LEVEL", 74, 0, BLACK, LIGHT_GRAY);
+	ObjLayer.DrawObject(COLON, 95, 0, BLACK, LIGHT_GRAY);
+	ObjLayer.DrawNumber(this->level, 100, 0, BLACK, LIGHT_GRAY);
+}
 
 //Drawing functions
 void CGAME::startMap() {
-	BgdLayer.clear(BLACK, WHITE);
+	BgdLayer.clear(BLACK, LIGHT_GRAY);
 	for (int i = 0; i < BOARD_HEIGHT; i++)
 		aLanes[i]->DrawLane(BgdLayer);
 }
@@ -1467,7 +1574,17 @@ void CGAME::drawMap() {
 		this->aLanes[i]->DrawObjects(ObjLayer);
 	if (!cPlayer->isDead()) cPlayer->drawCharacter(ObjLayer);
 }
+void CGAME::drawTaskBar() {
+	// draw pause
+	ObjLayer.drawString("P", 3, 0, BLACK, LIGHT_GRAY);
+	ObjLayer.DrawObject(COLON,8, 0, BLACK, LIGHT_GRAY);
+	ObjLayer.drawString("PAUSE", 12, 0, BLACK, LIGHT_GRAY);
 
+	updateLevel();
+	updateTime();
+	updateScore();
+	displayScreen(0, 0, SCREEN_WIDTH, 2);
+}
 void CGAME::intro() {
 	cout << "LET'S START IT!" << endl;
 }
@@ -1475,25 +1592,298 @@ void CGAME::outtro() {
 	cout << "END GAME..." << endl;
 }
 void CGAME::drawCountDown() {
+	//cout down
 	CGRAPHIC tmpBgdLayer(BgdLayer), tmpObjLayer({ L' ', -1, -1 });
 	displayScreen(tmpObjLayer, tmpBgdLayer);
-	int x = (SCREEN_WIDTH - 3) / 2, y = (SCREEN_HEIGHT - 3) / 2;
-	tmpObjLayer.DrawNumber(3, x, y, RED, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
-	Sleep(1000);
+
+	int x = (SCREEN_WIDTH - 35) / 2, y = (SCREEN_HEIGHT - 17) / 2;
+	tmpObjLayer.DrawBigNumber(3, x, y, DARK_RED, WHITE);
+	displayScreen(tmpObjLayer, BgdLayer, 0, 0, -1, -1);
+
+	bool isSkip = false;
+	takeArest(isSkip, 1000);
+
 	tmpObjLayer.clear(-1, -1);
-	tmpObjLayer.DrawNumber(2, x, y, BRIGHT_YELLOW, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
-	Sleep(1000);
+	tmpObjLayer.DrawBigNumber(2, x, y, BRIGHT_YELLOW, WHITE);
+	displayScreen(tmpObjLayer, BgdLayer, 0, 0, -1, -1);
+
+	takeArest(isSkip, 1000);
+
 	tmpObjLayer.clear(-1, -1);
-	tmpObjLayer.DrawNumber(1, x, y, LIGHT_GREEN, -1);
-	displayScreen(tmpObjLayer, tmpBgdLayer, x, y, x + 3 - 1, y + 3 - 1);
-	Sleep(1000);
-}
-void CGAME::drawPlayAgain() {
-	cout << "Play again (Y/N)?" << endl;
+	tmpObjLayer.DrawBigNumber(1, x, y, DARK_GREEN, WHITE);
+	displayScreen(tmpObjLayer, BgdLayer, 0, 0, -1, -1);
+
+	takeArest(isSkip, 1000);
 }
 
+bool CGAME::drawLosingScreen(int COLOR) {
+	// draw
+	CGRAPHIC Tmpback;
+	Tmpback.clear(SKY_BLUE, SKY_BLUE);
+	for (int i = 0; i < 208; i++) {
+		Tmpback.screen[i][34].bgdColor = DARK_GREEN;
+		Tmpback.screen[i][34].txtColor = DARK_GREEN;
+	}
+	for (int i = 0; i < 208; i++)
+		for (int j = 34; j < 51; j++) {
+			Tmpback.screen[i][j].bgdColor = LIGHT_GREEN;
+			Tmpback.screen[i][j].txtColor = LIGHT_GREEN;
+		}
+	CGRAPHIC TmpBgdLayer(BgdLayer), TmpObjLayer({ L' ', -1, -1 });
+	TmpBgdLayer.clear(SKY_BLUE, SKY_BLUE);
+	for (int i = 0; i < 208; i++) {
+		TmpBgdLayer.screen[i][34].bgdColor = DARK_GREEN;
+		TmpBgdLayer.screen[i][34].txtColor = DARK_GREEN;
+	}
+	for (int i = 0; i < 208; i++)
+		for (int j = 35; j < 51; j++) {
+			TmpBgdLayer.screen[i][j].bgdColor = LIGHT_GREEN;
+		}
+	int UFO_x = 81, UFO_y = 10;
+	int Dino_x = UFO_x + 15, Dino_y = UFO_y + 20;
+	CUFO UFO(UFO_x, UFO_y);
+	UFO.DrawObject(TmpBgdLayer, 47, 28);
+	CDINOSAUR DINO(Dino_x, Dino_y, true, COLOR);
+	DINO.DrawBlock(TmpObjLayer);
+	for (int i = 0; i < 208; i++) {
+		Tmpback.screen[i][34].bgdColor = DARK_GREEN;
+		Tmpback.screen[i][34].txtColor = DARK_GREEN;
+	}
+	for (int i = 0; i < 208; i++) {
+		TmpBgdLayer.screen[i][34].bgdColor = DARK_GREEN;
+		TmpBgdLayer.screen[i][34].txtColor = DARK_GREEN;
+		TmpBgdLayer.screen[i][34].txtColor = BLACK;
+	}
+	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
+	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
+
+	bool isSkip = false;
+	takeArest(isSkip);
+
+	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
+	DINO.setY(Dino_y -= 3);
+	DINO.DrawBlock(TmpObjLayer);
+	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 9);
+
+	takeArest(isSkip);
+
+	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
+	DINO.setY(Dino_y -= 3);
+	DINO.DrawBlock(TmpObjLayer);
+	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 9);
+
+	takeArest(isSkip);
+
+	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
+	DINO.setY(Dino_y -= 3);
+	DINO.DrawBlock(TmpObjLayer);
+	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 9);
+
+	takeArest(isSkip);
+
+	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
+	DINO.setY(Dino_y -= 3);
+	DINO.DrawBlock(TmpObjLayer);
+	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 9);
+
+	takeArest(isSkip);
+
+	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
+	DINO.setY(Dino_y -= 1);
+	DINO.DrawBlock(TmpObjLayer);
+	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
+	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
+	TmpBgdLayer.erasePixel(UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
+	for (int i = 0; i < 208; i++) {
+		Tmpback.screen[i][34].bgdColor = DARK_GREEN;
+		Tmpback.screen[i][34].txtColor = DARK_GREEN;
+	}
+	for (int i = 0; i < 208; i++) {
+		TmpBgdLayer.screen[i][34].bgdColor = DARK_GREEN;
+		TmpBgdLayer.screen[i][34].txtColor = DARK_GREEN;
+	}
+	displayScreen(TmpObjLayer, TmpBgdLayer, UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
+	displayScreen(TmpBgdLayer, Tmpback, UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
+
+	takeArest(isSkip);
+
+	TmpBgdLayer.DrawMissonFailed(54, 2, DARK_RED, SKY_BLUE);
+	TmpBgdLayer.drawString("SCORE", UFO_x, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpBgdLayer.DrawNumber(cPlayer->getScore(), UFO_x + 25, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpBgdLayer.drawString("LEVEL", UFO_x, UFO_y + 13, BLACK, SKY_BLUE);
+	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 13, BLACK, SKY_BLUE);
+	TmpBgdLayer.DrawNumber(level, UFO_x + 25, UFO_y + 13, BLACK, SKY_BLUE);
+	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
+
+	takeArest(isSkip);
+
+	TmpBgdLayer.drawString("PLAY AGAIN", 34, 40, LIGHT_GRAY, LIGHT_GREEN);
+	TmpBgdLayer.drawString("EXIT TO MENU", 134, 40, LIGHT_GRAY, LIGHT_GREEN);
+	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
+
+	// option
+	const int fromX = 34, fromY = 40,
+		toX = fromX + 11 * 4 + 7, toY = fromY + 4;
+
+	const int PLAY_AGAIN = fromX;
+	const int EXIT_TO_MENU = fromX + 100;
+
+	int xOption = PLAY_AGAIN, yOption = fromY;
+
+	// draw current choice
+	if (xOption == PLAY_AGAIN) {
+		TmpObjLayer.drawString("PLAY AGAIN", PLAY_AGAIN, fromY, DARK_GREEN, LIGHT_GREEN);
+		TmpObjLayer.drawString("EXIT TO MENU", EXIT_TO_MENU, fromY, LIGHT_GRAY, LIGHT_GREEN);
+	}
+	else {
+		TmpObjLayer.drawString("EXIT TO MENU", xOption, 40, DARK_RED, LIGHT_GREEN);
+		TmpObjLayer.drawString("PLAY AGAIN", 34, 40, LIGHT_GRAY, LIGHT_GREEN);
+	}
+	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 40, SCREEN_WIDTH - 1, 42);
+
+	while (1) {
+		// erase the last step
+		if (xOption == PLAY_AGAIN)TmpObjLayer.erasePixel(34, 40, 34 + 60, 42);
+		else TmpObjLayer.erasePixel(134, 40, 134 + 60, 42);
+
+		int temp = toupper(_getch());
+		if (xOption == PLAY_AGAIN) {
+			if (!isEnterButton(temp)) {
+				if (isUpButton(temp) == true || isDownButton(temp) == true || isLeftButton(temp) == true || isRightButton(temp) == true) {
+					xOption = EXIT_TO_MENU;
+
+					TmpObjLayer.drawString("PLAY AGAIN", 34, 40, LIGHT_GRAY, LIGHT_GREEN);
+					displayScreen(TmpObjLayer, TmpBgdLayer, 34, 40, 34 + 60, 42);
+					TmpObjLayer.drawString("EXIT TO MENU", 134, 40, DARK_RED, LIGHT_GREEN);
+					displayScreen(TmpObjLayer, TmpBgdLayer, 134, 40, 134 + 60, 42);
+				}
+			}
+			else {
+				return true;
+			}
+		}
+		else {
+			if (!isEnterButton(temp)) {
+				if (isUpButton(temp) == true || isDownButton(temp) == true || isLeftButton(temp) == true || isRightButton(temp) == true) {
+					xOption = PLAY_AGAIN;
+					TmpObjLayer.drawString("PLAY AGAIN", 34, 40, DARK_GREEN, LIGHT_GREEN);
+					displayScreen(TmpObjLayer, TmpBgdLayer, 34, 40, 34 + 60, 42);
+					TmpObjLayer.drawString("EXIT TO MENU", 134, 40, LIGHT_GRAY, LIGHT_GREEN);
+					displayScreen(TmpObjLayer, TmpBgdLayer, 134, 40, 134 + 60, 42);
+
+				}
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+}
+void CGAME::drawWiningScreen(int COLOR) {
+	PlaySound(TEXT("joustus_mysterycard_new.wav"), NULL, SND_ASYNC);
+	CGRAPHIC Tmpback;
+	Tmpback.clear(SKY_BLUE, SKY_BLUE);
+	for (int i = 0; i < 208; i++) {
+		Tmpback.screen[i][34].bgdColor = DARK_GREEN;
+		Tmpback.screen[i][34].txtColor = DARK_GREEN;
+	}
+	for (int i = 0; i < 208; i++)
+		for (int j = 34; j < 51; j++) {
+			Tmpback.screen[i][j].bgdColor = LIGHT_GREEN;
+			Tmpback.screen[i][j].txtColor = LIGHT_GREEN;
+		}
+	CGRAPHIC TmpBgdLayer(BgdLayer), TmpObjLayer({ L' ', -1, -1 });
+	TmpBgdLayer.clear(SKY_BLUE, SKY_BLUE);
+	for (int i = 0; i < 208; i++) {
+		TmpBgdLayer.screen[i][34].bgdColor = DARK_GREEN;
+		TmpBgdLayer.screen[i][34].txtColor = DARK_GREEN;
+	}
+	for (int i = 0; i < 208; i++)
+		for (int j = 35; j < 51; j++) {
+			TmpBgdLayer.screen[i][j].bgdColor = LIGHT_GREEN;
+		}
+	int UFO_x = 81, UFO_y = 10;
+	int Dino_x = UFO_x + 15, Dino_y = UFO_y + 20;
+	int Fedora_x = Dino_x + 1, Fedora_y = Dino_y - 12;
+	CUFO UFO(UFO_x, UFO_y);
+	for (int i = UFO_x + 13; i <= UFO_x + 31; i++)
+		for (int j = UFO_y + 17; j <= UFO_y + 23; j++) {
+			Tmpback.screen[i][j].txtColor = BRIGHT_YELLOW;
+			Tmpback.screen[i][j].bgdColor = BRIGHT_YELLOW;
+		}
+	UFO.DrawObject(TmpBgdLayer, 47, 28);
+	CDINOSAUR DINO(Dino_x, Dino_y, false, COLOR);
+	DINO.DrawBlock(TmpBgdLayer);
+	for (int i = 0; i < 208; i++) {
+		Tmpback.screen[i][34].bgdColor = DARK_GREEN;
+		Tmpback.screen[i][34].txtColor = DARK_GREEN;
+	}
+	for (int i = 0; i < 208; i++) {
+		TmpBgdLayer.screen[i][34].bgdColor = DARK_GREEN;
+		TmpBgdLayer.screen[i][34].txtColor = DARK_GREEN;
+		TmpBgdLayer.screen[i][34].txtColor = BLACK;
+	}
+	TmpBgdLayer.screen[Dino_x + 7][Dino_y + 4].bgdColor = LIGHT_GREEN;
+	TmpBgdLayer.screen[Dino_x + 8][Dino_y + 4].bgdColor = LIGHT_GREEN;
+	TmpBgdLayer.screen[Dino_x + 9][Dino_y + 4].bgdColor = LIGHT_GREEN;
+	TmpObjLayer.DrawHat(Fedora_x, Fedora_y, SADDLE_BROWN);
+	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
+	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
+
+	bool isSkip = false;
+	takeArest(isSkip, 300);
+
+	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
+	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
+	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y - 2, Fedora_x + 15, Fedora_y + 5);
+
+	takeArest(isSkip, 300);
+
+	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
+	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
+	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y - 2, Fedora_x + 15, Fedora_y + 5);
+
+	takeArest(isSkip, 300);
+
+	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
+	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
+	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y - 2, Fedora_x + 15, Fedora_y + 5);
+
+	takeArest(isSkip, 300);
+
+	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
+	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
+	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y - 2, Fedora_x + 15, Fedora_y + 5);
+	TmpBgdLayer.erasePixel(UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
+	TmpObjLayer.erasePixel(UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
+	for (int i = UFO_x + 13; i <= UFO_x + 31; i++)
+		for (int j = UFO_y + 17; j <= UFO_y + 23; j++) {
+			Tmpback.screen[i][j].txtColor = SKY_BLUE;
+			Tmpback.screen[i][j].bgdColor = SKY_BLUE;
+		}
+	DINO.DrawBlock(TmpBgdLayer);
+	TmpObjLayer.DrawHat(Fedora_x, Fedora_y, SADDLE_BROWN);
+	TmpObjLayer.DrawMissonMissonCompleted(40, 2, DARK_GREEN, SKY_BLUE);
+	displayScreen(TmpBgdLayer, Tmpback, UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
+	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
+	TmpObjLayer.drawString("SCORE", UFO_x, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpObjLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpObjLayer.DrawNumber(cPlayer->getScore(), UFO_x + 25, UFO_y + 8, BLACK, SKY_BLUE);
+	TmpObjLayer.drawString("TIME", UFO_x, UFO_y + 13, BLACK, SKY_BLUE);
+	TmpObjLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 13, BLACK, SKY_BLUE);
+	TmpObjLayer.drawTime(curTime, UFO_x + 25, UFO_y + 13, BLACK, SKY_BLUE);
+
+	takeArest(isSkip, 300);
+
+	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
+	TmpObjLayer.drawString("PRESS ANY KEY TO RETURN", 60, UFO_y + 30, DARK_GREEN, LIGHT_GREEN);
+
+	takeArest(isSkip, 300);
+
+	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
+}
 
 void CGAME::displayScreen(int fromX, int fromY, int toX, int toY) {
 	if (toX < 0 || toX > SCREEN_WIDTH - 1) toX = SCREEN_WIDTH - 1;
@@ -1516,6 +1906,34 @@ void CGAME::displayScreen(CGRAPHIC& ObjLayer, const CGRAPHIC& BgdLayer, int from
 			else if (objPixel.bgdColor < 0) objPixel.bgdColor = bgdPixel.bgdColor;
 		}
 	ObjLayer.display(hStdout, dwBytesWritten, fromX, fromY, toX, toY);
+}
+
+void CGAME::playEffectSound(string soundName) {
+	mciSendString(L"close wav", NULL, 0, NULL);
+	if (soundName != OFF_SOUND) {
+		string fileName = "open " + soundName + int_to_string(effectSoundLevel) + ".wav" + " type mpegvideo alias wav";
+		wstring wfileName(fileName.begin(), fileName.end());
+		LPCWSTR swfileName = wfileName.c_str();
+		mciSendString(swfileName, NULL, 0, NULL);
+
+		mciSendString(L"play wav", NULL, 0, NULL);
+	}
+}
+void CGAME::playBackgroundSound(string soundName) {
+	if (soundName == OFF_SOUND) PlaySound(NULL, NULL, 0);
+	else {
+		string fileName = soundName + int_to_string(bgdSoundLevel) + ".wav";
+		wstring wfileName(fileName.begin(), fileName.end());
+		LPCWSTR swfileName = wfileName.c_str();
+		PlaySound(swfileName, NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+	}
+}
+void CGAME::takeArest(bool& isSkip, int wait) {
+	if (!isSkip) {
+		isSkip = _kbhit();
+		if (isSkip) _getch();
+	}
+	if (!isSkip) Sleep(500);
 }
 
 bool isUpButton(int button) {
@@ -1584,209 +2002,6 @@ void ShowScrollbar(BOOL Show)
 {
 	HWND hWnd = GetConsoleWindow();
 	ShowScrollBar(hWnd, SB_BOTH, Show);
-}
-
-
-void CGAME::drawLosingScreen(int COLOR) {
-	CGRAPHIC Tmpback;
-	Tmpback.clear(SKY_BLUE, SKY_BLUE);
-	for (int i = 0; i < 208; i++) {
-		Tmpback.screen[i][34].bgdColor = DARK_GREEN;
-		Tmpback.screen[i][34].txtColor = DARK_GREEN;
-	}
-	for (int i = 0; i < 208; i++)
-		for (int j = 34; j < 51; j++) {
-			Tmpback.screen[i][j].bgdColor = LIGHT_GREEN;
-			Tmpback.screen[i][j].txtColor = LIGHT_GREEN;
-		}
-	CGRAPHIC TmpBgdLayer(BgdLayer), TmpObjLayer({L' ', -1, -1});
-	TmpBgdLayer.clear(SKY_BLUE, SKY_BLUE);
-	for (int i = 0; i < 208; i++) {
-		TmpBgdLayer.screen[i][34].bgdColor = DARK_GREEN;
-		TmpBgdLayer.screen[i][34].txtColor = DARK_GREEN;
-	}
-	for (int i = 0; i < 208; i++)
-		for (int j = 35; j < 51; j++) {
-			TmpBgdLayer.screen[i][j].bgdColor = LIGHT_GREEN;
-		}
-	int UFO_x = 81, UFO_y = 10;
-	int Dino_x = UFO_x + 15, Dino_y = UFO_y + 20;
-	CUFO UFO(UFO_x, UFO_y);
-	UFO.DrawObject(TmpBgdLayer, 47, 28);
-	CDINOSAUR DINO(Dino_x, Dino_y, COLOR);
-	DINO.DrawBlock(TmpObjLayer);
-	for (int i = 0; i < 208; i++) {
-		Tmpback.screen[i][34].bgdColor = DARK_GREEN;
-		Tmpback.screen[i][34].txtColor = DARK_GREEN;
-	}
-	for (int i = 0; i < 208; i++) {
-		TmpBgdLayer.screen[i][34].bgdColor = DARK_GREEN;
-		TmpBgdLayer.screen[i][34].txtColor = DARK_GREEN;
-		TmpBgdLayer.screen[i][34].txtColor = BLACK;
-	}
-	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
-	displayScreen(TmpObjLayer,TmpBgdLayer, 0, 0, -1, -1);
-	Sleep(500);
-
-	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
-	DINO.setY(Dino_y -= 3);
-	DINO.DrawBlock(TmpObjLayer);
-	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 9);
-	Sleep(500);
-	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
-	DINO.setY(Dino_y -= 3);
-	DINO.DrawBlock(TmpObjLayer);
-	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 9);
-	Sleep(500);
-	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
-	DINO.setY(Dino_y -= 3);
-	DINO.DrawBlock(TmpObjLayer);
-	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 9);
-	Sleep(500);
-	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
-	DINO.setY(Dino_y -= 3);
-	DINO.DrawBlock(TmpObjLayer);
-	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 9);
-	Sleep(500);
-	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
-	DINO.setY(Dino_y -= 1);
-	DINO.DrawBlock(TmpObjLayer);
-	displayScreen(TmpObjLayer, TmpBgdLayer, Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
-	TmpObjLayer.erasePixel(Dino_x, Dino_y, Dino_x + 16, Dino_y + 6);
-	TmpBgdLayer.erasePixel(UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
-	for (int i = 0; i < 208; i++) {
-		Tmpback.screen[i][34].bgdColor = DARK_GREEN;
-		Tmpback.screen[i][34].txtColor = DARK_GREEN;
-	}
-	for (int i = 0; i < 208; i++) {
-		TmpBgdLayer.screen[i][34].bgdColor = DARK_GREEN;
-		TmpBgdLayer.screen[i][34].txtColor = DARK_GREEN;
-	}
-	displayScreen(TmpObjLayer, TmpBgdLayer, UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
-	displayScreen(TmpBgdLayer, Tmpback, UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
-
-	Sleep(500);
-	TmpBgdLayer.DrawMissonFailed(54,2,DARK_RED,SKY_BLUE);
-	TmpBgdLayer.drawString("SCORE", UFO_x , UFO_y + 10, BLACK, SKY_BLUE);
-	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 10, BLACK, SKY_BLUE);
-	TmpBgdLayer.drawString("LEVEL", UFO_x , UFO_y + 15, BLACK, SKY_BLUE);
-	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 15, BLACK, SKY_BLUE);
-	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1,-1);
-	Sleep(500);
-	TmpBgdLayer.drawString("PLAY AGAIN", 34, 40, BLACK, LIGHT_GREEN);
-	TmpBgdLayer.drawString("EXIT TO MENU", 134, 40, BLACK, LIGHT_GREEN);
-	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
-
-}
-
-void CGAME::drawWiningScreen(int COLOR) {
-	PlaySound(TEXT("joustus_mysterycard_new.wav"), NULL, SND_ASYNC);
-	CGRAPHIC Tmpback;
-	Tmpback.clear(SKY_BLUE, SKY_BLUE);
-	for (int i = 0; i < 208; i++) {
-		Tmpback.screen[i][34].bgdColor = DARK_GREEN;
-		Tmpback.screen[i][34].txtColor = DARK_GREEN;
-	}
-	for (int i = 0; i < 208; i++)
-		for (int j = 34; j < 51; j++) {
-			Tmpback.screen[i][j].bgdColor = LIGHT_GREEN;
-			Tmpback.screen[i][j].txtColor = LIGHT_GREEN;
-		}
-	CGRAPHIC TmpBgdLayer(BgdLayer), TmpObjLayer({ L' ', -1, -1 });
-	TmpBgdLayer.clear(SKY_BLUE, SKY_BLUE);
-	for (int i = 0; i < 208; i++) {
-		TmpBgdLayer.screen[i][34].bgdColor = DARK_GREEN;
-		TmpBgdLayer.screen[i][34].txtColor = DARK_GREEN;
-	}
-	for (int i = 0; i < 208; i++)
-		for (int j = 35; j < 51; j++) {
-			TmpBgdLayer.screen[i][j].bgdColor = LIGHT_GREEN;
-		}
-	int UFO_x = 81, UFO_y = 10;
-	int Dino_x = UFO_x + 15, Dino_y = UFO_y + 20;
-	int Fedora_x = Dino_x + 1, Fedora_y = Dino_y - 12;
-	CUFO UFO(UFO_x, UFO_y);
-	for (int i = UFO_x + 13; i <= UFO_x + 31; i++)
-		for (int j = UFO_y + 17; j <= UFO_y + 23; j++) {
-			Tmpback.screen[i][j].txtColor = BRIGHT_YELLOW;
-			Tmpback.screen[i][j].bgdColor = BRIGHT_YELLOW;
-		}
-	UFO.DrawObject(TmpBgdLayer, 47, 28);
-	CDINOSAUR DINO(Dino_x, Dino_y,false, COLOR);
-	DINO.DrawBlock(TmpBgdLayer);
-	for (int i = 0; i < 208; i++) {
-		Tmpback.screen[i][34].bgdColor = DARK_GREEN;
-		Tmpback.screen[i][34].txtColor = DARK_GREEN;
-	}
-	for (int i = 0; i < 208; i++) {
-		TmpBgdLayer.screen[i][34].bgdColor = DARK_GREEN;
-		TmpBgdLayer.screen[i][34].txtColor = DARK_GREEN;
-		TmpBgdLayer.screen[i][34].txtColor = BLACK;
-	}
-	TmpBgdLayer.screen[Dino_x +7][Dino_y+4].bgdColor = LIGHT_GREEN;
-	TmpBgdLayer.screen[Dino_x +8][Dino_y+4].bgdColor = LIGHT_GREEN;
-	TmpBgdLayer.screen[Dino_x + 9][Dino_y + 4].bgdColor = LIGHT_GREEN;
-	TmpObjLayer.DrawHat(Fedora_x, Fedora_y, SADDLE_BROWN);
-	displayScreen(TmpBgdLayer, Tmpback, 0, 0, -1, -1);
-	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
-	Sleep(300);
-	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
-	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
-	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y-2, Fedora_x + 15, Fedora_y + 5);
-	Sleep(300);
-	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
-	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
-	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y-2, Fedora_x + 15, Fedora_y + 5);
-	Sleep(300);
-	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
-	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
-	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y-2, Fedora_x + 15, Fedora_y + 5);
-	Sleep(300);
-	TmpObjLayer.erasePixel(Fedora_x, Fedora_y, Fedora_x + 15, Fedora_y + 5);
-	TmpObjLayer.DrawHat(Fedora_x, Fedora_y += 2, SADDLE_BROWN);
-	displayScreen(TmpObjLayer, TmpBgdLayer, Fedora_x, Fedora_y-2, Fedora_x + 15, Fedora_y + 5);
-	TmpBgdLayer.erasePixel(UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
-	TmpObjLayer.erasePixel(UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
-	for (int i = UFO_x + 13; i <= UFO_x + 31; i++)
-		for (int j = UFO_y + 17; j <= UFO_y + 23; j++) {
-			Tmpback.screen[i][j].txtColor = SKY_BLUE;
-			Tmpback.screen[i][j].bgdColor = SKY_BLUE;
-		}
-	DINO.DrawBlock(TmpBgdLayer);
-	TmpObjLayer.DrawHat(Fedora_x, Fedora_y, SADDLE_BROWN);
-	TmpObjLayer.DrawMissonMissonCompleted(40, 2, DARK_GREEN, SKY_BLUE);
-	displayScreen(TmpBgdLayer, Tmpback, UFO_x, UFO_y + 7, UFO_x + 47, UFO_y + 28);
-	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0,-1, -1);
-	TmpObjLayer.drawString("SCORE", UFO_x + 1, UFO_y + 8, BLACK, SKY_BLUE);
-	TmpObjLayer.DrawObject(COLON, UFO_x + 22, UFO_y + 8, BLACK, SKY_BLUE);
-	TmpObjLayer.drawString("TIME", UFO_x + 5, UFO_y + 13, BLACK, SKY_BLUE);
-	TmpObjLayer.DrawObject(COLON, UFO_x + 22, UFO_y + 13, BLACK, SKY_BLUE);
-	Sleep(300);
-	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
-	TmpObjLayer.drawString("PRESS ANY KEY TO RETURN", 60, UFO_y + 30, BLACK, LIGHT_GREEN);
-	Sleep(300);
-	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
-}
-
-void CGAME::playEffectSound(string soundName) {
-	mciSendString(L"close wav", NULL, 0, NULL);
-	if (soundName != OFF_SOUND) {
-		string fileName = "open " + soundName + int_to_string(effectSoundLevel) + ".wav" + " type mpegvideo alias wav";
-		wstring wfileName(fileName.begin(), fileName.end());
-		LPCWSTR swfileName = wfileName.c_str();
-		mciSendString(swfileName, NULL, 0, NULL);
-
-		mciSendString(L"play wav", NULL, 0, NULL);
-	}
-}
-void CGAME::playBackgroundSound(string soundName) {
-	if (soundName == OFF_SOUND) PlaySound(NULL, NULL, 0);
-	else {
-		string fileName = soundName + int_to_string(bgdSoundLevel) + ".wav";
-		wstring wfileName(fileName.begin(), fileName.end());
-		LPCWSTR swfileName = wfileName.c_str();
-		PlaySound(swfileName, NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-	}
 }
 
 string int_to_string(int num) {

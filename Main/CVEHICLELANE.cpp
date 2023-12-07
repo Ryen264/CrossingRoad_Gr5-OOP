@@ -70,6 +70,30 @@ void CVEHICLELANE::push_frontObject(int ID) {
     }
     updatePosObj();
 }
+void CVEHICLELANE::push_backObject(int ID) {
+    switch (ID) {
+    case CAR_ID: {
+        lane.push_back(new CCAR(0, this->y, false));
+        break;
+    }
+    case TRUCK_ID: {
+        lane.push_back(new CTRUCK(0, this->y, false));
+        break;
+    }
+    case BUS_HEAD_ID: {
+        lane.push_back(new CBUS(0, this->y, false, true));
+        break;
+    }
+    case BUS_TAIL_ID: {
+        lane.push_back(new CBUS(0, this->y, false, false));
+        break;
+    }
+    default:
+        lane.push_back(NULL);
+    }
+    updatePosObj();
+}
+
 void CVEHICLELANE::pushNormally() {
     if (condition == 0) {
         int ID = random(OBJECT_ID_LIST);
@@ -124,7 +148,6 @@ void CVEHICLELANE::pushNormally() {
             condition = (ID == BUS_HEAD_ID) ? BUS_TAIL_ID : 0;
         }
     }
-
 }
 void CVEHICLELANE::lightWork()
 {
