@@ -4,7 +4,6 @@ CRIVERLANE::CRIVERLANE(int x, int y, int delayTime) : CLANE(x, y) {
 		this->lane.push_front(NULL);
 	this->isMoveRight = rand() % 2;
 	this->delayTime = delayTime;
-
 	this->ID = RIVERLANE_ID;
 
 	//set buffer
@@ -136,16 +135,16 @@ void CRIVERLANE::Move() {
 	timeCount++;
 	if (timeCount >= delayTime) {
 		timeCount = 0;
+		pop_backObject();
 		//Random push a perry or 1-3 capybaras
 		if (condition == 0) {
 			int ID = random(OBJECT_ID_LIST);
-			pop_backObject();
 			push_frontObject(ID);
 			switch (ID) {
 			case CAPYBARA_ID: {
 				countObject = 1;
-				numberOfCapybara = 1 + rand() % 4;
-				if (numberOfCapybara > 1) condition = CAPYBARA_ID;
+				numberOfConditionObj = 1 + rand() % 4;
+				if (numberOfConditionObj > 1) condition = CAPYBARA_ID;
 				else condition = -CAPYBARA_ID;
 				break;
 			}
@@ -157,30 +156,21 @@ void CRIVERLANE::Move() {
 				condition = 0;
 			}
 		}
+		else if (condition < 0) {
+			push_frontObject(random(OBJECT_ID_LIST - vector<int>{-condition}));
+			condition = 0;
+		}
 		else {
-			switch (condition) {
-			case CAPYBARA_ID: {
-				pop_backObject();
+			if (condition == CAPYBARA_ID) {
 				push_frontObject(CAPYBARA_ID);
 				countObject++;
-				if (countObject >= numberOfCapybara) {
+				if (countObject >= numberOfConditionObj) {
 					condition = -CAPYBARA_ID;
 					countObject = 0;
 				}
-				break;
 			}
-			case -CAPYBARA_ID: {
-				pop_backObject();
-				push_frontObject(random(OBJECT_ID_LIST - vector<int>{CAPYBARA_ID}));
-				condition = 0;
-				break;
-			}
-			case -PERRY_ID: {
-				pop_backObject();
-				push_frontObject(random(OBJECT_ID_LIST - vector<int>{PERRY_ID}));
-				condition = 0;
-				break;
-			} default:
+			else {
+				push_frontObject(random(OBJECT_ID_LIST));
 				condition = 0;
 			}
 		}
@@ -192,4 +182,54 @@ void CRIVERLANE::injuredPlayer(CPLAYER& player) {
 		player.setAlive(false);
 		return;
 	}
+}
+
+int CRIVERLANE::getCondition() const {
+	return condition;
+}
+int CRIVERLANE::getCountObject() const {
+	return countObject;
+}
+int CRIVERLANE::getNumberOfConditionObj() const {
+	return numberOfConditionObj;
+}
+int CRIVERLANE::getTimeCount() const
+{
+	return timeCount;
+}
+int CRIVERLANE::getDelayTime() const
+{
+	return delayTime;
+}
+
+void CRIVERLANE::setCondition(int condition)
+{
+	if (!checkinList(condition, { 0, -CAPYBARA_ID, -PERRY_ID, CAPYBARA_ID })) condition = 0;
+	this->condition = condition;
+}
+void CRIVERLANE::setCountObject(int countObject)
+{
+	if (countObject < 0) countObject = 0;
+	this->countObject = countObject;
+}
+void CRIVERLANE::setNumberOfConditionObj(int numberOfConditionObj)
+{
+	if (numberOfConditionObj < 0) numberOfConditionObj = 0;
+	this->numberOfConditionObj = numberOfConditionObj;
+}
+void CRIVERLANE::setTimeCount(int timeCount)
+{
+	if (timeCount < 0) timeCount = 0;
+	this->timeCount = timeCount;
+}
+void CRIVERLANE::setDelayTime(int delayTime)
+{
+	if (delayTime < 0) delayTime = 0;
+	this->delayTime = delayTime;
+}
+
+bool checkinList(int val, vector<int> list) {
+	for (int& mem : list)
+		if (val == mem) return true;
+	return false;
 }

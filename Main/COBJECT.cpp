@@ -24,6 +24,7 @@ int COBJECT::getX() const {
 int COBJECT::getY() const {
 	return this->y;
 }
+
 void COBJECT::setPos(int x, int y)
 {
 	this->x = x; this->y = y;
@@ -34,6 +35,20 @@ void COBJECT::setX(int x) {
 void COBJECT::setY(int y) {
 	this->y = y;
 }
+
+bool COBJECT::getIsRight() const
+{
+	return false;
+}
+bool COBJECT::getIsHead() const
+{
+	return false;
+}
+
+void COBJECT::setIsRight(bool isRight) {}
+void COBJECT::setIsHead(bool isHead) {}
+
+void COBJECT::setColor(int color) {}
 
 void COBJECT::DrawBlock(CGRAPHIC& layer, bool isPass) {
 	if (!isPass) {
@@ -47,7 +62,6 @@ void COBJECT::DrawBlock(CGRAPHIC& layer, bool isPass) {
 				if (block[i][j].txtColor >= 0) layer.screen[i + x][j + y] = block[i][j];
 	}
 }
-void COBJECT::setColor(int color) {}
 
 int random(vector<int> arr) {
 	int size = (int)arr.size();
