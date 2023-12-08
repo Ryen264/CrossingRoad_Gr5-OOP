@@ -139,8 +139,12 @@ void CLANE::DrawLane(CGRAPHIC& layer) {
     }
 }
 void CLANE::DrawObjects(CGRAPHIC& layer) {
-    for (int k = 0; k < BOARD_WIDTH; k++)
-        if (lane[k] != NULL) lane[k]->DrawBlock(layer);
+    for (int k = 0; k < BOARD_WIDTH; k++) {
+        if (lane.size() > k && lane[k] != nullptr) {
+            lane[k]->DrawBlock(layer);
+        }
+    }
+
 }
 
 vector<int> operator-(const vector<int> first, const vector<int> second) {
