@@ -23,7 +23,7 @@ CVEHICLELANE::~CVEHICLELANE() {
     if (ptrafficLight != NULL) delete ptrafficLight;
 }
 
-void CVEHICLELANE::push_frontObject(int ID) {
+void CVEHICLELANE::pushObject(int ID) {
     if (isMoveRight) {
         switch (ID) {
         case CAR_ID: {
@@ -97,7 +97,7 @@ void CVEHICLELANE::push_backObject(int ID) {
 void CVEHICLELANE::pushNormally() {
     if (condition == 0) {
         int ID = random(OBJECT_ID_LIST);
-        push_frontObject(ID);
+        pushObject(ID);
         switch (ID) {
         case CAR_ID: {
             countObject = 1;
@@ -123,13 +123,13 @@ void CVEHICLELANE::pushNormally() {
     }
     else if (condition < 0) {
         int ID = random(OBJECT_ID_LIST - vector<int>{-condition});
-        push_frontObject(ID);
+        pushObject(ID);
         condition = (ID == BUS_HEAD_ID) ? BUS_TAIL_ID : 0;
     }
     else {
         switch (condition) {
         case CAR_ID: case TRUCK_ID: {
-            push_frontObject(condition);
+            pushObject(condition);
             countObject++;
             if (countObject >= numberOfConditionObj) {
                 condition = -condition;
@@ -138,13 +138,13 @@ void CVEHICLELANE::pushNormally() {
             break;
         }
         case BUS_TAIL_ID: {
-            push_frontObject(BUS_TAIL_ID);
+            pushObject(BUS_TAIL_ID);
             condition = -BUS_HEAD_ID;
             break;
         }
         default:
             int ID = random(OBJECT_ID_LIST);
-            push_frontObject(ID);
+            pushObject(ID);
             condition = (ID == BUS_HEAD_ID) ? BUS_TAIL_ID : 0;
         }
     }
@@ -175,7 +175,7 @@ void CVEHICLELANE::Move() {
         timeCount = 0;
         //Random push a car
         if (lightPos < 0 || !isStop) {
-            pop_backObject();
+            popObject();
             pushNormally();
         }
         else {
@@ -184,12 +184,12 @@ void CVEHICLELANE::Move() {
             if (lane[lightPos] != NULL && lane[lightPos]->getID() == BUS_HEAD_ID) {
                 if (isMoveRight) {
                     if (lightPos > 0) lane.insert(lane.begin() + lightPos - 1, NULL);
-                    else push_frontObject(BUS_TAIL_ID);
+                    else pushObject(BUS_TAIL_ID);
                 }
                 else {
                     if (lightPos < BOARD_WIDTH - 2) lane.insert(lane.begin() + lightPos + 2, NULL);
                     else if (lightPos == BOARD_WIDTH - 2) lane.push_back(NULL);
-                    else push_frontObject(BUS_TAIL_ID);
+                    else pushObject(BUS_TAIL_ID);
                 }
             }
             else {
@@ -199,7 +199,7 @@ void CVEHICLELANE::Move() {
                     else lane.push_back(NULL);
                 }
             }
-            pop_backObject();
+            popObject();
 
             //push before
             if (isMoveRight) {

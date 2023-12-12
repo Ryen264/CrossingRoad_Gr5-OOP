@@ -7,11 +7,11 @@ CGRASSLANE::CGRASSLANE(int x, int y, vector<int> typeLane) : CLANE(x, y) {
             //Random push a egg or no more than 3 trees or NULL
             int random = rand() % 20;
             if (random == 0 && !haveEgg) {
-                push_frontObject(EGG_ID);
+                pushObject(EGG_ID);
                 haveEgg = true;
             }
             else if (random % 5 == 0 && !haveTree) {
-                push_frontObject((rand() % 2) ? TREE_DOUBLE_ID : TREE_SINGLE_ID);
+                pushObject((rand() % 2) ? TREE_DOUBLE_ID : TREE_SINGLE_ID);
                 countTree++;
                 if (countTree >= MAX_NUMBER_OF_TREE) haveTree = true;
             }
@@ -20,7 +20,7 @@ CGRASSLANE::CGRASSLANE(int x, int y, vector<int> typeLane) : CLANE(x, y) {
     }
     else {
         for (int i = BOARD_WIDTH - 1; i >= 0; i--)
-            if (typeLane[i] != 0) push_frontObject(typeLane[i]);
+            if (typeLane[i] != 0) pushObject(typeLane[i]);
             else lane.push_front(NULL);
     }
 
@@ -33,7 +33,7 @@ CGRASSLANE::CGRASSLANE(int x, int y, vector<int> typeLane) : CLANE(x, y) {
 }
 
 void CGRASSLANE::injuredPlayer(CPLAYER& player) {}
-void CGRASSLANE::push_frontObject(int ID) {
+void CGRASSLANE::pushObject(int ID) {
     if (isMoveRight) {
         switch (ID) {
         case EGG_ID: {

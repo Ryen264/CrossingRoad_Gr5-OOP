@@ -16,7 +16,7 @@ L"▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀",
 
 public:
 	CTRAINLANE(int x = 0, int y = 0, int delayTime = 0, int numberOfConditionObj = 0);
-	void push_frontObject(int ID = 0);
+	void pushObject(int ID = 0);
 	void push_backObject(int ID = 0);
 	void Move();
 

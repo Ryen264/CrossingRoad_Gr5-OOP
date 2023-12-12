@@ -16,9 +16,9 @@ public:
 	CLANE(int x = 0, int y = 0);
 	virtual ~CLANE();
 	virtual void Move();
-	virtual void push_frontObject(int ID);
+	virtual void pushObject(int ID);
 	virtual void push_backObject(int ID);
-	void pop_backObject();
+	void popObject();
 	COBJECT* frontObject() const;
 	COBJECT* backObject() const;
 	bool emptyObject() const;

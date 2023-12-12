@@ -140,7 +140,10 @@ int CPLAYER::updateDepend() {
         this->yBoard = (this->y - START_BOARD_HEIGHT) / BLOCK_HEIGHT;
         break;
     }
-    case CAR_ID: case TRUCK_ID: case TRAIN_HEAD_ID: case TRAIN_BODY_ID:
+    case CAR_ID: case TRUCK_ID:
+        this->alive = false;
+        break;
+    case TRAIN_HEAD_ID: case TRAIN_BODY_ID:
         this->alive = false;
         break;
     }

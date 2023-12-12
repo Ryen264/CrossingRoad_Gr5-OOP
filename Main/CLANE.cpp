@@ -22,9 +22,9 @@ CLANE::~CLANE() {
 }
 
 void CLANE::Move() {}
-void CLANE::push_frontObject(int ID) {}
+void CLANE::pushObject(int ID) {}
 void CLANE::push_backObject(int ID) {}
-void CLANE::pop_backObject() {
+void CLANE::popObject() {
     if (isMoveRight) {
         COBJECT* back = lane.back();
         if (back != NULL) delete back;

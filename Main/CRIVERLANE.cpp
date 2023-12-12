@@ -100,7 +100,7 @@ CRIVERLANE::CRIVERLANE(int x, int y, int delayTime) : CLANE(x, y) {
 		block[i][5].txtColor = BLUE;
 	block[6][5].txtColor = BLUE;
 }
-void CRIVERLANE::push_frontObject(int ID) {
+void CRIVERLANE::pushObject(int ID) {
 	if (isMoveRight) {
 		switch (ID) {
 		case PERRY_ID: {
@@ -151,11 +151,11 @@ void CRIVERLANE::Move() {
 	timeCount++;
 	if (timeCount >= delayTime) {
 		timeCount = 0;
-		pop_backObject();
+		popObject();
 		//Random push a perry or 1-3 capybaras
 		if (condition == 0) {
 			int ID = random(OBJECT_ID_LIST);
-			push_frontObject(ID);
+			pushObject(ID);
 			switch (ID) {
 			case CAPYBARA_ID: {
 				countObject = 1;
@@ -173,12 +173,12 @@ void CRIVERLANE::Move() {
 			}
 		}
 		else if (condition < 0) {
-			push_frontObject(random(OBJECT_ID_LIST - vector<int>{-condition}));
+			pushObject(random(OBJECT_ID_LIST - vector<int>{-condition}));
 			condition = 0;
 		}
 		else {
 			if (condition == CAPYBARA_ID) {
-				push_frontObject(CAPYBARA_ID);
+				pushObject(CAPYBARA_ID);
 				countObject++;
 				if (countObject >= numberOfConditionObj) {
 					condition = -CAPYBARA_ID;
@@ -186,7 +186,7 @@ void CRIVERLANE::Move() {
 				}
 			}
 			else {
-				push_frontObject(random(OBJECT_ID_LIST));
+				pushObject(random(OBJECT_ID_LIST));
 				condition = 0;
 			}
 		}
