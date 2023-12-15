@@ -593,7 +593,7 @@ int CGAME::Menu() {
 				break;
 			case HELP:
 				playEffectSound(MENU_ENTER);
-				this->Help();
+				this->Help(CREAMY_AVOCADO, BLACK, WHITE, DARK_BROWN, WHITE);
 				break;
 			case ABOUT:
 				playEffectSound(MENU_ENTER);
@@ -976,7 +976,7 @@ void CGAME::Setting() {
 		displayScreen(tmpObjLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	}
 }
-void CGAME::Help() {
+void CGAME::Help(int header, int txt, int bgd, int clipboard, int paper) {
 	CGRAPHIC tmpBgdLayer(BgdLayer);
 
 	vector<string> bodycontent = {
@@ -1004,7 +1004,7 @@ void CGAME::Help() {
 		toX = fromX + width - 1, toY = fromY + height + 1;
 	
 
-	tmpBgdLayer.DrawTextBoard("HELP", CREAMY_AVOCADO, bodycontent, fromX, fromY, 53, 29, BLACK, WHITE, DARK_BROWN, WHITE);
+	tmpBgdLayer.DrawTextBoard("HELP", header, bodycontent, fromX, fromY, 53, 29, txt, bgd, clipboard, paper);
 	displayScreen(tmpBgdLayer, tmpBgdLayer, fromX, fromY, toX, toY);
 	_getch();
 }
@@ -1186,7 +1186,7 @@ int CGAME::Pause(HANDLE t) {
 				return 0;
 			case HELP_OPTION:
 				playEffectSound(MENU_ENTER);
-				Help();
+				Help(BRIGHT_YELLOW, BLACK, SAND, DARK_BLUE, SAND);
 				break;
 			case SAVE_OPTION:
 				playEffectSound(MENU_ENTER);

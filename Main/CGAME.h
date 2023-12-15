@@ -75,7 +75,7 @@ public:
     void LoadGame();
     void SaveGame(const CGRAPHIC& BgdLayer);
     void Setting();
-    void Help();
+    void Help(int header, int txt, int bgd, int clipboard, int paper);
     void About();
 
     int Pause(HANDLE t);
