@@ -794,7 +794,7 @@ void CGRAPHIC::DrawSettingScreen(int first_x, int first_y) {
 		screen[first_x + 28 + i][first_y + 23].bgdColor = LIGHT_GRAY;
 		screen[first_x + 39 + i][first_y + 23].bgdColor = LIGHT_GRAY;
 		screen[first_x + 28 + i][first_y + 24].bgdColor = LIGHT_GRAY;
-		screen[first_x + 39 + i][first_y + 2].bgdColor = LIGHT_GRAY;
+		screen[first_x + 39 + i][first_y + 24].bgdColor = LIGHT_GRAY;
 	}
 	Text(L"BACKGROUND", 10 + first_x, 12 + first_y, BLACK, WHITE);
 	Text(L"EFFECT", 10 + first_x, 16 + first_y, BLACK, WHITE);

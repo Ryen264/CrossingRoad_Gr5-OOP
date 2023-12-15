@@ -43,7 +43,7 @@ CTRAINLANE::CTRAINLANE(int x, int y, int delayTime, int numberOfConditionObj) : 
 	block[15][1].bgdColor = SADDLE_BROWN;
 }
 
-void CTRAINLANE::push_frontObject(int ID) {
+void CTRAINLANE::pushObject(int ID) {
 	if (isMoveRight) {
 		switch (ID) {
 		case TRAIN_HEAD_ID: {
@@ -97,14 +97,14 @@ void CTRAINLANE::Move()
 		timeCount = 0;
 		//Push head first and n train body respectively
 		if (countObject <= numberOfConditionObj) {
-			pop_backObject();
-			if (countObject == 0) push_frontObject(TRAIN_HEAD_ID);
-			else push_frontObject(TRAIN_BODY_ID);
+			popObject();
+			if (countObject == 0) pushObject(TRAIN_HEAD_ID);
+			else pushObject(TRAIN_BODY_ID);
 			countObject++;
 		}
 		else if (countObject <= numberOfConditionObj + BOARD_WIDTH) {
-			pop_backObject();
-			push_frontObject();
+			popObject();
+			pushObject();
 			countObject++;
 		}
 		else if (rand() % 5 == 0) countObject = 0;

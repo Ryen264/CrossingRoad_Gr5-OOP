@@ -231,7 +231,7 @@ void CGAME::loadData(string fileName) {
 			lane->setCondition(condition); lane->setCountObject(countObject); lane->setNumberOfConditionObj(numberOfConditionObj); lane->setLightPos(lightPos); lane->setTimeLight(timeLight);
 
 			//clear the last aLanes
-			while (!lane->emptyObject()) lane->pop_backObject();
+			while (!lane->emptyObject()) lane->popObject();
 			lane->clearObject();
 
 			for (int j = 0; j < BOARD_WIDTH; j++) {
@@ -243,7 +243,7 @@ void CGAME::loadData(string fileName) {
 				file >> isRight >> isHead;
 
 				//COBJECT: <ID> (object: push with ID)
-				//...	<isRight>	<isRight>
+				//...	<isRight>	<isHead>
 				lane->push_backObject(objID);
 				if (objID != 0) {
 					COBJECT* back = lane->backObject();
@@ -988,7 +988,7 @@ void CGAME::Help() {
 		"  + ENTER - SPACE               MARK",
 		"  + P							PAUSE",
 		"- RULE:                             ",
-		"  TRY TO SURVICE AND COLLECT EGGS!!!"
+		"  TRY TO SURVIVE AND COLLECT EGGS!!!"
 	};
 
 	int maxWidth = 0;
@@ -1511,6 +1511,12 @@ void CGAME::SubThreadNewGame() {
 				}
 				break;
 			}
+			case CAR_ID: case TRUCK_ID:
+				playEffectSound(GAME_CARHIT);
+				break;
+			case TRAIN_HEAD_ID: case TRAIN_BODY_ID:
+				playEffectSound(GAME_TRAIN);
+				break;
 			}
 
 			if (cPlayer->isMoving() && !(nextObj->getID() == TREE_DOUBLE_ID || nextObj->getID() == TREE_SINGLE_ID)) {
@@ -1547,7 +1553,6 @@ void CGAME::SubThreadNewGame() {
 		}
 	}
 }
-
 // Time
 void CGAME::updateTime() {
 	endTime = clock();
@@ -1731,6 +1736,7 @@ bool CGAME::drawLosingScreen(int COLOR) {
 	TmpBgdLayer.DrawMissonFailed(54, 2, DARK_RED, SKY_BLUE);
 	TmpBgdLayer.drawString("SCORE", UFO_x, UFO_y + 8, BLACK, SKY_BLUE);
 	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 8, BLACK, SKY_BLUE);
+	if (cPlayer->getScore() == 0) cPlayer->setScore(1);
 	TmpBgdLayer.DrawNumber(cPlayer->getScore(), UFO_x + 25, UFO_y + 8, BLACK, SKY_BLUE);
 	TmpBgdLayer.drawString("LEVEL", UFO_x, UFO_y + 13, BLACK, SKY_BLUE);
 	TmpBgdLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 13, BLACK, SKY_BLUE);
@@ -1892,6 +1898,7 @@ void CGAME::drawWiningScreen(int COLOR) {
 	displayScreen(TmpObjLayer, TmpBgdLayer, 0, 0, -1, -1);
 	TmpObjLayer.drawString("SCORE", UFO_x, UFO_y + 8, BLACK, SKY_BLUE);
 	TmpObjLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 8, BLACK, SKY_BLUE);
+	if (cPlayer->getScore() == 0) cPlayer->setScore(1);
 	TmpObjLayer.DrawNumber(cPlayer->getScore(), UFO_x + 25, UFO_y + 8, BLACK, SKY_BLUE);
 	TmpObjLayer.drawString("TIME", UFO_x, UFO_y + 13, BLACK, SKY_BLUE);
 	TmpObjLayer.DrawObject(COLON, UFO_x + 21, UFO_y + 13, BLACK, SKY_BLUE);

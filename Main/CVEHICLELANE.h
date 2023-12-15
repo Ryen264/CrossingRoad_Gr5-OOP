@@ -35,7 +35,7 @@ L"▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄",
 public:
 	CVEHICLELANE(int x = 0, int y = 0, int delayTime = 0);
 	~CVEHICLELANE();
-	void push_frontObject(int ID = 0);
+	void pushObject(int ID = 0);
 	void push_backObject(int ID = 0);
 	void pushNormally();
 	void lightWork();
